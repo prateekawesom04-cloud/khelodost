@@ -38,6 +38,11 @@
         updateSports(data);
     });
 
+    
+    setInterval(() => {
+        callApi('get',`{{route('user.getSportData')}}`,{sportname:{{$sportname}}},updateSports);
+    }, 500);
+
   </script>
 
 @endsection

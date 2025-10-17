@@ -13,6 +13,11 @@ class SportbookController extends Controller
 {
     //
 
+    public function sport(Request $request){
+        $sportname = $request->sportname;
+        return view('pages.'.$sportname,compact('sportname'));
+    }
+
     public function getSportFixture(Request $request){
         $sportname = $request->sportname;
         $sportData = Cache::remember($sportname, 60, function () use ($sportname) {
@@ -94,6 +99,17 @@ class SportbookController extends Controller
         ]);
     }
 
+    
+    public function getSportData(Request $request){
+        $body = Storage::get('sports/'.$request->sportname.'.json');
+
+        // dd($body);
+        return response()->json([
+            'data'=>$body,
+            'sport'=>$sportname,
+            'code'=>'200'
+        ]);
+    }
     
     public function getEventData(Request $request){
         $body = Storage::get('event/'.$request->eventId.'.json');
