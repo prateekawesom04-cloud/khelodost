@@ -101,35 +101,32 @@
             let html = ``;
             
             html += `
-                <tr data-gmid='${data.gmid}' data-mid='${data.mid}' data-ename="${data.ename}" data-stime="${data.stime}">
-                    <!-- Football -->
-                    <td class="text-start px-3">
-                        <div class="match-layout">
-                            <!-- Left Side: Date & Time -->
-                            <span class="match-status today">${data.stime}</small></span>
-
-                            <a href="${eventPage}/${data.gmid}" class="right-side eventPage">
-                                ${data.ename}
-                            </a>
+                <div class="border-solid border-b border-gray-500 p-2" data-gmid='${data.gmid}' data-mid='${data.mid}' data-ename="${data.ename}" data-stime="${data.stime}">
+                    
+                    <span class="text-sm">${data.stime}</span>
+                    <div class="flex flex-row items-center justify-between pb-1">
+                        <a href="${eventPage}/${data.gmid}" class="right-side eventPage">
+                            ${data.ename}
+                        </a>
+                        <div class="flex flex-row items-center gap-3 justify-between">
+                            <span class="in_play blinking_green m-0"></span>
+                            <span class="">BM</span>
                         </div>
-                    </td>
+                    </div>
+                    <div class="flex flex-row">  
                     `;
                 
-                $(data.section).each(function(i,j){
-                    html +=`
-                        <td>
-                        `;
+                        $(data.section).each(function(i,j){
                             $(j.odds).each(function(){
                                 html +=`
                                     <a class="odd-btn ${this.otype} ${this.oname}">${this.odds}</a>
                                 `;
                             });
-                    html +=`
-                        </td>
-                        `;
-                });
+                        });
+
                 html +=`
-                </tr>
+                    </div>
+                </div>
             `;
 
             return html;
