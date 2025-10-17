@@ -5,6 +5,11 @@
     /* normal text color: #000 */
     /* special text color: #929391 */
 
+
+a {
+    text-decoration: none;
+}
+
 .form-control:focus, input:focus {
     box-shadow: none;
 }
@@ -54,4 +59,22 @@
   align-content: center;
   align-items: center;
   justify-content: space-between;
+}
+
+.in_play {
+    letter-spacing: 0.9px;
+    border-radius: 12px;
+    color: #fff;
+    float: right;
+    margin: 4px 4px 0px 8px;
+  }
+
+  .blinking_green {
+  animation: 2s blink-green ease infinite;
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+  margin-left: 5px;
+  background-color: #05fb33 !important;
+  background-color: #00ff00;
 }

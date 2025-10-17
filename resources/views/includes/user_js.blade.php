@@ -31,35 +31,30 @@
             //     eventPage = "{{url('upcomingEventPage')}}";
             // }
             return `
-                <tr data-gameId='${data.gameId}' data-marketId='${data.marketId}' data-eventName="${data.eventName}" data-eventDate="${data.eventDate}">
-                    <!-- Cricket -->
-                    <td class="text-start px-3">
-                        <div class="match-layout">
-                            <!-- Left Side: Date & Time -->
-                            <span class="match-status today">${data.eventDate}</small></span>
-
-                            <!-- Right Side: Teams -->
+                <div class="border-solid border-b border-gray-500 p-2" data-gameId='${data.gameId}' data-marketId='${data.marketId}' data-eventName="${data.eventName}" data-eventDate="${data.eventDate}">
+                    
+                        <span class="text-sm">${data.eventDate}</span>
+                        
+                        <div class="flex flex-row items-center justify-between pb-1">
                             <a href="${eventPage}/${data.gameId}" class="right-side eventPage">
                                 ${data.eventName}
                             </a>
+                            <div class="flex flex-row items-center gap-3 justify-between">
+                                <span class="in_play blinking_green m-0"></span>
+                                <span class="">BM</span>
+                            </div>
                         </div>
-                    </td>
 
-                    <td>
-                        <a class="odd-btn">${data.back11}<br><small>${data.back11}</small></a>
-                        <a class="odd-btn">${data.back1}<br><small>${data.back1}</small></a>
-                    </td>
+                        <div class="flex flex-row">
+                            <a class="odd-btn">${data.back11}<br><small>${data.back11}</small></a>
+                            <a class="odd-btn">${data.back1}<br><small>${data.back1}</small></a>
+                            <a class="odd-btn">${data.back12}<br><small>${data.back12}</small></a>
+                            <a class="odd-btn lay">${data.lay11}<br><small>${data.lay11}</small></a>
+                            <a class="odd-btn lay">${data.lay1}<br><small>${data.lay1}</small></a>
+                            <a class="odd-btn lay">${data.lay12}<br><small>${data.lay12}</small></a>
+                        </div>
 
-                    <td>
-                        <a class="odd-btn">${data.back12}<br><small>${data.back12}</small></a>
-                        <a class="odd-btn lay">${data.lay11}<br><small>${data.lay11}</small></a>
-                    </td>
-
-                    <td>
-                        <a class="odd-btn lay">${data.lay1}<br><small>${data.lay1}</small></a>
-                        <a class="odd-btn lay">${data.lay12}<br><small>${data.lay12}</small></a>
-                    </td>
-                </tr>
+                </div>
             `;
         }
 
