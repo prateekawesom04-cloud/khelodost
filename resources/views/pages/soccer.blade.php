@@ -2,20 +2,21 @@
 
 @section('sports_body')
 <main class="layout-content-center p-3">
-    <div class="card-body p-0 sport_box hidden">
-        <table class="table text-center mb-0 align-middle odds-table">
-            <thead class="table-light">
-                <tr>
-                    <th class="text-start fw-bold" style="width: 40%">⚽ Football</th>
-                    <th style="width: 20%">1</th>
-                    <th style="width: 20%">X</th>
-                    <th style="width: 20%">2</th>
-                </tr>
-            </thead>
-            <tbody class="soccer">
-                
-            </tbody>
-        </table>
+    <div class="card shadow-sm mb-4 sport_box hidden">
+        <div class="p-1 w-100">
+            <div class="div mb-0 align-middle odds-div">
+                <div class="table_head">
+                    <div class="fw-bold" style="width: 50%">🏏 Soccer</div>
+                    <div style="">1</div>
+                    <div style="">X</div>
+                    <div style="">2</div>
+                </div>
+                <div class="soccer">
+                    
+                    
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 @endsection
