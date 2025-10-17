@@ -164,28 +164,15 @@
             
             html += `
                 <!-- ${data.mname} -->
-                <table id="market_${data.mid}" class="table text-center mb-0 align-middle odds-table my-2">
-                    <thead class="table-light">
-                        <tr>
-                            <th style="">${data.mname}</th>
-                            <th style=""></th>
-                        </tr>
-                    </thead>
-                    <tbody class="data_market_${data.mid}">`;
+                <div id="market_${data.mid}" class="flex flex-col" data-marketId="${data.mid}">
+                    <div class="bg-[#fc7600] mt-3 p-2 data_market_${data.mid}">${data.mname}</div>`;
 
                     $(data.section).each(function(i,j){
 
                         html +=`
-                            <tr class="m_row${i} relative">
-                                <!-- ${this.nat} -->
-                                <td class="text-start px-3">
-                                    <div class="match-layout">
-                                        <div class="right-side">
-                                            <div class="match_nat${i}">${this.nat}</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
+                            <div class="m_row${i} flex flex-row relative">
+                                <div class="match_nat${i} w-[60%]">${this.nat}</div>
+                                <div class="flex flex-1">
                             `;
 
                             $(this.odds).each(function(i,j){
@@ -195,16 +182,14 @@
                             });
 
                     html +=`
-                    
-                                    <div class="odd_suspended ${(j.gstatus=="SUSPENDED")?"d-blockwet":""}">Suspended</div>
-                                </td>
-                            </tr>
+                                </div>
+                                <div class="odd_suspended ${(j.gstatus=="SUSPENDED")?"d-blockwet":""}">Suspended</div>
+                            </div>
                         `;
                     })
                 
                 html +=`
-                    </tbody>
-                </table>
+                </div>
             `;
 
             $('.soccerData').append(html);
