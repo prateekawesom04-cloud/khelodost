@@ -135,7 +135,7 @@ class getSportFixture extends Command
         Storage::put('sports/inplay/'.$sportname.'.json', $sportInplayDataArray);
         Storage::put('sports/upcoming/'.$sportname.'.json', $sportUpcomingDataArray);
         Log::info('----'.$sportname);
-        $response = $pusher->trigger($sportname.'-sportsupdate', $sportname.'-sportsupdate-event', ['data' => $body,'sport'=>$sportname]);
+        // $response = $pusher->trigger($sportname.'-sportsupdate', $sportname.'-sportsupdate-event', ['data' => $body,'sport'=>$sportname]);
             
 
             // return json_decode($response->getBody(), true);

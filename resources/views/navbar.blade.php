@@ -13,7 +13,7 @@
         </a>
 
         <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('cricket') ? 'active' : '' }}"
-            href="{{ route('cricket') }}">
+            href="{{ route('user.sport','cricket') }}">
             <span class="me-1">🏏</span>Cricket
         </a>
 

@@ -29,18 +29,18 @@
     // Enable pusher logging - don't include this in production
     // Pusher.logToConsole = true;
 
-    var pusher = new Pusher('{{env('PUSHER_APP_KEY')}}', {
-      cluster: 'ap2'
-    });
+    // var pusher = new Pusher('{{env('PUSHER_APP_KEY')}}', {
+    //   cluster: 'ap2'
+    // });
 
-    var channel = pusher.subscribe('cricket-sportsupdate');
-    channel.bind('cricket-sportsupdate-event', function(data) {
-        updateSports(data);
-    });
+    // var channel = pusher.subscribe('cricket-sportsupdate');
+    // channel.bind('cricket-sportsupdate-event', function(data) {
+    //     updateSports(data);
+    // });
 
     
     setInterval(() => {
-        callApi('get',`{{route('user.getSportData','cricket')}}`,{sportname:{{$sportname}}},updateSports);
+        callApi('get',`{{route('user.getSportData','cricket')}}`,{sportname:`{{$sportname}}`},updateSports);
     }, 500);
 
   </script>

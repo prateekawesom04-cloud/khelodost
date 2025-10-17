@@ -106,7 +106,7 @@ class SportbookController extends Controller
         // dd($body);
         return response()->json([
             'data'=>$body,
-            'sport'=>$sportname,
+            'sport'=>$request->sportname,
             'code'=>'200'
         ]);
     }
