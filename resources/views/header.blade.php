@@ -56,7 +56,7 @@
         <!-- Sports -->
         <div class="mb-4 px-3 pt-3">
             <h6 class="text-uppercase text-muted small mb-3">Sports</h6>
-            <a href="{{ route('user.getSportData','cricket') }}"
+            <a href="{{ route('user.sport','cricket') }}"
                 class="d-block text-dark text-decoration-none mb-2 py-1 rounded hover-bg-light px-2">🏏
                 Cricket</a>
             <a href="{{ route('football') }}"
