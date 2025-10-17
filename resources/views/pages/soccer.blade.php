@@ -2,7 +2,7 @@
 
 @section('sports_body')
 <main class="layout-content-center p-3">
-    <div class="card-body p-0">
+    <div class="card-body p-0 sport_box hidden">
         <table class="table text-center mb-0 align-middle odds-table">
             <thead class="table-light">
                 <tr>
@@ -44,6 +44,7 @@
         }, 500);
 
     });
+
 
   </script>
 

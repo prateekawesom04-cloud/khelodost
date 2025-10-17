@@ -3,7 +3,7 @@
 @section('sports_body')
 <main class="container py-3">
     <div class="card shadow-sm mb-4">
-        <div class="card-body p-0">
+        <div class="card-body p-0 sport_box hidden">
             <div class="table-responsive">
                 <table class="table text-center mb-0 align-middle odds-table">
                     <thead class="table-light">

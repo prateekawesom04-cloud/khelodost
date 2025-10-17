@@ -23,4 +23,11 @@
 </div>
 
     @include('includes.user_js')
+    <script>
+        $(document).ready(function(){
+            setTimeout(() => {
+            $('.sport_box').show();
+            }, 500);
+        });
+    </script>
 @endsection

@@ -18,12 +18,12 @@
         </a>
 
         <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('football') ? 'active' : '' }}"
-            href="{{ route('football') }}">
+            href="{{ route('user.sport','soccer') }}">
             <span class="me-1">⚽</span>Football
         </a>
 
         <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('tennis') ? 'active' : '' }}"
-            href="{{ route('tennis') }}">
+            href="{{ route('user.sport','tennis') }}">
             <span class="me-1">🎾</span>Tennis
         </a>
 
