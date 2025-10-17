@@ -20,6 +20,7 @@
 </main>
 @endsection
 
+@include('includes.soccerEvent_js')
 @section('js')
 <script src="https://js.pusher.com/8.4.0/pusher.min.js"></script>
   <script>
