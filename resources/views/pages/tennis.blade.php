@@ -8,7 +8,6 @@
                 <div class="table_head">
                     <div class="fw-bold" style="width: 50%">🏏 Tennis</div>
                     <div style="">1</div>
-                    <div style="">X</div>
                     <div style="">2</div>
                 </div>
                 <div class="tennis">
