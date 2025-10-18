@@ -386,7 +386,7 @@ body {
 .odd-btn {
     display: inline-block;
     /* width: 3.5rem; */
-    padding: 0.4rem 0rem;
+    padding: 0.6rem 0rem;
     border: 1px solid #dee2e6;
     border-radius: 6px;
     background: #0c9971;
@@ -399,6 +399,7 @@ body {
     font-size: 11px;
     flex: 1;
     margin: 0 0.1rem;
+    max-width: 70px;
 }
 
 .odd-btn.lay {

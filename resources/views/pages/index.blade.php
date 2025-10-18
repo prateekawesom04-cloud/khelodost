@@ -58,21 +58,20 @@
             </div>
 
             <!-- 🔷 In Play -->
-            <div class="card shadow-sm mb-3">
-                <div class="card-header bg-success text-white">⏵In Play</div>
-                <div class="card-body p-0 flex overflow-x-scroll w-100">
-                    <table class="table text-center mb-0 align-middle odds-table">
-                        <thead class="table-light">
-                            <tr>
-                                <th class="text-start fw-bold" style="width: 40%">🏏 Cricket</th>
-                                <th style="width: 20%">1</th>
-                                <th style="width: 20%">X</th>
-                                <th style="width: 20%">2</th>
-                            </tr>
-                        </thead>
-                        <tbody class="cricketDataIndex">
-                        </tbody>
-                    </table>
+            <div class="card shadow-sm mb-4 sport_box hidden">
+                <div class="p-1 w-100">
+                    <div class="div mb-0 align-middle odds-div">
+                        <div class="table_head">
+                            <div class="fw-bold" style="width: 50%">🏏 Cricket</div>
+                            <div style="">1</div>
+                            <div style="">X</div>
+                            <div style="">2</div>
+                        </div>
+                        <div class="cricketInplayData">
+                            
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -252,14 +251,18 @@
     // Enable pusher logging - don't include this in production
     // Pusher.logToConsole = true;
 
-    var pusher = new Pusher('{{env('PUSHER_APP_KEY')}}', {
-      cluster: 'ap2'
-    });
+    // var pusher = new Pusher('{{env('PUSHER_APP_KEY')}}', {
+    //   cluster: 'ap2'
+    // });
 
-    var channel = pusher.subscribe('sportsupdate');
-    channel.bind('sportsupdate-event', function(data) {
-        updateCricketIndex(data);
-    });
+    // var channel = pusher.subscribe('sportsupdate');
+    // channel.bind('sportsupdate-event', function(data) {
+    //     updateCricketIndex(data);
+    // });
+    
+    setInterval(() => {
+        callApi('get',`{{route('user.getSportData','cricket')}}`,{sportname:`cricket`},updateInplaySports);
+    }, 500);
 
   </script>
 
