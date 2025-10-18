@@ -207,13 +207,14 @@
                 
                 $(j.odds).each(function(){
                     let odd = $(m_div).find(`.m_row${i}`).find(`.${this.oname}`);
-                    if($(odd).html() != this.odds){
-                        $(this).addClass('odd_change');
+                    if(parseFloat($(odd).html()) != parseFloat(this.odds)){
+                        
+                        $(odd).addClass('odd_change');
                         setTimeout(() => {
-                            $(this).removeClass('odd_change');
-                        }, 300);
+                            $(odd).removeClass('odd_change');
+                        }, 400);
+                        $(odd).html(this.odds);
                     }
-                    $(odd).html(this.odds);
                 });
             });
 
