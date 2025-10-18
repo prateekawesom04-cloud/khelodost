@@ -172,6 +172,11 @@
             
             $(j.odds).each(function(){
                 let odd = $(m_div).find(`.m_row${i}`).find(`.${this.oname}`);
+                console.log($(odd).html(),'----$(odd).html() != ,',this.odds,',--this.odds');
+                console.log(parseFloat($(odd).html()),'----$(odd).html() int != ,',parseFloat(this.odds),',--this.odds int');
+                
+                console.log('$(odd).html() != this.odds----',(parseFloat($(odd).html()) != parseFloat(this.odds)));
+                
                 if($(odd).html() != this.odds){
                     $(this).addClass('odd_change');
                     setTimeout(() => {
