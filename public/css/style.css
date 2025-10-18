@@ -383,6 +383,9 @@ body {
     font-size: 0.9rem;
 }
 
+.sport_box .odd-btn {
+    max-width: 100%;
+}
 .odd-btn {
     display: inline-block;
     /* width: 3.5rem; */
