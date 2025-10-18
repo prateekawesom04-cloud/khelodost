@@ -40,8 +40,9 @@ a {
 }
 
 .odd_suspended, .odd_running {
-    /* display: block; */
+    display: none;
     text-align: center;
+    align-content: center;
     position: absolute;
     right: 0;
     top: 0;
