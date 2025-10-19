@@ -183,6 +183,7 @@
 
                     html +=`
                                     <div class="odd_suspended ${(j.gstatus=="SUSPENDED")?"d-block":""}">Suspended</div>
+                                    <div class="odd_suspended ${(j.gstatus=="Ball Running")?"d-block":""}">Ball Running</div>
                                 </div>
                             </div>
                         `;
