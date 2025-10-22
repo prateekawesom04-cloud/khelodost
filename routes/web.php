@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SportbookController;
+use App\Http\Controllers\SportookBetController;
 
 
 Route::middleware(['auth_middleware'])->group(function () {
@@ -40,6 +41,10 @@ Route::middleware(['custom_session_middleware'])->group(function () {
         Route::post('paymentGatewayMethod', [TransactionController::class,'paymentGatewayMethod'])->name('paymentGatewayMethod')->withoutMiddleware([VerifyCsrfToken::class]);
         
         Route::get('deposit', [UserController::class,'deposit'])->name('user.deposit');
+        
+        Route::post('placebet', [SportookBetController::class,'placebet'])->name('user.placebet')->withoutMiddleware([VerifyCsrfToken::class]);
+        
+        Route::get('openbets', [SportookBetController::class,'openbets'])->name('user.openbets')->withoutMiddleware([VerifyCsrfToken::class]);
 
 
     });

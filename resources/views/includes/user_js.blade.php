@@ -135,14 +135,14 @@
                 $(data.section).each(function(i,j){
 
                     html +=`
-                        <div class="m_row${i} px-2 py-1 flex flex-row items-center border-b border-gray-500">
+                            <div class="m_row${i} px-2 py-1 flex flex-row items-center border-b border-gray-500 market_data" data-marketId="${data.mid}" data-nat="${this.nat}" data-mname="${data.mname}">
                             <div class="match_nat${i} w-[60%]">${this.nat}</div>
                             <div class="flex flex-1 justify-center relative">
                         `;
 
                         $(this.odds).each(function(i,j){
                             html +=`
-                                <a class="odd-btn ${j.otype} ${j.oname}">${j.odds}</a>
+                                <a data-oddVal="${j.odds}" class="odd-btn ${j.otype} ${j.oname}">${j.odds}</a>
                             `;
                         });
 
@@ -671,5 +671,25 @@
                 </td>
             </tr>
         `;
+    }
+
+    function formatData(dateStr){
+        const today = new Date(dateStr);
+
+        // Extract day, month, and year
+        let day = today.getDate();
+        let month = today.getMonth() + 1;
+        let year = today.getFullYear();
+        let hours = today.getHours();
+        let minutes = String(today.getMinutes()).padStart(2, '0');
+
+        // Add leading zero to day and month if needed
+        day = day < 10 ? '0' + day : day;
+        month = month < 10 ? '0' + month : month;
+
+        // Format the date as dd/mm/yyyy
+        const formattedDate = `${day} ${month} ${year} ${hours}:${minutes}`;
+
+        return formattedDate;
     }
 </script>

@@ -21,10 +21,10 @@ class AuthCheckMiddleware
                 return response()->json([
                     'mesaage'=> 'User Not Logged In',
                     'code'=> '403',
-                    'redirect'=> route('user.login')
+                    'redirect'=> route('login')
                 ]);
             }
-            return redirect()->route('user.login');
+            return redirect()->route('login');
         } else{
             return $next($request);
         }

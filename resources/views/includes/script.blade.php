@@ -20,11 +20,11 @@
     
     function ajaxResponse(response){
         
+        if(response.redirect){
+            window.location.href = response.redirect;
+        }
         if(response.code==200){
             responseToast(response.message,'bg-success');
-            if(response.redirect){
-                window.location.href = response.redirect;
-            }
         } else{
             responseToast(response.message,'bg-warning');
         }

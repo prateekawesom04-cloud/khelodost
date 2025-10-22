@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <div class="app_body">
+    <div class="app_body relative">
         <div>
             @include('header')
             @include('navbar')

@@ -388,7 +388,7 @@ body {
 }
 .odd-btn {
     display: inline-block;
-    /* width: 3.5rem; */
+    width: 3.4rem;
     padding: 0.6rem 0rem;
     border: 1px solid #dee2e6;
     border-radius: 6px;
@@ -732,4 +732,21 @@ main::-webkit-scrollbar {
     border-radius: 0.4rem;
     border-bottom: 2px solid #fff;
     background: #306757;
+}
+
+.bet-btns button,.bet-btns a {
+  font-size: 12px;
+  text-align: center;
+  margin: 1px 2px;
+  width: 46%;
+  color: #fff;
+  cursor: pointer;
+  padding: 4px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #fc7600;
+  border-image: initial;
+  background: #fc7600;
+  font-weight: bold;
+  border-radius: 4px;
 }
