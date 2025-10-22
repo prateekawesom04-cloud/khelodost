@@ -58,7 +58,7 @@
 
    function updateBetslip(odd){
       
-      betslipData.oddVal = $(odd).attr('data-oddVal');
+      betslipData.oddVal = $(odd).html();
       betslipData.marketId = $(odd).parents('.market_data').attr('data-marketId');
       betslipData.mname = $(odd).parents('.market_data').attr('data-mname');
       betslipData.nat = $(odd).parents('.market_data').attr('data-nat');
