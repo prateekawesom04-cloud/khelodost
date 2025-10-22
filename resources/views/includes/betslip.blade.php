@@ -44,6 +44,7 @@
    $('body').on('click','.odd-btn',function(){
       $('.betslip').show();
       updateBetslip(this);
+      $('#betslipTab').tab('show');
 
    });
 
@@ -63,6 +64,7 @@
       betslipData.nat = $(odd).parents('.market_data').attr('data-nat');
       
       stakeUpdate(100);
+      $(odd).attr('data-oddId',betslipData.oddVal);
       $('#oddVal').val(betslipData.oddVal);
       $('#nat').html(betslipData.nat);
    }
@@ -83,10 +85,11 @@
 
       marketId = $(`.market_data[data-marketId='${betslipData.marketId}']`);
       
-      oddVal = $(marketId).find(`.odd-btn[data-oddVal='${betslipData.oddVal}']`);
+      odd = $(marketId).find(`.odd-btn[data-oddId='${betslipData.oddVal}']`).html();
       
-      if(!oddVal.length){
+      if(odd != betslipData.oddVal){
          responseToast('Odd changed');
+         $('.betslip').hide();
          return false;
       }
 
