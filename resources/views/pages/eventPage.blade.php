@@ -47,9 +47,9 @@
 @section('js')
 
 <script>
-    setInterval(() => {
+    // setInterval(() => {
         callApi('get',`{{route('user.getEventData')}}`,{eventId:{{$eventId}}},updateCricketEvent);
-    }, 500);
+    // }, 500);
     
     $(document).ready(function(){
         betslipData.eventId = "{{($eventId)?$eventId:''}}";

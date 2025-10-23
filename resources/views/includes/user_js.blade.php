@@ -135,20 +135,22 @@
                 $(data.section).each(function(i,j){
 
                     html +=`
-                            <div class="m_row${i} px-2 py-1 flex flex-row items-center border-b border-gray-500 market_data" data-marketId="${data.mid}" data-nat="${this.nat}" data-mname="${data.mname}">
-                            <div class="match_nat${i} w-[60%]">${this.nat}</div>
-                            <div class="flex flex-1 justify-center relative">
+                        <div class="m_row${i} py-1 flex flex-col items-center border-b border-gray-500 market_data" data-marketId="${data.mid}" data-nat="${this.nat}" data-mname="${data.mname}">
+                            <div class="flex flex-row items-center justify-between w-full">
+                                <div class="match_nat${i} w-[60%]">${this.nat}</div>
+                                <div class="flex flex-1 justify-center relative">
                         `;
 
                         $(this.odds).each(function(i,j){
                             html +=`
-                                <a data-oddVal="${j.odds}" class="odd-btn ${j.otype} ${j.oname}">${j.odds}</a>
+                                    <a data-oddVal="${j.odds}" class="odd-btn ${j.otype} ${j.oname}">${j.odds}</a>
                             `;
                         });
 
                 html +=`
-                                <div class="odd_suspended ${(j.gstatus=="SUSPENDED")?"d-block":""}">Suspended</div>
-                                <div class="odd_suspended ${(j.gstatus=="Ball Running")?"d-block":""}">Ball Running</div>
+                                    <div class="odd_suspended ${(j.gstatus=="SUSPENDED")?"d-block":""}">Suspended</div>
+                                    <div class="odd_suspended ${(j.gstatus=="Ball Running")?"d-block":""}">Ball Running</div>
+                                </div>
                             </div>
                         </div>
                     `;

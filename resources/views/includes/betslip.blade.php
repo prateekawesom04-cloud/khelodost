@@ -1,4 +1,4 @@
-<div id="betslip" class="m-1 md:static absolute hidden md:flex betslip" style="display:none;">
+<div id="betslipData" class="flex betslip" style="display:none;">
    <span id="bet_msg_error"></span>
    <span id="errmsg"></span>
    <div class="lds-dual-ring  loader" style="display:none"></div>
@@ -12,22 +12,22 @@
          <span id="profit" class="my-1 text-green-500"></span>
          <span id="loss" class="my-1 text-red-500"></span>
       </div>
-      <div class="flex flex-row flex-wrap justify-evenly bet-btns">
-         <div class="col-6 p-[0.1rem]">
+      <div class="flex flex-row flex-wrap justify-evenly items-center bet-btns">
+         <div class="col-6 p-[0.4rem]">
             <div class="flex flex-col gap-1">
-                  <label for="">Odds</label>
-                  <input type="number" pattern="[0-9]*" step="1" id="oddVal" class="calProfitLoss odd-val odds-input form-control p-0 border-0 CommanBtn">
+                  {{-- <label for="">Odds</label> --}}
+                     <div class="flex flex-row justify-center items-center gap-1">
+                        <span class="p-1 !bg-[#273393] h-full w-[25px] flex justify-center items-center">+</span>
+                        <div class="stake_inputs w-[70%]">
+                           <input type="number" pattern="[0-9]*" step="1" id="stakeValue" class="calProfitLoss stake-input form-control text-center p-0 border-0 CommanBtn ">
+                        </div>
+                        <span class="p-1 !bg-[#273393] h-full w-[25px] flex justify-center items-center">-</span>
+                     </div>
             </div>
          </div>
-         <div class="col-6 p-[0.1rem]">
-            <label for="">Stake</label>
-            <div class="flex flex-row justify-center items-center gap-1">
-               <span class="p-1 bg-[#fc7600] h-[12px flex items-center">+</span>
-               <div class="stake_inputs w-[70%]">
-                  <input pattern="[0-9]*" step="1" id="stakeValue" class="calProfitLoss stake-input form-control p-0 border-0 CommanBtn">
-               </div>
-               <span class="p-1 bg-[#fc7600] h-[12px flex items-center">-</span>
-            </div>
+         <div class="col-6 p-[0.4rem]">
+            {{-- <label for="">Stake</label> --}}
+            <input type="number" pattern="[0-9]*" step="1" id="oddVal" class="calProfitLoss odd-val odds-input form-control text-center p-0 border-0 CommanBtn">
          </div>
          <div class="col-3 p-[0.1rem]">
             <button type="button" value="100">100</button>
@@ -54,22 +54,23 @@
             <button type="button" value="100000">100000</button>
          </div>
          <div class="col-3 p-[0.1rem]">
-            <button type="button" value="100">Min Stake</button>
+            <button type="button" class="!bg-[#fc7600] text-white" value="100">Min Stake</button>
          </div>
          <div class="col-3 p-[0.1rem]">
-            <button type="button" value="100000">Max Stake</button>
+            <button type="button" class="!bg-[#273393] text-white" value="100000">Max Stake</button>
          </div>
          <div class="col-3 p-[0.1rem]">
-            <button type="button" onclick="">Edit Stake</button>
+            <button type="button" class="!bg-[#066d11] text-white" onclick="">Edit Stake</button>
          </div>
          <div class="col-3 p-[0.1rem]">
-            <button type="button" onclick="stakeUpdate(0);">Clear</button>
+            <button type="button" class="!bg-[#ff1c1c] text-white" value="0">Clear</button>
          </div>
          <div class="col-6 p-[0.1rem]">
-            <button href="javascript:void(0)" class="!bg-[#fff] !text-[#fc7600] border !border-[#fc7600]" type="button" onclick="stakeUpdate(0);"> Cancel</button>
+            {{-- <button href="javascript:void(0)" class="!!bg-[#fff] !text-[#fc7600] border !border-[#fc7600]" type="button" value="0"> Cancel</button> --}}
+            <button href="javascript:void(0)" class="!bg-[#e86779] text-white" type="button" value="0"> Cancel</button>
          </div>
          <div class="col-6 p-[0.1rem]">
-            <button href="javascript:void(0)" class="" onclick="placeBet();"> Place Bet</button>
+            <button href="javascript:void(0)" class="!bg-[#15b526] text-white" onclick="placeBet();"> Place Bet</button>
          </div>
       </div>
    </div>
@@ -84,7 +85,9 @@
    $('body').on('click','.odd-btn',function(){
       $('.betslip').show();
       updateBetslip(this);
-      $('#betslipTab').tab('show');
+      // $('#betslipTab').tab('show');
+      $('#betslipData').css('background',$(this).css('background'));
+      $(this).parents('.market_data').append($('#betslipData').show());
 
    });
 
@@ -159,7 +162,7 @@
             bets +=`
                <div class="flex flex-col rounded-md border border-[#747a87] p-2 mt-2">
                   
-                  <div class="bg-[#fc7600] flex flex-row gap-2 flex-1 mt-2 p-2">
+                  <div class="!bg-[#fc7600] flex flex-row gap-2 flex-1 mt-2 p-2">
                      <span class="t_data w-[40%]">BetId</span>
                      <span class="t_data w-[20%]">Date</span>
                      <span class="t_data w-[20%]">Odd Value</span>

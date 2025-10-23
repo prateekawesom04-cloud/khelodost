@@ -35,7 +35,7 @@
 
 
 <script>
-  $('.openbetsdiv')on('click',function(){
+  // $('.openbetsdiv')on('click',function(){
     
-  });
+  // });
 </script>

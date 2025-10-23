@@ -51,7 +51,7 @@ class SportookBetController extends Controller
     }
 
     public function openBets(Request $request){
-        $openBets = SportookBet::whereIn('status',[1])->get();
+        $openBets = SportookBet::whereIn('status',[1])->orderBy('id','desc')->get();
 
         // dd($openBets);
         if(count($openBets)){
