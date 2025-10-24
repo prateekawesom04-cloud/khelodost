@@ -24,14 +24,14 @@
     <div class="shadow-sm mb-4">
         <div class="card-body p-0 eventDatabox">
             <div class="text-center">
-                <h4 class="my-1 border-b-2 border-gray-300">India Vs South Africa</h4>
-                <div class="flex flex-row justify-evenly items-center my-1 border-b-2 border-gray-300">
+                <h4 class="my-1 border-b-2 border-gray-300">{{$eventData->eventName}}</h4>
+                {{-- <div class="flex flex-row justify-evenly items-center my-1 border-b-2 border-gray-300">
                     <h5>Live</h5>
                     <h5>Scorecard</h5>
-                </div>
+                </div> --}}
                 <div class="flex flex-row justify-evenly items-center my-1 border-b-2 border-gray-300">
-                    <h5>Market Start Time</h5>
-                    <h5>10 Oct 2025</h5>
+                    <h5>Event Start Time</h5>
+                    <h5>{{$eventData->eventDate}}</h5>
                 </div>
             </div>
 

@@ -395,4 +395,16 @@ class AdminDataController extends Controller
             'response_code'=>'200'
         ]);
     }
+
+    public function sattlement(Request $request){
+        $eventId = $request->eventId;
+        return view('pages.sattlement',compact('eventId'));
+    }
+    
+    public function updateSportResult(Request $request){
+        $eventId = $request->eventId;
+        
+    }
+    
+
 }

@@ -173,8 +173,15 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
         Route::post('addFund', [AdminDataController::class,'addFund'])->name('addFund')->withoutMiddleware([VerifyCsrfToken::class]);
         
         Route::post('updatePhone', [AdminDataController::class,'updatePhone'])->name('updatePhone')->withoutMiddleware([VerifyCsrfToken::class]);
+        
+        Route::post('updateSportResult', [AdminDataController::class,'updateSportResult'])->name('updateSportResult')->withoutMiddleware([VerifyCsrfToken::class]);
+        
+        Route::get('sattlement/{eventId}', [AdminDataController::class,'sattlement'])->name('sattlement');
             
 
+        // Route::get('/sattlement', function () {
+        //     return view('pages.sattlement');
+        // })->name('sattlement');
     });
     
         // Post/Action requests end
@@ -187,3 +194,4 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
 
 Route::get('getSportFixture/{sportname}',[SportbookController::class,'getSportFixture'])->name('getSportFixture');
 Route::get('getCricketEventData/{eventId}',[SportbookController::class,'getCricketEventData'])->name('getCricketEventData');
+Route::post('updateSportResult/{eventId}',[SportbookController::class,'updateSportResult'])->name('updateSportResult');

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Storage;
 use App\Events\EventNotification;
+use App\Models\Event;
 
 class SportbookController extends Controller
 {
@@ -54,7 +55,8 @@ class SportbookController extends Controller
         // $body = Storage::get('event/'.$request->eventId.'.json');
         // $body = json_decode($body);
         $eventId = $request->eventId;
-        return view('pages.eventPage',compact('eventId'));
+        $eventData = Event::where('eventId',$request->eventId)->first();
+        return view('pages.eventPage',compact('eventId','eventData'));
     }
     
     public function soccerEvent(Request $request){

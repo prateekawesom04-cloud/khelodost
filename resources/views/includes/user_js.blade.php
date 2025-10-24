@@ -127,7 +127,7 @@
         
         html += `
             <!-- ${data.mname} -->
-            <div id="market_${data.mid}" class="flex flex-col" data-marketId="${data.mid}">
+            <div id="market_${data.mid}" class="flex flex-col market" data-marketId="${data.mid}">
                 <div class="bg-[#fc7600] mt-3 p-2 data_market_${data.mid}">
                     ${data.mname}
                 </div>`;
@@ -137,8 +137,8 @@
                     html +=`
                         <div class="m_row${i} py-1 flex flex-col items-center border-b border-gray-500 market_data" data-marketId="${data.mid}" data-nat="${this.nat}" data-mname="${data.mname}">
                             <div class="flex flex-row items-center justify-between w-full">
-                                <div class="match_nat${i} w-[60%]">${this.nat}</div>
-                                <div class="flex flex-1 justify-center relative">
+                                <div class="match_nat match_nat${i} w-[60%]">${this.nat}</div>
+                                <div class="flex flex-1 justify-end relative">
                         `;
 
                         $(this.odds).each(function(i,j){

@@ -7,21 +7,21 @@
    </audio>
    <div id="placeBetSilp" class="flex flex-col items-center">
       
-      <div class="flex flex-row gap-2">
+      {{-- <div class="flex flex-row gap-2">
          <span id="nat" class="my-1"></span>
          <span id="profit" class="my-1 text-green-500"></span>
          <span id="loss" class="my-1 text-red-500"></span>
-      </div>
+      </div> --}}
       <div class="flex flex-row flex-wrap justify-evenly items-center bet-btns">
          <div class="col-6 p-[0.4rem]">
             <div class="flex flex-col gap-1">
                   {{-- <label for="">Odds</label> --}}
                      <div class="flex flex-row justify-center items-center gap-1">
-                        <span class="p-1 !bg-[#273393] h-full w-[25px] flex justify-center items-center">+</span>
+                        <span class="p-1 !bg-[#273393] h-full w-[25px] flex justify-center items-center text-white">+</span>
                         <div class="stake_inputs w-[70%]">
                            <input type="number" pattern="[0-9]*" step="1" id="stakeValue" class="calProfitLoss stake-input form-control text-center p-0 border-0 CommanBtn ">
                         </div>
-                        <span class="p-1 !bg-[#273393] h-full w-[25px] flex justify-center items-center">-</span>
+                        <span class="p-1 !bg-[#273393] h-full w-[25px] flex justify-center items-center text-white">-</span>
                      </div>
             </div>
          </div>
@@ -82,12 +82,28 @@
 
    let betslipData = {};
 
+   function profitAmount(odd, stake){
+      return parseFloat((odd-1)*stake/100).toFixed(2);
+   }
+
    $('body').on('click','.odd-btn',function(){
       $('.betslip').show();
-      updateBetslip(this);
       // $('#betslipTab').tab('show');
       $('#betslipData').css('background',$(this).css('background'));
       $(this).parents('.market_data').append($('#betslipData').show());
+
+      if($('.loss').length){
+         $('.loss').remove();
+         $('.profit').remove();
+      }
+      $(this).parents('.market').find('.market_data').each(function(i,j){
+         if($(j).attr('data-oddVal') != betslipData.oddVal){
+            $(j).find('.match_nat').after('<span class="loss my-1 text-green-500"></span>');
+         }
+      });
+      $(this).parents('.market_data').find('.match_nat').after('<span class="profit my-1 text-green-500"></span>');
+      updateBetslip(this);
+      stakeUpdate(100);
 
    });
 
@@ -101,15 +117,15 @@
 
    function updateBetslip(odd){
       
-      betslipData.oddVal = $(odd).html();
+      betslipData.oddVal = $(odd).attr('data-oddval');
       betslipData.marketId = $(odd).parents('.market_data').attr('data-marketId');
       betslipData.mname = $(odd).parents('.market_data').attr('data-mname');
       betslipData.nat = $(odd).parents('.market_data').attr('data-nat');
+      betslipData.profit = profitAmount(betslipData.oddVal, val);
       
-      stakeUpdate(100);
       $(odd).attr('data-oddId',betslipData.oddVal);
       $('#oddVal').val(betslipData.oddVal);
-      $('#nat').html(betslipData.nat);
+      // $('#nat').html(betslipData.nat);
    }
    
    function stakeUpdate(val){
@@ -117,10 +133,9 @@
       // if(val < 100){
       //    responseToast('minimum stake value is 100');
       // }
-      betslipData.profit = parseFloat(betslipData.oddVal*val).toFixed(2);
       betslipData.bet_amount = val;
-      $('#profit').html(betslipData.profit);
-      $('#loss').html(val);
+      $('.profit').html(betslipData.profit);
+      $('.loss').html(val);
       $('#stakeValue').val(val);
    }
 
