@@ -5,7 +5,8 @@
     
             <!-- 🔷 Banner Image Card -->
             <div class="mb-2">
-                <div class="rounded-4 text-center flex flex-row max-w-full overflow-hidden app_scroller">
+                <iframe src="https://tv.jaipursofttech.com/livetv.php?eventId={{$eventId}}" frameborder="0" class="w-full"></iframe>
+                {{-- <div class="rounded-4 text-center flex flex-row max-w-full overflow-hidden app_scroller">
                     <a href="{{ route('index') }}" class="min-w-full">
                         <img src="{{ asset('banners/banner1.png') }}" class="img-fluid" alt="Banner">
                     </a>
@@ -18,7 +19,7 @@
                     <a href="{{ route('index') }}" class="min-w-full">
                         <img src="{{ asset('banners/banner4.png') }}" class="img-fluid" alt="Banner">
                     </a>
-                </div>
+                </div> --}}
             </div>
     <div class="shadow-sm mb-4">
         <div class="card-body p-0 eventDatabox">

@@ -417,7 +417,12 @@ body {
 }
 
 .odd-btn:hover {
-    background: #91c9f5;
+    /* background: #91c9f5; */
+    opacity: 0.5;
+}
+
+.back2,.back3,.lay2,.lay3{
+    display: none;
 }
 
 .odd_change{
