@@ -72,12 +72,12 @@
                         </div>
 
                         <div class="flex flex-row">
-                            <a class="odd-btn">${data.back11}<br><small>${data.back11}</small></a>
-                            <a class="odd-btn">${data.back1}<br><small>${data.back1}</small></a>
-                            <a class="odd-btn">${data.back12}<br><small>${data.back12}</small></a>
-                            <a class="odd-btn lay">${data.lay11}<br><small>${data.lay11}</small></a>
-                            <a class="odd-btn lay">${data.lay1}<br><small>${data.lay1}</small></a>
-                            <a class="odd-btn lay">${data.lay12}<br><small>${data.lay12}</small></a>
+                            <a class="odd-btn">${data.back11}</a>
+                            <a class="odd-btn">${data.back1}</a>
+                            <a class="odd-btn">${data.back12}</a>
+                            <a class="odd-btn lay">${data.lay11}</a>
+                            <a class="odd-btn lay">${data.lay1}</a>
+                            <a class="odd-btn lay">${data.lay12}</a>
                         </div>
 
                 </div>
@@ -669,18 +669,18 @@
                 </td>
 
                 <td>
-                    <a class="odd-btn">${data.back11}<br><small>${data.back11}</small></a>
-                    <a class="odd-btn">${data.back1}<br><small>${data.back1}</small></a>
+                    <a class="odd-btn">${data.back11}</a>
+                    <a class="odd-btn">${data.back1}</a>
                 </td>
 
                 <td>
-                    <a class="odd-btn">${data.back12}<br><small>${data.back12}</small></a>
-                    <a class="odd-btn lay">${data.lay11}<br><small>${data.lay11}</small></a>
+                    <a class="odd-btn">${data.back12}</a>
+                    <a class="odd-btn lay">${data.lay11}</a>
                 </td>
 
                 <td>
-                    <a class="odd-btn lay">${data.lay1}<br><small>${data.lay1}</small></a>
-                    <a class="odd-btn lay">${data.lay12}<br><small>${data.lay12}</small></a>
+                    <a class="odd-btn lay">${data.lay1}</a>
+                    <a class="odd-btn lay">${data.lay12}</a>
                 </td>
             </tr>
         `;
