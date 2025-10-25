@@ -113,7 +113,9 @@
                 if(i == data.length-1) {
                     cricketEventPageLoading = true;
                 }
-                create_cMarketDiv(this);
+                // if(j.gtype == "match" || j.gtype == "match1" || j.gtype == "fancy") {
+                    create_cMarketDiv(this);
+                // }
             } else {
                 update_cMarket(this);
             } 
@@ -128,13 +130,16 @@
         html += `
             <!-- ${data.mname} -->
             <div id="market_${data.mid}" class="flex flex-col market text-[12px]" data-marketId="${data.mid}">
-                <div class="bg-[#fc7600] mt-3 p-2 data_market_${data.mid}">
+                <div class="bg-[#2888ef] mt-3 p-2 data_market_${data.mid}">
                     ${data.mname}
                 </div>
                 
                 
                 <div class="flex flex-row items-center justify-between w-full border-b border-gray-500">
-                    <span class="w-[60%]">Max</span>
+                    <div class="w-[60%]">
+                        <span class="">Max</span>
+                        <span class="mx-1 text-green-500">${(data.max)?data.max:''}</span>
+                    </div>
                     <div class="flex flex-row justify-end flex-1">
                         <span class="bet-head">BACK</span>
                         <span class="bet-head !bg-[#e9a9dc]">LAY</span>
