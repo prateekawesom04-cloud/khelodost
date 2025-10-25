@@ -21,7 +21,7 @@
             
             <!-- TOURNAMENT_WINNER -->
             <div id="market_4705448399709" class="flex flex-col" data-marketid="4705448399709">
-                <div class="bg-[#fc7600] mt-3 p-2 data_market_4705448399709">
+                <div class="bg-[#2888ef] mt-3 p-2 data_market_4705448399709">
                     TOURNAMENT_WINNER
                 </div>
                         <div class="m_row0 px-2 py-1 flex flex-row items-center border-b border-gray-500">
@@ -188,7 +188,7 @@
         
             <!-- Bookmaker Cup Bhav -->
             <div id="market_5284603987897" class="flex flex-col" data-marketid="5284603987897">
-                <div class="bg-[#fc7600] mt-3 p-2 data_market_5284603987897">
+                <div class="bg-[#2888ef] mt-3 p-2 data_market_5284603987897">
                     Bookmaker Cup Bhav
                 </div>
                         <div class="m_row0 px-2 py-1 flex flex-row items-center border-b border-gray-500 relative">

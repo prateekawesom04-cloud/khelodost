@@ -54,7 +54,7 @@
             <button type="button" value="100000">100000</button>
          </div>
          <div class="col-3 p-[0.1rem]">
-            <button type="button" class="!bg-[#fc7600] text-white" value="100">Min Stake</button>
+            <button type="button" class="!bg-[#2888ef] text-white" value="100">Min Stake</button>
          </div>
          <div class="col-3 p-[0.1rem]">
             <button type="button" class="!bg-[#273393] text-white" value="100000">Max Stake</button>
@@ -179,7 +179,7 @@
             bets +=`
                <div class="flex flex-col rounded-md border border-[#747a87] p-2 mt-2">
                   
-                  <div class="!bg-[#fc7600] flex flex-row gap-2 flex-1 mt-2 p-2">
+                  <div class="!bg-[#2888ef] flex flex-row gap-2 flex-1 mt-2 p-2">
                      <span class="t_data w-[40%]">BetId</span>
                      <span class="t_data w-[20%]">Date</span>
                      <span class="t_data w-[20%]">Odd Value</span>

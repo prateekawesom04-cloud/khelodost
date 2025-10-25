@@ -31,7 +31,7 @@
   </div>
 </div>
 
-{{-- <div class="fixed bottom-[0px] right-[0px] bg-[#fc7600] text-white p-2 rounded-md openbetsdiv">Open Bets</div> --}}
+{{-- <div class="fixed bottom-[0px] right-[0px] bg-[#2888ef] text-white p-2 rounded-md openbetsdiv">Open Bets</div> --}}
 
 
 <script>

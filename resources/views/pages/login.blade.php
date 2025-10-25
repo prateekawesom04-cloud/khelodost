@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Playcrickgg Login</title>
+  <title>Login</title>
   <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" /> -->
   <link rel="stylesheet" href="{{ asset('css') }}/tailwind.min.css">
@@ -25,56 +25,60 @@
   </style>
 </head>
 
-<body class="d-flex align-items-center justify-content-center bg-light" style="height:100vh; margin:0;">
-  <div class="bg-custom-green p-4 rounded-3 text-center text-white shadow" style="width: 380px;">
-    <!-- Logo -->
-    <a>
-      <img src="{{ asset('images/logo.png') }}" alt="Logo" class="mb-4" style="max-width:180px;" />
-    </a>
-
-    <!-- Login Form -->
-    <form>
-      @csrf
-      <!-- Mobile Number -->
-      <div class="mb-3">
-        <div class="input-group">
-          <span class="input-group-text input-group-text-yellow"><i class="bi bi-phone"></i></span>
-          <input type="text" name="phone" class="form-control rounded-end" placeholder="Enter your mobile number" />
+<body class="d-flex align-items-center justify-content-center bg-light">
+  <div class="bg-custom-green rounded-3 text-center text-white shadow my-5" style="width: 380px;">
+    <!-- Logo --><div alt="Logo" class="mb- w-full" style="height: 420px;background: url('banners/auth.png');background-position: center center;background-size: cover;background-repeat: no-repeat;border-radius: 8px 8px 0 0;"></div>
+    <div class="px-4">
+      <a>
+        <div style="display: block;height: 77px;position: relative;">
+          <img alt="Logo" style="/*! max-width:180px; *//*! position: absolute; */top: 0%;left: 0%;height: 90px;/*! width: 100%; */" src="logo/logo.png" class="mb-2">
         </div>
-      </div>
-
-      <!-- Password -->
-      <div class="mb-3">
-        <div class="input-group">
-          <span class="input-group-text input-group-text-yellow"><i class="bi bi-lock"></i></span>
-          <input type="password" name="password" class="form-control rounded-end" placeholder="Password" />
+      </a>
+  
+      <!-- Login Form -->
+      <form>
+        @csrf
+        <!-- Mobile Number -->
+        <div class="mb-3">
+          <div class="input-group">
+            <span class="input-group-text input-group-text-yellow"><i class="bi bi-phone"></i></span>
+            <input type="text" name="phone" class="form-control rounded-end" placeholder="Enter your mobile number" />
+          </div>
         </div>
-      </div>
-
-      <!-- Login Buttons -->
-      <div class="d-grid gap-2 mb-3">
-        <a href="javascript:void(0)" class="btn btn-yellow text-center login">Login</a>
-        <a href="javascript:void(0)" onclick="demoLogin()" class="btn btn-yellow text-center">Login With Demo ID</a>
-      </div>
-
-      <!-- Forgot Password -->
-      <div class="mb-3 text-end">
-        <a href="{{ route('forgot_password') }}">Forgot Password?</a>
-      </div>
-
-      <!-- Or login with -->
-      <p class="mb-2">Or login with</p>
-      <div class="d-grid mb-3">
-        <a href="{{route('api.login.social')}}" class="btn btn-success rounded-3 fw-semibold text-center !flex items-center justify-center">
-          <img class="rounded-circle mr-1" src="{{asset('icons/google.png')}}" width="20" height=20"> Google
-        </a>
-      </div>
-
-      <!-- Register -->
-      <p class="small">
-        New User? <a href="{{route('signin')}}"><b>Create Account</b></a>
-      </p>
-    </form>
+  
+        <!-- Password -->
+        <div class="mb-3">
+          <div class="input-group">
+            <span class="input-group-text input-group-text-yellow"><i class="bi bi-lock"></i></span>
+            <input type="password" name="password" class="form-control rounded-end" placeholder="Password" />
+          </div>
+        </div>
+  
+        <!-- Login Buttons -->
+        <div class="d-grid gap-2 mb-3">
+          <a href="javascript:void(0)" class="btn btn-yellow text-center login">Login</a>
+          <a href="javascript:void(0)" onclick="demoLogin()" class="btn btn-yellow text-center">Login With Demo ID</a>
+        </div>
+  
+        <!-- Forgot Password -->
+        <div class="mb-3 text-end">
+          <a href="{{ route('forgot_password') }}">Forgot Password?</a>
+        </div>
+  
+        <!-- Or login with -->
+        <p class="mb-2">Or login with</p>
+        <div class="d-grid mb-3">
+          <a href="{{route('api.login.social')}}" class="btn btn-success rounded-3 fw-semibold text-center !flex items-center justify-center">
+            <img class="rounded-circle mr-1" src="{{asset('icons/google.png')}}" width="20" height=20"> Google
+          </a>
+        </div>
+  
+        <!-- Register -->
+        <p class="small">
+          New User? <a href="{{route('signin')}}"><b>Create Account</b></a>
+        </p>
+      </form>
+    </div>
   </div>
 
 @include('includes.app_toast')

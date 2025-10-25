@@ -15,7 +15,7 @@
   <style>
     body {
       background-color: #f0f8ff;
-      height: 100vh;
+      /* height: 100vh; */
       margin: 0;
       display: flex;
       align-items: center;
@@ -58,13 +58,15 @@
   </style>
 </head>
 
-<body>
-  <div class="bg-custom-green p-4 rounded-3 shadow-lg" style="width: 100%; max-width: 440px; color: white;">
-
-    <!-- Logo -->
-    <a href="javascript:void(0)" class="d-block mb-4 text-center">
-      <img src="{{ asset('images/logo.png') }}" alt="Logo" style="max-width: 180px;" />
-    </a>
+<body class="d-flex align-items-center justify-content-center bg-light">
+  <div class="bg-custom-green rounded-3 text-center text-white shadow my-5" style="width: 380px;">
+    <!-- Logo --><div alt="Logo" class="mb- w-full" style="height: 420px;background: url('banners/auth.png');background-position: center center;background-size: cover;background-repeat: no-repeat;border-radius: 8px 8px 0 0;"></div>
+    <div class="px-4">
+      <a>
+        <div style="display: block;height: 77px;position: relative;">
+          <img alt="Logo" style="/*! max-width:180px; *//*! position: absolute; */top: 0%;left: 0%;height: 90px;/*! width: 100%; */" src="logo/logo.png" class="mb-2">
+        </div>
+      </a>
 
     <!-- Form -->
     <form action="{{route('post.signin')}}" method="POST">

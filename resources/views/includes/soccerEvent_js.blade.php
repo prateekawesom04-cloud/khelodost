@@ -165,7 +165,7 @@
             html += `
                 <!-- ${data.mname} -->
                 <div id="market_${data.mid}" class="flex flex-col" data-marketId="${data.mid}">
-                    <div class="bg-[#fc7600] mt-3 p-2 data_market_${data.mid}">${data.mname}</div>`;
+                    <div class="bg-[#2888ef] mt-3 p-2 data_market_${data.mid}">${data.mname}</div>`;
 
                     $(data.section).each(function(i,j){
 
