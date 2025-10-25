@@ -8,7 +8,7 @@
 
 <body>
     @include('admin.header')
-    {{-- @include('admin.navbar') --}}
+    @include('admin.navbar')
     @yield('body')
     @include('admin.model.add_method')
     @include('admin.model.add_banner')

@@ -87,21 +87,25 @@
    }
 
    $('body').on('click','.odd-btn',function(){
-      $('.betslip').show();
       // $('#betslipTab').tab('show');
+      betslipData.oddVal = $(this).attr('data-oddVal');
+      betslipData.marketId = $(this).parents('.market_data').attr('data-marketId');
       $('#betslipData').css('background',$(this).css('background'));
       $(this).parents('.market_data').append($('#betslipData').show());
+      $('.betslip').show();
 
       if($('.loss').length){
          $('.loss').remove();
          $('.profit').remove();
       }
+
       $(this).parents('.market').find('.market_data').each(function(i,j){
-         if($(j).attr('data-oddVal') != betslipData.oddVal){
-            $(j).find('.match_nat').after('<span class="loss my-1 text-green-500"></span>');
-         }
+         // if($(j).attr('data-marketId') != betslipData.marketId){
+            $(j).find('.match_nat').append('<span class="loss my-1 text-red-500"></span>');
+         // }
       });
-      $(this).parents('.market_data').find('.match_nat').after('<span class="profit my-1 text-green-500"></span>');
+      $(this).parents('.market_data').find('.loss').remove();
+      $(this).parents('.market_data').find('.match_nat').append('<span class="profit my-1 text-green-500"></span>');
       updateBetslip(this);
       stakeUpdate(100);
 
@@ -117,11 +121,8 @@
 
    function updateBetslip(odd){
       
-      betslipData.oddVal = $(odd).attr('data-oddval');
-      betslipData.marketId = $(odd).parents('.market_data').attr('data-marketId');
-      betslipData.mname = $(odd).parents('.market_data').attr('data-mname');
-      betslipData.nat = $(odd).parents('.market_data').attr('data-nat');
-      betslipData.profit = profitAmount(betslipData.oddVal, val);
+      // betslipData.mname = $(odd).parents('.market_data').attr('data-mname');
+      // betslipData.nat = $(odd).parents('.market_data').attr('data-nat');
       
       $(odd).attr('data-oddId',betslipData.oddVal);
       $('#oddVal').val(betslipData.oddVal);
@@ -134,6 +135,7 @@
       //    responseToast('minimum stake value is 100');
       // }
       betslipData.bet_amount = val;
+      betslipData.profit = profitAmount(betslipData.oddVal, val);
       $('.profit').html(betslipData.profit);
       $('.loss').html(val);
       $('#stakeValue').val(val);
