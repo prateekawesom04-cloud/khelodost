@@ -53,6 +53,7 @@
       border-radius: inherit !important;
       align-items: center;
       justify-content: center;
+      border: 0 !important;
     }
   </style>
 </head>
@@ -79,7 +80,7 @@
           @endforeach -->
           
         </select>
-        <input type="text" name="phone" class="form-control" placeholder="Enter your phone number" maxlength="10" />
+        <input type="text" name="phone" class="form-control !border-l-0" placeholder="Enter your phone number" maxlength="10" />
         <!-- <a href="javascript:void(0)" class="btn btn-yellow rounded-0 rounded-end text-center">Get OTP</a> -->
       </div>
 
@@ -160,8 +161,12 @@
         return option.text;
       }
 
+      // var optionWithImage = $(
+      //   '<span style="display: flex;justify-content: space-between;"><img src="' + option.img + '" class="img-flag" width="15" /> ' + option.text + '</span>'
+      // );
+      
       var optionWithImage = $(
-        '<span style="display: flex;justify-content: space-between;"><img src="' + option.img + '" class="img-flag" width="15" /> ' + option.text + '</span>'
+        '<span style="display: flex;justify-content: space-between;"> ' + option.text + '</span>'
       );
       return optionWithImage;
     }

@@ -8,7 +8,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Downline List</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{{ route('admin.user_downline_list',$userData->user_uid) }}">User Downline
+                    <li><a class="dropdown-item" href="{{ route('admin.user_downline_list',$userData->username) }}">User Downline
                             List</a></li>
                     <li>
                         <a class="dropdown-item" href="{{ route('admin.master_downline_list') }}">Master Downline
@@ -18,7 +18,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.my_account',$userData->user_uid) }}">👨‍💼My Account</a>
+                <a class="nav-link" href="{{ route('admin.my_account',$userData->username) }}">👨‍💼My Account</a>
             </li>
 
             <li class="nav-item dropdown">

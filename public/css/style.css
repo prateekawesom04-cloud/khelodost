@@ -386,13 +386,29 @@ body {
 .sport_box .odd-btn {
     max-width: 100%;
 }
+
+.bet-head {
+    display: inline-block;
+    width: 3.4rem;
+    padding: 0.6rem 0rem;
+    background: #91c9f5;
+    font-weight: 600;
+    text-decoration: none;
+    color: #000;
+    transition: 0.2s;
+    text-align: center;
+    font-size: 11px;
+    flex: 1;
+    max-width: 90px;
+}
+
 .odd-btn {
     display: inline-block;
     width: 3.4rem;
     padding: 0.6rem 0rem;
     /* border: 1px solid #dee2e6; */
     /* border-radius: 6px; */
-    background: #0c9971;
+    background: #91c9f5;
     font-weight: 600;
     text-decoration: none;
     color: #000;
@@ -406,7 +422,7 @@ body {
 }
 
 .odd-btn.lay {
-    background: #fc7600;
+    background: #e9a9dc;
 }
 
 .odd-btn small {

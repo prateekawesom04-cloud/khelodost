@@ -127,15 +127,26 @@
         
         html += `
             <!-- ${data.mname} -->
-            <div id="market_${data.mid}" class="flex flex-col market" data-marketId="${data.mid}">
+            <div id="market_${data.mid}" class="flex flex-col market text-[12px]" data-marketId="${data.mid}">
                 <div class="bg-[#fc7600] mt-3 p-2 data_market_${data.mid}">
                     ${data.mname}
-                </div>`;
+                </div>
+                
+                
+                <div class="flex flex-row items-center justify-between w-full border-b border-gray-500">
+                    <span class="w-[60%]">Max</span>
+                    <div class="flex flex-row justify-end flex-1">
+                        <span class="bet-head">BACK</span>
+                        <span class="bet-head !bg-[#e9a9dc]">LAY</span>
+                    </div>
+                </div>
+                
+                `;
 
                 $(data.section).each(function(i,j){
 
                     html +=`
-                        <div class="m_row${i} py-1 flex flex-col items-center border-b border-gray-500 market_data" data-marketId="${data.mid}" data-nat="${this.nat}" data-mname="${data.mname}">
+                        <div class="m_row${i} flex flex-col items-center border-b border-gray-500 market_data" data-marketId="${data.mid}" data-nat="${this.nat}" data-mname="${data.mname}">
                             <div class="flex flex-row items-center justify-between w-full">
                                 <div class="flex justify-between items-center match_nat match_nat${i} w-[60%]"><span>${this.nat}</span></div>
                                 <div class="flex flex-1 justify-end relative">
