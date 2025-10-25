@@ -23,7 +23,7 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    .bg-custom-green { background-color: #0c9971; }
+    .bg-custom-green { background-color: #0c0339; }
     .btn-yellow {
       background-color: #ffd600; color: #000; font-weight: 700;
       border-radius: 0.5rem; border: none; transition: background-color 0.3s ease;
@@ -59,15 +59,17 @@
 </head>
 
 <body class="d-flex align-items-center justify-content-center bg-light">
-  <div class="bg-custom-green rounded-3 text-center text-white shadow my-5" style="width: 380px;">
-    <!-- Logo --><div alt="Logo" class="mb- w-full" style="height: 420px;background: url('banners/auth.png');background-position: center center;background-size: cover;background-repeat: no-repeat;border-radius: 8px 8px 0 0;"></div>
-    <div class="px-4">
-      <a>
+  <div class="bg-custom-green rounded-3 text-center text-white shadow my-" style="width: 380px;">
+    <!-- Logo -->
+    {{-- <img src="{{ asset('banners/auth.png') }}" alt="Logo" class="mb-4 w-full" /> --}}
+    <div alt="Logo" class="mb- w-full" style="height: 284px;background: url('banners/auth.png');background-position: center center;background-size: cover;background-repeat: no-repeat;border-radius: 8px 8px 0 0;background-position-y: 30%;"></div>
+    <div class="p-4 py-2">
+      {{-- <a>
         <div style="display: block;height: 77px;position: relative;">
           <img alt="Logo" style="/*! max-width:180px; *//*! position: absolute; */top: 0%;left: 0%;height: 90px;/*! width: 100%; */" src="logo/logo.png" class="mb-2">
         </div>
-      </a>
-
+      </a> --}}
+  
     <!-- Form -->
     <form action="{{route('post.signin')}}" method="POST">
       @csrf
