@@ -749,10 +749,15 @@ main::-webkit-scrollbar {
 
 
 .account_btn {
-    box-shadow: #fce100 0px 3px 2px 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    box-shadow: #0552cc 0px 3px 2px 0px;
     border-radius: 0.4rem;
     border-bottom: 2px solid #fff;
-    background: #306757;
+    background: #0552cc;
 }
 
 .bet-btns button,.bet-btns a {
@@ -773,3 +778,7 @@ main::-webkit-scrollbar {
   font-weight: bold;
   /* border-radius: 4px; */
 }
+
+
+/* font sizes for tablet and mobile */
+

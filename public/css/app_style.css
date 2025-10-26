@@ -32,13 +32,6 @@ a {
     justify-content: space-between;
 }
 
-.account_btn {
-    box-shadow: #fce100 0px 3px 2px 0px;
-    border-radius: 0.4rem;
-    border-bottom: 2px solid #fff;
-    background: #306757;
-}
-
 .odd_suspended, .odd_running {
     display: none;
     text-align: center;
