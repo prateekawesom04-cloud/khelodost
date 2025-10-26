@@ -780,5 +780,12 @@ main::-webkit-scrollbar {
 }
 
 
-/* font sizes for tablet and mobile */
+/* font for tablet and desktop */
+
+h3,h4,h5 {
+    font-size: 12px;
+    margin: 0;
+}
+
+/* font sizes for mobile */
 
