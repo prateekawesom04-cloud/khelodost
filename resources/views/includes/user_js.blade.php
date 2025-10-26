@@ -113,9 +113,9 @@
                 if(i == data.length-1) {
                     cricketEventPageLoading = true;
                 }
-                // if(j.gtype == "match" || j.gtype == "match1" || j.gtype == "fancy") {
+                if(j.gtype == "match" || j.gtype == "match1" || j.gtype == "fancy" || j.gtype == "oddeven" || j.gtype) {
                     create_cMarketDiv(this);
-                // }
+                }
             } else {
                 update_cMarket(this);
             } 
@@ -129,16 +129,55 @@
         
         html += `
             <!-- ${data.mname} -->
-            <div id="market_${data.mid}" class="flex flex-col market text-[12px]" data-marketId="${data.mid}">
+            <div id="market_${data.mid}" class="flex flex-col market text-[12px]" data-mname="${data.mname}" data-marketId="${data.mid}">
                 <div class="bg-[#2888ef] mt-3 p-2 data_market_${data.mid}">
-                    ${data.mname}
+                    ${(data.mname=='fancy1')?'TOSS':data.mname}
                 </div>
                 
                 
                 <div class="flex flex-row items-center justify-between w-full border-b border-gray-500">
                     <div class="w-[60%]">
+                        `;
+
+                if(data.mname == 'MATCH_ODDS'){
+                    html +=`
                         <span class="">Max</span>
-                        <span class="mx-1 text-green-500">${(data.max)?data.max:''}</span>
+                        <span class="mx-1 text-green-500">5000</span>
+                    `;
+                } else {
+
+                    if(data.min){
+                        html +=`
+                            <span class="">Min</span>
+                            <span class="mx-1 text-green-500">${(data.min)?data.min:''}</span>
+                        `;
+                    }
+                    if(data.max){
+                        html +=`
+                            <span class="">Max</span>
+                            <span class="mx-1 text-green-500">${(data.max)?data.max:''}</span>
+                        `;
+                    }
+
+                }
+                
+
+                if(!data.min && !data.max){
+                    if(data.gtype == "fancy"){
+                        html +=`
+                            <span class="">Session Market</span>
+                        `;
+                    } else if(data.gtype == "oddeven"){
+                        html +=`
+                            <span class="">Fancy Market</span>
+                        `;
+                    // } else{
+                    //     html +=`
+                    //         <span class="">${data.mname} Session</span>
+                    //     `;
+                    }
+                }
+                html +=`
                     </div>
                     <div class="flex flex-row justify-end flex-1">
                         <span class="bet-head">BACK</span>
@@ -149,7 +188,12 @@
                 `;
 
                 $(data.section).each(function(i,j){
-
+                    
+                    if(data.mname == 'fancy1' && i==2) {
+                        
+                        // return false;
+                        return;
+                    }
                     html +=`
                         <div class="m_row${i} flex flex-col items-center border-b border-gray-500 market_data" data-marketId="${data.mid}" data-nat="${this.nat}" data-mname="${data.mname}">
                             <div class="flex flex-row items-center justify-between w-full">
@@ -163,7 +207,7 @@
                             `;
                         });
 
-                html +=`
+                            html +=`
                                     <div class="odd_suspended ${(j.gstatus=="SUSPENDED")?"d-block":""}">Suspended</div>
                                     <div class="odd_suspended ${(j.gstatus=="Ball Running")?"d-block":""}">Ball Running</div>
                                 </div>
@@ -176,7 +220,11 @@
             </div>
         `;
 
-        $('.eventData').append(html);
+        if(data.mname == "TIED_MATCH"){
+            $('.market[data-mname=Bookmaker]').after(html);
+        } else{
+            $('.eventData').append(html);
+        }
     }
 
     function update_cMarket(data){
