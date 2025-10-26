@@ -9,7 +9,7 @@
 
         <!-- Logo -->
         <a href="{{ route('index') }}" class="flex items-center justify-center h-2 navbar-brand p-0 flex-shrink-0 ms-5 w-[25%]">
-            <img src="{{ asset('logo/logo.png') }}" alt="Logo" height="40"
+            <img class="w-full" src="{{ asset('logo/logo.png') }}" alt="Logo" height="40"
                 style="max-width: 150px; height: auto;" />
         </a>
 
@@ -29,9 +29,15 @@
         <div class="d-flex align-items-center gap-2 ms-auto flex-shrink-0" id="headerButtons">
             @if($userData)
             <div class="flex flex-row gap-1 align-items-center">
-                <button class="account_btn rounded-[0.4rem] px-2 px-sm-3 py-1 text-nowrap flex items-center gap-[0.6rem]" data-bs-toggle="offcanvas" data-bs-target="#accountPanel"><span class="flex items-center gap-1 justify-center">
-                <img src="{{asset('icons/coins.png')}}" alt="" class="w-6"> : {{$userData->wallet_amount}} </a></span><i class="bi bi-arrow-repeat"></i></button>
-                <button class="account_btn rounded-[0.4rem] px-2 px-sm-3 py-1 text-nowrap flex items-center gap-[0.6rem]" data-bs-toggle="offcanvas" data-bs-target="#accountPanel"><span>Exp. : {{$userData->unsattled_amount}} </a></span><i class="bi bi-arrow-repeat"></i></button>
+                <div class="flex flex-row gap-2">
+
+                    <button class="account_btn rounded-[0.4rem] px-1 py-1 text-nowrap flex items-center gap-[0.6rem]" data-bs-toggle="offcanvas" data-bs-target="#accountPanel"><span class="flex items-center gap-1 justify-center text-[7px]">
+                    <img src="{{asset('icons/coins.png')}}" alt="" class="w-6"> : {{$userData->wallet_amount}} </a></span><i class="bi bi-arrow-repeat"></i></button>
+    
+                    <button class="account_btn rounded-[0.4rem] px-1 py-1 text-nowrap flex items-center gap-[0.6rem]" data-bs-toggle="offcanvas" data-bs-target="#accountPanel"><span class="text-[7px]">Exp. : {{$userData->unsattled_amount}} </a></span><i class="bi bi-arrow-repeat"></i></button>
+
+                </div>
+
                 <img src="{{asset('logo/avatar.png')}}" data-bs-target="#accountPanel" data-bs-toggle="offcanvas" alt="" class="w-12 rounded-circle border-2 border-solid !border-[#2d92f6] cursor-pointer">
                 
                 <!-- <a class="relative logout" href="{{route('logout')}}">
