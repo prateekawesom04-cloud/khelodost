@@ -191,8 +191,8 @@
                     
                     if(data.mname == 'fancy1' && i==2) {
                         
-                        // return false;
-                        return;
+                        return false;
+                        // return;
                     }
                     html +=`
                         <div class="m_row${i} flex flex-col items-center border-b border-gray-500 market_data" data-marketId="${data.mid}" data-nat="${this.nat}" data-mname="${data.mname}">
