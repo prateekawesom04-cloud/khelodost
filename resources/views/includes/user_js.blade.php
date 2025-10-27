@@ -197,7 +197,7 @@
                     html +=`
                         <div class="m_row${i} flex flex-col items-center border-b border-gray-500 market_data" data-marketId="${data.mid}" data-nat="${this.nat}" data-mname="${data.mname}">
                             <div class="flex flex-row items-center justify-between w-full">
-                                <div class="flex justify-between items-center match_nat match_nat${i} w-[60%]"><span>${this.nat}</span></div>
+                                <div class="flex justify-between items-center match_nat w-[60%]"><span class="match_nat${i}">${this.nat}</span></div>
                                 <div class="flex flex-1 justify-end relative">
                         `;
 
