@@ -67,7 +67,7 @@ class getSportFixture extends Command
             foreach ($chunk as $item) {
                 if($sportname=='cricket'){
 
-                    // if($item['marketId']){
+                    if($item['marketId']){
                         $data = [];
                         $data['eventName'] = $item['eventName'];
                         $data['gameId'] = $item['gameId'];
@@ -85,16 +85,17 @@ class getSportFixture extends Command
                         $date = explode(' / ',$item['eventName'])[1];
                         $date = explode(' (IST)',$date)[0];
                         
-                        if(strtotime(now()) > strtotime($date) && $item['inPlay']=="True"){
+                        // if(strtotime(now()) > strtotime($date) && $item['inPlay']=="True"){
+                        if($item['inPlay']=="True"){
                             $sportInplayDataArray[] = $data;
                         } else if(strtotime(now()) < strtotime($date)){
                             $sportUpcomingDataArray[] = $data;
                         }
-                    // }
+                    }
 
                 } else{
                     
-                    // if($item['mid']){
+                    if($item['mid']){
                         $data = [];
                         $data['gmid'] = $item['gmid'];
                         $data['ename'] = $item['ename'];
@@ -106,12 +107,13 @@ class getSportFixture extends Command
                         $sportDataArray[] = $data;
                         $date = $item['stime'];
                         
-                        if(strtotime(now()) > strtotime($date) && $item['iplay']=="true"){
+                        // if(strtotime(now()) > strtotime($date) && $item['iplay']=="true"){
+                        if($item['iplay']=="true"){
                             $sportInplayDataArray[] = $data;
                         } else if(strtotime(now()) < strtotime($date)){
                             $sportUpcomingDataArray[] = $data;
                         }
-                    // }
+                    }
 
                 }
             }
