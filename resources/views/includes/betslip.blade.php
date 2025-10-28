@@ -67,7 +67,7 @@
          </div>
          <div class="col-6 p-[0.1rem]">
             {{-- <button href="javascript:void(0)" class="!!bg-[#fff] !text-[#fc7600] border !border-[#fc7600]" type="button" value="0"> Cancel</button> --}}
-            <button href="javascript:void(0)" class="!bg-[#e86779] text-white" type="button" value="0"> Cancel</button>
+            <button onclick="cancelBet();" class="!bg-[#e86779] text-white" type="button" value="0"> Cancel</button>
          </div>
          <div class="col-6 p-[0.1rem]">
             <button href="javascript:void(0)" class="!bg-[#15b526] text-white" onclick="placeBet();"> Place Bet</button>
@@ -168,6 +168,12 @@
       }
    }
    
+   function cancelBet(){
+      $('.betslip').hide();
+      $('.loss').remove();
+      $('.profit').remove();
+   }
+
    function openBets(res){
       
       if(res.code == 200){

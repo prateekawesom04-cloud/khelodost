@@ -113,7 +113,7 @@
                 if(i == data.length-1) {
                     cricketEventPageLoading = true;
                 }
-                if(j.gtype == "match" || j.gtype == "match1" || j.gtype == "fancy" || j.gtype == "oddeven") {
+                if(j.gtype == "match" || j.gtype == "match1" || j.gtype == "fancy" || j.gtype == "oddeven" || j.gtype == "fancy1") {
                     create_cMarketDiv(this);
                 }
             } else {
