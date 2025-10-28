@@ -145,7 +145,7 @@
                 if(data.mname == 'MATCH_ODDS'){
                     html +=`
                         <span class="">Max</span>
-                        <span class="mx-1 text-green-500">5000</span>
+                        <span class="mx-1 text-green-500">100000</span>
                     `;
                 } else {
 

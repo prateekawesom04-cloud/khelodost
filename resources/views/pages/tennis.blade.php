@@ -38,7 +38,8 @@
     // });
     
     $(document).ready(function(){
-         
+        
+        callApi('get',`{{route('user.getSportData','tennis')}}`,{sportname:`{{$sportname}}`},updateSoccer);
         setInterval(() => {
             callApi('get',`{{route('user.getSportData','tennis')}}`,{sportname:`{{$sportname}}`},updateSoccer);
         }, 500);

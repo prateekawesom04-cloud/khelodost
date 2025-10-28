@@ -61,7 +61,8 @@ class SportbookController extends Controller
     
     public function soccerEvent(Request $request){
         $eventId = $request->eventId;
-        return view('pages.soccerEventPage',compact('eventId'));
+        $eventData = Event::where('eventId',$request->eventId)->first();
+        return view('pages.soccerEventPage',compact('eventId','eventData'));
     }
 
     public function soccerUpcomingEvent(Request $request){

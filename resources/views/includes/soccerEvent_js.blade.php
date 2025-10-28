@@ -57,7 +57,7 @@
         }
 
         function soccer(data){
-            let eventPage = "{{url('soccerEvent')}}";
+            let eventPage = "{{url('eventDetail')}}";
             let c_time = (new Date()).getTime();
             let html = ``;
             // if((new Date()).getTime() < (new Date(data.stime)).getTime()) {
@@ -149,7 +149,12 @@
                     if(i == data.length-1) {
                         eventPageLoading = true;
                     }
-                    createMarketDiv(this);
+                    // if(j.gtype == "match" || j.gtype == "match1" || (j.gtype == "fancy" && j.mname =="Normal") || j.gtype == "oddeven" || j.gtype == "fancy1") {
+                    //     create_cMarketDiv(this);
+                    // } 
+                    if(j.mname == "MATCH_ODDS" || j.mname == "Bookmaker") {
+                        createMarketDiv(this);
+                    }
                 } else {
                     updateMarket(this);
                 } 
@@ -164,15 +169,52 @@
             
             html += `
                 <!-- ${data.mname} -->
-                <div id="market_${data.mid}" class="flex flex-col" data-marketId="${data.mid}">
-                    <div class="bg-[#2888ef] mt-3 p-2 data_market_${data.mid}">${data.mname}</div>`;
+                <div id="market_${data.mid}" class="flex flex-col market text-[12px]" data-mname="${data.mname}" data-marketId="${data.mid}">
+                    <div class="bg-[#2888ef] mt-3 p-2 data_market_${data.mid}">${data.mname}</div>
+                    
+                
+                    <div class="flex flex-row items-center justify-between w-full border-b border-gray-500">
+                        <div class="w-[60%]">
+                            `;
+
+                    if(data.mname == 'MATCH_ODDS'){
+                        html +=`
+                            <span class="">Max</span>
+                            <span class="mx-1 text-green-500">100000</span>
+                        `;
+                    } else {
+
+                        if(data.min){
+                            html +=`
+                                <span class="">Min</span>
+                                <span class="mx-1 text-green-500">${(data.min)?data.min:''}</span>
+                            `;
+                        }
+                        if(data.max){
+                            html +=`
+                                <span class="">Max</span>
+                                <span class="mx-1 text-green-500">${(data.max)?data.max:''}</span>
+                            `;
+                        }
+
+                    }
+                    html +=`
+                        </div>
+                        <div class="flex flex-row justify-end flex-1">
+                            <span class="bet-head">BACK</span>
+                            <span class="bet-head !bg-[#e9a9dc]">LAY</span>
+                        </div>
+                    </div>
+                    
+                    `;
 
                     $(data.section).each(function(i,j){
 
                         html +=`
-                            <div class="m_row${i} px-2 py-1 flex flex-row items-center border-b border-gray-500 market_data" data-market_Id="${data.mid}" data-nat="${this.nat}" data-mname="${data.mname}">
-                                <div class="match_nat${i} w-[60%]">${this.nat}</div>
-                                <div class="flex flex-1 justify-center relative">
+                            <div class="m_row${i} flex flex-col items-center border-b border-gray-500 market_data" data-marketId="${data.mid}" data-nat="${this.nat}" data-mname="${data.mname}">
+                                <div class="flex flex-row items-center justify-between w-full">
+                                    <div class="flex justify-between items-center match_nat w-[60%]"><span class="match_nat${i}">${this.nat}</span></div>
+                                    <div class="flex flex-1 justify-end relative">
                             `;
 
                             $(this.odds).each(function(i,j){
@@ -181,9 +223,10 @@
                                 `;
                             });
 
-                    html +=`
-                                    <div class="odd_suspended ${(j.gstatus=="SUSPENDED")?"d-block":""}">Suspended</div>
-                                    <div class="odd_suspended ${(j.gstatus=="Ball Running")?"d-block":""}">Ball Running</div>
+                        html +=`
+                                        <div class="odd_suspended ${(j.gstatus=="SUSPENDED")?"d-block":""}">Suspended</div>
+                                        <div class="odd_suspended ${(j.gstatus=="Ball Running")?"d-block":""}">Ball Running</div>
+                                    </div>
                                 </div>
                             </div>
                         `;

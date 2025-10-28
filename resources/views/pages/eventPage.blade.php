@@ -48,6 +48,7 @@
 @section('js')
 
 <script>
+    callApi('get',`{{route('user.getEventData')}}`,{eventId:{{$eventId}}},updateCricketEvent);
     setInterval(() => {
         callApi('get',`{{route('user.getEventData')}}`,{eventId:{{$eventId}}},updateCricketEvent);
     }, 500);
