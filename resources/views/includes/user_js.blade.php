@@ -113,7 +113,10 @@
                 if(i == data.length-1) {
                     cricketEventPageLoading = true;
                 }
-                if(j.gtype == "match" || j.gtype == "match1" || j.gtype == "fancy" || j.gtype == "oddeven" || j.gtype == "fancy1") {
+                if(j.gtype == "match" || j.gtype == "match1" || (j.gtype == "fancy" && j.mname =="Normal") || j.gtype == "oddeven" || j.gtype == "fancy1") {
+                //     create_cMarketDiv(this);
+                // } 
+                // if(j.mname == "MATCH_ODDS" || j.mname == "Bookmaker" || j.mname == "TIED_MATCH" || j.mname == "fancy1" || j.mname == "Normal" || j.mname == "oddeven") {
                     create_cMarketDiv(this);
                 }
             } else {
