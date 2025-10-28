@@ -36,7 +36,7 @@ class eventlist extends Command
 
         foreach($sportData as $event){
             
-            if($sportname=='cricket'){
+            if($sportname != 'cricket'){
                 $eventName = $event['ename'];
                 $date = $event['stime'];
                 $status = (strtotime(now()) > strtotime($date)) ? 1 : 0;
