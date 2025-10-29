@@ -1,11 +1,14 @@
 @extends('master')
 
 @php
+if($userData){
     if($userData->additional_data){
         $additional_data = json_decode($userData->additional_data,true);
         $stakes = (array_key_exists('stakes',$additional_data))?$additional_data['stakes']:[];
     }
-
+}else{
+    $stakes = [];
+}
 @endphp
 
 @section('body')

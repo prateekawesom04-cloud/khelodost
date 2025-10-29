@@ -77,10 +77,10 @@
                                 <th>User Name</th>
                                 <th>Sport Name</th>
                                 <th>Event</th>
-                                <th>Market</th>
+                                {{-- <th>Market</th>
                                 <th>Selection</th>
-                                <th>Type</th>
-                                <th>Odds Req.</th>
+                                <th>Type</th> --}}
+                                <th>Odds</th>
                                 <th>Stake</th>
                                 <th>Place Time</th>
                                 <th>Settle Time</th>
