@@ -63,7 +63,7 @@
                         <div class="card-body p-0">
                             <div class="d-flex justify-content-between align-items-center border-bottom px-3 py-2">
                                 <div class="fw-bold">Name</div>
-                                <div class="text-break">{{$user->user_uid}}</div>
+                                <div class="text-break">{{$user->username}}</div>
                             </div>
                             <!-- <div class="d-flex justify-content-between align-items-center border-bottom px-3 py-2">
                                 <div class="fw-bold">Commission</div>
@@ -109,7 +109,7 @@
                             <div class="d-flex justify-content-between align-items-center border-bottom px-3 py-2">
                                 <div class="fw-bold">Mobile Number</div>
                                 <div>{{($user->phone)?$user->phone:0}} <span>
-                                    <i data-user_uid="{{ $user->user_uid }}" class="fas fa-pen-to-square text-primary changePhoneModal" style="cursor: pointer;"
+                                    <i data-username="{{ $user->username }}" class="fas fa-pen-to-square text-primary changePhoneModal" style="cursor: pointer;"
                                         title="Update Phone" data-bs-toggle="modal"
                                         data-bs-target="#changePhoneModal">
                                     </i>
@@ -126,7 +126,7 @@
                                 <div class="fw-bold">Password</div>
                                 <div class="d-flex align-items-center gap-2">
                                     <span>*********</span>
-                                    <i data-user_uid="{{ $user->user_uid }}" class="fas fa-pen-to-square text-primary changePasswordModel" style="cursor: pointer;"
+                                    <i data-username="{{ $user->username }}" class="fas fa-pen-to-square text-primary changePasswordModel" style="cursor: pointer;"
                                         title="Edit Password" data-bs-toggle="modal"
                                         data-bs-target="#changePasswordModal">
                                     </i>
@@ -146,13 +146,13 @@
                                 <div class="col-12 col-md-4">
                                     <form class="filter_data">
                                         @csrf
-                                        <input type="hidden" name="user_uid" value="{{$user->user_uid}}">
+                                        <input type="hidden" name="username" value="{{$user->username}}">
                                         <select name="filter_type" class="form-control bg-dark text-white border-secondary filter_type">
                                             <option value="0">Deposit</option>
                                             <option value="1">Withdrawal</option>
-                                            @foreach($providers as $provider)
+                                            {{-- @foreach($providers as $provider)
                                             <option value="{{$provider->provider}}">{{$provider->provider}}</option>
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                     </form>
                                 </div>
@@ -296,7 +296,7 @@
     let form = $('.filter_type').parents('form');
     let formData = new FormData(form[0]);
     $(document).ready(function(){
-        callAdminApi('post', `{{url('/admin')}}/userStatments`, formData, transactionList);
+        callAjaxFormData('post', `{{url('/admin')}}/userStatments`, formData, transactionList);
     });
 
 </script>

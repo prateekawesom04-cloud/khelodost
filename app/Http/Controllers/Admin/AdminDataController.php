@@ -38,7 +38,7 @@ class AdminDataController extends Controller
     
     public function index(){
         $user = User::getCurrentUser();
-        // $gameData = GameHistory::join('users','users.user_uid','=','game_histories.user_uid')->where('admin_uid',$user->user_uid)->get();
+        // $gameData = GameHistory::join('users','users.username','=','game_histories.username')->where('admin_username',$user->username)->get();
         $p_l = 0;
         // foreach($gameData as $g_user){
         //     $p_l+=$g_user->bet_amount;
@@ -58,7 +58,7 @@ class AdminDataController extends Controller
 
     public function userStatments(Request $request){
         $table = Transaction::where([
-            'user_uid'=>$request->user_uid,
+            'username'=>$request->username,
             'payment_type'=>$request->filter_type
         ])->get();
 
@@ -71,7 +71,7 @@ class AdminDataController extends Controller
 
     public function userGameHistory(Request $request){
         $table = GameHistory::where([
-            'user_uid'=>$request->user_uid,
+            'username'=>$request->username,
             'provider'=>$request->filter_type
         ])->get();
            
@@ -99,10 +99,10 @@ class AdminDataController extends Controller
 
     }
 
-    public function assignBonus($user_uid,array $bonusData){
+    public function assignBonus($username,array $bonusData){
         
 
-        $userData =  User::where('user_uid',$user_uid)->first();
+        $userData =  User::where('username',$username)->first();
 
         $additional_data = json_decode($userData->additional_data,true);
 
@@ -203,7 +203,7 @@ class AdminDataController extends Controller
         $table = new $table();
         $table = $table->where([
             $request->search_data_key=>$request->search_data_value,
-            'user_uid'=>$request->user_uid
+            'username'=>$request->username
             ])->get();
         // dd($table);
         
@@ -259,10 +259,10 @@ class AdminDataController extends Controller
     
     public function deposit(){
         $user = User::getCurrentUser();
-        $transactions = User::join('transactions','transactions.user_uid','=','users.user_uid')
-        ->select('transactions.*','users.admin_uid')
+        $transactions = User::join('transactions','transactions.username','=','users.username')
+        ->select('transactions.*','users.admin_username')
         ->where([
-            'admin_uid'=>$user->user_uid,
+            'admin_username'=>$user->username,
             'payment_type'=>0,
             'manual'=>1
         ])
@@ -272,10 +272,10 @@ class AdminDataController extends Controller
     
     public function withdraw(){
         $user = User::getCurrentUser();
-        $transactions = User::join('transactions','transactions.user_uid','=','users.user_uid')
-        ->select('transactions.*','users.admin_uid')
+        $transactions = User::join('transactions','transactions.username','=','users.username')
+        ->select('transactions.*','users.admin_username')
         ->where([
-            'admin_uid'=>$user->user_uid,
+            'admin_username'=>$user->username,
             'payment_type'=>1,
             'manual'=>1
         ])->get();
@@ -285,7 +285,7 @@ class AdminDataController extends Controller
     
     public function payments(){
         $user = User::getCurrentUser();
-        $payments = Payment::where('admin_uid',$user->user_uid)->get();
+        $payments = Payment::where('admin_username',$user->username)->get();
         return view('admin.pages.payments',compact('payments'));
     }
 
@@ -301,7 +301,7 @@ class AdminDataController extends Controller
                 'response_code'=>'400'
             ]);
         }
-        $user = User::where('user_uid',$request->user_uid)->first();
+        $user = User::where('username',$request->username)->first();
         $user->wallet_amount += $request->depositFund;
         $user->save();
         return response()->json([
@@ -373,7 +373,7 @@ class AdminDataController extends Controller
                 'response_code'=>'400'
             ]);
         }
-        $user = User::where('user_uid',$request->user_uid)->first();
+        $user = User::where('username',$request->username)->first();
         $user->phone = $request->phone;
         $user->save();
         return response()->json([
@@ -389,7 +389,7 @@ class AdminDataController extends Controller
                 'response_code'=>'400'
             ]);
         }
-        $user = User::where('user_uid',$request->user_uid)->delete();
+        $user = User::where('username',$request->username)->delete();
         return response()->json([
             'redirect'=> url()->previous(),
             'response_code'=>'200'

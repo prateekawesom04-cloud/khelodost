@@ -150,8 +150,8 @@
                                         @php
                                         $userRoles = ['admin','super admin','super master','master','agent','user'];
                                         @endphp
-                                        <a href="{{route('admin.user_downline_list',$user->user_uid)}}"> 
-                                            <span class="badge bg-success">{{$userRoles[$user->status]}}</span class="text-white"> {{ $user->user_uid }}
+                                        <a href="{{route('admin.user_downline_list',$user->username)}}"> 
+                                            <span class="badge bg-success">{{$userRoles[$user->status]}}</span class="text-white"> {{ $user->username }}
                                         </a>
                                     </td>
                                     <td>{{ $user->wallet_amount }}</td>
@@ -171,18 +171,18 @@
                                     <td>
                                         <!-- Scrollable action buttons -->
                                         <div
-                                            class="action-buttons d-flex flex-nowrap gap-1 justify-content-center overflow-auto user_actions" data-user_uid="{{ $user->user_uid }}">
-                                            <a href="{{ route('admin.my_account',$user->user_uid) }}"
+                                            class="action-buttons d-flex flex-nowrap gap-1 justify-content-center overflow-auto user_actions" data-username="{{ $user->username }}">
+                                            <a href="{{ route('admin.my_account',$user->username) }}"
                                                 class="btn btn-sm fw-bold btn-user-details" data-bs-toggle="tooltip"
                                                 title="User Details">U</a>
                                             <a href="#" class="btn btn-sm fw-bold btn-deposit-collection updateWalletModel depositWallet"
-                                                data-bs-toggle="modal" data-user_wallet="{{ $user->wallet_amount }}" data-user_uid="{{ $user->user_uid }}" data-bs-target="#balanceModal"
+                                                data-bs-toggle="modal" data-user_wallet="{{ $user->wallet_amount }}" data-username="{{ $user->username }}" data-bs-target="#balanceModal"
                                                 title="Deposit / Collection">D/C</a>
                                             <a href="#" class="btn btn-sm fw-bold btn-withdrawal updateWalletModel withdrawWallet"
-                                                data-bs-toggle="modal" data-user_wallet="{{ $user->wallet_amount }}" data-user_uid="{{ $user->user_uid }}" data-bs-target="#withdrawModal"
+                                                data-bs-toggle="modal" data-user_wallet="{{ $user->wallet_amount }}" data-username="{{ $user->username }}" data-bs-target="#withdrawModal"
                                                 title="Withdrawal">W</a>
                                             <a href="#" class="btn btn-sm fw-bold btn-password-change changePasswordModel"
-                                                data-bs-toggle="modal" data-user_uid="{{ $user->user_uid }}" data-bs-target="#changePasswordModal"
+                                                data-bs-toggle="modal" data-username="{{ $user->username }}" data-bs-target="#changePasswordModal"
                                                 title="Password Change">P</a>
                                             <a href="#" class="btn btn-sm fw-bold btn-game-controller"
                                                 data-bs-toggle="modal"
@@ -192,7 +192,7 @@
                                                 title="Casino Control">
                                                 CC
                                             </a>
-                                            <a href="javascript:void(0)" class="btn btn-sm fw-bold btn-delete deleteUser" data-user_uid="{{ $user->user_uid }}" data-bs-toggle="modal"
+                                            <a href="javascript:void(0)" class="btn btn-sm fw-bold btn-delete deleteUser" data-username="{{ $user->username }}" data-bs-toggle="modal"
                                                 data-bs-target="#deleteConfirmationModal" title="Delete">D</a>
                                         </div>
                                     </td>

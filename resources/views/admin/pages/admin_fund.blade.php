@@ -7,7 +7,7 @@
             <h4 class="mb-0">Admin Fund</h4>
         </div>
         <form class="px-4">
-            <input type="hidden" name="user_uid" value="{{$userData->user_uid}}">
+            <input type="hidden" name="username" value="{{$userData->username}}">
             <!-- Group 1: Current Balance, Remarks, Total Balance -->
             <div class="mb-3">
                 <label for="currentBalance" class="form-label">Current Balance</label>

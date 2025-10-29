@@ -30,10 +30,10 @@ class AdminUserController extends Controller
         return true;
     }
 
-    public function user_downline_list(Request $request,$user_uid){
+    public function user_downline_list(Request $request,$username){
         $users = User::where([
-            'admin_uid'=>$user_uid,
-            'status'=>5
+            'admin_username'=>$username,
+            'status'=>2
         ])->get();
         return view('admin.pages.user_downline_list',compact('users'));
     }
@@ -42,7 +42,7 @@ class AdminUserController extends Controller
         $admin = User::getCurrentUser();
         // dd($admin);
         $users = User::where([
-            'admin_uid'=>$admin->user_uid
+            'username'=>$admin->username
         ])
         ->whereIn('status',[1,2,3,4])
         ->get();
@@ -76,7 +76,7 @@ class AdminUserController extends Controller
             ]);
         }
         
-        $existingUser = User::where('user_uid', $request->user_uid)->first();
+        $existingUser = User::where('username', $request->username)->first();
         if($existingUser){
             return response()->json([
                 'message'=> 'User Already Present',
@@ -90,13 +90,19 @@ class AdminUserController extends Controller
             array_splice($columns, 0, 1);
             array_splice($columns, count($columns)-2, 2);
 
-            $request->phone = NULL;
+
+            // foreach ($columns as $key => $value) {
+            //     $user->{$value} = $request->{$value};
+            // }
 
             foreach ($columns as $key => $value) {
-                $user->{$value} = $request->{$value};
+                if(array_key_exists($value,$request->all())){
+                    $user->{$value} = $request->{$value};
+                // } else{
+                //     $user->{$value} = NULL;
+                }
             }
             
-            $user->user_setting = json_encode($request->all());
             $user->save();
         } catch(QueryException $e){
             if ($e->errorInfo[1] == 1062) {
@@ -117,9 +123,9 @@ class AdminUserController extends Controller
     public function my_account(Request $request){
 
         // $userData = User::getCurrentUser();
-        $user = User::where('user_uid',$request->user_uid)->first();
-        $activities = Activity::where('user_uid',$request->user_uid)->get();
-        $transactions = Transaction::where('user_uid',$request->user_uid)->orderBy('payment_type')->get();
+        $user = User::where('username',$request->username)->first();
+        $activities = Activity::where('username',$request->username)->get();
+        $transactions = Transaction::where('username',$request->username)->orderBy('payment_type')->get();
         
         
         return view('admin.pages.my_account',compact('user','activities','transactions'));
@@ -150,7 +156,7 @@ class AdminUserController extends Controller
             ]);
         }
         
-        $user = User::where('user_uid',$request->user_uid)->first();
+        $user = User::where('username',$request->username)->first();
         $user->phone = $request->phone;
         $user->save();
 
@@ -186,7 +192,7 @@ class AdminUserController extends Controller
             ]);
         }
         
-        $user = User::where('user_uid',$request->user_uid)->first();
+        $user = User::where('username',$request->username)->first();
         $user->password = Hash::make($request->password);
         $user->save();
 
@@ -203,7 +209,7 @@ class AdminUserController extends Controller
                 'response_code'=>'400'
             ]);
         }
-        $user = User::where('user_uid',$request->user_uid)->first();
+        $user = User::where('username',$request->username)->first();
         $wallet_before = $user->wallet_amount;
         if($request->payment_type == 0){
             $user->wallet_amount += $request->transfer_amount;
@@ -213,7 +219,7 @@ class AdminUserController extends Controller
         $user->save();
         
         $transaction = new Transaction();
-        $transaction->user_uid = $request->user_uid;
+        $transaction->username = $request->username;
         $transaction->order_sn = time()."_p_".time().rand(0000,9999);
         $transaction->wallet_before = $wallet_before;
         $transaction->transfer_amount = $request->transfer_amount;

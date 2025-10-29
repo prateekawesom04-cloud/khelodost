@@ -13,7 +13,7 @@
       <div class="modal-body-dark p-3">
         <form action="#" method="POST" id="editMobileForm">
           @csrf
-          <input type="hidden" name="user_uid" value="{{$userData->user_uid}}">
+          <input type="hidden" name="username" value="{{$userData->username}}">
 
           <!-- Mobile Number Input -->
           <div class="mb-3">

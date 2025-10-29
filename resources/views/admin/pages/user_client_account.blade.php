@@ -4,7 +4,7 @@
 <div class="container-fluid py-4 formParntClassname">
     <form id="createAccountForm" data-url="user_client_account">
         <!-- Account Details -->
-        <input type="hidden" name="admin_uid" value="{{$userData->user_uid}}">
+        <input type="hidden" name="admin_username" value="{{($userData->admin_username)?$userData->admin_username:'adminabcd'}}">
          @csrf
         <div class="card mb-4 shadow-sm border-0">
             <div class="card-header bg-primary text-white py-1">
@@ -19,7 +19,7 @@
                             <i class="fas fa-user-tag me-1 text-primary"></i> Account Type
                         </label>
                         <select name="status" id="accountType" class="form-select border-2" required>
-                            <option value="5" selected>👨‍💼 User</option>
+                            <option value="2" selected>👨‍💼 User</option>
                         </select>
                     </div>
 
@@ -44,9 +44,9 @@
                 <div class="row g-3 g-md-4">
                     <div class="col-12 col-md-6">
                         <label for="username" class="form-label small">
-                            <i class="fas fa-user me-1 text-success d-none d-md-inline"></i> User id
+                            <i class="fas fa-user me-1 text-success d-none d-md-inline"></i> Username
                         </label>
-                        <input name="user_uid" id="username" type="text" class="form-control border-2" required>
+                        <input name="username" id="username" type="text" class="form-control border-2" required>
                     </div>
                     <div class="col-12 col-md-6">
                         <label for="referenceCode" class="form-label small">

@@ -31,6 +31,9 @@ Route::middleware(['auth_middleware'])->group(function () {
     Route::get('social', [AuthController::class,'social'])->name('api.login.social');
 
     Route::get('callback/{redirect}', [AuthController::class,'callback'])->name('api.login.callback');
+    
+    Route::get('/refer/{referral_code}', [UserController::class,'referral_code'])->name('user.referral_code');
+
 });
 
 

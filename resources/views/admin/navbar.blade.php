@@ -2,27 +2,27 @@
     <div class="container-fluid">
         <ul class="navbar-nav flex-row w-100">
             <li class="nav-item">
-                <a class="nav-link active-nav" href="{{ route('admin.index') }}">Dashboard</a>
+                <a class="nav-link !bg-[#000] active-nav" href="{{ route('admin.index') }}">Dashboard</a>
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Downline List</a>
+                <a class="nav-link !bg-[#000] dropdown-toggle" href="#" data-bs-toggle="dropdown">Downline List</a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="{{ route('admin.user_downline_list',$userData->username) }}">User Downline
                             List</a></li>
-                    <li>
+                    {{-- <li>
                         <a class="dropdown-item" href="{{ route('admin.master_downline_list') }}">Master Downline
                             List</a>
-                    </li>
+                    </li> --}}
                 </ul>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.my_account',$userData->username) }}">👨‍💼My Account</a>
+                <a class="nav-link !bg-[#000]" href="{{ route('admin.my_account',$userData->username) }}">👨‍💼My Account</a>
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">My Report</a>
+                <a class="nav-link !bg-[#000] dropdown-toggle" href="#" data-bs-toggle="dropdown">My Report</a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="{{ route('admin.event_profit_loss') }}">Event Profit/Loss</a>
                     </li>
@@ -34,14 +34,14 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.betlist') }}">🎯BetList</a>
+                <a class="nav-link !bg-[#000]" href="{{ route('admin.betlist') }}">🎯BetList</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.market_analysis') }}">Market Analysis</a>
+                <a class="nav-link !bg-[#000]" href="{{ route('admin.market_analysis') }}">Market Analysis</a>
             </li>
             <li class="nav-item position-relative">
-                <a class="nav-link position-relative d-inline-block" href="{{ route('admin.deposit') }}">
+                <a class="nav-link !bg-[#000] position-relative d-inline-block" href="{{ route('admin.deposit') }}">
                     💰Deposit
                     <span class="position-absolute badge rounded-pill bg-danger badge-notification">
                         3
@@ -49,18 +49,18 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.withdraw') }}">💸Withdraw</a>
+                <a class="nav-link !bg-[#000]" href="{{ route('admin.withdraw') }}">💸Withdraw</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.payments') }}">🏧Payments</a>
+                <a class="nav-link !bg-[#000]" href="{{ route('admin.payments') }}">🏧Payments</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.commission') }}">Commission</a>
+                <a class="nav-link !bg-[#000]" href="{{ route('admin.commission') }}">Commission</a>
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">⚙️My Setting</a>
+                <a class="nav-link !bg-[#000] dropdown-toggle" href="#" data-bs-toggle="dropdown">⚙️My Setting</a>
                 <ul class="dropdown-menu">
                     @if($userData->status==0)
                     <li><a class="dropdown-item" href="{{ route('admin.admin_fund') }}">💰Admin Fund</a></li>
@@ -80,7 +80,7 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link fw-bold" href="{{ route('admin.logout') }}"><strong>Logout 🔒</strong></a>
+                <a class="nav-link !bg-[#000] fw-bold" href="{{ route('admin.logout') }}"><strong>Logout 🔒</strong></a>
             </li>
         </ul>
     </div>

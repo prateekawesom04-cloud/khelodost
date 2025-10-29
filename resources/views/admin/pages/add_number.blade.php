@@ -20,7 +20,7 @@
                 <tbody id="bannerTableBody">
                     <tr>
                         <td>{{$userData->phone}}</td>
-                        <td>{{$userData->user_uid}}</td>
+                        <td>{{$userData->username}}</td>
                         <td><a href="#" class="btn btn-warning btn-sm px-3 py-1"data-bs-toggle="modal"
                                         data-bs-target="#editMobileModal"data-bs-placement="top" title="Edit">✍️</a></td>
                         <!-- <td>

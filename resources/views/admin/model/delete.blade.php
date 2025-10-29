@@ -12,7 +12,7 @@
       <div class="modal-body-dark">
         <form action="#" id="deleteForm">
           @csrf
-              <input name="user_uid" type="hidden" id="user_uid" class="form-control" value="">
+              <input name="username" type="hidden" id="username" class="form-control" value="">
             <div class="col-12 mb-2">
               <label for="casino-datetime" class="form-label">Master Password</label>
               <input name="masterPassword" type="text" class="form-control" id="password">

@@ -13,7 +13,7 @@
       <div class="modal-body-dark p-3">
         <form action="#" id="changePasswordFormModel" data-url="changePassword">
           @csrf
-              <input name="user_uid" type="hidden" id="user_uid" class="form-control" value="">
+              <input name="username" type="hidden" id="username" class="form-control" value="">
           <div class="row">
             <!-- Old Password -->
             <div class="form-group col-md-6 mb-3">

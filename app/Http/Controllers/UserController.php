@@ -55,7 +55,7 @@ class UserController extends Controller
             'username'=>$user->username,
             'payment_type'=>'0'
         ])->get();
-        // $payments = Payment::where('admin_uid',$user->admin_uid)->get();
+        // $payments = Payment::where('admin_username',$user->admin_username)->get();
         return view('accounts.deposit',compact('data','agent'));
 
     }
@@ -64,7 +64,7 @@ class UserController extends Controller
         
         $user = $this->currentUser;
         $data = Transaction::where([
-            'user_uid'=>$user->user_uid,
+            'username'=>$user->username,
             'payment_type'=>'1'
         ])->get();
         return view('accounts.withdrawal',compact('data'));
@@ -92,7 +92,7 @@ class UserController extends Controller
     public function transaction(Request $request){
         
         $user = $this->currentUser;
-        $data = Transaction::where('user_uid',$user->user_uid)->get();
+        $data = Transaction::where('username',$user->username)->get();
         return view('accounts.transaction',compact('data'));
 
     }
@@ -156,7 +156,7 @@ class UserController extends Controller
     public function addBank(Request $request){
 
         $rules = [
-            'user_uid'=>'required',
+            'username'=>'required',
             'account_holder'=>'required',
             'account_number'=>'required|numeric',
             'confirm_account_number' => 'required|same:account_number',
@@ -179,10 +179,10 @@ class UserController extends Controller
             
         } else{
 
-            $userBank = UserBank::where('user_uid',$request->user_uid)->first();
+            $userBank = UserBank::where('username',$request->username)->first();
     
             if($userBank){
-                $userBank->user_uid = $request->user_uid;
+                $userBank->username = $request->username;
                 $userBank->account_holder = $request->account_holder;
                 $userBank->account_number = $request->account_number;
                 $userBank->bank_name = $request->bank_name;
@@ -191,7 +191,7 @@ class UserController extends Controller
                 $userBank->save();
             } else{
                 $userBank = new UserBank();
-                $userBank->user_uid = $request->user_uid;
+                $userBank->username = $request->username;
                 $userBank->account_holder = $request->account_holder;
                 $userBank->account_number = $request->account_number;
                 $userBank->bank_name = $request->bank_name;

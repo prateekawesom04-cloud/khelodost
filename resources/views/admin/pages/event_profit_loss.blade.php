@@ -12,13 +12,13 @@
                             <label for="data-source" class="form-label">Data Source</label>
                                 <form class="filter_data">
                                     @csrf
-                                    <input type="hidden" name="user_uid" value="{{$userData->user_uid}}">
+                                    <input type="hidden" name="username" value="{{$userData->username}}">
                                     <select name="filter_type" class="form-control bg-dark text-white border-secondary filter_type">
                                         <option value="0">Deposit</option>
-                                        <option value="1">Withdrawal</option>
+                                        {{-- <option value="1">Withdrawal</option>
                                         @foreach($providers as $provider)
                                         <option value="{{$provider->provider}}">{{$provider->provider}}</option>
-                                        @endforeach
+                                        @endforeach --}}
                                     </select>
                                 </form>
                         </div>
@@ -130,7 +130,7 @@
     let formData = new FormData(form[0]);
     
     $(document).ready(function(){
-        callAdminApi('post', `{{url('/admin')}}/userStatments`, formData, transactionList);
+        callAjaxFormData('post', `{{url('/admin')}}/userStatments`, formData, transactionList);
     });
 
 </script>

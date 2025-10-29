@@ -59,7 +59,7 @@
                                     @endphp
                                 <tr>
                                     <td>{{$transaction->created_at}}</td>
-                                    <td>{{$transaction->user_uid}}</td>
+                                    <td>{{$transaction->username}}</td>
                                     <td>{{$transaction->order_sn}}</td>
                                     <td>{{$transaction->wallet_before}}</td>
                                     <td>{{($transaction->payment_type)?'-':$transaction->transfer_amount}}</td>

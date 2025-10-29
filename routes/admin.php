@@ -47,7 +47,7 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
 
         Route::get('/', [AdminDataController::class,'index'])->name('admin.index');
 
-        Route::get('/user_downline_list/{user_uid}', [AdminUserController::class,'user_downline_list'])->name('admin.user_downline_list');
+        Route::get('/user_downline_list/{username}', [AdminUserController::class,'user_downline_list'])->name('admin.user_downline_list');
         
         Route::post('/add_user_client', [AdminUserController::class,'add_user_client'])->name('admin.action.add_user_client');
         
@@ -72,7 +72,7 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
             return view('admin.pages.add_edit_client_account');
         })->name('admin.add_edit_client_account');
         
-        Route::get('/my_account/{user_uid}', [AdminUserController::class,'my_account'])->name('admin.my_account');
+        Route::get('/my_account/{username}', [AdminUserController::class,'my_account'])->name('admin.my_account');
 
         Route::get('/event_profit_loss', function () {
         return view('admin.pages.event_profit_loss');

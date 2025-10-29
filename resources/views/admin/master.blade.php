@@ -30,6 +30,7 @@
     @include('admin.model.responseModel')
     @include('includes.app_toast')
     @include('includes.ajaxCalls')
+    @include('includes.script')
     @include('includes.admin_js')
     @yield('js')
 </body>
