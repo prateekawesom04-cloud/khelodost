@@ -1,5 +1,13 @@
 @extends('master')
 
+@php
+    if($userData){
+        $additional_data = json_decode($userData->additional_data,true);
+        $stakes = (array_key_exists('stakes',$additional_data))?$additional_data['stakes']:[];
+    }
+
+@endphp
+
 @section('body')
     <div class="container-fluid p-0">
     <div class="layout-container">
@@ -23,6 +31,10 @@
 </div>
 
     @include('includes.user_js')
+    @if($userData)
+        @include('includes.addStake')
+    @endif
+    @include('includes.betslip')
     <script>
         $(document).ready(function(){
             setTimeout(() => {

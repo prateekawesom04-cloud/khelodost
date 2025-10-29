@@ -2,6 +2,23 @@
 
 @section('sports_body')
 <main class="layout-content-center p-3">
+            <div class="mb-2">
+                <iframe src="https://tv.jaipursofttech.com/livetv.php?eventId={{$eventId}}" frameborder="0" class="w-full"></iframe>
+                {{-- <div class="rounded-4 text-center flex flex-row max-w-full overflow-hidden app_scroller">
+                    <a href="{{ route('index') }}" class="min-w-full">
+                        <img src="{{ asset('banners/banner1.png') }}" class="img-fluid" alt="Banner">
+                    </a>
+                    <a href="{{ route('index') }}" class="min-w-full">
+                        <img src="{{ asset('banners/banner2.png') }}" class="img-fluid" alt="Banner">
+                    </a>
+                    <a href="{{ route('index') }}" class="min-w-full">
+                        <img src="{{ asset('banners/banner3.png') }}" class="img-fluid" alt="Banner">
+                    </a>
+                    <a href="{{ route('index') }}" class="min-w-full">
+                        <img src="{{ asset('banners/banner4.png') }}" class="img-fluid" alt="Banner">
+                    </a>
+                </div> --}}
+            </div>
     <div class="card shadow-sm mb-4">
         <div class="card-body p-0">
             <div class="text-center">
@@ -33,9 +50,9 @@
     
     eventId = {{$eventId}};
     callApi('get',`{{route('user.getEventData')}}`,{eventId:{{$eventId}}},updateSoccerEvent);
-    setInterval(() => {
-        callApi('get',`{{route('user.getEventData')}}`,{eventId:{{$eventId}}},updateSoccerEvent);
-    }, 500);
+    // setInterval(() => {
+    //     callApi('get',`{{route('user.getEventData')}}`,{eventId:{{$eventId}}},updateSoccerEvent);
+    // }, 500);
 </script>
 
 @endsection

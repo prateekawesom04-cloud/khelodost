@@ -19,9 +19,9 @@
 
     <div class="card-body tab-content">
       <!-- Betslip Tab -->
-      <div class="tab-pane fade show active" id="betslip" role="tabpanel">
+      {{-- <div class="tab-pane fade show active" id="betslip" role="tabpanel">
         @include('includes.betslip')
-      </div>
+      </div> --}}
 
       <!-- Open Bets Tab -->
       <div class="tab-pane fade" id="openbets" role="tabpanel">

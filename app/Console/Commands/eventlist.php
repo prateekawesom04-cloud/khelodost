@@ -37,16 +37,19 @@ class eventlist extends Command
         foreach($sportData as $event){
             
             if($sportname != 'cricket'){
+                $eventId = $event['gmid'];
                 $eventName = $event['ename'];
                 $date = $event['stime'];
                 $status = (strtotime(now()) > strtotime($date)) ? 1 : 0;
             } else {
-                $eventName = $event['eventName'];
-                $date = $event['startDate'];
+                $eventId = $event['gameId'];
+                $eventName = explode(' / ',$event['eventName'])[0];
+                $date = explode(' / ',$event['eventName'])[1];
+                $date = explode(' (IST)',$date)[0];
                 $status = (strtotime(now()) > strtotime($date)) ? 1 : 0;
             }
             Event::updateOrCreate(
-                ['eventId' => $event['gameId']],
+                ['eventId' => $eventId],
                 [
                     'eventName' => $eventName,
                     'eventDate' => $date,

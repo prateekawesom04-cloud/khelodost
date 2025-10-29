@@ -29,6 +29,14 @@
             {{-- <label for="">Stake</label> --}}
             <input type="number" pattern="[0-9]*" step="1" id="oddVal" class="calProfitLoss odd-val odds-input form-control text-center p-0 border-0 CommanBtn">
          </div>
+         @if(isset($stakes) && count($stakes))
+            @foreach($stakes as $stake)
+            <div class="col-3 p-[0.1rem]">
+               <button type="button" value="{{$stake}}">{{$stake}}</button>
+            </div>
+            @endforeach
+         @endif
+
          <div class="col-3 p-[0.1rem]">
             <button type="button" value="100">100</button>
          </div>
@@ -53,6 +61,9 @@
          <div class="col-3 p-[0.1rem]">
             <button type="button" value="100000">100000</button>
          </div>
+      </div>
+      
+      <div class="flex flex-row flex-wrap justify-evenly items-center bet-btns">
          <div class="col-3 p-[0.1rem]">
             <button type="button" class="!bg-[#2888ef] text-white" value="100">Min Stake</button>
          </div>
@@ -60,7 +71,7 @@
             <button type="button" class="!bg-[#273393] text-white" value="100000">Max Stake</button>
          </div>
          <div class="col-3 p-[0.1rem]">
-            <button type="button" class="!bg-[#066d11] text-white" onclick="">Edit Stake</button>
+            <button type="button" class="!bg-[#066d11] text-white addStake">Edit Stake</button>
          </div>
          <div class="col-3 p-[0.1rem]">
             <button type="button" class="!bg-[#ff1c1c] text-white" value="0">Clear</button>
@@ -116,7 +127,13 @@
    });
 
    $('body').on('click','.bet-btns button', function(){
-      stakeUpdate($(this).val());
+      if(!$(this).hasClass('addStake')){
+         stakeUpdate($(this).val());
+      } else{
+         @if($userData)
+            $('#addStake').modal('show');
+         @endif
+      }
    });
 
    function updateBetslip(odd){
