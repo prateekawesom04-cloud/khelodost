@@ -15,6 +15,10 @@
                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" />
                 <label class="form-check-label" for="inlineRadio2">Loss</label>
             </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" />
+                <label class="form-check-label" for="inlineRadio2">Draw</label>
+            </div>
         </div>
     </div>
 @endsection

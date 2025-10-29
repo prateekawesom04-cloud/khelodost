@@ -12,11 +12,13 @@
             style="font-size: 12px;">
 
         <div class="row g-2 mb-3 ">
-            @foreach($stakes as $stake)
-            <div class="col-6 mb-2 mx-auto">
-                <a class="btn w-100 !bg-[#2888ef]" data-amount="{{$stake}}" style="font-size: 12px;">{{$stake}}</a>
-            </div>
-            @endforeach
+            @if(isset($stakes) && count($stakes))
+                @foreach($stakes as $stake)
+                <div class="col-6 mb-2 mx-auto">
+                    <a class="btn w-100 !bg-[#2888ef]" data-amount="{{$stake}}" style="font-size: 12px;">{{$stake}}</a>
+                </div>
+                @endforeach
+            @endif
         </div>
 
       </div>
