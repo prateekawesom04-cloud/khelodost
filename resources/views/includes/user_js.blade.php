@@ -206,7 +206,7 @@
 
                         $(this.odds).each(function(i,j){
                             html +=`
-                                    <a data-oddVal="${j.odds}" class="odd-btn ${j.otype} ${j.oname}">${j.odds}</a>
+                                    <a data-oddVal="${j.odds}" class="odd-btn ${j.otype} ${j.oname}">${j.odds}<small>${j.size}</small></a>
                             `;
                         });
 

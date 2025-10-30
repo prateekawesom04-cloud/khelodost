@@ -119,7 +119,7 @@
                         $(data.section).each(function(i,j){
                             $(j.odds).each(function(){
                                 html +=`
-                                    <a class="odd-btn ${this.otype} ${this.oname}">${this.odds}</a>
+                                    <a class="odd-btn ${this.otype} ${this.oname}">${this.odds}<small>${j.size}</small></a>
                                 `;
                             });
                         });

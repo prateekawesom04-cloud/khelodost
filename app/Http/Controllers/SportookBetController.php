@@ -39,6 +39,7 @@ class SportookBetController extends Controller
         $bet->status = 1;
         $bet->save();
 
+        $user->wallet_amount -= $request->bet_amount;
         $user->unsattled_amount += $request->bet_amount;
         $user->save();
 
