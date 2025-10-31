@@ -36,8 +36,11 @@ Route::middleware(['auth_middleware'])->group(function () {
 
 });
 
+    // Route::middleware(['bonus_middleware'])->group(function () {
+        
+    // });
 
-Route::middleware(['custom_session_middleware'])->group(function () {
+Route::middleware(['custom_session_middleware','bonus_middleware'])->group(function () {
 
     Route::middleware(['auth_check_middleware'])->group(function () {
         

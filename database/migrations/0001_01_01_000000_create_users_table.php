@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('commission_amount')->default(0);
             $table->string('referral_code')->unique()->nullable();
             $table->integer('referral_nos')->default(0);
+            $table->json('bonus')->nullable();
             $table->integer('last_login')->nullable();
             $table->json('additional_data')->nullable();
             $table->timestamps();
