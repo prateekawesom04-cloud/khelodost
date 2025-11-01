@@ -34,8 +34,11 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link !bg-[#000]" href="{{ route('admin.betlist') }}">🎯BetList</a>
+                <a class="nav-link !bg-[#000]" href="{{ route('admin.bonusData') }}">Bonus</a>
             </li>
+            {{-- <li class="nav-item">
+                <a class="nav-link !bg-[#000]" href="{{ route('admin.betlist') }}">🎯BetList</a>
+            </li> --}}
 
             <li class="nav-item">
                 <a class="nav-link !bg-[#000]" href="{{ route('admin.market_analysis') }}">Market Analysis</a>
