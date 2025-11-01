@@ -50,11 +50,15 @@
     .select2-selection {
       height: 100% !important;
       display: flex !important;
-      border-radius: inherit !important;
+      border-radius: 0.5rem 0 0 0.5rem !important;
       align-items: center;
       justify-content: center;
       border: 0 !important;
     }
+    
+.select2 b {
+  display: none;
+}
   </style>
 </head>
 
@@ -165,13 +169,13 @@
         return option.text;
       }
 
-      // var optionWithImage = $(
-      //   '<span style="display: flex;justify-content: space-between;"><img src="' + option.img + '" class="img-flag" width="15" /> ' + option.text + '</span>'
-      // );
-      
       var optionWithImage = $(
-        '<span style="display: flex;justify-content: space-between;"> ' + option.text + '</span>'
+        '<span style="display: flex;justify-content: space-between;"><img src="' + option.img + '" class="img-flag mr-2" width="15" /> ' + option.text + '</span>'
       );
+      
+      // var optionWithImage = $(
+      //   '<span style="display: flex;justify-content: space-between;"> ' + option.text + '</span>'
+      // );
       return optionWithImage;
     }
 

@@ -82,6 +82,22 @@ class AdminDataController extends Controller
         ]);
     }
 
+    public function bonusData(){
+        $data = Bonus::all();
+        return view('admin.pages.bonus',compact('data'));
+    }
+
+    public function updateBonus(Request $request){
+        $bonus = Bonus::where('bonus_uid',$request->bonus_uid)->first();
+        $bonus->status = $request->status;
+        $bonus->save();
+
+        return response()->json([
+            'message'=> 'Bonus Updated Successfully',
+            'response_code'=> '200'
+        ]);
+    }
+
     public function createBonus(Request $request){
         $bonus = new Bonus();
         $bonus->bonus_uid = time().rand(111,999);
@@ -89,12 +105,12 @@ class AdminDataController extends Controller
         $bonus->amount = $request->amount;
         $bonus->wager_amount = $request->wager_amount;
         $bonus->description = $request->description;
-        $bonus->status = $request->status;
+        $bonus->status = 1;
         $bonus->save();
 
         return response()->json([
             'message'=> 'Bonus created',
-            'error_code'=> '200'
+            'response_code'=> '200'
         ]);
 
     }

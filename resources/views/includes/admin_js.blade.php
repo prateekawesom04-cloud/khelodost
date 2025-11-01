@@ -160,6 +160,19 @@
         $(this).siblings('.input_error').remove();
     });
 
+    
+    // update bonus
+    $('.b_active').on('click',function(){
+        formData = {};
+        callApi('post', `updateBonus`, {bonus_uid:$(this).attr('data-bonus_uid'),status:0}, ajaxResponseModal);
+    });
+    
+    $('.b_deactive').on('click',function(){
+        formData = {};
+        callApi('post', `updateBonus`, {bonus_uid:$(this).attr('data-bonus_uid'),status:1}, ajaxResponseModal);
+    });
+
+
     // update transaction
     $('.reject_deposit').on('click',function(){
         formData = {};

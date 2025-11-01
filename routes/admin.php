@@ -46,6 +46,14 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
         })->name('admin.logout');
 
         Route::get('/', [AdminDataController::class,'index'])->name('admin.index');
+        
+        Route::get('bonusData', [AdminDataController::class,'bonusData'])->name('admin.bonusData');
+
+        Route::post('/createBonus', [AdminDataController::class,'createBonus'])->name('admin.action.createBonus')->withoutMiddleware([VerifyCsrfToken::class]);
+        
+        Route::post('/assignBonus', [AdminDataController::class,'assignBonus'])->name('admin.action.assignBonus')->withoutMiddleware([VerifyCsrfToken::class]);
+        
+        Route::post('updateBonus', [AdminDataController::class,'updateBonus'])->name('admin.action.updateBonus')->withoutMiddleware([VerifyCsrfToken::class]);
 
         Route::get('/user_downline_list/{username}', [AdminUserController::class,'user_downline_list'])->name('admin.user_downline_list');
         
@@ -86,6 +94,10 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
         Route::get('/betlist', function () {
         return view('admin.pages.betlist');
             })->name('admin.betlist');
+
+        Route::get('/sampleTable', function () {
+        return view('admin.pages.sampleTable');
+            })->name('admin.sampleTable');
 
         Route::get('/market_analysis', function () {
         return view('admin.pages.market_analysis');
@@ -153,10 +165,6 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
         Route::post('/submitUserUpdates', [AdminDataController::class,'submitUserUpdates'])->name('admin.action.submitUserUpdates');
 
         Route::post('/add_edit_client_account', [AdminDataController::class,'submitForm'])->name('admin.action.add_edit_client_account');
-
-        Route::post('/createBonus', [AdminDataController::class,'createBonus'])->name('admin.action.createBonus');
-        
-        Route::post('/assignBonus', [AdminDataController::class,'assignBonus'])->name('admin.action.assignBonus');
         
         Route::post('createModelData', [AdminDataController::class,'createModelData'])->name('createModelData')->withoutMiddleware([VerifyCsrfToken::class]);
         
