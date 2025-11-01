@@ -23,9 +23,9 @@
         </div>
     </div>
     @include('includes.app_toast')
-    @if($claim_bonus)
+    {{-- @if($claim_bonus) --}}
     @include('includes.bonusModal')
-    @endif
+    {{-- @endif --}}
     @include('includes.ajaxCalls')
     @include('includes.script')
     @yield('js')

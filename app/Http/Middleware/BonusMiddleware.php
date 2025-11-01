@@ -30,11 +30,14 @@ class BonusMiddleware
         $shareBonus = [];
         $claim_bonus = 0;
 
-        foreach($bonuses as $bonus){
-            if($bonus['claim_status'] == 0 && $bonus['type'] == 0){
-                $claim_bonus = 1;
-                $bonus['description'] = Bonus::where('bonus_uid',$bonus['bonus_uid'])->first()->description;
-                $shareBonus[] = $bonus;
+        if($bonuses){
+
+            foreach($bonuses as $bonus){
+                if($bonus['claim_status'] == 0 && $bonus['type'] == 0){
+                    $claim_bonus = 1;
+                    $bonus['description'] = Bonus::where('bonus_uid',$bonus['bonus_uid'])->first()->description;
+                    $shareBonus[] = $bonus;
+                }
             }
         }
         
