@@ -98,7 +98,7 @@
                             @foreach ($users as $user)
                                 <tr>
                                     
-                                    <td>{{ ($user->loss_amount > 50000)?'<span class="badge bg-success"> VIP </span>':''}} {{ $user->username }}</td>
+                                    <td><span class="badge bg-success">{{ ($user->loss_amount > 50000)?'VIP':'user'}}</span> {{ $user->username }}</td>
                                     <td>{{ $user->wallet_amount }}</td>
                                     <td>{{ $user->unsattled_amount }}</td>
                                     <!-- <td>200000</td> -->

@@ -187,7 +187,7 @@ class UserController extends Controller
                 $bonuses = json_decode($userData->bonus,true);
                 unset($bonuses[$request->bonus_uid]);
                 $userData->bonus = json_encode($bonuses);
-                dd(json_encode($bonuses));
+                // dd(json_encode($bonuses));
                 $userData->wallet_amount += $bonus_amount;
                 $userData->wager_amount -= $bonus_amount;
             // }

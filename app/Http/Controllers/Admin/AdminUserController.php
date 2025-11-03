@@ -32,7 +32,7 @@ class AdminUserController extends Controller
 
     public function user_downline_list(Request $request,$username){
         $users = User::where([
-            'admin_username'=>$username,
+            // 'admin_username'=>$username,
             'status'=>2
         ])->get();
         return view('admin.pages.user_downline_list',compact('users'));
