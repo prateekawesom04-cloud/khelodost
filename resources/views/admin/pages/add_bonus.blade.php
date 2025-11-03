@@ -15,8 +15,8 @@
             <form>
                 <!-- User ID -->
                 <div class="mb-4">
-                    <label for="userId" class="form-label fw-semibold">User ID:</label>
-                    <input type="text" class="form-control" id="userId" name="userId" placeholder="Enter user ID" required>
+                    <label for="userId" class="form-label fw-semibold">Username:</label>
+                    <input type="text" class="form-control" id="userId" name="username" placeholder="Enter Username" required>
                 </div>
 
                 <!-- Bonus Type -->
@@ -24,18 +24,10 @@
                     <label for="bonusType" class="form-label fw-semibold">Bonus Type:</label>
                     <select class="form-select" id="bonusType" name="bonusType" required>
                         <option value="" selected disabled>-- Select Bonus Type --</option>
-                        <option value="Red envelope">Red envelope</option>
-                        <option value="Agent red envelope recharge">Agent red envelope recharge</option>
-                        <option value="Recharge gift">Recharge gift</option>
-                        <option value="Bonus recharge">Bonus recharge</option>
-                        <option value="First full gift">First full gift</option>
-                        <option value="Invite bonus">Invite bonus</option>
-                        <option value="Card binding gift">Card binding gift</option>
-                        <option value="Weekly Awards">Weekly Awards</option>
-                        <option value="Agent Bonus">Agent Bonus</option>
-                        <option value="Daily Awards">Daily Awards</option>
-                        <option value="New members get bonuses by playing games">New members get bonuses by playing games</option>
-                        <option value="Return Awards">Return Awards</option>
+                        @foreach($bonus as $b)
+                            <option value="{{$b->bonus_uid}}">{{$b->name}}</option>
+                        @endforeach
+                        {{-- <option value="Red envelope">Red envelope</option> --}}
                     </select>
                 </div>
 

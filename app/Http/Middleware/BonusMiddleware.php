@@ -27,17 +27,19 @@ class BonusMiddleware
         }
 
         $bonuses = json_decode($userData->bonus,true);
+        // dd($bonuses);
         $shareBonus = [];
         $claim_bonus = 0;
 
-        if($bonuses){
+        if(count($bonuses) > 0){
+            $claim_bonus = 1;
 
             foreach($bonuses as $bonus){
-                if($bonus['claim_status'] == 0 && $bonus['type'] == 0){
-                    $claim_bonus = 1;
+                // if($bonus['claim_status'] == 0 && $bonus['type'] == 0){
+                    // $claim_bonus = 1;
                     $bonus['description'] = Bonus::where('bonus_uid',$bonus['bonus_uid'])->first()->description;
                     $shareBonus[] = $bonus;
-                }
+                // }
             }
         }
         

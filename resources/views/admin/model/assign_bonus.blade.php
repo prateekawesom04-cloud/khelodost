@@ -1,14 +1,14 @@
 <!-- Compact Reusable Modal with Form -->
-<div class="modal fade" id="editBonusModal" tabindex="-1" aria-labelledby="editBonusModalLabel" aria-hidden="true">
+<div class="modal fade" id="assignBonusModal" tabindex="-1" aria-labelledby="assignBonusModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header modal-header-dark">
-                <h5 class="modal-title" id="mainModalLabel">Edit Bonus</h5>
+                <h5 class="modal-title" id="mainModalLabel">Assign Bonus</h5>
                 <a type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></a>
             </div>
             <div class="modal-body modal-header-dark">
-                <form id="editBonusForm">
+                <form id="assignBonusForm">
                     {{-- <div class="mb-3">
                         <label for="name" class="form-label">Amount</label>
                         <input type="text" id="amount" name="amount" class="form-control">
@@ -22,23 +22,28 @@
                         </select>
                     </div> --}}
 
+                    
+                <div class="mb-3">
+                    <label for="userId" class="form-label fw-semibold">Username:</label>
+                    <input type="text" class="form-control" id="userId" name="username" placeholder="Enter Username" required>
+                </div>
+
                     <!-- Amount -->
-                    <input type="hidden" name="bonus_uid">
+                    <input type="hidden" name="type" value="1">
                     <div class="mb-3">
                         <label for="amount" class="form-label">Amount</label>
                         <input type="text" id="amount" name="amount" class="form-control">
                     </div>
 
-                    <!-- Wager Amount -->
                     <div class="mb-3">
-                        <label for="wagerAmount" class="form-label">Wager Amount</label>
-                        <input type="text" id="wagerAmount" name="wager_amount" class="form-control">
-                    </div>
-
-                    <!-- Description -->
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
-                        <input type="text" id="description" name="description" class="form-control">
+                        <label for="bonusType" class="form-label fw-semibold">Bonus Type:</label>
+                        <select class="form-select" id="bonusType" name="bonus_uid" required>
+                            <option value="" selected disabled>-- Select Bonus Type --</option>
+                            @foreach($assignBonus as $b)
+                                <option value="{{$b->bonus_uid}}">{{$b->name}}</option>
+                            @endforeach
+                            {{-- <option value="Red envelope">Red envelope</option> --}}
+                        </select>
                     </div>
 
                     <!-- Status -->
@@ -48,32 +53,20 @@
                     {{-- </div> --}}
                 </form>
 
-                {{-- <a href="javascript:void(0)" type="button" class="createBonus" class="btn btn-primary">Save</a> --}}
+                {{-- <a href="javascript:void(0)" type="button" class="assignBonus" class="btn btn-primary">Save</a> --}}
             </div>
 
             <div class="modal-footer">
-                <a href="javascript:void(0)" type="button" class="updateBonus btn btn-primary">Save</a>
+                <a href="javascript:void(0)" type="button" class="assignBonus btn btn-primary">Save</a>
             </div>
         </div>
     </div>
 </div>
 <script>
-    $('.createBonus').on('click',function(){
+    $('.assignBonus').on('click',function(){
         $(this).addClass('disabled');
-        let formData = new FormData($('#editBonusForm')[0]);
+        let formData = new FormData($('#assignBonusForm')[0]);
         
-        callAjaxFormData('post', `createBonus`, formData, ajaxResponseModal);
-    });
-
-    $('.editBonus').on('click',function(){
-        
-        $('#editBonusForm').find('input[name="bonus_uid"]').val($(this).data('bonus_uid'));
-    });
-    
-    $('.updateBonus').on('click',function(){
-        $(this).addClass('disabled');
-        let formData = new FormData($('#editBonusForm')[0]);
-        
-        callAjaxFormData('post', `updateBonus`, formData, ajaxResponseModal);
+        callAjaxFormData('post', `assignBonus`, formData, ajaxResponseModal);
     });
 </script>

@@ -27,8 +27,11 @@
                         <input type="search" id="search" class="form-control form-control-sm border border-primary"
                             style="max-width: 250px;">
                     </div>
-                    <div class="col-6 col-lg-3">
+                    {{-- <div class="col-6 col-lg-3 px-2">
                         <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#editBonusModal">Create Bonus</a>
+                    </div> --}}
+                    <div class="col-6 col-lg-3 px-2">
+                        <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#assignBonusModal">Assign  Bonus</a>
                     </div>
                 </div>
 
@@ -46,8 +49,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if($data->count() > 0)
-                                @foreach($data as $row)
+                            @if($bonus->count() > 0)
+                                @foreach($bonus as $row)
                                     <tr>
                                         <td>{{$row->bonus_uid}}</td>
                                         <td>{{$row->amount}}</td>
@@ -58,11 +61,11 @@
                                             <div class="flex flex-row items-center justify-evenly">
                                                 <div class="p-[.1rem]">
                                                     {{-- <i data-bonus_uid="{{ $row->bonus_uid }}" class="fas fa-{{($row->status)?'check b_active':'circle-xmark b_deactive'}} text-danger" style="cursor: pointer;" title="Change Status"></i> --}}
-                                                    <i data-bonus_uid="{{ $row->bonus_uid }}" class="{{($row->status)?'check b_active':'circle-xmark b_deactive'}} text-white fas fa-edit" style="cursor: pointer;" title="Change Status"></i>
+                                                    <i data-bonus_uid="{{ $row->bonus_uid }}" class="fas fa-{{($row->status)?'circle-xmark text-danger b_active':'check text-success b_deactive'}}" style="cursor: pointer;" title="Change Status"></i>
                                                 </div>
-                                                {{-- <div>
+                                                <div>
                                                     <i data-bonus_uid="{{ $row->bonus_uid }}" class="editBonus fas fa-edit" data-bs-toggle="modal" data-bs-target="#editBonusModal"></i>
-                                                </div> --}}
+                                                </div>
 
                                             </div>
                                         </td>
@@ -94,3 +97,25 @@
         </div>
     </div>
 @endsection
+
+@section('js')
+
+    @include('admin.model.edit_bonus')
+    @include('admin.model.assign_bonus')
+
+    <script>
+        
+    // update bonus
+    $('.b_active').on('click',function(){
+        formData = {};
+        callApi('post', `changeBonusStatus`, {bonus_uid:$(this).attr('data-bonus_uid'),status:0}, ajaxResponseModal);
+    });
+    
+    $('.b_deactive').on('click',function(){
+        formData = {};
+        callApi('post', `changeBonusStatus`, {bonus_uid:$(this).attr('data-bonus_uid'),status:1}, ajaxResponseModal);
+    });
+
+    </script>
+
+    @endsection

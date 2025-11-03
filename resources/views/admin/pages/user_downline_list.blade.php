@@ -79,6 +79,7 @@
                     <table class="table table-bordered table-sm align-middle text-center small mb-0">
                         <thead class="table-light sticky-top">
                             <tr>
+                                <th>VIP</th>
                                 <th>Username</th>
                                 <th>Balance</th>
                                 <th>Exposure</th>
@@ -96,7 +97,8 @@
                         <tbody>
                             @foreach ($users as $user)
                                 <tr>
-                                    <td><span class="badge bg-success">USER</span> {{ $user->username }}</td>
+                                    
+                                    <td>{{ ($user->loss_amount > 50000)?'<span class="badge bg-success"> VIP </span>':''}} {{ $user->username }}</td>
                                     <td>{{ $user->wallet_amount }}</td>
                                     <td>{{ $user->unsattled_amount }}</td>
                                     <!-- <td>200000</td> -->

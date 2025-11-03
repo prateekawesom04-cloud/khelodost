@@ -55,7 +55,11 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
         
         Route::post('updateBonus', [AdminDataController::class,'updateBonus'])->name('admin.action.updateBonus')->withoutMiddleware([VerifyCsrfToken::class]);
 
+        Route::post('changeBonusStatus', [AdminDataController::class,'changeBonusStatus'])->name('admin.action.changeBonusStatus')->withoutMiddleware([VerifyCsrfToken::class]);
+
         Route::get('/user_downline_list/{username}', [AdminUserController::class,'user_downline_list'])->name('admin.user_downline_list');
+        
+        // Route::get('/user_downline_list', [AdminUserController::class,'user_downline_list'])->name('admin.user_downline_list');
         
         Route::post('/add_user_client', [AdminUserController::class,'add_user_client'])->name('admin.action.add_user_client');
         
@@ -103,6 +107,12 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
         return view('admin.pages.market_analysis');
             })->name('admin.market_analysis');
 
+        // Route::get('/add_bonus', function () {
+        // return view('admin.pages.add_bonus');
+        //     })->name('admin.add_bonus');
+
+        Route::get('/add_bonus', [AdminDataController::class,'add_bonus'])->name('admin.add_bonus');
+        
         Route::get('/deposit', [AdminDataController::class,'deposit'])->name('admin.deposit');
 
         Route::get('/withdraw', [AdminDataController::class,'withdraw'])->name('admin.withdraw');
@@ -141,9 +151,6 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
         return view('admin.pages.add_number');
             })->name('admin.add_number');
 
-        Route::get('/add_bonus', function () {
-        return view('admin.pages.add_bonus');
-            })->name('admin.add_bonus');
 
 
 

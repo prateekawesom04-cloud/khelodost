@@ -77,9 +77,13 @@ class AuthController extends Controller
 
                     $bonuses = json_decode($user->bonus,true);
 
+                    $bonus = Bonus::where('type',0)->first();
                     $bonus_uid = Bonus::where('type',0)->first()->bonus_uid;
-                    $bonuses[$bonus_uid] = $this->addBonus($bonus_uid);
-
+                    // $bonuses[$bonus_uid] = $this->addBonus($bonus_uid);
+                    $bonuses[$bonus_uid]['bonus_uid'] = $bonus_uid;
+                    $bonuses[$bonus_uid]['amount'] = $bonus->amount;
+                    // dump('$bonuses----',$bonuses);
+                    // dd(json_encode($bonuses));
                     $user->bonus = json_encode($bonuses);
                     
                     if($request->age_confirm){
@@ -114,9 +118,11 @@ class AuthController extends Controller
                     
                     $bonuses = json_decode($user->bonus,true);
 
+                    $bonus = Bonus::where('type',0)->first();
                     $bonus_uid = Bonus::where('type',0)->first()->bonus_uid;
-                    $bonuses[$bonus_uid] = $this->addBonus($bonus_uid);
-
+                    // $bonuses[$bonus_uid] = $this->addBonus($bonus_uid);
+                    $bonuses[$bonus_uid]['bonus_uid'] = $bonus_uid;
+                    $bonuses[$bonus_uid]['amount'] = $bonus->amount;
                     $user->bonus = json_encode($bonuses);
 
                     if($request->age_confirm){
@@ -504,7 +510,7 @@ class AuthController extends Controller
         $bonus['wager_amount'] = 0.00;
         $bonus['bonus_applied_date'] = now();
         $bonus['claim_status'] = 0;
-        $bonus['type'] = 0;
+        // $bonus['type'] = 0;
         
         return $bonus;
 

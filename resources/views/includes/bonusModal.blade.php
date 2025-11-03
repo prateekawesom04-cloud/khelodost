@@ -4,7 +4,7 @@
     <div class="modal-content !w-[280px] mx-auto text-center">
       <div class="modal-header border-0">
         {{-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> --}}
-        {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
 
@@ -18,7 +18,7 @@
                 </div>
                 @endforeach
             @endif
-          <button type="button" class="btn btn-primary bg-[#0552cc] claim_bonus" data-bs-dismiss="modal">Claim Now</button>
+          <a href="{{route('user.bonus')}}" type="button" class="btn btn-primary bg-[#0552cc] claim_bonus">Claim Now</a>
         </div>
 
       </div>
@@ -28,8 +28,10 @@
 
 <script>
     $(document).ready(function(){
+      if(localStorage.getItem('showBonusModal') !== 'shown'){
+          localStorage.setItem('showBonusModal', 'shown');
         $('#showBonus').modal('show');
-
+      }
         // $('.claim_bonus').click(function(){
         //     window.location.href = '{{route('user.sport','cricket')}}';
         // });

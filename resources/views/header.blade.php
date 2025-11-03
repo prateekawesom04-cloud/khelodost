@@ -148,7 +148,9 @@
             <a href="{{ route('account_statement') }}" class="d-block py-2 px-3 text-decoration-none text-dark border-bottom">📥 Deposit &
                 Withdraw</a>
             <a href="{{ route('open_bets') }}" class="d-block py-2 px-3 text-decoration-none text-dark border-bottom">📊 Open Bets</a>
-            <a href="#" class="d-block py-2 px-3 text-decoration-none text-dark border-bottom">🎁 Bonuses</a>
+            @if($userData->bonus)
+            <a href="{{ route('user.bonus') }}" class="d-block py-2 px-3 text-decoration-none text-dark border-bottom">🎁 Bonuses</a>
+            @endif
             <a href="{{ route('profit_loss_event') }}" class="d-block py-2 px-3 text-decoration-none text-dark border-bottom">📃 Account
                 Statement</a>
         </div>

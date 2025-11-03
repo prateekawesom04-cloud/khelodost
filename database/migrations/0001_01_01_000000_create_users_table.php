@@ -22,6 +22,9 @@ return new class extends Migration
             $table->integer('status')->default(2);
             $table->string('referral')->nullable();
             $table->string('wallet_amount')->default(0);
+            $table->string('win_amount')->default(0);
+            $table->string('loss_amount')->default(0);
+            $table->string('wager_amount')->default(0);
             $table->string('unsattled_amount')->default(0);
             $table->string('commission_amount')->default(0);
             $table->string('referral_code')->unique()->nullable();

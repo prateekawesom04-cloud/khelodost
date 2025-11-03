@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('bonuses', function (Blueprint $table) {
             $table->id();
             $table->string('bonus_uid')->nullable();
+            $table->string('name')->nullable();
             $table->tinyInteger('type')->nullable();
             $table->decimal('amount',10,2)->nullable();
             $table->decimal('wager_amount',10,2)->nullable();

@@ -120,35 +120,82 @@ class UserController extends Controller
 
     public function bonus(Request $request){
         
-        return view('accounts.bonus');
+        $userData = $this->currentUser;
+        // $bonusData = [];
+        $bonus = json_decode($userData->bonus,true);
+        // $bonus = json_decode($userData->bonus);
+        foreach($bonus as $key => $value){
+            // dd($value->bonus_uid);
+        //     // if(!$bonusData['claim_status']){
+                $value['description'] = Bonus::where('bonus_uid',$key)->first()->description;
+                $bonus[$key] = $value;
+        //     // }
+        }
+        // $bonus = json_decode($bonus);
+        // dd($bonus);
+
+        return view('accounts.bonus',compact('bonus'));
     }
 
     public function claimBonus(Request $request){
 
         $userData = $this->currentUser;
-        $bonusData = $this->user_additional_data->bonusData;
-        $user_bonus_wager = $bonusData->{$request->bonus_id}->wager_amount;
+        $fullfilled = 1;
 
         $bonus = Bonus::where([
             'status'=>1,
-            'bonus_uid'=>$request->bonus_id
+            'bonus_uid'=>$request->bonus_uid
         ])->first();
+        $bonus_amount = $bonus->amount;
 
-        $wager_amount = $bonus->wager_amount;
+        if($bonus->type==0){
+            $wager_amount = $bonus->wager_amount*10;
+            if($userData->win_amount < $wager_amount){
+                $fullfilled = 0;
+            }
+        } else if($bonus->type==1){
+            if($userData->loss_amount < 50000){
+                $fullfilled = 0;
+            } else{
+                $wager_amount = $bonus->wager_amount*10;
+                if($userData->wager_amount < $wager_amount){
+                    $fullfilled = 0;
+                }
+            }
+        } else if($bonus->type==2){
+            $wager_amount = json_decode($userData->bonus,true)[$request->bonus_uid]['amount']*10;
+            if($userData->win_amount < $wager_amount){
+                $fullfilled = 0;
+            }
+        } else if($bonus->type==3){
+            $bonus_amount = json_decode($userData->bonus,true)[$request->bonus_uid]['amount'];
+        } else{
+            $bonus_amount = json_decode($userData->bonus,true)[$request->bonus_uid]['amount'];
+        }
 
-        if($user_bonus_wager < $wager_amount){
+        // $wager_amount = $bonus->wager_amount;
+
+        if(!$fullfilled){
             return response()->json([
-                'message'=> 'Please fulfill the wager',
+                'message'=> 'Condition not fullfilled to claim this bonus',
+                // 'message'=> $bonus->description,
                 'response_code'=> '405'
             ]);
         } else{
             // add request to add amount in walletP
             // if($bonus->type == 2){
-                $userData->wallet_amount += $bonus->amount;
+                $bonuses = json_decode($userData->bonus,true);
+                unset($bonuses[$request->bonus_uid]);
+                $userData->bonus = json_encode($bonuses);
+                dd(json_encode($bonuses));
+                $userData->wallet_amount += $bonus_amount;
+                $userData->wager_amount -= $bonus_amount;
             // }
         }
+        $userData->save();
+        
         return response()->json([
-            'message'=> 'Bonus Amount added to your wallet',
+            'message'=> 'You have successfully claimed the bonus',
             'response_code'=> '200'
         ]);
     }

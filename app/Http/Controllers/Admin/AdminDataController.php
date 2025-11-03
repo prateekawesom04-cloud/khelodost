@@ -83,13 +83,27 @@ class AdminDataController extends Controller
     }
 
     public function bonusData(){
-        $data = Bonus::all();
-        return view('admin.pages.bonus',compact('data'));
+        $bonus = Bonus::all();
+        $assignBonus = Bonus::where(['type'=>1,'status'=>1])->get();
+        return view('admin.pages.bonus',compact('bonus','assignBonus'));
+    }
+
+    public function changeBonusStatus(Request $request){
+        $bonus = Bonus::where('bonus_uid',$request->bonus_uid)->first();
+        $bonus->status = $request->status;
+        $bonus->save();
+
+        return response()->json([
+            'message'=> 'Bonus Updated Successfully',
+            'response_code'=> '200'
+        ]);
     }
 
     public function updateBonus(Request $request){
         $bonus = Bonus::where('bonus_uid',$request->bonus_uid)->first();
-        $bonus->status = $request->status;
+        $bonus->amount = $request->amount;
+        $bonus->wager_amount = $request->wager_amount;
+        $bonus->description = $request->description;
         $bonus->save();
 
         return response()->json([
@@ -115,20 +129,26 @@ class AdminDataController extends Controller
 
     }
 
-    public function assignBonus($username,array $bonusData){
+    public function add_bonus(){
+        $bonus = Bonus::all();
+        return view('admin.pages.add_bonus',compact('bonus'));
+    }
+
+    public function assignBonus(Request $request){
         
 
-        $userData =  User::where('username',$username)->first();
+        $userData =  User::where('username',$request->username)->first();
 
-        $additional_data = json_decode($userData->additional_data,true);
+        $bonus = json_decode($userData->bonus,true);
 
-        $additional_data['bonusData'][$bonusData['bonus_uid']] = $bonusData;
-        $userData->additional_data = json_encode( $additional_data);
+        $bonus[$request->bonus_uid]['bonus_uid'] = $request->bonus_uid;
+        $bonus[$request->bonus_uid]['amount'] = $request->amount;
+        $userData->bonus = json_encode( $bonus);
         $userData->save();
 
         return response()->json([
             'message'=> 'Bonus added',
-            'error_code'=> '200'
+            'response_code'=> '200'
         ]);
     }
 
