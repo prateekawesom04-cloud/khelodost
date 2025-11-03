@@ -145,6 +145,15 @@ class AuthController extends Controller
                 $referralUser = User::where('referral_code',$request->referral_code)->first();
                 if($referralUser){
                     $referralUser->referral_nos += 1;
+                    $bonuses = json_decode($referralUser->bonus,true);
+
+                    $bonus = Bonus::where('type',0)->first();
+                    $bonus_uid = Bonus::where('type',3)->first()->bonus_uid;
+                    // $bonuses[$bonus_uid] = $this->addBonus($bonus_uid);
+                    $bonuses[$bonus_uid]['bonus_uid'] = $bonus_uid;
+                    $bonuses[$bonus_uid]['amount'] = $bonus->amount;
+                    $referralUser->bonus = json_encode($bonuses);
+
                     $referralUser->save();
                     
                     $user->referral = $referralUser->username;

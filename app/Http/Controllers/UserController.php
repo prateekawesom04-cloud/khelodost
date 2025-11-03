@@ -106,7 +106,7 @@ class UserController extends Controller
     public function referral_code(Request $request,$referral_code){
         Session::put(['referral_code'=>$referral_code]);
         // dd(Session::get('referral_code'));
-        return redirect('register');
+        return redirect('signin');
     }
 
     public function notification(Request $request){

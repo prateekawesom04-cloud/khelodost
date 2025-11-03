@@ -117,7 +117,7 @@
 
       <!-- Referral Code -->
       <div class="mb-3">
-        <input type="text" name="referral_code" class="form-control rounded-3" placeholder="Referral Code (optional)" />
+        <input type="text" name="referral_code" value="{{Session::get('referral_code')}}" class="form-control rounded-3" placeholder="Referral Code (optional)" />
       </div>
 
       <!-- Remember Me -->
