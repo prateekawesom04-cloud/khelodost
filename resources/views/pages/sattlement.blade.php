@@ -2,95 +2,100 @@
 
 @section('body')
 
-    <div class="flex flex-col justify-center items-center">
-        <h4 class="my-1 border-b border-gray-300">Settlement Page</h4>
-        {{-- <h4 class="mt-2 mb-1">{{$eventId}}</h4> --}}
-        <h4 class="mt-2 mb-1">Event List</h4>
-        <div class="">
-            <!-- Scrollable Table -->
-            <div class="table-responsive-sm" style="max-height: 400px;">
-                <table class="table table-bordered table-sm align-middle text-center small mb-0">
-                    <thead class="table-light sticky-top">
-                        <tr>
-                            <th>Username</th>
-                            <th>Balance</th>
-                            <th>Exposure</th>
-                            <!-- <th>Exposure Limit</th> -->
-                            <th>Avail .Bal.</th>
-                            <!-- <th>Ref. P/L</th> -->
-                            <!-- <th>Partnership</th> -->
-                            <th>U Lock</th>
-                            <th>B Lock</th>
-                            <!-- <th>My %</th> -->
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($users as $user)
+    <div class="container-fluid p-4">
+
+        <!-- Bet History Section -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header text-white">
+                <strong>Events</strong>
+            </div>
+            <div class="card-body">
+
+                <!-- Table Controls -->
+                <div class="d-flex flex-wrap flex-nowrap align-items-center mb-3">
+                    <div class="d-flex align-items-center me-3 flex-shrink-0">
+                        <label class="me-2 mb-0" for="show-entries">Show</label>
+                        <select id="show-entries" class="form-select w-auto">
+                            <option>10</option>
+                            <option>25</option>
+                            <option>50</option>
+                            <option>100</option>
+                        </select>
+                    </div>
+
+                    <div class="d-flex align-items-center ms-auto flex-grow-1">
+                        <label class="me-2 mb-0" for="search">Search:</label>
+                        <input type="search" id="search" class="form-control form-control-sm border border-primary"
+                            style="max-width: 250px;">
+                    </div>
+                    {{-- <div class="col-6 col-lg-3 px-2">
+                        <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#editBonusModal">Create Bonus</a>
+                    </div> --}}
+                    <div class="col-6 col-lg-3 px-2">
+                        <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#assignBonusModal">Assign  Bonus</a>
+                    </div>
+                </div>
+
+                <!-- Bet History Table -->
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center align-middle table-sm">
+                        <thead class="table-light">
                             <tr>
-                                <td><span class="badge bg-success">USER</span> {{ $user->username }}</td>
-                                <td>{{ $user->wallet_amount }}</td>
-                                <td>{{ $user->unsattled_amount }}</td>
-                                <!-- <td>200000</td> -->
-                                <td>{{$user->wallet_amount - $user->unsattled_amount }}</td>
-                                <!-- <td>1000</td> -->
-                                <!-- <td>{{$user->partnership_percentage }}</td> -->
-                                <td><input type="checkbox" name="u_lock" /></td>
-                                <td><input type="checkbox" name="b_lock" /></td>
-                                <!-- <td>10%</td> -->
-                                <td>
-                                    <span class="badge bg-{{ $user->status == 3 ? 'danger' : 'success' }}">
-                                        {{ $user->status == 6 ? 'inactive' : 'active' }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <!-- Scrollable action buttons -->
-                                    <div
-                                        class="action-buttons d-flex flex-nowrap gap-1 justify-content-center overflow-auto user_actions" data-username="{{ $user->username }}">
-                                        <a href="{{ route('admin.my_account',$user->username) }}"
-                                            class="btn btn-sm fw-bold btn-user-details" data-bs-toggle="tooltip"
-                                            title="User Details">U</a>
-                                        <a href="#" class="btn btn-sm fw-bold btn-deposit-collection updateWalletModel depositWallet"
-                                            data-bs-toggle="modal" data-user_wallet="{{ $user->wallet_amount }}" data-username="{{ $user->username }}" data-bs-target="#balanceModal"
-                                            title="Deposit / Collection">D/C</a>
-                                        <a href="#" class="btn btn-sm fw-bold btn-withdrawal updateWalletModel withdrawWallet"
-                                            data-bs-toggle="modal" data-user_wallet="{{ $user->wallet_amount }}" data-username="{{ $user->username }}" data-bs-target="#withdrawModal"
-                                            title="Withdrawal">W</a>
-                                        <a href="#" class="btn btn-sm fw-bold btn-password-change changePasswordModel"
-                                            data-bs-toggle="modal" data-username="{{ $user->username }}" data-bs-target="#changePasswordModal"
-                                            title="Password Change">P</a>
-                                        <a href="#" class="btn btn-sm fw-bold btn-game-controller"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#gameControllerModal"title="Game Control">GC</a>
-                                        <a href="#" class="btn btn-sm fw-bold btn-casino-control"
-                                            data-bs-toggle="modal" data-bs-target="#casinocontrolModal"
-                                            title="Casino Control">
-                                            CC
-                                        </a>
-                                        <a href="javascript:void(0)" class="btn btn-sm fw-bold btn-delete deleteUser" data-username="{{ $user->username }}" data-bs-toggle="modal"
-                                            data-bs-target="#deleteConfirmationModal" title="Delete">D</a>
-                                    </div>
-                                </td>
-
+                                <th>Event ID</th>
+                                <th>Name</th>
+                                <th>Date</th>
+                                {{-- <th>Description</th> --}}
+                                <th>Status</th>
+                                <th>Action</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" />
-                <label class="form-check-label" for="inlineRadio1">Win</label>
-            </div>
+                        </thead>
+                        <tbody>
+                            @if($events->count() > 0)
+                                @foreach($events as $row)
+                                    <tr>
+                                        <td>{{$row->eventId}}</td>
+                                        <td>{{$row->eventName}}</td>
+                                        <td>{{$row->eventDate}}</td>
+                                        {{-- <td>{{(!$row->status)?'upcoming':'inplay'}}</td> --}}
+                                        <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td>
+                                        <td>
+                                            <div class="flex flex-row items-center justify-evenly">
+                                                <div class="p-[.1rem]">
+                                                    {{-- <i data-bonus_uid="{{ $row->bonus_uid }}" class="fas fa-{{($row->status)?'check b_active':'circle-xmark b_deactive'}} text-danger" style="cursor: pointer;" title="Change Status"></i> --}}
+                                                    <i data-bonus_uid="{{ $row->bonus_uid }}" class="fas fa-{{($row->status)?'circle-xmark text-danger b_active':'check text-success b_deactive'}}" style="cursor: pointer;" title="Change Status"></i>
+                                                </div>
+                                                <div>
+                                                    <i data-bonus_uid="{{ $row->bonus_uid }}" class="editBonus fas fa-edit" data-bs-toggle="modal" data-bs-target="#editBonusModal"></i>
+                                                </div>
 
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" />
-                <label class="form-check-label" for="inlineRadio2">Loss</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" />
-                <label class="form-check-label" for="inlineRadio2">Draw</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                            <tr>
+                                <td colspan="10" class="text-white text-center">No data!</td>
+                            </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3">
+                    <div class="small text-white mb-2 mb-md-0">Showing 1 to 10 of 0 entries</div>
+                    <nav>
+                        <ul class="pagination pagination-sm mb-0">
+                            <li class="page-item disabled"><a class="page-link">First</a></li>
+                            <li class="page-item disabled"><a class="page-link">Previous</a></li>
+                            <li class="page-item disabled"><a class="page-link">Next</a></li>
+                            <li class="page-item disabled"><a class="page-link">Last</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
             </div>
         </div>
     </div>
+
 @endsection

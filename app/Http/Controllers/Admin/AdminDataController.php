@@ -16,6 +16,7 @@ use App\Models\Activity;
 use App\Models\Payment;
 use App\Models\Appdata;
 use App\Models\GameHistory;
+use App\Models\Event;
 
 class AdminDataController extends Controller
 {
@@ -434,7 +435,8 @@ class AdminDataController extends Controller
 
     public function sattlement(Request $request){
         $eventId = $request->eventId;
-        return view('pages.sattlement',compact('eventId'));
+        $events = Event::all();
+        return view('pages.sattlement',compact('events'));
     }
     
     public function updateSportResult(Request $request){
