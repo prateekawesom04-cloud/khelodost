@@ -4,6 +4,16 @@
 
     <div class="container">
         <div class="col-12 col-md-6 mx-auto my-4">
+
+            {{-- Notification Bar --}}
+            <div class="bonusList pb-2 mb-2">
+                @foreach($bonus as $value)
+                {{-- @dd($value); --}}
+                    @include('includes.claimBonus',['description'=>$value['description'] ?? $value,'bonus_uid'=>$value['bonus_uid'] ?? $value])
+                    {{-- @include('includes.claimBonus',['description'=>$value->description ?? $value,'bonus_uid'=>$value->bonus_uid ?? $value]) --}}
+                @endforeach
+            </div>
+
             <div class="flex flex-row items-center">
                 <div class="p-2 w-full">
                     <button class="w-full p-2 !border-1 !border-[#0552cc] rounded-md !bg-[#0552cc] text-white">
@@ -26,11 +36,7 @@
             // }
             @endphp
 
-            @foreach($bonus as $value)
-            {{-- @dd($value); --}}
-                @include('includes.claimBonus',['description'=>$value['description'] ?? $value,'bonus_uid'=>$value['bonus_uid'] ?? $value])
-                {{-- @include('includes.claimBonus',['description'=>$value->description ?? $value,'bonus_uid'=>$value->bonus_uid ?? $value]) --}}
-            @endforeach
+
 
         </div>
     </div>

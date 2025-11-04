@@ -1,5 +1,5 @@
-<div class="notification_bar">
-    <div class="alert fade show flex flex-row items-center justify-between border-b !border-[#0552cc] py-1 !bg-[#0c0339] text-white text-[#0552cc]" role="alert">
+<div class="notification_bar p-2">
+    <div class="alert fade show flex flex-row items-center justify-between border-b !border-[#0552cc] py-1 mb-0 !bg-[#0c0339] text-white text-[#0552cc]" role="alert">
         
         <div class="flex flex-col items-start justify-evenly">
             <div class="img">
