@@ -29,10 +29,10 @@
                             style="max-width: 250px;">
                     </div>
                     {{-- <div class="col-6 col-lg-3 px-2">
-                        <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#editBonusModal">Create Bonus</a>
+                        <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#sattleEvent">Create Bonus</a>
                     </div> --}}
                     <div class="col-6 col-lg-3 px-2">
-                        <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#assignBonusModal">Assign  Bonus</a>
+                        <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#assignBonusModal">Update Event</a>
                     </div>
                 </div>
 
@@ -56,16 +56,20 @@
                                         <td>{{$row->eventId}}</td>
                                         <td>{{$row->eventName}}</td>
                                         <td>{{$row->eventDate}}</td>
+                                        @php
+                                            $teamA = explode(' v ',$row->eventName)[0];
+                                            $teamB = explode(' v ',$row->eventName)[1];
+                                        @endphp
                                         {{-- <td>{{(!$row->status)?'upcoming':'inplay'}}</td> --}}
                                         <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td>
                                         <td>
                                             <div class="flex flex-row items-center justify-evenly">
                                                 <div class="p-[.1rem]">
-                                                    {{-- <i data-bonus_uid="{{ $row->bonus_uid }}" class="fas fa-{{($row->status)?'check b_active':'circle-xmark b_deactive'}} text-danger" style="cursor: pointer;" title="Change Status"></i> --}}
-                                                    <i data-bonus_uid="{{ $row->bonus_uid }}" class="fas fa-{{($row->status)?'circle-xmark text-danger b_active':'check text-success b_deactive'}}" style="cursor: pointer;" title="Change Status"></i>
+                                                    {{-- <i data-eventId="{{ $row->eventId }}" class="fas fa-{{($row->status)?'check b_active':'circle-xmark b_deactive'}} text-danger" style="cursor: pointer;" title="Change Status"></i> --}}
+                                                    <i data-eventName="{{$row->eventName}}" data-eventId="{{ $row->eventId }}" class="fas fa-{{($row->status)?'circle-xmark text-danger b_active':'check text-success b_deactive'}}" style="cursor: pointer;" title="Change Status"></i>
                                                 </div>
                                                 <div>
-                                                    <i data-bonus_uid="{{ $row->bonus_uid }}" class="editBonus fas fa-edit" data-bs-toggle="modal" data-bs-target="#editBonusModal"></i>
+                                                    <i data-teamA="{{$teamA}}" data-teamB="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#sattleEvent"></i>
                                                 </div>
 
                                             </div>
@@ -97,5 +101,62 @@
             </div>
         </div>
     </div>
+
+    <!-- Compact Reusable Modal with Form -->
+<div class="modal fade" id="sattleEvent" tabindex="-1" aria-labelledby="sattleEventLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header modal-header-dark">
+                <h5 class="modal-title" id="mainModalLabel">Edit Bonus</h5>
+                <a type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></a>
+            </div>
+            <div class="modal-body modal-header-dark">
+                <form id="sattleEventForm">
+                    {{-- <div class="mb-3">
+                        <label for="name" class="form-label">Amount</label>
+                        <input type="text" id="amount" name="amount" class="form-control">
+                    </div> --}}
+                    <!-- Bonus Type Dropdown -->
+                    <div class="mb-3">
+                        <label for="bonusType" class="form-label">Result</label>
+                        <select id="bonusType" name="type" class="form-select">
+                            <option value="1">Team A</option>
+                            <option value="2">Team B</option>
+                        </select>
+                    </div>
+
+                </form>
+
+                {{-- <a href="javascript:void(0)" type="button" class="createBonus" class="btn btn-primary">Save</a> --}}
+            </div>
+
+            <div class="modal-footer">
+                <a href="javascript:void(0)" type="button" class="sattleEvent btn btn-primary">Save</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('.sattleEvent').on('click',function(){
+        $(this).addClass('disabled');
+        let formData = new FormData($('#sattleEventForm')[0]);
+        
+        callAjaxFormData('post', `sattleEvent`, formData, ajaxResponseModal);
+    });
+
+    $('.editBonus').on('click',function(){
+        
+        $('#sattleEventForm').find('input[name="eventId"]').val($(this).data('eventId'));
+    });
+    
+    $('.updateBonus').on('click',function(){
+        $(this).addClass('disabled');
+        let formData = new FormData($('#sattleEventForm')[0]);
+        
+        callAjaxFormData('post', `updateBonus`, formData, ajaxResponseModal);
+    });
+</script>
+
 
 @endsection

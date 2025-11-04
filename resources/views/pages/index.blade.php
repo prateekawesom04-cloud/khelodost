@@ -86,7 +86,7 @@
             </div>
 
             <!-- 🔶 Game Providers -->
-            <div class="card shadow-sm mb-2">
+            {{-- <div class="card shadow-sm mb-2">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span class="fw-bold">🎲Game Providers</span>
                     <div>
@@ -134,7 +134,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <!-- 🔷 Indian Card Games -->
             <div class="card shadow-sm mb-2">

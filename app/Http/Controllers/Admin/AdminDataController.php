@@ -434,7 +434,7 @@ class AdminDataController extends Controller
     }
 
     public function sattlement(Request $request){
-        $eventId = $request->eventId;
+        // $eventId = $request->eventId;
         $events = Event::all();
         return view('pages.sattlement',compact('events'));
     }

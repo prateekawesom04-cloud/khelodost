@@ -7,14 +7,14 @@ use App\Models\Event;
 use Illuminate\Support\Facades\Storage;
 
 
-class eventlist extends Command
+class test extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'app:eventlist {sportname}';
+    protected $signature = 'app:test {sportname}';
 
     /**
      * The console command description.
