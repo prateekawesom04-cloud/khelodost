@@ -147,7 +147,7 @@ class AuthController extends Controller
                     $referralUser->referral_nos += 1;
                     $bonuses = json_decode($referralUser->bonus,true);
 
-                    $bonus = Bonus::where('type',0)->first();
+                    $bonus = Bonus::where('type',3)->first();
                     $bonus_uid = Bonus::where('type',3)->first()->bonus_uid;
                     // $bonuses[$bonus_uid] = $this->addBonus($bonus_uid);
                     $bonuses[$bonus_uid]['bonus_uid'] = $bonus_uid;

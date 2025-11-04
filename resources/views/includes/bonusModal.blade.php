@@ -29,11 +29,13 @@
 <script>
     $(document).ready(function(){
       if(localStorage.getItem('showBonusModal') !== 'shown'){
-          localStorage.setItem('showBonusModal', 'shown');
-        $('#showBonus').modal('show');
+          // localStorage.setItem('showBonusModal', 'shown');
+        // $('#showBonus').modal('show');
+        $('.indexBonus').show();
       }
-        // $('.claim_bonus').click(function(){
-        //     window.location.href = '{{route('user.sport','cricket')}}';
-        // });
+        $('.claim_bonus').click(function(){
+            localStorage.setItem('showBonusModal', 'shown');
+            // window.location.href = '{{route('user.sport','cricket')}}';
+        });
     });
 </script>

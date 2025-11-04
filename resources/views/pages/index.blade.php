@@ -22,6 +22,16 @@
                 </div>
             </div>
 
+
+            <div class="indexBonus" style="display: none">
+                
+                @if($claim_bonus)
+                    @foreach($shareBonus as $value)
+                        @include('includes.claimBonus',['description'=>$value['description'] ?? $value,'bonus_uid'=>$value['bonus_uid'] ?? $value,'anchor'=>true])
+                    @endforeach
+                @endif
+            </div>
+
             <!-- 🔶 Tabs -->
             <div class="card shadow-sm mb-1">
                 <div class="card-body d-flex justify-content-between align-items-center">
@@ -260,9 +270,9 @@
     //     updateCricketIndex(data);
     // });
     
-    setInterval(() => {
+    // setInterval(() => {
         callApi('get',`{{route('user.getSportData','cricket')}}`,{sportname:`cricket`},updateInplaySports);
-    }, 500);
+    // }, 500);
 
   </script>
 
