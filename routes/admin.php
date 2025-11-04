@@ -192,6 +192,8 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
         Route::post('updateSportResult', [AdminDataController::class,'updateSportResult'])->name('updateSportResult')->withoutMiddleware([VerifyCsrfToken::class]);
         
         Route::get('sattlement', [AdminDataController::class,'sattlement'])->name('sattlement');
+
+        Route::post('sattleEvent', [AdminDataController::class,'sattleEvent'])->name('sattleEvent')->withoutMiddleware([VerifyCsrfToken::class]);
             
 
         // Route::get('/sattlement', function () {

@@ -435,8 +435,29 @@ class AdminDataController extends Controller
 
     public function sattlement(Request $request){
         // $eventId = $request->eventId;
-        $events = Event::all();
+        $events = Event::where('status',1)->get();
         return view('pages.sattlement',compact('events'));
+    }
+
+    public function sattleEvent(Request $request){
+        $eventId = $request->eventId;
+        $result = $request->result;
+        dd($result);
+        
+        $event = Event::where('eventId',$eventId)->first();
+        $event->result = $result;
+        $event->status = 2; // settled
+        $event->save();
+
+        return response()->json([
+            'message'=> 'Event Sattled Successfully',
+            'response_code'=> '200'
+        ]);
+    }
+
+    public function sattleBets(Request $request){
+        $eventId = $request->eventId;
+           
     }
     
     public function updateSportResult(Request $request){

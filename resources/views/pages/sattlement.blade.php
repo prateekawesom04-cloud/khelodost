@@ -31,9 +31,9 @@
                     {{-- <div class="col-6 col-lg-3 px-2">
                         <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#sattleEvent">Create Bonus</a>
                     </div> --}}
-                    <div class="col-6 col-lg-3 px-2">
+                    {{-- <div class="col-6 col-lg-3 px-2">
                         <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#assignBonusModal">Update Event</a>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <!-- Bet History Table -->
@@ -57,19 +57,19 @@
                                         <td>{{$row->eventName}}</td>
                                         <td>{{$row->eventDate}}</td>
                                         @php
-                                            $teamA = explode(' v ',$row->eventName)[0];
-                                            $teamB = explode(' v ',$row->eventName)[1];
+                                            $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
+                                            $teamB = explode(' v ',$row->eventName)[1] ?? 'Series';
                                         @endphp
-                                        {{-- <td>{{(!$row->status)?'upcoming':'inplay'}}</td> --}}
-                                        <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td>
+                                        <td>{{(!$row->status)?'upcoming':'inplay'}}</td>
+                                        {{-- <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td> --}}
                                         <td>
                                             <div class="flex flex-row items-center justify-evenly">
-                                                <div class="p-[.1rem]">
-                                                    {{-- <i data-eventId="{{ $row->eventId }}" class="fas fa-{{($row->status)?'check b_active':'circle-xmark b_deactive'}} text-danger" style="cursor: pointer;" title="Change Status"></i> --}}
+                                                {{-- <div class="p-[.1rem]">
                                                     <i data-eventName="{{$row->eventName}}" data-eventId="{{ $row->eventId }}" class="fas fa-{{($row->status)?'circle-xmark text-danger b_active':'check text-success b_deactive'}}" style="cursor: pointer;" title="Change Status"></i>
-                                                </div>
+                                                </div> --}}
                                                 <div>
-                                                    <i data-teamA="{{$teamA}}" data-teamB="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#sattleEvent"></i>
+                                                    <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="{{($teamB=='Series')?'':'#sattleEvent'}}"></i>
+                                                    {{-- <i data-teamA="{{$explode(' v ',$row->eventName)[0]}}" data-teamB="{{explode(' v ',$row->eventName)[1]}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#sattleEvent"></i> --}}
                                                 </div>
 
                                             </div>
@@ -108,7 +108,7 @@
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header modal-header-dark">
-                <h5 class="modal-title" id="mainModalLabel">Edit Bonus</h5>
+                <h5 class="modal-title" id="mainModalLabel">Sattle Event</h5>
                 <a type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></a>
             </div>
             <div class="modal-body modal-header-dark">
@@ -118,12 +118,18 @@
                         <input type="text" id="amount" name="amount" class="form-control">
                     </div> --}}
                     <!-- Bonus Type Dropdown -->
-                    <div class="mb-3">
-                        <label for="bonusType" class="form-label">Result</label>
+                    {{-- <div class="mb-3">
+                        <label for="bonusType" class="form-label"><span class="eventIdVal"></span>Result</label>
                         <select id="bonusType" name="type" class="form-select">
                             <option value="1">Team A</option>
                             <option value="2">Team B</option>
                         </select>
+                    </div> --}}
+
+                    <div class="flex gap-2">
+                        <input type="radio" name="result" id="" value="0"> <span class="mx-1">Draw</span>
+                        <input type="radio" name="result" id="" value="1"> <span class="mx-1 teamA"></span> wins
+                        <input type="radio" name="result" id="" value="2"> <span class="mx-1 teamB"></span> wins
                     </div>
 
                 </form>
@@ -142,12 +148,14 @@
         $(this).addClass('disabled');
         let formData = new FormData($('#sattleEventForm')[0]);
         
-        callAjaxFormData('post', `sattleEvent`, formData, ajaxResponseModal);
+        callAjaxFormData('post', `{{route('sattleEvent')}}`, formData, ajaxResponseModal);
     });
 
-    $('.editBonus').on('click',function(){
+    $('.editEvent').on('click',function(){
         
-        $('#sattleEventForm').find('input[name="eventId"]').val($(this).data('eventId'));
+        $('#sattleEventForm').find('.eventIdVal').val($(this).data('eventId'));
+        $('#sattleEventForm').find('.teamA').text($(this).data('teama'));
+        $('#sattleEventForm').find('.teamB').text($(this).data('teamb'));
     });
     
     $('.updateBonus').on('click',function(){

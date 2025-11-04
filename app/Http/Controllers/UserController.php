@@ -67,7 +67,7 @@ class UserController extends Controller
             'username'=>$user->username,
             'payment_type'=>'1'
         ])->get();
-        return view('accounts.withdrawal',compact('data'));
+        return view('accounts.withdraw',compact('data'));
 
     }
 
@@ -151,7 +151,8 @@ class UserController extends Controller
         if($bonus->type==0){
             $wager_amount = $bonus->wager_amount*10;
             $user_additional_data = json_decode($userData->additional_data,true);
-            $user_additional_data['signUpBonusClaimed'] = true;
+            $user_additional_data['signUpBonusClaim'] = false;
+            // $user_additional_data['signUpBonusClaim'] = $wager_amount;
             $userData->additional_data = json_encode($user_additional_data);
             // if($userData->win_amount < $wager_amount){
             //     $fullfilled = 0;
