@@ -150,9 +150,12 @@ class UserController extends Controller
 
         if($bonus->type==0){
             $wager_amount = $bonus->wager_amount*10;
-            if($userData->win_amount < $wager_amount){
-                $fullfilled = 0;
-            }
+            $user_additional_data = json_decode($userData->additional_data,true);
+            $user_additional_data['signUpBonusClaimed'] = true;
+            $userData->additional_data = json_encode($user_additional_data);
+            // if($userData->win_amount < $wager_amount){
+            //     $fullfilled = 0;
+            // }
         } else if($bonus->type==1){
             if($userData->loss_amount < 50000){
                 $fullfilled = 0;
