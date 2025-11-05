@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Bonus;
 use App\Models\Payment;
 use App\Models\UserBank;
+use App\Models\SportookBet;
 
 class UserController extends Controller
 {
@@ -258,5 +259,30 @@ class UserController extends Controller
 
         }
 
+    }
+    
+    public function openBets(Request $request){
+        $openBets = SportookBet::where('username',$this->currentUser->username)->whereIn('status',[1])->orderBy('id','desc')->get();
+
+        // dd($openBets);
+        if(count($openBets)){
+            return response()->json([
+                'code'=>'200',
+                'data'=> $openBets
+            ]);
+        } else{
+            return response()->json([
+                'code'=>'401',
+                'data'=> 'No Openbets Available'
+            ]);
+        }
+    }
+
+    public function betlist(Request $request){
+        $bets = SportookBet::where('username',$this->currentUser->username)->get();
+        $openBets = SportookBet::where('username',$this->currentUser->username)->where('status',0)->get();
+
+        // $bets = SportookBet::where('status',0)->get();
+        return view('accounts.open_bets',compact('bets','openBets'));
     }
 }

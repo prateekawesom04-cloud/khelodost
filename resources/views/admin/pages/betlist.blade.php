@@ -75,21 +75,48 @@
                         <thead class="table-light">
                             <tr>
                                 <th>User Name</th>
-                                <th>Sport Name</th>
-                                <th>Event</th>
+                                {{-- <th>Sport Name</th> --}}
+                                <th>BetId</th>
+                                <th>EventId</th>
                                 {{-- <th>Market</th>
                                 <th>Selection</th>
                                 <th>Type</th> --}}
                                 <th>Odds</th>
-                                <th>Stake</th>
-                                <th>Place Time</th>
-                                <th>Settle Time</th>
+                                <th>Bet Amount</th>
+                                <th>Profit/Loss</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @if($bets->count() > 0)
+                                @foreach ($bets as $bet)
+                                    <tr>
+                                        <td class="text-white">{{ $bet->username ?? 'N/A' }}</td>
+                                        <td class="text-white">{{ $bet->betId }}</td>
+                                        <td class="text-white">{{ $bet->eventId }}</td>
+                                        <td class="text-white">{{ $bet->oddVal }}</td>
+                                        {{-- <td class="text-white">{{ $bet->stakeValue }}</td> --}}
+                                        <td class="text-white">{{ $bet->bet_amount }}</td>
+                                        <td class="text-white">{{ $bet->profit ?? 'N/A'}}</td>
+                                        <td class="text-white">
+                                            @if($bet->status == 0)
+                                                Unsettled
+                                                {{-- <span class="text-white">Unsettled</span> --}}
+                                            @elseif($bet->status == 1)
+                                                <span class="text-success">Won</span>
+                                            @elseif($bet->status == 2)
+                                                <span class="text-danger">Lost</span>
+                                            @else
+                                                N/A
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
                             <tr>
                                 <td colspan="10" class="text-white">No data!</td>
                             </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>

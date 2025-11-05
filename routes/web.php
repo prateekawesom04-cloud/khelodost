@@ -18,6 +18,17 @@ Route::middleware(['auth_middleware'])->group(function () {
     })->name('login');
 
     Route::get('signin', function () {
+        $referral_code = '';
+        
+        if($request->session()->has('referral_code')){
+            
+            $referral_code = session('referral_code');
+
+        }
+
+        // Session::flush();
+
+        return view('pages.register',compact('referral_code'));
         return view('pages.signin');
     })->name('signin');
 
@@ -52,12 +63,13 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
         
         Route::post('placebet', [SportookBetController::class,'placebet'])->name('user.placebet')->withoutMiddleware([VerifyCsrfToken::class]);
         
-        Route::get('openbets', [SportookBetController::class,'openbets'])->name('user.openbets')->withoutMiddleware([VerifyCsrfToken::class]);
+        Route::get('openbets', [UserController::class,'openbets'])->name('user.openbets')->withoutMiddleware([VerifyCsrfToken::class]);
 
         Route::get('bonus', [UserController::class,'bonus'])->name('user.bonus');
 
         Route::post('claimBonus', [UserController::class,'claimBonus'])->name('user.post.claimBonus')->withoutMiddleware([VerifyCsrfToken::class]);
 
+        Route::get('betlist', [UserController::class,'betlist'])->name('user.betlist');
     });
 
     Route::get('eventPage/{eventId}', [SportbookController::class,'eventPage'])->name('user.eventPage');
@@ -140,9 +152,9 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
         return view('accounts.account_statement');
     })->name('account_statement');
 
-    Route::get('/open_bets', function () {
-        return view('accounts.open_bets');
-    })->name('open_bets');
+    // Route::get('/open_bets', function () {
+    //     return view('accounts.open_bets');
+    // })->name('open_bets');
 
     Route::get('/profit_loss_event', function () {
         return view('accounts.profit_loss_event');

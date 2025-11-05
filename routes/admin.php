@@ -73,6 +73,8 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
 
         Route::get('/inactive_user_downline_list', [AdminDataController::class,'inactive_user_downline_list'])->name('admin.inactive_user_downline_list');
 
+        Route::get('/betlist', [AdminDataController::class,'betlist'])->name('admin.betlist');
+
         Route::get('/user_client_account', function () {
             return view('admin.pages.user_client_account');
         })->name('admin.user_client_account');
@@ -95,9 +97,9 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
             })->name('admin.downline_profit_loss');
 
 
-        Route::get('/betlist', function () {
-        return view('admin.pages.betlist');
-            })->name('admin.betlist');
+        // Route::get('/betlist', function () {
+        // return view('admin.pages.betlist');
+        //     })->name('admin.betlist');
 
         Route::get('/sampleTable', function () {
         return view('admin.pages.sampleTable');

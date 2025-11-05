@@ -191,7 +191,9 @@
                 `;
 
                 $(data.section).each(function(i,j){
-                    
+                    var betOn = i+1; // lay by default
+                    var temp = betOn;
+
                     if(data.mname == 'fancy1' && i==2) {
                         
                         return false;
@@ -205,8 +207,14 @@
                         `;
 
                         $(this.odds).each(function(i,j){
+                            // var betOn = 1;
+                            if((i+1)%2 == 0){
+                                betOn = 0; // back
+                            } else{
+                                betOn = temp; // lay
+                            }
                             html +=`
-                                    <a data-oddVal="${j.odds}" class="odd-btn ${j.otype} ${j.oname}">${j.odds}<small>${j.size}</small></a>
+                                    <a data-oddVal="${j.odds}" data-beton='${betOn}' class="odd-btn ${j.otype} ${j.oname}">${j.odds}<small>${j.size}</small></a>
                             `;
                         });
 

@@ -22,12 +22,13 @@ class SportookBetController extends Controller
 
         $request->username = $user->username;
 
-        $request->betId = substr($request->username,0,5).'_'.rand(1000,9999).'_'.substr(time(),6,strlen(time())-1);
+        $request->betId = substr($user->username,0,5).'_'.rand(1000,9999).'_'.substr(time(),6,strlen(time())-1);
 
         $bet = new SportookBet();
-        $bet->username = $request->username;
+        $bet->username = $user->username;
         $bet->betId = $request->betId;
         $bet->mname = $request->mname;
+        $bet->betOn = $request->betOn;
         $bet->eventId = $request->eventId;
         $bet->marketId = $request->marketId;
         $bet->wallet_before = $user->wallet_amount;
@@ -36,7 +37,7 @@ class SportookBetController extends Controller
         $bet->profit = $request->profit;
         // $bet->loss = $request->loss;
         $bet->ip = $request->ip();
-        $bet->status = 1;
+        $bet->status = 0;
         $bet->save();
 
         $user->wallet_amount -= $request->bet_amount;
@@ -51,20 +52,20 @@ class SportookBetController extends Controller
 
     }
 
-    public function openBets(Request $request){
-        $openBets = SportookBet::whereIn('status',[1])->orderBy('id','desc')->get();
+    // public function openBets(Request $request){
+    //     $openBets = SportookBet::whereIn('status',[1])->orderBy('id','desc')->get();
 
-        // dd($openBets);
-        if(count($openBets)){
-            return response()->json([
-                'code'=>'200',
-                'data'=> $openBets
-            ]);
-        } else{
-            return response()->json([
-                'code'=>'401',
-                'data'=> 'No Openbets Available'
-            ]);
-        }
-    }
+    //     // dd($openBets);
+    //     if(count($openBets)){
+    //         return response()->json([
+    //             'code'=>'200',
+    //             'data'=> $openBets
+    //         ]);
+    //     } else{
+    //         return response()->json([
+    //             'code'=>'401',
+    //             'data'=> 'No Openbets Available'
+    //         ]);
+    //     }
+    // }
 }

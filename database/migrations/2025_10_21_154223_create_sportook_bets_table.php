@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('username');
             $table->string('betId');
             $table->string('mname');
+            $table->tinyInteger('betOn');
             $table->string('eventId');
             $table->string('marketId');
             $table->string('wallet_before');

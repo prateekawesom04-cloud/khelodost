@@ -94,12 +94,14 @@
    let betslipData = {};
 
    function profitAmount(odd, stake){
-      return parseFloat((odd-1)*stake/100).toFixed(2);
+      return parseFloat((odd-1)*stake).toFixed(2);
+      // return parseFloat((odd-1)*stake/100).toFixed(2);
    }
 
    $('body').on('click','.odd-btn',function(){
       // $('#betslipTab').tab('show');
       betslipData.oddVal = $(this).attr('data-oddVal');
+      betslipData.betOn = $(this).attr('data-beton');
       betslipData.marketId = $(this).parents('.market_data').attr('data-marketId');
       $('#betslipData').css('background',$(this).css('background'));
       $(this).parents('.market_data').append($('#betslipData').show());

@@ -3,7 +3,8 @@
 @section('sports_body')
 <style>
   .open-bets-header {
-    background-color: #0c9971;
+    background-color: #2888ef;
+    /* background-color: #0c9971; */
     color: white;
     padding: 12px 20px;
     border-radius: 8px 8px 0 0;
@@ -77,53 +78,126 @@
   <div class="section-card">
     <div class="open-bets-header">Open Bets</div>
     
-    <div class="section-label">Match Odds</div>
+    {{-- <div class="section-label">Match Odds</div> --}}
     
     <div class="table-responsive">
       <table>
         <thead class="table-header">
           <tr>
-            <th>Event Name</th>
-            <th>Market Type</th>
+            {{-- <th>Sport Name</th> --}}
+            <th>BetId</th>
+            <th>EventId</th>
+            {{-- <th>Market</th>
             <th>Selection</th>
-            <th>Bet Type</th>
-            <th>Stack</th>
-            <th>Round ID</th>
-            <th>Place Time</th>
+            <th>Type</th> --}}
+            <th>Odds</th>
+            <th>Bet Amount</th>
+            <th>Profit/Loss</th>
+            <th>Status</th>
           </tr>
         </thead>
+        <tbody>
+            @if($openBets->count() > 0)
+                  @foreach ($openBets as $bet)
+                      <tr>
+                          {{-- <td class="">{{ $bet->username ?? 'N/A' }}</td> --}}
+                          <td class="">{{ $bet->betId }}</td>
+                          <td class="">{{ $bet->eventId }}</td>
+                          <td class="">{{ $bet->oddVal }}</td>
+                          {{-- <td class="">{{ $bet->stakeValue }}</td> --}}
+                          <td class="">{{ $bet->bet_amount }}</td>
+                          <td class="">{{ $bet->profit ?? 'N/A'}}</td>
+                          <td class="">
+                              @if($bet->status == 0)
+                                  Unsettled
+                                  {{-- <span class="">Unsettled</span> --}}
+                              @elseif($bet->status == 1)
+                                  <span class="text-success">Won</span>
+                              @elseif($bet->status == 2)
+                                  <span class="text-danger">Lost</span>
+                              @else
+                                  N/A
+                              @endif
+                          </td>
+                      </tr>
+                  @endforeach
+              @else
+              <tr>
+                  <td colspan="10" class="">No data!</td>
+              </tr>
+              @endif
+        </tbody>
       </table>
       
+      @if(!$bets->count())
       <div class="no-data">
         <div class="no-data-icon">📄</div>
         <div>No data</div>
       </div>
+      @endif
     </div>
   </div>
 
   <!-- Session Section -->
   <div class="section-card">
-    <div class="section-label">Session</div>
+    <div class="open-bets-header">Bets</div>
+    {{-- <div class="section-label">Bets</div> --}}
     
     <div class="table-responsive">
       <table>
         <thead class="table-header">
           <tr>
-            <th>Event Name</th>
-            <th>Market Type</th>
+            {{-- <th>Sport Name</th> --}}
+            <th>BetId</th>
+            <th>EventId</th>
+            {{-- <th>Market</th>
             <th>Selection</th>
-            <th>Bet Type</th>
-            <th>Stack</th>
-            <th>Round ID</th>
-            <th>Place Time</th>
+            <th>Type</th> --}}
+            <th>Odds</th>
+            <th>Bet Amount</th>
+            <th>Profit/Loss</th>
+            <th>Status</th>
           </tr>
         </thead>
+        <tbody>
+            @if($bets->count() > 0)
+                  @foreach ($bets as $bet)
+                      <tr>
+                          {{-- <td class="">{{ $bet->username ?? 'N/A' }}</td> --}}
+                          <td class="">{{ $bet->betId }}</td>
+                          <td class="">{{ $bet->eventId }}</td>
+                          <td class="">{{ $bet->oddVal }}</td>
+                          {{-- <td class="">{{ $bet->stakeValue }}</td> --}}
+                          <td class="">{{ $bet->bet_amount }}</td>
+                          <td class="">{{ $bet->profit ?? 'N/A'}}</td>
+                          <td class="">
+                              @if($bet->status == 0)
+                                  Unsettled
+                                  {{-- <span class="">Unsettled</span> --}}
+                              @elseif($bet->status == 1)
+                                  <span class="text-success">Won</span>
+                              @elseif($bet->status == 2)
+                                  <span class="text-danger">Lost</span>
+                              @else
+                                  N/A
+                              @endif
+                          </td>
+                      </tr>
+                  @endforeach
+              @else
+              <tr>
+                  <td colspan="10" class="">No data!</td>
+              </tr>
+              @endif
+        </tbody>
       </table>
       
+      @if(!$bets->count())
       <div class="no-data">
         <div class="no-data-icon">📄</div>
         <div>No data</div>
       </div>
+      @endif
     </div>
   </div>
 </main>

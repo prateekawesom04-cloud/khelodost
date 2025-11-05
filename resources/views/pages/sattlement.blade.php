@@ -68,7 +68,8 @@
                                                     <i data-eventName="{{$row->eventName}}" data-eventId="{{ $row->eventId }}" class="fas fa-{{($row->status)?'circle-xmark text-danger b_active':'check text-success b_deactive'}}" style="cursor: pointer;" title="Change Status"></i>
                                                 </div> --}}
                                                 <div>
-                                                    <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="{{($teamB=='Series')?'':'#sattleEvent'}}"></i>
+                                                    <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#sattleEvent"></i>
+                                                    {{-- <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="{{($teamB=='Series')?'':'#sattleEvent'}}"></i> --}}
                                                     {{-- <i data-teamA="{{$explode(' v ',$row->eventName)[0]}}" data-teamB="{{explode(' v ',$row->eventName)[1]}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#sattleEvent"></i> --}}
                                                 </div>
 
@@ -113,6 +114,7 @@
             </div>
             <div class="modal-body modal-header-dark">
                 <form id="sattleEventForm">
+                    <input type="hidden" name="eventId" class="eventIdVal">
                     {{-- <div class="mb-3">
                         <label for="name" class="form-label">Amount</label>
                         <input type="text" id="amount" name="amount" class="form-control">
@@ -125,12 +127,15 @@
                             <option value="2">Team B</option>
                         </select>
                     </div> --}}
+                    <div class="eventData">
 
-                    <div class="flex gap-2">
-                        <input type="radio" name="result" id="" value="0"> <span class="mx-1">Draw</span>
-                        <input type="radio" name="result" id="" value="1"> <span class="mx-1 teamA"></span> wins
-                        <input type="radio" name="result" id="" value="2"> <span class="mx-1 teamB"></span> wins
                     </div>
+
+                    {{-- <div class="flex gap-2">
+                        <input type="radio" name="result" id="" value="1"> <span class="mx-1 teamA"></span>wins
+                        <input type="radio" name="result" id="" value="2"> <span class="mx-1 teamB"></span>wins
+                        <input type="radio" name="result" id="" value="3"> <span class="mx-1">Draw</span>
+                    </div> --}}
 
                 </form>
 
@@ -144,26 +149,82 @@
     </div>
 </div>
 <script>
+
+    function getEventData(res){
+        res = res.response;
+        res = JSON.parse(res);
+        data = res.data;
+        if(! data.length){
+            return false;
+        }
+        $(data).each(function(i,j){
+
+
+            if(j.mname == "MATCH_ODDS" || j.mname == "Bookmaker" || j.mname == "TIED_MATCH" || j.mname == "fancy1" || j.mname == "Normal" || j.mname == "oddeven") {
+
+            // if(data.mname == "MATCH_ODDS" || data.mname == "Bookmaker" || data.mname == "TIED_MATCH" || data.mname == "fancy1" || data.mname == "Normal" || data.mname == "oddeven") {
+
+                let html = '';
+                
+                html += `
+                    <div class="market" data-marketid="${j.mid}" data-mname="${j.mname}">
+                        <h3>${j.mname}</h3>
+                        <div class="mb-3">
+                            <label for="matchType" class="form-label"><span class="eventIdVal"></span>Result</label>
+                            <select id="nat" name="result" class="form-select">
+                `;
+                
+                    $(j.section).each(function(i,j){
+                        html+=`
+                            <option value="${i+1}">${this.nat}</option>
+                        `;
+                    });
+                html +=`
+                            </select>
+                        </div>
+                    </div>
+                        
+                `;
+
+                if(data.mname == "TIED_MATCH"){
+                    $('.market[data-mname=Bookmaker]').after(html);
+                } else{
+                    $('.eventData').append(html);
+                }
+            }
+        });
+    }
+
     $('.sattleEvent').on('click',function(){
         $(this).addClass('disabled');
         let formData = new FormData($('#sattleEventForm')[0]);
+        // console.log('formdata--',formData);
         
         callAjaxFormData('post', `{{route('sattleEvent')}}`, formData, ajaxResponseModal);
+        // callApi('post', `{{route('sattleEvent')}}`, formData, ajaxResponseModal);
     });
 
     $('.editEvent').on('click',function(){
         
-        $('#sattleEventForm').find('.eventIdVal').val($(this).data('eventId'));
-        $('#sattleEventForm').find('.teamA').text($(this).data('teama'));
-        $('#sattleEventForm').find('.teamB').text($(this).data('teamb'));
+        callApi('get',`{{route('user.getEventData')}}`,{eventId:$(this).attr('data-eventId')},getEventData);
+        // $('#sattleEventForm').find('.eventIdVal').val($(this).attr('data-eventId'));
+        // $('#sattleEventForm').find('.teamA').text($(this).attr('data-teama'));
+        // $('#sattleEventForm').find('.teamB').text($(this).attr('data-teamb'));
     });
     
-    $('.updateBonus').on('click',function(){
-        $(this).addClass('disabled');
-        let formData = new FormData($('#sattleEventForm')[0]);
+    // $('.updateBonus').on('click',function(){
+    //     $(this).addClass('disabled');
+    //     let formData = new FormData($('#sattleEventForm')[0]);
         
-        callAjaxFormData('post', `updateBonus`, formData, ajaxResponseModal);
-    });
+    //     callAjaxFormData('post', `updateBonus`, formData, ajaxResponseModal);
+    // });
+
+    // @if($events->count() > 0)
+    //     @foreach($events as $row)
+            // callApi('get',`{{route('user.getEventData')}}`,{eventId:{{$row->eventId}}},updateSattleEvent);
+    //     @endforeach
+    // @endif
+
 </script>
 
 

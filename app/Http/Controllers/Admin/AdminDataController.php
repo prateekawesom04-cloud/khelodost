@@ -17,6 +17,7 @@ use App\Models\Payment;
 use App\Models\Appdata;
 use App\Models\GameHistory;
 use App\Models\Event;
+use App\Models\SportookBet;
 
 class AdminDataController extends Controller
 {
@@ -433,6 +434,12 @@ class AdminDataController extends Controller
         ]);
     }
 
+    public function betlist(Request $request){
+        $bets = SportookBet::all();
+        // $bets = SportookBet::where('status',0)->get();
+        return view('admin.pages.betlist',compact('bets'));
+    }
+
     public function sattlement(Request $request){
         // $eventId = $request->eventId;
         $events = Event::where('status',1)->get();
@@ -440,14 +447,42 @@ class AdminDataController extends Controller
     }
 
     public function sattleEvent(Request $request){
+        // dd($request->all());
         $eventId = $request->eventId;
         $result = $request->result;
-        dd($result);
         
         $event = Event::where('eventId',$eventId)->first();
-        $event->result = $result;
-        $event->status = 2; // settled
+        // dd($event);
+        $event->status = $result;
+        // $event->status = 2; // settled
         $event->save();
+
+        $wonUsers = SportookBet::where('status',0)->where('eventId',$eventId)->where('betOn',$result)->select('username','bet_amount','oddVal','profit')->get();
+        // dd($wonUsers->count());
+        if($wonUsers->count()){
+            
+            // $wonUsers = SportookBet::where('status',0)->where('eventId',$eventId)->select('username','bet_amount','oddVal','profit')->get();
+            
+
+            // dd($wonUsers);
+            foreach ($wonUsers as $user) {
+                $userData = User::where('username',$user->username)->first();
+                $userData->wallet_amount += ($user->profit);
+                // $userData->wallet_amount += ($user->bet_amount * $user->oddVal);
+                $userData->unsattled_amount -= $user->bet_amount;
+                $userData->save();
+            }
+
+            $bets = SportookBet::where('eventId',$eventId)->where('status',0)->where('betOn',$result)->update(['status'=>1]);
+            dd($wonUsers);
+        // } else if($result == 2){
+        //     $bets = SportookBet::where('eventId',$eventId)->where('betOn',2)->get();
+        } else{
+        //     $bets = SportookBet::where('eventId',$eventId)->where('betOn',3)->get();
+        }
+
+        // $bets = SportookBet::where('eventId',$eventId)->get();
+        // $bets = SportookBet::where('eventId',$eventId)->update(['betOn'=>$result]);
 
         return response()->json([
             'message'=> 'Event Sattled Successfully',
