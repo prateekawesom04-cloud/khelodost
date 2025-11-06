@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Schema;
 use Stevebauman\Location\Facades\Location;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Bonus;
 use App\Models\Transaction;
@@ -46,11 +47,33 @@ class AdminDataController extends Controller
         //     $p_l+=$g_user->bet_amount;
         // }
         
-        $events = Event::where('status',1)->get();
+        //total event exposure
+        // $events = Event::where('status',1)->get();
+
+        // $events = DB::table('sportook_bets')
+        $eventsExposure = SportookBet::select('eventId', DB::raw('SUM(bet_amount) as exposure'))
+        // ->join('sportook_bets', 'events.eventId', '=', 'sportook_bets.eventId')
+        ->groupBy('eventId');
+        // ->select('events.eventId', DB::raw('SUM(sportook_bets.bet_amount) as total_bet_amount'))
+        // ->where('events.status', 1)
+        // ->get();
+        // $events = Event::where('events.status',1)->join('sportook_bets','sportook_bets.eventId','=','events.eventId')->select('events.*','sportook_bets.*',"SUM('sportook_bets.bet_amount')")->get();
+
+        $events = Event::joinSub($eventsExposure,'eventsExposure',function($join){
+            $join->on('events.eventId','=','eventsExposure.eventId');
+        })
+        ->where('status',1);
+        
+        $cricketEvents = $events->where('sportname','cricket')->get();
+        $footballEvents = $events->where('sportname','football')->get();
+        $tennisEvents = $events->where('sportname','tennis')->get();
+        
+
+        // dd($events);
         $user = User::whereIn('status', [2])->count();
         $userTotal = User::all()->count();
         // $totalBets = count($gameData);
-        return view('admin.pages.index',compact('user','userTotal','p_l','events'));
+        return view('admin.pages.index',compact('user','userTotal','p_l','cricketEvents','footballEvents','tennisEvents'));
     }
     
     
