@@ -48,7 +48,7 @@ class AdminDataController extends Controller
         // }
         
         //total event exposure
-        // $events = Event::where('status',1)->get();
+        $allEvents = Event::where('status',1)->limit(20)->get();
 
         // $events = DB::table('sportook_bets')
         $eventsExposure = SportookBet::select('eventId', DB::raw('SUM(bet_amount) as exposure'))
@@ -73,7 +73,7 @@ class AdminDataController extends Controller
         $user = User::whereIn('status', [2])->count();
         $userTotal = User::all()->count();
         // $totalBets = count($gameData);
-        return view('admin.pages.index',compact('user','userTotal','p_l','cricketEvents','footballEvents','tennisEvents'));
+        return view('admin.pages.index',compact('user','userTotal','p_l','allEvents','cricketEvents','footballEvents','tennisEvents'));
     }
     
     
