@@ -46,10 +46,11 @@ class AdminDataController extends Controller
         //     $p_l+=$g_user->bet_amount;
         // }
         
+        $events = Event::where('status',1)->get();
         $user = User::whereIn('status', [2])->count();
         $userTotal = User::all()->count();
         // $totalBets = count($gameData);
-        return view('admin.pages.index',compact('user','userTotal','p_l'));
+        return view('admin.pages.index',compact('user','userTotal','p_l','events'));
     }
     
     

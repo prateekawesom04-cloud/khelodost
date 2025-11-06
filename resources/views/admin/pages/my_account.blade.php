@@ -1,44 +1,44 @@
 @extends('admin.master')
 @section('body')
     <!-- Responsive Account Page -->
-    <div class="container-fluid p-2 p-md-4 text-white bg-dark">
+    <div class="container-fluid p-2 p-md-4">
         <div class="row g-2 g-md-3">
 
             <!-- Sidebar -->
             <div class="col-12 col-lg-3">
-                <div class="card shadow-sm h-100 bg-dark text-white">
-                    <!-- <div class="card-header bg-primary text-white fw-bold">
+                <div class="card shadow-sm h-100">
+                    <!-- <div class="card-header bg-primary fw-bold">
                         My Account
                     </div> -->
 
                     <!-- Desktop Navigation -->
-                    <ul class="list-group list-group-flush mb-0 bg-dark">
+                    <ul class="list-group list-group-flush mb-0">
                         <li>
                             <a href="javascript:void(0);"
-                                class="list-group-item list-group-item-action sidebar-link active bg-dark text-white"
+                                class="list-group-item list-group-item-action sidebar-link active"
                                 data-target="profile">Agent Profile</a>
                         </li>
                         <li>
                             <a href="javascript:void(0);"
-                                class="list-group-item list-group-item-action sidebar-link bg-dark text-white"
+                                class="list-group-item list-group-item-action sidebar-link"
                                 data-target="statement">Account Statement</a>
                         </li>
                         <li>
                             <a href="javascript:void(0);"
-                                class="list-group-item list-group-item-action sidebar-link bg-dark text-white"
+                                class="list-group-item list-group-item-action sidebar-link"
                                 data-target="deposit_withdrawal">Deposit & Withdraw</a>
                         </li>
                         @if($user->status==5)
                         <li>
                             <a href="javascript:void(0);"
-                                class="list-group-item list-group-item-action sidebar-link bg-dark text-white"
+                                class="list-group-item list-group-item-action sidebar-link"
                                 data-target="activity">Activity Log</a>
                         </li>
                         @endif
                     </ul>
 
                     <!-- Mobile/Tablet Navigation -->
-                    <div class="d-block d-none p-2 bg-dark">
+                    <div class="d-block d-none p-2">
                         <div class="d-flex gap-1">
                             <a href="javascript:void(0);" class="btn btn-outline-primary sidebar-link active flex-fill"
                                 data-target="profile">Profile</a>
@@ -58,9 +58,9 @@
 
                 <!-- Profile Section -->
                 <div id="profile-section">
-                    <div class="card shadow-sm bg-dark text-white">
-                        <div class="card-header bg-primary text-white fw-bold">Account Details</div>
-                        <div class="card-body p-0">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary fw-bold">Account Details</div>
+                        <div class="card-body p-0 !text-black">
                             <div class="d-flex justify-content-between align-items-center border-bottom px-3 py-2">
                                 <div class="fw-bold">Name</div>
                                 <div class="text-break">{{$user->username}}</div>
@@ -100,10 +100,10 @@
                                 <div>{{$user->unsattled_amount}}</div>
                             </div>
                             @if($user->status!=5)
-                            <div class="d-flex justify-content-between align-items-center border-bottom px-3 py-2">
+                            {{-- <div class="d-flex justify-content-between align-items-center border-bottom px-3 py-2">
                                 <div class="fw-bold">Partnership</div>
                                 <div>{{$user->partnership_percentage}}</div>
-                            </div>
+                            </div> --}}
                             @endif
                             @if($user->phone)
                             <div class="d-flex justify-content-between align-items-center border-bottom px-3 py-2">
@@ -138,8 +138,8 @@
 
                 <!-- Statement Section -->
                 <div id="statement-section" style="display: none;">
-                    <div class="card shadow-sm bg-dark text-white">
-                        <div class="card-header bg-primary text-white fw-bold">Account Statement</div>
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary fw-bold">Account Statement</div>
                         <div class="card-body">
 
                             <div class="row mb-3 g-2">
@@ -147,7 +147,7 @@
                                     <form class="filter_data">
                                         @csrf
                                         <input type="hidden" name="username" value="{{$user->username}}">
-                                        <select name="filter_type" class="form-control bg-dark text-white border-secondary filter_type">
+                                        <select name="filter_type" class="form-control border-secondary filter_type">
                                             <option value="0">Deposit</option>
                                             <option value="1">Withdrawal</option>
                                             {{-- @foreach($providers as $provider)
@@ -181,8 +181,8 @@
 
                 <!-- Deposit Withdrawal Section -->
                 <div id="deposit-withdrawal-section" style="display: none;">
-                    <div class="card shadow-sm bg-dark text-white">
-                        <div class="card-header bg-primary text-white fw-bold">Deposit & Withdraw</div>
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary fw-bold">Deposit & Withdraw</div>
                         <div class="card-body p-0">
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped table-dark mb-0">
@@ -228,8 +228,8 @@
 
                 <!-- Activity Log Section -->
                 <div id="activity-section" style="display: none;">
-                    <div class="card shadow-sm bg-dark text-white">
-                        <div class="card-header bg-primary text-white fw-bold">Activity Log</div>
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary fw-bold">Activity Log</div>
                         <div class="card-body p-0">
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped table-dark mb-0">

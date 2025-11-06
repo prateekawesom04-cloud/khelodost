@@ -731,6 +731,9 @@ main::-webkit-scrollbar {
   color: white;
 }
 
+#liveChart, #backupChart {
+    max-height: 300px;
+}
 
 @media screen and (max-width: 767px) {
     .odd-btn.back2 {
@@ -744,6 +747,10 @@ main::-webkit-scrollbar {
     }
     .odd-btn.lay3 {
         display: none;
+    }
+    
+    #liveChart, #backupChart {
+        max-height: 115px;
     }
 }
 

@@ -4,7 +4,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #292d2e;
+    /* background-color: #292d2e; */
     color: #ffffff;
 }
 
@@ -14,22 +14,22 @@ i.fas {
 
 /* Card Styling */
 .card {
-    background-color: #323740 !important;
+    /* background-color: #323740 !important; */
     color: #ffffff !important;
-    border: 1px solid #75bada !important;
+    border: 1px solid #0c0339 !important;
     border-radius: 6px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 .card-header {
-    background-color: #3f5067 !important;
+    background-color: #0d6efd !important;
     color: #ffffff !important;
-    border-bottom: 1px solid #2b2f36 !important;
+    border-bottom: 1px solid #0c0339 !important;
     font-weight: 600;
 }
 
 .card-body {
-    background-color: #323740 !important;
+    /* background-color: #323740 !important; */
     color: #ffffff !important;
 }
 
@@ -47,15 +47,15 @@ table {
 
 table th,
 table td {
-    background-color: #323740 !important;
-    color: #ffffff !important;
-    border: 1px solid #2b2f36 !important;
+    /* background-color: #323740 !important; */
+    color: #0d6efd !important;
+    border: 1px solid #0c0339 !important;
     padding: 8px;
     text-align: left;
 }
 
 table thead th {
-    background-color: #3f5067 !important;
+    background-color: #0c0339 !important;
     color: #ffffff !important;
     font-weight: bold;
 }
@@ -74,7 +74,8 @@ table tbody tr:hover {
 
 /* Header Container */
 .responsive-header {
-    background: linear-gradient(to bottom, #1f2327, #3b4553, #49585f);
+    /* background: linear-gradient(to bottom, #1f2327, #3b4553, #49585f); */
+    background: #0c0339;
     color: white;
     padding: 12px 16px;
 }
@@ -146,7 +147,8 @@ table tbody tr:hover {
 /* Shrink logo on medium devices */
 @media (max-width: 768px) {
     .header-logo {
-        max-height: 30px;
+        /* max-height: 30px; */
+        width: 200px;
     }
 }
 
@@ -168,30 +170,31 @@ table tbody tr:hover {
     }
 
     .header-logo {
-        max-height: 20px;
+        /* max-height: 20px; */
     }
 }
 
 /* Navbar Active nav link */
 .navbar {
-    background: linear-gradient(to bottom, #1f2327, #3b4655, #4a5357);
-    padding: 0;
+    /* background: linear-gradient(to bottom, #1f2327, #3b4655, #4a5357); */
+    background: #fff;
+    padding: 0.2rem 0;
 }
 
 .nav-link {
-    color: white !important;
+    /* color: white !important; */
     font-weight: 700;
     font-size: 13px;
     padding: 5px 12px !important;
 }
 
 .nav-link:hover {
-    background: rgba(0, 0, 0, 0.2);
+    /* background: rgba(0, 0, 0, 0.2); */
 }
 
 .active-nav {
     background: #f7ffb9 !important;
-    color: #1b00ff !important;
+    color: #0d6efd !important;
     border-radius: 20px 20px 20px 20px;
 }
 .dropdown-menu {
@@ -226,13 +229,19 @@ table tbody tr:hover {
     transform: translateX(-50%);
 }
 
-/* Mobile scroll */
-@media (max-width: 991px) {
     .navbar-nav {
         flex-direction: row !important;
         overflow-x: auto;
         flex-wrap: nowrap;
     }
+
+/* Mobile scroll */
+@media (max-width: 991px) {
+    /* .navbar-nav {
+        flex-direction: row !important;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+    } */
 
     .nav-item {
         flex-shrink: 0;
@@ -343,10 +352,10 @@ td .d-flex {
 
 /* My Account  */
 .sidebar-link.active {
-    background-color: #dceede;
-    color: #000a9b;
+    background-color: #0d6efd;
+    color: #fff;
     font-weight: 600;
-    border-left: 4px solid #00039b;
+    /* border-left: 4px solid #00039b; */
 }
 
 .icon-btn {

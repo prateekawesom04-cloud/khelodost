@@ -56,6 +56,28 @@
                                 <h5>{{$userData->wallet_amount}}</h5>
                             </div>
                         </div>
+                        {{-- <div class="col-6 col-md-2">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div class="card-header bg-success text-white fw-bold">
+                                    <i class="fas fa-bolt me-2"></i>User Data
+                                </div>
+                                <div class="card-body text-center">
+                                    <h5 class="mb-3">Active User Data</h5>
+                                    <canvas id="liveChart" class="w-100" style="max-height: 300px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-2">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div class="card-header bg-info text-white fw-bold">
+                                    <i class="fas fa-database me-2"></i>Backup Sports Profit
+                                </div>
+                                <div class="card-body text-center">
+                                    <h5 class="mb-3">Last Backup Profit</h5>
+                                    <canvas id="backupChart" class="w-100" style="max-height: 300px;"></canvas>
+                                </div>
+                            </div>
+                        </div> --}}
                         <!-- <div class="col-6 col-md-2">
                             <div class="bg-primary text-white p-3 rounded shadow-sm">
                                 <h6>Sport P&L</h6>
@@ -66,30 +88,124 @@
                 </div>
 
                 <!-- Live Sports Profit Chart -->
-                <div class="col-12 col-md-6">
+                <div class="col-6">
                     <div class="card h-100 border-0 shadow-sm">
-                        <div class="card-header bg-success text-white fw-bold">
+                        <div class="card-header bg-success text-white fw-bold" style="background: #28a745 !important;">
                             <i class="fas fa-bolt me-2"></i>User Data
                         </div>
                         <div class="card-body text-center">
                             <h5 class="mb-3">Active User Data</h5>
-                            <canvas id="liveChart" class="w-100" style="max-height: 300px;"></canvas>
+                            <canvas id="liveChart" class="w-100"></canvas>
                         </div>
                     </div>
                 </div>
 
                 <!-- Backup Sports Profit Chart -->
-                <div class="col-12 col-md-6">
+                <div class="col-6">
                     <div class="card h-100 border-0 shadow-sm">
                         <div class="card-header bg-info text-white fw-bold">
                             <i class="fas fa-database me-2"></i>Backup Sports Profit
                         </div>
                         <div class="card-body text-center">
                             <h5 class="mb-3">Last Backup Profit</h5>
-                            <canvas id="backupChart" class="w-100" style="max-height: 300px;"></canvas>
+                            <canvas id="backupChart" class="w-100"></canvas>
                         </div>
                     </div>
                 </div>
+                
+                    <div class="container-fluid py-4">
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center align-middle table-sm">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Event ID</th>
+                                        <th>Name</th>
+                                        <th>Date</th>
+                                        {{-- <th>Description</th> --}}
+                                        <th>Status</th>
+                                        {{-- <th>Action</th> --}}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if($events->count() > 0)
+                                        @foreach($events as $row)
+                                            <tr>
+                                                <td>{{$row->eventId}}</td>
+                                                <td>{{$row->eventName}}</td>
+                                                <td>{{$row->eventDate}}</td>
+                                                @php
+                                                    $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
+                                                    $teamB = explode(' v ',$row->eventName)[1] ?? 'Series';
+                                                @endphp
+                                                <td>{{(!$row->status)?'upcoming':'inplay'}}</td>
+                                                {{-- <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td> --}}
+                                                {{-- <td>
+                                                    <div class="flex flex-row items-center justify-evenly">
+                                                        <div>
+                                                            <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-target="#sattleEvent"></i>
+                                                        </div>
+
+                                                    </div>
+                                                </td> --}}
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                    <tr>
+                                        <td colspan="10" class="text-white text-center">No data!</td>
+                                    </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {{-- <div class="card shadow-sm border-0 mb-4">
+                            <div class="card-header text-white">
+                                <strong>Events</strong>
+                            </div>
+                            <div class="card-body">
+
+
+                                <div class="d-flex flex-wrap flex-nowrap align-items-center mb-3">
+                                    <div class="d-flex align-items-center me-3 flex-shrink-0">
+                                        <label class="me-2 mb-0" for="show-entries">Show</label>
+                                        <select id="show-entries" class="form-select w-auto">
+                                            <option>10</option>
+                                            <option>25</option>
+                                            <option>50</option>
+                                            <option>100</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="d-flex align-items-center ms-auto flex-grow-1">
+                                        <label class="me-2 mb-0" for="search">Search:</label>
+                                        <input type="search" id="search" class="form-control form-control-sm border border-primary"
+                                            style="max-width: 250px;">
+                                    </div>
+                                    <div class="col-6 col-lg-3 px-2">
+                                        <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#sattleEvent">Create Bonus</a>
+                                    </div>
+                                    <div class="col-6 col-lg-3 px-2">
+                                        <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#assignBonusModal">Update Event</a>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3">
+                                    <div class="small text-white mb-2 mb-md-0">Showing 1 to 10 of 0 entries</div>
+                                    <nav>
+                                        <ul class="pagination pagination-sm mb-0">
+                                            <li class="page-item disabled"><a class="page-link">First</a></li>
+                                            <li class="page-item disabled"><a class="page-link">Previous</a></li>
+                                            <li class="page-item disabled"><a class="page-link">Next</a></li>
+                                            <li class="page-item disabled"><a class="page-link">Last</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+
+                            </div>
+                        </div> --}}
+                    </div>
             </div>
         </div>
     </div>
