@@ -522,7 +522,7 @@ class AdminDataController extends Controller
             }
         }
 
-        dd($lossUsers);
+        // dd($lossUsers);
 
         $bets = SportookBet::where('eventId',$eventId)->where('status',0)->where('betOn',$result)->update(['status'=>1]);
         // $bets = SportookBet::where('eventId',$eventId)->get();
