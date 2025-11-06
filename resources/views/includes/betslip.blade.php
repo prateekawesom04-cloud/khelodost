@@ -103,6 +103,7 @@
       betslipData.oddVal = $(this).attr('data-oddVal');
       betslipData.betOn = $(this).attr('data-beton');
       betslipData.marketId = $(this).parents('.market_data').attr('data-marketId');
+      betslipData.mname = $(this).parents('.market_data').attr('data-mname');
       $('#betslipData').css('background',$(this).css('background'));
       $(this).parents('.market_data').append($('#betslipData').show());
       $('.betslip').show();
@@ -164,8 +165,12 @@
 
       marketId = $(`.market_data[data-marketId='${betslipData.marketId}']`);
       
-      odd = $(marketId).find(`.odd-btn[data-oddId='${betslipData.oddVal}']`).html();
+      odd = $(marketId).find(`.odd-btn[data-oddId='${betslipData.oddVal}']`).find('span').html();
       
+      console.log('odd--',odd);
+      console.log('betslipData.oddVal--',betslipData.oddVal);
+      
+
       if(odd != betslipData.oddVal){
          responseToast('Odd changed');
          $('.betslip').hide();

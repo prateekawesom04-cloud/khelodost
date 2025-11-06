@@ -20,7 +20,7 @@ Route::middleware(['auth_middleware'])->group(function () {
     Route::get('signin', function () {
         $referral_code = '';
         
-        if($request->session()->has('referral_code')){
+        if(session()->has('referral_code')){
             
             $referral_code = session('referral_code');
 
@@ -28,7 +28,7 @@ Route::middleware(['auth_middleware'])->group(function () {
 
         // Session::flush();
 
-        return view('pages.register',compact('referral_code'));
+        return view('pages.signin',compact('referral_code'));
         return view('pages.signin');
     })->name('signin');
 

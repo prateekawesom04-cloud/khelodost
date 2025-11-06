@@ -44,7 +44,7 @@
         <div class="mb-3">
           <div class="input-group">
             <span class="input-group-text input-group-text-yellow"><i class="bi bi-phone"></i></span>
-            <input type="text" name="phone" class="form-control rounded-end" placeholder="Enter your mobile number" />
+            <input type="text" name="phone" class="form-control rounded-end" placeholder="Enter your mobile number" maxlength="10" />
           </div>
         </div>
   

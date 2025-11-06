@@ -60,7 +60,7 @@ class AuthController extends Controller
             }
             return response()->json([
                 'message'=> $errors[0],
-                'code'=> '405'
+                'response_code'=> '405'
             ]);
             
         } else{
@@ -92,7 +92,7 @@ class AuthController extends Controller
                     } else{
                         return response()->json([
                             'message'=> 'please confirm your age',
-                            'code'=> '405'
+                            'response_code'=> '405'
                         ]);
                     }
                     
@@ -101,7 +101,7 @@ class AuthController extends Controller
                 } else{
                     return response()->json([
                         'message'=> 'Already Registered',
-                        'code'=> '405',
+                        'response_code'=> '405',
                     ]);
                 }
                 
@@ -135,7 +135,7 @@ class AuthController extends Controller
             } else{
                 return response()->json([
                     'message'=> 'please provide username',
-                    'code'=> '404'
+                    'response_code'=> '404'
                 ]);
             }
 
@@ -163,7 +163,7 @@ class AuthController extends Controller
 
             return response()->json([
                 'message'=> 'Sign In Successfully',
-                'code'=> '200',
+                'response_code'=> '200',
                 'redirect'=>route('index')
             ]);
 
@@ -185,7 +185,7 @@ class AuthController extends Controller
         if(empty($user)){
             return response()->json([
                 'message'=> 'User not found',
-                'code'=> '104'
+                'response_code'=> '104'
             ]);
         } else{
             if(Hash::check($request->password,$user->password)){
@@ -195,7 +195,7 @@ class AuthController extends Controller
             } else{
                 return response()->json([
                     'message'=> 'Wrong Password',
-                    'code'=> '105'
+                    'response_code'=> '105'
                 ]);
             }
         }
@@ -207,7 +207,7 @@ class AuthController extends Controller
         // $activity->save();
         return response()->json([
             'message'=> 'Login Successfully',
-            'code'=> '200',
+            'response_code'=> '200',
             'redirect'=>route('index')
         ]);
     }

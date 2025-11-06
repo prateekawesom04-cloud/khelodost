@@ -449,38 +449,158 @@ class AdminDataController extends Controller
     public function sattleEvent(Request $request){
         // dd($request->all());
         $eventId = $request->eventId;
+        $marketId = $request->marketId;
         $result = $request->result;
         
         $event = Event::where('eventId',$eventId)->first();
+        // $event = Event::where('eventId',$eventId)->where('marketId',$eventId)->first();
         // dd($event);
-        $event->status = $result;
+        // $event->status = $result;
         // $event->status = 2; // settled
-        $event->save();
+        // $event->save();
 
-        $wonUsers = SportookBet::where('status',0)->where('eventId',$eventId)->where('betOn',$result)->select('username','bet_amount','oddVal','profit')->get();
-        // dd($wonUsers->count());
+        $sattledBets = SportookBet::where(
+            [
+            'status'=>1,
+            'eventId'=>$eventId,
+            'marketid'=>$request->marketId
+            ])
+            ->select('username','bet_amount','oddVal','profit')->get();
+
+        if($sattledBets->count()){
+            return $this->editSattleEvent($request);
+        }
+
+        $wonUsers = SportookBet::where(
+            [
+            'status'=>0,
+            'eventId'=>$eventId,
+            'betOn'=>$result,
+            'marketid'=>$request->marketId
+            ])
+            ->select('username','bet_amount','oddVal','profit')->get();
+
+        $lossUsers = SportookBet::where(
+            [
+            'status'=>0,
+            'eventId'=>$eventId,
+            'marketid'=>$request->marketId
+            ])
+            ->where('betOn','!=',$result)->select('username','bet_amount','oddVal','profit')->get();
+
+        // dump('wonusers---',$wonUsers);
+        // dd('lossUsers-----',$lossUsers);
         if($wonUsers->count()){
             
             // $wonUsers = SportookBet::where('status',0)->where('eventId',$eventId)->select('username','bet_amount','oddVal','profit')->get();
-            
 
             // dd($wonUsers);
+
             foreach ($wonUsers as $user) {
                 $userData = User::where('username',$user->username)->first();
-                $userData->wallet_amount += ($user->profit);
+                $userData->wallet_amount += $user->profit;
                 // $userData->wallet_amount += ($user->bet_amount * $user->oddVal);
                 $userData->unsattled_amount -= $user->bet_amount;
                 $userData->save();
             }
 
-            $bets = SportookBet::where('eventId',$eventId)->where('status',0)->where('betOn',$result)->update(['status'=>1]);
-            dd($wonUsers);
-        // } else if($result == 2){
-        //     $bets = SportookBet::where('eventId',$eventId)->where('betOn',2)->get();
-        } else{
-        //     $bets = SportookBet::where('eventId',$eventId)->where('betOn',3)->get();
         }
 
+            // dd($wonUsers);
+        // } else if($result == 2){
+        //     $bets = SportookBet::where('eventId',$eventId)->where('betOn',2)->get();
+        // } else{
+        //     $bets = SportookBet::where('eventId',$eventId)->where('betOn',3)->get();
+        
+        if($lossUsers->count()){
+            foreach ($lossUsers as $user) {
+                $userData = User::where('username',$user->username)->first();
+                $userData->wallet_amount -= $user->bet_amount;
+                // $userData->wallet_amount += ($user->bet_amount * $user->oddVal);
+                $userData->unsattled_amount -= $user->bet_amount;
+                $userData->save();
+            }
+        }
+
+        dd($lossUsers);
+
+        $bets = SportookBet::where('eventId',$eventId)->where('status',0)->where('betOn',$result)->update(['status'=>1]);
+        // $bets = SportookBet::where('eventId',$eventId)->get();
+        // $bets = SportookBet::where('eventId',$eventId)->update(['betOn'=>$result]);
+
+        return response()->json([
+            'message'=> 'Event Sattled Successfully',
+            'response_code'=> '200'
+        ]);
+    }
+    
+    public function editSattleEvent(Request $request){
+        // dd($request->all());
+        $eventId = $request->eventId;
+        $marketId = $request->marketId;
+        $result = $request->result;
+        
+        $event = Event::where('eventId',$eventId)->first();
+        // $event = Event::where('eventId',$eventId)->where('marketId',$eventId)->first();
+        // dd($event);
+        // $event->status = $result;
+        // $event->status = 2; // settled
+        // $event->save();
+
+        $wonUsers = SportookBet::where(
+            [
+            'status'=>0,
+            'eventId'=>$eventId,
+            'betOn'=>$result,
+            'marketid'=>$request->marketId
+            ])
+            ->select('username','bet_amount','oddVal','profit')->get();
+
+        $lossUsers = SportookBet::where(
+            [
+            'status'=>0,
+            'eventId'=>$eventId,
+            'marketid'=>$request->marketId
+            ])
+            ->where('betOn','!=',$result)->select('username','bet_amount','oddVal','profit')->get();
+
+        // dump('wonusers---',$wonUsers);
+        // dd('lossUsers-----',$lossUsers);
+        if($wonUsers->count()){
+            
+            // $wonUsers = SportookBet::where('status',0)->where('eventId',$eventId)->select('username','bet_amount','oddVal','profit')->get();
+
+            // dd($wonUsers);
+
+            foreach ($wonUsers as $user) {
+                $userData = User::where('username',$user->username)->first();
+                $userData->wallet_amount += $user->profit;
+                // $userData->wallet_amount += ($user->bet_amount * $user->oddVal);
+                $userData->unsattled_amount -= $user->bet_amount;
+                $userData->save();
+            }
+
+        }
+
+            // dd($wonUsers);
+        // } else if($result == 2){
+        //     $bets = SportookBet::where('eventId',$eventId)->where('betOn',2)->get();
+        // } else{
+        //     $bets = SportookBet::where('eventId',$eventId)->where('betOn',3)->get();
+        
+        if($lossUsers->count()){
+            foreach ($lossUsers as $user) {
+                $userData = User::where('username',$user->username)->first();
+                $userData->wallet_amount -= $user->bet_amount;
+                // $userData->wallet_amount += ($user->bet_amount * $user->oddVal);
+                $userData->unsattled_amount -= $user->bet_amount;
+                $userData->save();
+            }
+        }
+
+        dd($lossUsers);
+
+        $bets = SportookBet::where('eventId',$eventId)->where('status',0)->where('betOn',$result)->update(['status'=>1]);
         // $bets = SportookBet::where('eventId',$eventId)->get();
         // $bets = SportookBet::where('eventId',$eventId)->update(['betOn'=>$result]);
 

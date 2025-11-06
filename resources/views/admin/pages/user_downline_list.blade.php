@@ -79,7 +79,7 @@
                     <table class="table table-bordered table-sm align-middle text-center small mb-0">
                         <thead class="table-light sticky-top">
                             <tr>
-                                <th>VIP</th>
+                                {{-- <th>VIP</th> --}}
                                 <th>Username</th>
                                 <th>Balance</th>
                                 <th>Exposure</th>

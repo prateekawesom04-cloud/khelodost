@@ -262,7 +262,8 @@ class UserController extends Controller
     }
     
     public function openBets(Request $request){
-        $openBets = SportookBet::where('username',$this->currentUser->username)->whereIn('status',[1])->orderBy('id','desc')->get();
+        $openBets = SportookBet::where('username',$this->currentUser->username)->orderBy('id','desc')->get();
+        // $openBets = SportookBet::where('username',$this->currentUser->username)->whereIn('status',[1])->orderBy('id','desc')->get();
 
         // dd($openBets);
         if(count($openBets)){

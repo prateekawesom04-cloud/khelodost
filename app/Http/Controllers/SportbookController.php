@@ -81,7 +81,7 @@ class SportbookController extends Controller
         // dd($body);
         return response()->json([
             'response'=>$body,
-            'code'=>'200'
+            'response_code'=>'200'
         ]);
     }
 
@@ -98,7 +98,7 @@ class SportbookController extends Controller
         // dd($body);
         return response()->json([
             'response'=>$body,
-            'code'=>'200'
+            'response_code'=>'200'
         ]);
     }
 
@@ -110,7 +110,7 @@ class SportbookController extends Controller
         return response()->json([
             'data'=>$body,
             'sport'=>$request->sportname,
-            'code'=>'200'
+            'response_code'=>'200'
         ]);
     }
     
@@ -120,7 +120,7 @@ class SportbookController extends Controller
         // dd($body);
         return response()->json([
             'response'=>$body,
-            'code'=>'200'
+            'response_code'=>'200'
         ]);
     }
 

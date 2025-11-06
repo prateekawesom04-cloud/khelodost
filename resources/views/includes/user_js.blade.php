@@ -214,7 +214,7 @@
                                 betOn = temp; // lay
                             }
                             html +=`
-                                    <a data-oddVal="${j.odds}" data-beton='${betOn}' class="odd-btn ${j.otype} ${j.oname}">${j.odds}<small>${j.size}</small></a>
+                                    <a data-oddVal="${j.odds}" data-beton='${betOn}' class="odd-btn ${j.otype} ${j.oname}"><span>${j.odds}</span><small>${j.size}</small></a>
                             `;
                         });
 
@@ -257,7 +257,9 @@
                     setTimeout(() => {
                         $(odd).removeClass('odd_change');
                     }, 400);
-                    $(odd).html(this.odds);
+                    // $(odd).html(this.odds);
+                    $(odd).find('span').html(this.odds);
+                    $(odd).find('small').html(this.size);
                 }
             });
         });
