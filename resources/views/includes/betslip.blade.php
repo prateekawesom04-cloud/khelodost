@@ -12,7 +12,7 @@
          <span id="profit" class="my-1 text-green-500"></span>
          <span id="loss" class="my-1 text-red-500"></span>
       </div> --}}
-      <div class="flex flex-row flex-wrap justify-evenly items-center bet-btns">
+      <div class="flex flex-row flex-wrap justify-evenly items-center bet-btns w-full">
          <div class="col-6 p-[0.4rem]">
             <div class="flex flex-col gap-1">
                   {{-- <label for="">Odds</label> --}}
@@ -63,7 +63,7 @@
          </div>
       </div>
       
-      <div class="flex flex-row flex-wrap justify-evenly items-center bet-btns">
+      <div class="flex flex-row flex-wrap justify-evenly items-center bet-btns w-full">
          <div class="col-3 p-[0.1rem]">
             <button type="button" class="!bg-[#2888ef] text-white" value="100">Min Stake</button>
          </div>
@@ -91,6 +91,21 @@
 
 <script>
 
+   @if($userData)
+   
+   // let bets = {!! json_encode($userData->bets) !!};
+   let user_bets = localStorage.getItem('user_bets') ? JSON.parse(localStorage.getItem('user_bets')) : {};
+
+   if(Object.keys(user_bets).length){
+      
+      $.each(user_bets, function(i,j){
+         $('market_data[data-marketId="'+j.marketId+'"]').find(`.loss`).html(j.bet_amount);
+         $('market_data[data-marketId="'+j.marketId+'"]').find(`.profit`).html(j.profit);
+      });
+   }
+
+   @endif
+
    let betslipData = {};
 
    function profitAmount(odd, stake){
@@ -108,18 +123,24 @@
       $(this).parents('.market_data').append($('#betslipData').show());
       $('.betslip').show();
 
-      if($('.loss').length){
-         $('.loss').remove();
-         $('.profit').remove();
-      }
+      // if($('.loss').length){
+         $('.loss').hide();
+         $('.profit').hide();
+      // }
 
       $(this).parents('.market').find('.market_data').each(function(i,j){
          // if($(j).attr('data-marketId') != betslipData.marketId){
-            $(j).find('.match_nat').append('<span class="loss my-1 text-red-500"></span>');
+            // $(j).find('.match_nat').append('<span class="loss my-1 text-red-500"></span>');
+            $(j).find('.match_nat').find('.loss').show();
+            $(j).find('.match_nat').find('.profit').hide();
          // }
       });
-      $(this).parents('.market_data').find('.loss').remove();
-      $(this).parents('.market_data').find('.match_nat').append('<span class="profit my-1 text-green-500"></span>');
+
+      // $(this).parents('.market_data').find('.loss').remove();
+      $(this).parents('.market_data').find('.loss').hide();
+      $(this).parents('.market_data').find('.profit').show();
+      // $(this).parents('.market_data').find('.match_nat').append('<span class="profit my-1 text-green-500"></span>');
+      // $(this).parents('.market_data').find('.match_nat').append('<span class="profit my-1 text-green-500"></span>');
       updateBetslip(this);
       stakeUpdate(100);
 
@@ -150,15 +171,22 @@
    }
    
    function stakeUpdate(val){
-      
+      if(val==''){
+         return false;
+      }
+      let marketDiv = $(`.market_data[data-marketId='${betslipData.marketId}']`);
       // if(val < 100){
       //    responseToast('minimum stake value is 100');
       // }
       betslipData.bet_amount = val;
       betslipData.profit = profitAmount(betslipData.oddVal, val);
-      $('.profit').html(betslipData.profit);
-      $('.loss').html(val);
+
+      $(marketDiv).find('.profit').html(betslipData.profit);
+      $(marketDiv).find('.loss').html(val);
+      // $('.loss').html(val);
       $('#stakeValue').val(val);
+   
+      
    }
 
    function placeBet(){
@@ -166,9 +194,6 @@
       marketId = $(`.market_data[data-marketId='${betslipData.marketId}']`);
       
       odd = $(marketId).find(`.odd-btn[data-oddId='${betslipData.oddVal}']`).find('span').html();
-      
-      console.log('odd--',odd);
-      console.log('betslipData.oddVal--',betslipData.oddVal);
       
 
       if(odd != betslipData.oddVal){
@@ -186,8 +211,12 @@
    }
    
    function postPlacebet(res){
+   
       ajaxResponse(res);
       if(res.code == 200){
+         $('.betslip').hide();
+         user_bets[betslipData.marketId] = betslipData;
+         localStorage.setItem('user_bets', JSON.stringify(user_bets));
          callApi('get','{{route('user.openbets')}}',null,openBets);
       }
    }

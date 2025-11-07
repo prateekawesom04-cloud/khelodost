@@ -11,27 +11,29 @@
             <div class="card-body">
 
                 <!-- Table Controls -->
-                <div class="d-flex flex-wrap flex-nowrap align-items-center mb-3">
-                    <div class="d-flex align-items-center me-3 flex-shrink-0">
-                        <label class="me-2 mb-0" for="show-entries">Show</label>
-                        <select id="show-entries" class="form-select w-auto">
-                            <option>10</option>
-                            <option>25</option>
-                            <option>50</option>
-                            <option>100</option>
-                        </select>
-                    </div>
+                <div class="row gy-2 gx-3 align-items-center justify-between mb-3 small">
 
-                    <div class="d-flex align-items-center ms-auto flex-grow-1">
-                        <label class="me-2 mb-0" for="search">Search:</label>
-                        <input type="search" id="search" class="form-control form-control-sm border border-primary"
-                            style="max-width: 250px;">
+                    <div class="col-12 col-md-6 flex">
+                        <div class="col-6 d-flex align-items-center">
+                            <label class="me-2" for="show-entries">Show</label>
+                            <select id="show-entries" class="form-select w-auto">
+                                <option>10</option>
+                                <option>25</option>
+                                <option>50</option>
+                                <option>100</option>
+                            </select>
+                            <span class="ms-2">entries</span>
+                        </div>
+                        <div class="col-6">
+                            <input id="search" type="search" class="form-control form-control-sm border-primary"
+                                placeholder="Search" style="min-width: 100%;">
+                        </div>
                     </div>
                     {{-- <div class="col-6 col-lg-3 px-2">
                         <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#editBonusModal">Create Bonus</a>
                     </div> --}}
-                    <div class="col-6 col-lg-3 px-2">
-                        <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#assignBonusModal">Assign  Bonus</a>
+                    <div class="col-12 col-md-3">
+                        <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100 h-full !flex justify-center items-center" data-bs-toggle="modal" data-bs-target="#assignBonusModal">Assign  Bonus</a>
                     </div>
                 </div>
 

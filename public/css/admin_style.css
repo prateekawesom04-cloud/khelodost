@@ -201,8 +201,10 @@ table tbody tr:hover {
 .dropdown-menu {
     position: absolute !important;
     z-index: 9999 !important;
-    background: linear-gradient(to bottom, #1f2327, #425063, #5d7581);
-    border: 1px solid #4b4a5e;
+    /* background: linear-gradient(to bottom, #1f2327, #425063, #5d7581); */
+    /* background: #0c0339; */
+    /* border: 1px solid #4b4a5e; */
+    color: #000 !important;
     min-width: 180px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -215,7 +217,7 @@ table tbody tr:hover {
 
 .dropdown-item {
     font-size: 13px;
-    color: white !important;
+    color: black !important;
     font-weight: 600 !important;
 }
 
@@ -234,6 +236,15 @@ table tbody tr:hover {
         flex-direction: row !important;
         overflow-x: auto;
         flex-wrap: nowrap;
+    }
+
+    
+    .dropdown-menu {
+        position: fixed !important;
+        /* max-height: 200px; */
+        overflow-y: auto;
+        top: 101.3px !important;
+        left: 80% !important;
     }
 
 /* Mobile scroll */
@@ -256,6 +267,7 @@ table tbody tr:hover {
         position: fixed !important;
         max-height: 200px;
         overflow-y: auto;
+        left: 50% !important;
     }
 }
 

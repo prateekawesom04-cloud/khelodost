@@ -339,7 +339,7 @@ class AdminDataController extends Controller
         ->where([
             'admin_username'=>$user->username,
             'payment_type'=>1,
-            'manual'=>1
+            // 'manual'=>1
         ])->get();
         // dd($transactions);
         return view('admin.pages.withdraw',compact('transactions'));

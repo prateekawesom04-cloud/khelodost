@@ -79,6 +79,7 @@ class getSportFixture extends Command
                         $data['lay1'] = $item['lay1'];
                         $data['lay12'] = $item['lay12'];
                         $data['section'] = $item['section'];
+                        $data['beventId'] = $item['beventId'];
                         
                         $sportDataArray[] = $data;
 
@@ -103,6 +104,7 @@ class getSportFixture extends Command
                         $data['mname'] = $item['mname'];
                         $data['stime'] = $item['stime'];
                         $data['section'] = $item['section'];
+                        $data['beventId'] = $item['beventId'];
                         
                         $sportDataArray[] = $data;
                         $date = $item['stime'];

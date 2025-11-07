@@ -127,7 +127,11 @@
     }
 
     function create_cMarketDiv(data){
+        $('iframe').attr('src',`https://tv.jaipursofttech.com/livetv.php?eventId=${data.beventId}`);
         
+        let user_bets = JSON.parse(localStorage.getItem('user_bets')) || {};
+        let loss = user_bets[data.mid] ? user_bets[data.mid].bet_amount : '';
+        let profit = user_bets[data.mid] ? user_bets[data.mid].profit : '';
         let html = '';
         
         html += `
@@ -201,8 +205,13 @@
                     }
                     html +=`
                         <div class="m_row${i} flex flex-col items-center border-b border-gray-500 market_data" data-marketId="${data.mid}" data-nat="${this.nat}" data-mname="${data.mname}">
-                            <div class="flex flex-row items-center justify-between w-full">
-                                <div class="flex justify-between items-center match_nat w-[60%]"><span class="match_nat${i}">${this.nat}</span></div>
+                            <div class="match_nat flex flex-row items-center justify-between w-full">
+                                <div class="flex justify-between items-center match_nat56 w-[60%]"><span class="match_nat${i}">${this.nat}</span>
+                                    <div class="flex flex-1 justify-end gap-2">
+                                        <span class="loss my-1 text-red-500">${loss}</span>
+                                        <span class="profit my-1 text-green-500">${profit}</span>
+                                    </div>
+                                </div>
                                 <div class="flex flex-1 justify-end relative">
                         `;
 
