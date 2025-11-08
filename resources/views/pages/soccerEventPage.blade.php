@@ -3,7 +3,7 @@
 @section('sports_body')
 <main class="layout-content-center p-3">
             <div class="mb-2">
-                <iframe src="https://tv.jaipursofttech.com/livetv.php?eventId={{$eventId}}" frameborder="0" class="w-full"></iframe>
+                <iframe src="https://tv.jaipursofttech.com/livetv.php?eventId={{$eventData->beventId}}" frameborder="0" class="w-full"></iframe>
                 {{-- <div class="rounded-4 text-center flex flex-row max-w-full overflow-hidden app_scroller">
                     <a href="{{ route('index') }}" class="min-w-full">
                         <img src="{{ asset('banners/banner1.png') }}" class="img-fluid" alt="Banner">

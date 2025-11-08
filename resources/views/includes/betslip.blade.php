@@ -96,20 +96,35 @@
    // let bets = {!! json_encode($userData->bets) !!};
    let user_bets = localStorage.getItem('user_bets') ? JSON.parse(localStorage.getItem('user_bets')) : {};
 
-   if(Object.keys(user_bets).length){
-      
-      $.each(user_bets, function(i,j){
-         $('market_data[data-marketId="'+j.marketId+'"]').find(`.loss`).html(j.bet_amount);
-         $('market_data[data-marketId="'+j.marketId+'"]').find(`.profit`).html(j.profit);
-      });
+   function loadBets(){
+
+      if(Object.keys(user_bets).length){
+         
+         $.each(user_bets, function(i,j){
+
+            $(`.market_data[data-marketId='${j.marketId}']`).find(`.odd-btn[data-oddVal='${j.oddVal}']`).parents('.match_nat').find('.profit').html(j.profit);
+            $(`.market_data[data-marketId='${j.marketId}']`).find(`.odd-btn[data-oddVal!='${j.oddVal}']`).parents('.match_nat').find('.loss').html(j.bet_amount);
+
+            $(`.market_data[data-marketId='${j.marketId}']`).find(`.odd-btn[data-oddVal='${j.oddVal}']`).parents('.match_nat').find('.loss').html('');
+            // $('market_data[data-marketId="'+j.marketId+'"]').find(`.odd-btn[data-oddId!='${j.oddVal}']`).parent().find('.match_nat').find('.loss').html(j.loss);
+         });
+      }
+
    }
+   $(document).ready(function(){
+      loadBets();
+   });
 
    @endif
 
    let betslipData = {};
 
-   function profitAmount(odd, stake){
-      return parseFloat((odd-1)*stake).toFixed(2);
+   function profitAmount(odd, stake,mname='MATCH_ODDS'){
+      if(mname != 'Normal'){
+         return parseFloat(odd*stake).toFixed(2);
+      } else {
+         return parseFloat((odd-1)*stake).toFixed(2);
+      }
       // return parseFloat((odd-1)*stake/100).toFixed(2);
    }
 
@@ -175,11 +190,16 @@
          return false;
       }
       let marketDiv = $(`.market_data[data-marketId='${betslipData.marketId}']`);
+      let mname = $(marketDiv).attr('data-mname');
       // if(val < 100){
       //    responseToast('minimum stake value is 100');
       // }
       betslipData.bet_amount = val;
-      betslipData.profit = profitAmount(betslipData.oddVal, val);
+      odd = betslipData.oddVal;
+      if(mname == 'Normal'){
+         odd = $(marketDiv).find(`.odd-btn[data-oddId='${betslipData.oddVal}']`).find('.odd_size').html();
+      }
+      betslipData.profit = profitAmount(odd, val,mname);
 
       $(marketDiv).find('.profit').html(betslipData.profit);
       $(marketDiv).find('.loss').html(val);

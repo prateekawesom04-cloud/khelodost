@@ -40,23 +40,35 @@ class eventlist extends Command
                 $eventId = $event['gmid'];
                 $eventName = $event['ename'];
                 $date = $event['stime'];
+                $beventId = $event['beventId'];
                 $status = (strtotime(now()) > strtotime($date)) ? 1 : 0;
             } else {
                 $eventId = $event['gameId'];
                 $eventName = explode(' / ',$event['eventName'])[0];
                 $date = explode(' / ',$event['eventName'])[1];
                 $date = explode(' (IST)',$date)[0];
+                $beventId = $event['beventId'];
                 $status = (strtotime(now()) > strtotime($date)) ? 1 : 0;
             }
-            Event::updateOrCreate(
-                ['eventId' => $eventId],
-                [
-                    'eventName' => $eventName,
-                    'eventDate' => $date,
-                    'sportname' => $sportname,
-                    'status' => $status
-                ]
-            );
+
+            $event = new Event();
+            $event->eventId = $eventId;
+            $event->eventName = $eventName;
+            $event->eventDate = $date;
+            $event->sportname = $sportname;
+            $event->beventId = $beventId;
+            $event->status = $status;
+            $event->save();
+            // Event::updateOrCreate(
+            //     ['eventId' => $eventId],
+            //     [
+            //         'eventName' => $eventName,
+            //         'eventDate' => $date,
+            //         'sportname' => $sportname,
+            //         'beventId' => $beventId,
+            //         'status' => $status
+            //     ]
+            // );
         }
 
     }

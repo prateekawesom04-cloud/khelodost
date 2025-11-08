@@ -116,8 +116,9 @@
                 // if(j.gtype == "match" || j.gtype == "match1" || (j.gtype == "fancy" && j.mname =="Normal") || j.gtype == "oddeven" || j.gtype == "fancy1") {
                 //     create_cMarketDiv(this);
                 // } 
-                if(j.mname == "MATCH_ODDS" || j.mname == "Bookmaker" || j.mname == "TIED_MATCH" || j.mname == "fancy1" || j.mname == "Normal" || j.mname == "oddeven") {
+                if(j.mname == "MATCH_ODDS" || j.mname == "Bookmaker" || j.mname == "TIED_MATCH" || j.mname == "fancy1" || j.mname == "Normal") {
                     create_cMarketDiv(this);
+                    loadBets();
                 }
             } else {
                 update_cMarket(this);
@@ -127,11 +128,14 @@
     }
 
     function create_cMarketDiv(data){
-        $('iframe').attr('src',`https://tv.jaipursofttech.com/livetv.php?eventId=${data.beventId}`);
         
         let user_bets = JSON.parse(localStorage.getItem('user_bets')) || {};
         let loss = user_bets[data.mid] ? user_bets[data.mid].bet_amount : '';
         let profit = user_bets[data.mid] ? user_bets[data.mid].profit : '';
+
+        loss = '';
+        profit = '';
+
         let html = '';
         
         html += `
@@ -208,8 +212,8 @@
                             <div class="match_nat flex flex-row items-center justify-between w-full">
                                 <div class="flex justify-between items-center match_nat56 w-[60%]"><span class="match_nat${i}">${this.nat}</span>
                                     <div class="flex flex-1 justify-end gap-2">
-                                        <span class="loss my-1 text-red-500">${loss}</span>
-                                        <span class="profit my-1 text-green-500">${profit}</span>
+                                        <span class="loss my-1 text-red-500"></span>
+                                        <span class="profit my-1 text-green-500"></span>
                                     </div>
                                 </div>
                                 <div class="flex flex-1 justify-end relative">
@@ -223,7 +227,7 @@
                                 betOn = temp; // lay
                             }
                             html +=`
-                                    <a data-oddVal="${j.odds}" data-beton='${betOn}' class="odd-btn ${j.otype} ${j.oname}"><span>${j.odds}</span><small>${j.size}</small></a>
+                                    <a data-oddVal="${j.odds}" data-beton='${betOn}' class="odd-btn ${j.otype} ${j.oname}"><span>${j.odds}</span><small odd_size>${j.size}</small></a>
                             `;
                         });
 

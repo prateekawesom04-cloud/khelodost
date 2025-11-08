@@ -32,12 +32,12 @@ if($userData){
 
     </div>
 </div>
+    @include('includes.betslip')
 
     @include('includes.user_js')
     @if($userData)
         @include('includes.addStake')
     @endif
-    @include('includes.betslip')
     <script>
         $(document).ready(function(){
             setTimeout(() => {

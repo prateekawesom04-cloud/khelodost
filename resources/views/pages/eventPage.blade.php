@@ -4,8 +4,8 @@
 <main class="layout-content-center p-3">
     
             <!-- 🔷 Banner Image Card -->
-            <div class="mb-2">
-                <iframe src="https://tv.jaipursofttech.com/livetv.php?eventId={{$eventId}}" frameborder="0" class="w-full"></iframe>
+            <div class="mb-2 relative" style="height: 285px;">
+                <iframe src="https://tv.jaipursofttech.com/livetv.php?eventId={{$eventData->beventId}}" frameborder="0" class="w-full h-full absolute top-0 left-0"></iframe>
                 {{-- <div class="rounded-4 text-center flex flex-row max-w-full overflow-hidden app_scroller">
                     <a href="{{ route('index') }}" class="min-w-full">
                         <img src="{{ asset('banners/banner1.png') }}" class="img-fluid" alt="Banner">

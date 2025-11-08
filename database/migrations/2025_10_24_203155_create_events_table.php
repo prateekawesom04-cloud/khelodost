@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('eventId');
+            $table->string('beventId');
             $table->string('eventName');
             $table->string('eventDate');
             $table->string('sportname');
             $table->string('status');
+            $table->json('additional_data')->nullable();
             $table->timestamps();
         });
     }
