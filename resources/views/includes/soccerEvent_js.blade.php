@@ -149,10 +149,11 @@
                     if(i == data.length-1) {
                         eventPageLoading = true;
                     }
-                    // if(j.gtype == "match" || j.gtype == "match1" || (j.gtype == "fancy" && j.mname =="Normal") || j.gtype == "oddeven" || j.gtype == "fancy1") {
+                    if(j.gtype == "match" || j.gtype == "match1" || (j.gtype == "fancy" && j.mname =="Normal") || j.gtype == "oddeven" || j.gtype == "fancy1") {
                     //     create_cMarketDiv(this);
                     // } 
-                    if(j.mname == "MATCH_ODDS" || j.mname == "Bookmaker") {
+                    // if(j.mname == "MATCH_ODDS") {
+                    // if(j.mname == "MATCH_ODDS" || j.mname == "Bookmaker") {
                         createMarketDiv(this);
                     }
                 } else {

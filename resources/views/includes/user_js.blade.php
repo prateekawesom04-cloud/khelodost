@@ -100,7 +100,7 @@
 
 
     
-    let cricketEventPageLoading = false;
+    let cricketEventPageLoading = 0;
     function updateCricketEvent(res){
 
         res = res.response;
@@ -111,16 +111,20 @@
         $(data).each(function(i,j){
             if(!cricketEventPageLoading) {
                 if(i == data.length-1) {
-                    cricketEventPageLoading = true;
+                    cricketEventPageLoading = 1;
                 }
                 // if(j.gtype == "match" || j.gtype == "match1" || (j.gtype == "fancy" && j.mname =="Normal") || j.gtype == "oddeven" || j.gtype == "fancy1") {
                 //     create_cMarketDiv(this);
                 // } 
                 if(j.mname == "MATCH_ODDS" || j.mname == "Bookmaker" || j.mname == "TIED_MATCH" || j.mname == "fancy1" || j.mname == "Normal") {
                     create_cMarketDiv(this);
-                    loadBets();
+                    // loadBets();
                 }
             } else {
+                if(cricketEventPageLoading==1){
+                    loadBets();
+                }
+                cricketEventPageLoading +=1;
                 update_cMarket(this);
             } 
             
@@ -208,10 +212,11 @@
                         // return;
                     }
                     html +=`
-                        <div class="m_row${i} flex flex-col items-center border-b border-gray-500 market_data" data-marketId="${data.mid}" data-nat="${this.nat}" data-mname="${data.mname}">
+                        <div class="m_row${i} flex flex-col items-center border-b border-gray-500 market_data" data-sid="${j.sid}" data-marketId="${data.mid}" data-nat="${this.nat}" data-mname="${data.mname}">
                             <div class="match_nat flex flex-row items-center justify-between w-full">
-                                <div class="flex justify-between items-center match_nat56 w-[60%]"><span class="match_nat${i}">${this.nat}</span>
-                                    <div class="flex flex-1 justify-end gap-2">
+                                <div class="flex justify-between items-center match_nat564565 w-[60%]">
+                                    <span class="match_nat${i}">${this.nat}</span>
+                                    <div class="flex flex-1 justify-end gap-2 gjfnj">
                                         <span class="loss my-1 text-red-500"></span>
                                         <span class="profit my-1 text-green-500"></span>
                                     </div>
@@ -222,12 +227,16 @@
                         $(this.odds).each(function(i,j){
                             // var betOn = 1;
                             if((i+1)%2 == 0){
+                                betType = 'lay';
+                                betType = 1;
                                 betOn = 0; // back
                             } else{
+                                betType = 'back';
+                                betType = 0;
                                 betOn = temp; // lay
                             }
                             html +=`
-                                    <a data-oddVal="${j.odds}" data-beton='${betOn}' class="odd-btn ${j.otype} ${j.oname}"><span>${j.odds}</span><small odd_size>${j.size}</small></a>
+                                    <a data-betType="${betType}" data-oddVal="${j.odds}" data-size="${j.size}" data-beton='${betOn}' class="odd-btn ${j.otype} ${j.oname}"><span>${j.odds}</span><small class="odd_size">${j.size}</small></a>
                             `;
                         });
 

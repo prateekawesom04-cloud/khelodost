@@ -37,6 +37,7 @@ if($userData){
     @include('includes.user_js')
     @if($userData)
         @include('includes.addStake')
+        @include('includes.normalbetModal')
     @endif
     <script>
         $(document).ready(function(){
