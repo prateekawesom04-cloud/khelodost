@@ -51,7 +51,7 @@
 
     // Sport Page js start
         function cricket(data){
-            let eventPage = "{{url('eventPage')}}";
+            let eventPage = "{{url('eventDetail')}}";
             let c_time = (new Date()).getTime();
             // if((new Date()).getTime() < (new Date(data.eventDate)).getTime()) {
             //     eventPage = "{{url('upcomingEventPage')}}";
@@ -133,19 +133,19 @@
 
     function create_cMarketDiv(data){
         
-        let user_bets = JSON.parse(localStorage.getItem('user_bets')) || {};
-        let loss = user_bets[data.mid] ? user_bets[data.mid].bet_amount : '';
-        let profit = user_bets[data.mid] ? user_bets[data.mid].profit : '';
+        // let user_bets = JSON.parse(localStorage.getItem('user_bets')) || {};
+        // let loss = user_bets[data.mid] ? user_bets[data.mid].bet_amount : '';
+        // let profit = user_bets[data.mid] ? user_bets[data.mid].profit : '';
 
-        loss = '';
-        profit = '';
+        // loss = '';
+        // profit = '';
 
         let html = '';
         
         html += `
             <!-- ${data.mname} -->
-            <div id="market_${data.mid}" class="flex flex-col market text-[12px]" data-mname="${data.mname}" data-marketId="${data.mid}">
-                <div class="bg-[#2888ef] mt-3 p-2 data_market_${data.mid}">
+            <div id="market_${data.mid}" class="flex flex-col market market_${data.mid} text-[12px]" data-gtype="${data.gtype}" data-mname="${data.mname}" data-marketId="${data.mid}">
+                <div class="bg-[#2888ef] mt-3 p-2">
                     ${(data.mname=='fancy1')?'TOSS':data.mname}
                 </div>
                 
@@ -186,10 +186,6 @@
                         html +=`
                             <span class="">Fancy Market</span>
                         `;
-                    // } else{
-                    //     html +=`
-                    //         <span class="">${data.mname} Session</span>
-                    //     `;
                     }
                 }
                 html +=`
@@ -203,8 +199,6 @@
                 `;
 
                 $(data.section).each(function(i,j){
-                    var betOn = i+1; // lay by default
-                    var temp = betOn;
 
                     if(data.mname == 'fancy1' && i==2) {
                         
@@ -212,38 +206,32 @@
                         // return;
                     }
                     html +=`
-                        <div class="m_row${i} flex flex-col items-center border-b border-gray-500 market_data" data-sid="${j.sid}" data-marketId="${data.mid}" data-nat="${this.nat}" data-mname="${data.mname}">
-                            <div class="match_nat flex flex-row items-center justify-between w-full">
-                                <div class="flex justify-between items-center match_nat564565 w-[60%]">
-                                    <span class="match_nat${i}">${this.nat}</span>
-                                    <div class="flex flex-1 justify-end gap-2 gjfnj">
-                                        <span class="loss my-1 text-red-500"></span>
-                                        <span class="profit my-1 text-green-500"></span>
-                                    </div>
-                                </div>
-                                <div class="flex flex-1 justify-end relative">
+                        <div class="market_row market_row_${j.sid} flex flex-row flex-wrap items-center border-b border-gray-500" data-sid="${j.sid}" data-nat="${j.nat}">
+                            <div class="flex flex-row justify-between items-center match_nat w-[60%]">
+                                <span class="match_nat_${i}">${j.nat}</span>
+                                <span class="loss mx-1 text-red-500"></span>
+                                <span class="profit mx-1 text-green-500"></span>
+                            </div>
+                            <div class="flex flex-1 justify-end relative">
                         `;
 
                         $(this.odds).each(function(i,j){
                             // var betOn = 1;
                             if((i+1)%2 == 0){
-                                betType = 'lay';
+                                // betType = 'lay';
                                 betType = 1;
-                                betOn = 0; // back
                             } else{
                                 betType = 'back';
                                 betType = 0;
-                                betOn = temp; // lay
                             }
                             html +=`
-                                    <a data-betType="${betType}" data-oddVal="${j.odds}" data-size="${j.size}" data-beton='${betOn}' class="odd-btn ${j.otype} ${j.oname}"><span>${j.odds}</span><small class="odd_size">${j.size}</small></a>
+                                <a data-oddId="${i}" data-otype="${j.otype}" data-oname="${j.oname}" data-tno="${j.tno}" data-betType="${betType}" data-oddVal="${j.odds}" data-size="${j.size}" class="odd-btn ${j.otype} ${j.oname}"><span>${j.odds}</span><small class="odd_size">${j.size}</small></a>
                             `;
                         });
 
                             html +=`
-                                    <div class="odd_suspended ${(j.gstatus=="SUSPENDED")?"d-block":""}">Suspended</div>
-                                    <div class="odd_suspended ${(j.gstatus=="Ball Running")?"d-block":""}">Ball Running</div>
-                                </div>
+                                <div class="odd_suspended ${(j.gstatus=="SUSPENDED")?"d-block":""}">Suspended</div>
+                                <div class="odd_suspended ${(j.gstatus=="Ball Running")?"d-block":""}">Ball Running</div>
                             </div>
                         </div>
                     `;
@@ -262,26 +250,26 @@
 
     function update_cMarket(data){
 
-        let m_div = $(`#market_${data.mid}`);
+        let market = $(`#market_${data.mid}`);
 
         let section = data.section;
         
         $(section).each(function(i,j){
             
-            $(m_div).find(`.match_nat${i}`).html(j.nat);
-            
-            $(j.odds).each(function(){
-                let odd = $(m_div).find(`.m_row${i}`).find(`.${this.oname}`);
+            $(j.odds).each(function(i,k){
+                let odd = $(market).find(`.market_row_${k.sid}`).find(`.odd-btn[data-tno='${k.tno}']`);
                 
-                if(parseFloat($(odd).html()) != parseFloat(this.odds)){
+                if(parseFloat($(odd).attr('data-oddVal')) != parseFloat(k.odds)){
                     
                     $(odd).addClass('odd_change');
                     setTimeout(() => {
                         $(odd).removeClass('odd_change');
                     }, 400);
                     // $(odd).html(this.odds);
-                    $(odd).find('span').html(this.odds);
-                    $(odd).find('small').html(this.size);
+                    $(odd).attr('data-size', k.size);
+                    $(odd).attr('data-oddVal', k.odds);
+                    $(odd).find('span').html(k.odds);
+                    $(odd).find('small').html(k.size);
                 }
             });
         });

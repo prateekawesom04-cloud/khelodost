@@ -189,7 +189,7 @@
                             </select>
                         </div>
                     </div>
-                    <a href="javascript:void(0)" class="sattleEvent btn btn-primary">Save</a>
+                    <a href="javascript:void(0)" class="sattleEvent btn btn-secondary">Save</a>
                     </form>
                 `;
 

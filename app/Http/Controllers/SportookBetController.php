@@ -28,7 +28,7 @@ class SportookBetController extends Controller
         $bet->username = $user->username;
         $bet->betId = $request->betId;
         $bet->mname = $request->mname;
-        $bet->betOn = $request->betOn;
+        $bet->betOn = $request->betType;
         $bet->eventId = $request->eventId;
         $bet->marketId = $request->marketId;
         $bet->wallet_before = $user->wallet_amount;

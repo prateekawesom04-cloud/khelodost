@@ -23,7 +23,7 @@
 
 
 @section('js')
-<script src="https://js.pusher.com/8.4.0/pusher.min.js"></script>
+{{-- <script src="https://js.pusher.com/8.4.0/pusher.min.js"></script> --}}
   <script>
 
     // Enable pusher logging - don't include this in production
