@@ -69,17 +69,17 @@ class getSportFixture extends Command
 
                     if($item['marketId']){
                         $data = [];
-                        $data['eventName'] = $item['eventName'];
-                        $data['gameId'] = $item['gameId'];
-                        $data['marketId'] = $item['marketId'];
-                        $data['back11'] = $item['back11'];
-                        $data['back1'] = $item['back1'];
-                        $data['back12'] = $item['back12'];
-                        $data['lay11'] = $item['lay11'];
-                        $data['lay1'] = $item['lay1'];
-                        $data['lay12'] = $item['lay12'];
-                        $data['section'] = $item['section'];
-                        $data['beventId'] = $item['beventId'];
+                        $data['eventName'] = $item['eventName'] ?? '';
+                        $data['gameId'] = $item['gameId'] ?? '';
+                        $data['marketId'] = $item['marketId'] ?? '';
+                        $data['back11'] = $item['back11'] ?? '';
+                        $data['back1'] = $item['back1'] ?? '';
+                        $data['back12'] = $item['back12'] ?? '';
+                        $data['lay11'] = $item['lay11'] ?? '';
+                        $data['lay1'] = $item['lay1'] ?? '';
+                        $data['lay12'] = $item['lay12'] ?? '';
+                        $data['section'] = $item['section'] ?? '';
+                        $data['beventId'] = $item['beventId'] ?? '';
                         
                         $sportDataArray[] = $data;
 
@@ -98,13 +98,13 @@ class getSportFixture extends Command
                     
                     if($item['mid']){
                         $data = [];
-                        $data['gmid'] = $item['gmid'];
-                        $data['ename'] = $item['ename'];
-                        $data['mid'] = $item['mid'];
-                        $data['mname'] = $item['mname'];
-                        $data['stime'] = $item['stime'];
-                        $data['section'] = $item['section'];
-                        $data['beventId'] = $item['beventId'];
+                        $data['gmid'] = $item['gmid'] ?? '';
+                        $data['ename'] = $item['ename'] ?? '';
+                        $data['mid'] = $item['mid'] ?? '';
+                        $data['mname'] = $item['mname'] ?? '';
+                        $data['stime'] = $item['stime'] ?? '';
+                        $data['section'] = $item['section'] ?? '';
+                        $data['beventId'] = $item['beventId'] ?? '';
                         
                         $sportDataArray[] = $data;
                         $date = $item['stime'];
