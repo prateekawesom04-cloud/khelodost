@@ -197,6 +197,7 @@
         
         
         $(data).each(function(i,j){
+            
             if(!cricketEventPageLoading) {
                 if(i == data.length-1) {
                     cricketEventPageLoading = 1;
@@ -209,17 +210,19 @@
                     // loadBets();
                 }
             } else {
-                // if(cricketEventPageLoading==1){
+                
+                if(cricketEventPageLoading==1){
+                    
                     loadBets();
-                // }
-                cricketEventPageLoading +=1;
+                    cricketEventPageLoading +=1;
+                }
                 update_cMarket(this);
             } 
             
         });
     }
 
-    let eventPageLoading = false;
+    let eventPageLoading = 0;
     function updateSoccerEvent(res){
 
         res = res.response;
@@ -230,7 +233,7 @@
         $(data).each(function(i,j){
             if(!eventPageLoading) {
                 if(i == data.length-1) {
-                    eventPageLoading = true;
+                    eventPageLoading = 1;
                 }
                 // if(j.gtype == "match" || j.gtype == "match1" || (j.gtype == "fancy" && j.mname =="Normal") || j.gtype == "oddeven" || j.gtype == "fancy1") {
                 //     create_cMarketDiv(this);
@@ -242,6 +245,12 @@
                 }
             } else {
                 // updateMarket(this);
+                if(eventPageLoading==1){
+                    console.log('chal rha hai ki nhi');
+                    
+                    loadBets();
+                    eventPageLoading +=1;
+                }
                 update_cMarket(this);
             } 
             
