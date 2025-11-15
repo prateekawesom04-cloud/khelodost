@@ -27,7 +27,7 @@
                     <div class="col-4 col-md-4 col-lg-4 mb-2">
                         <div class="border p-2 h-100 rounded">
                             <div class="fw-semibold">Available Balance</div>
-                            <div class="text-primary">IRP {{$userData->wallet_amount - $userData->unsattled_amount }}</div>
+                            <div class="text-primary">IRP {{$userData->wallet_amount + $userData->unsattled_amount }}</div>
                         </div>
                     </div>
 

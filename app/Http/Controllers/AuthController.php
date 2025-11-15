@@ -508,7 +508,8 @@ class AuthController extends Controller
         }
         $string = http_build_query($data);
         $string = urldecode($string); 
-        $string = trim($string) . "&key=" . $key;
+        // $string = trim($string) . "&key=" . $key;
+        $string = trim($string);
         return strtoupper(md5($string));
     }
 

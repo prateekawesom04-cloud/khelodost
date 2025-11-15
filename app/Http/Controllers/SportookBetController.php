@@ -20,6 +20,13 @@ class SportookBetController extends Controller
 
         $user = User::getCurrentUser();
 
+        if($user->wallet_amount < $request->bet_amount){
+            return response()->json([
+                'response_code'=>'401',
+                'message'=> 'Insufficient Balance'
+            ]);
+        }
+
         $request->username = $user->username;
 
         $request->betId = substr($user->username,0,5).'_'.rand(1000,9999).'_'.substr(time(),6,strlen(time())-1);
@@ -47,7 +54,7 @@ class SportookBetController extends Controller
         $user->save();
 
         return response()->json([
-            'code'=>'200',
+            'response_code'=>'200',
             'message'=> 'Bet Placed Successfully'
         ]);
 
@@ -60,12 +67,12 @@ class SportookBetController extends Controller
     //     // dd($openBets);
     //     if(count($openBets)){
     //         return response()->json([
-    //             'code'=>'200',
+    //             'response_code'=>'200',
     //             'data'=> $openBets
     //         ]);
     //     } else{
     //         return response()->json([
-    //             'code'=>'401',
+    //             'response_code'=>'401',
     //             'data'=> 'No Openbets Available'
     //         ]);
     //     }

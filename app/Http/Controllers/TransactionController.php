@@ -13,13 +13,14 @@ class TransactionController extends Controller
     public function paymentGatewayMethod(Request $request){
         $data = [];
 
+        $order_sn = 'TR'.time().rand(0000,9999);
         $user = User::getCurrentUser();
         
         if($user){
 
             $transaction = new Transaction();
             $transaction->username = $user->username;
-            $transaction->order_sn = $data['order_sn'];
+            $transaction->order_sn = $order_sn;
             $transaction->wallet_before = $user->wallet_amount;
             $transaction->transfer_amount = $request->transfer_amount;
             $transaction->ip = $request->ip();
@@ -29,46 +30,54 @@ class TransactionController extends Controller
             $transaction->remark = "remark001";
             $transaction->save();
             
+            
+            $data['versionNo'] = env('versionNo');
+            $data['mchNo'] = env('mchNo');
+            $data['price'] = $request->transfer_amount;
+            $data['orderDate'] = date('YmdHis');
+            $data['tradeNo'] = $order_sn;
+
             if($request->payment_type == 0){
     
-                $data['trade_type'] = 'INRUPI';
-                $data['ip'] = $request->ip();
-                $data['remark'] = "remark001";
+                $data['callbackUrl'] = env('APP_URL');
+                $data['payType'] = 01;
+                $data['channelPayType'] = env('channelPayType');
             
             } elseif ($request->payment_type == 1) {
     
-                // $data['currency'] = $request->currency;
-                $data['currency'] = "INR";
+                $data['notifyUrl'] = env('APP_URL').'/paymentCallback';
+                $data['mode'] = S1;
+                $data['accBankCode'] = $request->accBankCode;
+                $data['accName'] = $request->accName;
+                $data['accCardNo'] = $request->accCardNo;
+                $data['purpose'] = $request->purpose;
                 
             } else{
                 return False;
             }
     
-
-            $data['versionNo'] = env('versionNo');
-            $data['mchNo'] = env('mchNo');
-            $data['price'] = $request->transfer_amount;
-            $data['orderDate'] = date(now(),'yyyyMMddHHmmss');
-            $data['tradeNo'] = 'TR'.time().rand(0000,9999);
-            $data['callbackUrl'] = env('APP_URL').'/payment/callback';
-            $data['payType'] = $request->payment_type;
-            // $data['encryptionKey'] = env('encryptionKey');
-            // $data['signatureKey'] = env('signatureKey');
+            
 
             $data['payload'] = json_encode($data);
-            $data['payload'] = base64_encode($data['payload']);
+            $data['payload'] = (new AuthController)->aes256Encrypt(env('signatureKey'),$data['payload']);
 
-            $data['sign'] = (new AuthController)->md5_sign($data, env('LG_PAY_SECRET_KEY'));
+            $data['sign'] = $data['payload'].env('signatureKey');
+
+            $data['sign'] = strtoupper(md5($data['payload']));
             
-            $payment_type = ($request->payment_type==1) ? 'deposit' : 'order';
+            // $data['sign'] = (new AuthController)->md5_sign($data, env('signatureKey'));
             
-            $url = "https://www.lg-pay.com/api/".$payment_type."/create";
+            $payment_type = ($request->payment_type==1) ? 'transferApply' : 'makeOrder';
+            
+            // $url = "https://www.lg-pay.com/api/".$payment_type."/create";
+
+            $url = env('paying_url')."/".$payment_type;
             
             $ch = curl_init();
     
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                "Content-Type: application/x-www-form-urlencoded"
+                "Content-Type: application/json"
             ]);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
@@ -85,7 +94,7 @@ class TransactionController extends Controller
             } 
     
             curl_close($ch);
-            
+            // dd($response);
             return response()->json([
                 'message'=> 'Deposit Request Created Succesfully',
                 'code'=> '200',

@@ -60,6 +60,7 @@
     }
     
     $('.claimBonus').on('click',function(){
+        $(this).addClass('disabled');
         formData = {};
         callApi('post', `claimBonus`, {bonus_uid:$(this).attr('data-bonus_uid')}, claimBonus);
     });

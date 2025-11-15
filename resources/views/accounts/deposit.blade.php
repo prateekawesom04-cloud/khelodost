@@ -75,6 +75,23 @@
             </table>
         </div>
     </main>
+
+    
+<div class="modal fade" id="paymentModel" tabindex="-1" aria-labelledby="sattleEventLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header modal-header-dark">
+                <h5 class="modal-title" id="mainModalLabel">Deposit</h5>
+                <a type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></a>
+            </div>
+            <div class="modal-body modal-header-dark paymentModel">
+                
+            </div>
+
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
@@ -103,9 +120,12 @@
     });
 
     function paymentGatewayMethod(response) {
-        response = JSON.parse(response.response);
-        if (response.data['pay_url']) {
-            window.location.href = response.data['pay_url'];
+        // response = JSON.parse(response.response);
+        if (response.code == 200) {
+            $('#paymentModel').modal('show');
+            // window.location.href = response.data['pay_url'];
+            $('.paymentModel').html(response.response);
+
         } else {
             responseToast('Deposit Request failed');
             window.location.reload();

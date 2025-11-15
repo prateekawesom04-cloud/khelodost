@@ -25,7 +25,7 @@
                 <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.index') ? 'active' : '' }}" href="{{ route('admin.my_account',$userData->username) }}">👨‍💼My Account</a>
             </li>
 
-            <li class="nav-item dropdown">
+            {{-- <li class="nav-item dropdown">
                 <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.index') ? 'active' : '' }} dropdown-toggle" href="#" data-bs-toggle="dropdown">My Report</a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="{{ route('admin.event_profit_loss') }}">Event Profit/Loss</a>
@@ -35,10 +35,13 @@
                             Profit/Loss</a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
 
             <li class="nav-item">
                 <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.index') ? 'active' : '' }}" href="{{ route('admin.bonusData') }}">Bonus</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.betlist') ? 'active' : '' }}" href="{{ route('admin.betlist') }}">Betlist</a>
             </li>
             {{-- <li class="nav-item">
                 <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.index') ? 'active' : '' }}" href="{{ route('admin.betlist') }}">🎯BetList</a>

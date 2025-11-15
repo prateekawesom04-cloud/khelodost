@@ -501,6 +501,34 @@ class AdminDataController extends Controller
 
     }
 
+    public function sattleEventBets(Request $request){
+        
+        $event = Event::where('eventId',$request->eventId)->first();
+        $eventResults = json_decode($event->additional_data,true);
+        // dump($eventResults);
+        if(!$eventResults){
+            return response()->json([
+                'message'=> 'Result not decided for this event yet',
+                'response_code'=> '200'
+            ]);
+        }
+        foreach($eventResults as $k=>$market){
+            // dd($market['mname']);
+            // if($market['mname']=='Match Odds'){
+            $request->marketId = $k;
+            $request->mname = $market['mname'];
+            $request->marketResults = $market;
+            // dd($request);
+            $this->sattleBets($request);
+                
+            // }
+        }
+        return response()->json([
+            'message'=> 'Event Bets Sattled Successfully',
+            'response_code'=> '200'
+        ]);
+    }
+
     // public function sattleBets(Request $request){
     public function sattleBets($request){
         // dd($request);

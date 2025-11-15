@@ -39,7 +39,7 @@ class sattleBets extends Command
             $eventResults = json_decode($event->additional_data,true);
             // dump($eventResults);
             if(!$eventResults){
-                return;
+                continue;
             }
             foreach($eventResults as $k=>$market){
                 // dd($market['mname']);

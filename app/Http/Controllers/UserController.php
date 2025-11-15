@@ -141,6 +141,7 @@ class UserController extends Controller
     public function claimBonus(Request $request){
 
         $userData = $this->currentUser;
+        $admin = User::where('username',$userData->admin_username)->first();
         $fullfilled = 1;
 
         $bonus = Bonus::where([
@@ -195,9 +196,11 @@ class UserController extends Controller
                 // dd(json_encode($bonuses));
                 $userData->wallet_amount += $bonus_amount;
                 $userData->wager_amount -= $bonus_amount;
+                $admin->wallet_amount -= $bonus_amount;
             // }
         }
         $userData->save();
+        $admin->save();
         
         return response()->json([
             'message'=> 'You have successfully claimed the bonus',
