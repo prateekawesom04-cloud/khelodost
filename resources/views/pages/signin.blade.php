@@ -101,7 +101,7 @@
       <div class="input-group mb-3">
         <span class="input-group-text input-group-text-yellow"><i class="bi bi-lock text-warning"></i></span>
         <input type="password" name="password" class="form-control rounded-0 rounded-end" placeholder="Password" />
-        <a href="#" class="btn btn-outline-secondary" aria-label="Toggle password visibility">
+        <a href="#" class="btn btn-outline-secondary p_eye" aria-label="Toggle password visibility">
           <i class="bi bi-eye"></i>
         </a>
       </div>
@@ -110,7 +110,7 @@
       <div class="input-group mb-3">
         <span class="input-group-text input-group-text-yellow"><i class="bi bi-lock text-warning"></i></span>
         <input type="password" name="confirm_password" class="form-control rounded-0 rounded-end" placeholder="Confirm Password" />
-        <a href="#" class="btn btn-outline-secondary" aria-label="Toggle confirm password visibility">
+        <a href="#" class="btn btn-outline-secondary p_eye" aria-label="Toggle confirm password visibility">
           <i class="bi bi-eye"></i>
         </a>
       </div>
@@ -194,6 +194,14 @@
     });
   });
 
+  $('.p_eye').click(function(){
+      let input = $(this).siblings('input[name=password], input[name=confirm_password]');
+      if (input.attr('type') === 'password') {
+          input.attr('type', 'text');
+      } else {
+          input.attr('type', 'password');
+      }
+  });
 
 </script>
 
