@@ -472,69 +472,126 @@ class AdminDataController extends Controller
 
     public function sattleEvent(Request $request){
         // dd($request->all());
+        $event = Event::where('eventId',$request->eventId)->first();
+        // dd($event);
+        // dd(property_exists($event,'eventId'));
+        $eventResults = json_decode($event->additional_data,true);
+        // dump($eventResults);
+        // dump($eventResults[$request->marketId]['sid_results']);
+
+        // dump('$eventResults---',$request->sid_results);
+        if(!isset($eventResults[$request->marketId]['sid_results'])){
+            $eventResults[$request->marketId]['sid_results'] = [];
+        }
+        $eventResults[$request->marketId]['sid_results'] = $request->sid_results + $eventResults[$request->marketId]['sid_results'];
+        $eventResults[$request->marketId]['mname'] = $request->mname;
+        
+        // array_merge($eventResults[$request->marketId]['sid_results'],$request->sid_results);
+        // $eventResults[$request->marketId]['sid_results'] = $request->sid_results;
+        // dd($eventResults);
+        // dd('$eventResults after---',$eventResults);
+
+        $event->additional_data = json_encode($eventResults);
+        $event->save();
+        // dd( $eventResults);
+        return response()->json([
+            'message'=> "Event's Market Result Updated Successfully",
+            'response_code'=> '200'
+        ]);
+
+    }
+
+    // public function sattleBets(Request $request){
+    public function sattleBets($request){
+        // dd($request);
         $eventId = $request->eventId;
         $marketId = $request->marketId;
-        $result = $request->result;
+        $mname = $request->mname;
         
-        $event = Event::where('eventId',$eventId)->first();
-        // $event = Event::where('eventId',$eventId)->where('marketId',$eventId)->first();
-        // dd($event);
-        // $event->status = $result;
-        // $event->status = 2; // settled
-        // $event->save();
+        // $event = Event::where('eventId',$eventId)->first();
+        // $eventResults = json_decode($event->additional_data,true);
 
-        $sattledBets = SportookBet::where(
-            [
-            'status'=>1,
-            'eventId'=>$eventId,
-            'marketid'=>$request->marketId
-            ])
-            ->select('username','bet_amount','oddVal','profit')->get();
 
-        if($sattledBets->count()){
-            return $this->editSattleEvent($request);
+        if($mname == "Normal"){
+            $sids = array_keys($request->marketResults['sid_results']);
+            $eventBets = SportookBet::where(
+                [
+                'status'=>0,
+                'eventId'=>$eventId,
+                'marketid'=>$request->marketId
+                // 'marketId'=>$marketId
+                ])->whereIn('sid',$sids)
+                ->get();
+        } else{
+            $eventBets = SportookBet::where(
+                [
+                'status'=>0,
+                'eventId'=>$eventId,
+                'marketid'=>$request->marketId
+                // 'marketId'=>$marketId
+                ])
+                ->get();
+        }
+        // if($sattledBets->count()){
+        //     return $this->editSattleEvent($request);
+        // }
+
+        foreach($eventBets as $bet){
+            $result = $request->marketResults['sid_results'][$bet->sid];
+            // dump('result---',$result);
+            if($mname == "Normal"){
+
+                if($bet->betOn == 0){
+                    if($result >= $bet->oddVal){
+                        $bet->status = 1;
+                    } else {
+                        $bet->status = 2;
+                    }
+                } else {
+                    if($result < $bet->oddVal){
+                        $bet->status = 2;
+                    } else {
+                        $bet->status = 1;
+                    }
+                }
+            } else {
+                if($result == $bet->betOn){
+                    $bet->status = 1;
+                } else{
+                    $bet->status = 2;
+                }
+            }
+            $bet->save();
         }
 
         $wonUsers = SportookBet::where(
             [
-            'status'=>0,
+            'status'=>1,
             'eventId'=>$eventId,
-            'betOn'=>$result,
+            // 'betOn'=>$result,
             'marketid'=>$request->marketId
             ])
             ->select('username','bet_amount','oddVal','profit')->get();
 
         $lossUsers = SportookBet::where(
             [
-            'status'=>0,
+            'status'=>2,
             'eventId'=>$eventId,
             'marketid'=>$request->marketId
             ])
-            ->where('betOn','!=',$result)->select('username','bet_amount','oddVal','profit')->get();
+            ->select('username','bet_amount','oddVal','profit')->get();
 
-        // dump('wonusers---',$wonUsers);
-        // dd('lossUsers-----',$lossUsers);
         if($wonUsers->count()){
-            
-            // $wonUsers = SportookBet::where('status',0)->where('eventId',$eventId)->select('username','bet_amount','oddVal','profit')->get();
-
-            // dd($wonUsers);
 
             foreach ($wonUsers as $user) {
                 $userData = User::where('username',$user->username)->first();
-                $userData->wallet_amount += $user->profit;
+                $userData->wallet_amount += $user->profit+$user->bet_amount;
                 // $userData->wallet_amount += ($user->bet_amount * $user->oddVal);
                 $userData->unsattled_amount -= $user->bet_amount;
                 $userData->save();
             }
 
         }
-
-            // dd($wonUsers);
-        // } else if($result == 2){
-        //     $bets = SportookBet::where('eventId',$eventId)->where('betOn',2)->get();
-        // } else{
-        //     $bets = SportookBet::where('eventId',$eventId)->where('betOn',3)->get();
         
         if($lossUsers->count()){
             foreach ($lossUsers as $user) {
@@ -548,12 +605,8 @@ class AdminDataController extends Controller
 
         // dd($lossUsers);
 
-        $bets = SportookBet::where('eventId',$eventId)->where('status',0)->where('betOn',$result)->update(['status'=>1]);
-        // $bets = SportookBet::where('eventId',$eventId)->get();
-        // $bets = SportookBet::where('eventId',$eventId)->update(['betOn'=>$result]);
-
         return response()->json([
-            'message'=> 'Event Sattled Successfully',
+            'message'=> 'Event bets Sattled Successfully',
             'response_code'=> '200'
         ]);
     }
@@ -634,10 +687,10 @@ class AdminDataController extends Controller
         ]);
     }
 
-    public function sattleBets(Request $request){
-        $eventId = $request->eventId;
+    // public function sattleBets(Request $request){
+    //     $eventId = $request->eventId;
            
-    }
+    // }
     
     public function updateSportResult(Request $request){
         $eventId = $request->eventId;

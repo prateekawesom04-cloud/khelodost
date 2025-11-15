@@ -145,9 +145,9 @@
    @if($userData)
    
    // let bets = {!! json_encode($userData->bets) !!};
-   let bets = '';
-   // bets = JSON.parse(bets);
-   user_bets = (bets && bets!='') ? bets : localStorage.getItem('user_bets') ? JSON.parse(localStorage.getItem('user_bets')) : {};
+   let betsData = '';
+   // bets = JSON.parse(betsData);
+   user_bets = (betsData && betsData!='') ? betsData : localStorage.getItem('user_bets') ? JSON.parse(localStorage.getItem('user_bets')) : {};
    // user_bets = localStorage.getItem('user_bets') ? JSON.parse(localStorage.getItem('user_bets')) : {};
 
 

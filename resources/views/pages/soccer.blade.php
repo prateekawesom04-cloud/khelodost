@@ -21,7 +21,7 @@
 </main>
 @endsection
 
-@include('includes.soccerEvent_js')
+{{-- @include('includes.soccerEvent_js') --}}
 @section('js')
 <script src="https://js.pusher.com/8.4.0/pusher.min.js"></script>
   <script>
@@ -41,9 +41,9 @@
     $(document).ready(function(){
          
         callApi('get',`{{route('user.getSportData','soccer')}}`,{sportname:`{{$sportname}}`},updateSoccer);
-        setInterval(() => {
+        // setInterval(() => {
             callApi('get',`{{route('user.getSportData','soccer')}}`,{sportname:`{{$sportname}}`},updateSoccer);
-        }, 500);
+        // }, 500);
 
     });
 

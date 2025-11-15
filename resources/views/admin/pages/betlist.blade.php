@@ -91,17 +91,17 @@
                             @if($bets->count() > 0)
                                 @foreach ($bets as $bet)
                                     <tr>
-                                        <td class="text-white">{{ $bet->username ?? 'N/A' }}</td>
-                                        <td class="text-white">{{ $bet->betId }}</td>
-                                        <td class="text-white">{{ $bet->eventId }}</td>
-                                        <td class="text-white">{{ $bet->oddVal }}</td>
-                                        {{-- <td class="text-white">{{ $bet->stakeValue }}</td> --}}
-                                        <td class="text-white">{{ $bet->bet_amount }}</td>
-                                        <td class="text-white">{{ $bet->profit ?? 'N/A'}}</td>
-                                        <td class="text-white">
+                                        <td class="">{{ $bet->username ?? 'N/A' }}</td>
+                                        <td class="">{{ $bet->betId }}</td>
+                                        <td class="">{{ $bet->eventId }}</td>
+                                        <td class="">{{ $bet->oddVal }}</td>
+                                        {{-- <td class="">{{ $bet->stakeValue }}</td> --}}
+                                        <td class="">{{ $bet->bet_amount }}</td>
+                                        <td class="">{{ $bet->profit ?? 'N/A'}}</td>
+                                        <td class="">
                                             @if($bet->status == 0)
                                                 Unsettled
-                                                {{-- <span class="text-white">Unsettled</span> --}}
+                                                {{-- <span class="">Unsettled</span> --}}
                                             @elseif($bet->status == 1)
                                                 <span class="text-success">Won</span>
                                             @elseif($bet->status == 2)
@@ -114,7 +114,7 @@
                                 @endforeach
                             @else
                             <tr>
-                                <td colspan="10" class="text-white">No data!</td>
+                                <td colspan="10" class="">No data!</td>
                             </tr>
                             @endif
                         </tbody>

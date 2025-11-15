@@ -21,6 +21,18 @@
             html += eval(res.sport)(this);
         });
         $(`.${res.sport}`).html(html);
+    } 
+
+    function updateSoccer(res){
+        let html = ``;
+        
+        data = JSON.parse(res.data);
+        console.log(res.sport, 'data-----',data);
+        $(data).each(function(){
+
+            html += eval(res.sport)(this);
+        });
+        $(`.${res.sport}`).html(html);
     }
     
     function updateInplaySports(res){
@@ -96,6 +108,82 @@
         //     callApi('get',url,data);
         // });
 
+        function soccer(data){
+            let eventPage = "{{url('eventDetail')}}";
+            let c_time = (new Date()).getTime();
+            let html = ``;
+            // if((new Date()).getTime() < (new Date(data.stime)).getTime()) {
+            //     eventPage = "{{url('soccerUpcomingEvent')}}";
+            // }
+            html += `
+                <div class="border-solid border-b border-gray-500 p-2" data-gmid='${data.gmid}' data-mid='${data.mid}' data-ename="${data.ename}" data-stime="${data.stime}">
+                    
+                    <span class="text-sm">${data.stime}</span>
+                    <div class="flex flex-row items-center justify-between pb-1">
+                        <a href="${eventPage}/${data.gmid}" class="right-side eventPage">
+                            ${data.ename}
+                        </a>
+                        <div class="flex flex-row items-center gap-3 justify-between">
+                            <span class="in_play blinking_green m-0"></span>
+                            <span class="">BM</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-row">  
+                    `;
+                
+                        $(data.section).each(function(i,j){
+                            $(j.odds).each(function(){
+                                html +=`
+                                    <a class="odd-btn ${this.otype} ${this.oname}">${this.odds}</a>
+                                `;
+                            });
+                        });
+
+                html +=`
+                    </div>
+                </div>
+            `;
+
+            return html;
+        }
+        
+        function tennis(data){
+            let eventPage = "{{url('eventDetail')}}";
+            let c_time = (new Date()).getTime();
+            let html = ``;
+            
+            html += `
+                <div class="border-solid border-b border-gray-500 p-2" data-gmid='${data.gmid}' data-mid='${data.mid}' data-ename="${data.ename}" data-stime="${data.stime}">
+                    
+                    <span class="text-sm">${data.stime}</span>
+                    <div class="flex flex-row items-center justify-between pb-1">
+                        <a href="${eventPage}/${data.gmid}" class="right-side eventPage">
+                            ${data.ename}
+                        </a>
+                        <div class="flex flex-row items-center gap-3 justify-between">
+                            <span class="in_play blinking_green m-0"></span>
+                            <span class="">BM</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-row">  
+                    `;
+                
+                        $(data.section).each(function(i,j){
+                            $(j.odds).each(function(){
+                                html +=`
+                                    <a class="odd-btn ${this.otype} ${this.oname}">${this.odds}</a>
+                                `;
+                            });
+                        });
+
+                html +=`
+                    </div>
+                </div>
+            `;
+
+            return html;
+        }
+
     // sport page js end
 
 
@@ -121,9 +209,9 @@
                     // loadBets();
                 }
             } else {
-                if(cricketEventPageLoading==1){
+                // if(cricketEventPageLoading==1){
                     loadBets();
-                }
+                // }
                 cricketEventPageLoading +=1;
                 update_cMarket(this);
             } 
@@ -131,6 +219,35 @@
         });
     }
 
+    let eventPageLoading = false;
+    function updateSoccerEvent(res){
+
+        res = res.response;
+        res = JSON.parse(res);
+        data = res.data;
+        
+        
+        $(data).each(function(i,j){
+            if(!eventPageLoading) {
+                if(i == data.length-1) {
+                    eventPageLoading = true;
+                }
+                // if(j.gtype == "match" || j.gtype == "match1" || (j.gtype == "fancy" && j.mname =="Normal") || j.gtype == "oddeven" || j.gtype == "fancy1") {
+                //     create_cMarketDiv(this);
+                // } 
+                if(j.mname == "MATCH_ODDS") {
+                // if(j.mname == "MATCH_ODDS" || j.mname == "Bookmaker") {
+                    // createMarketDiv(this);
+                    create_cMarketDiv(this);
+                }
+            } else {
+                // updateMarket(this);
+                update_cMarket(this);
+            } 
+            
+        });
+    }
+    
     function create_cMarketDiv(data){
         
         // let user_bets = JSON.parse(localStorage.getItem('user_bets')) || {};

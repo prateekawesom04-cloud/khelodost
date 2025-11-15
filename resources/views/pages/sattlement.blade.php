@@ -68,7 +68,7 @@
                                                     <i data-eventName="{{$row->eventName}}" data-eventId="{{ $row->eventId }}" class="fas fa-{{($row->status)?'circle-xmark text-danger b_active':'check text-success b_deactive'}}" style="cursor: pointer;" title="Change Status"></i>
                                                 </div> --}}
                                                 <div>
-                                                    <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-target="#sattleEvent"></i>
+                                                    <i data-sportname="{{$row->sportname}}" data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-target="#sattleEvent"></i>
                                                     {{-- <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="{{($teamB=='Series')?'':'#sattleEvent'}}"></i> --}}
                                                     {{-- <i data-teamA="{{$explode(' v ',$row->eventName)[0]}}" data-teamB="{{explode(' v ',$row->eventName)[1]}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#sattleEvent"></i> --}}
                                                 </div>
@@ -150,10 +150,15 @@
 </div>
 <script>
 
+    let eventData = '';
+    let sportname = 'cricket';
+
     function getEventData(res){
         res = res.response;
         res = JSON.parse(res);
         data = res.data;
+        eventData = data;
+
         if(! data.length){
 
             return false;
@@ -163,37 +168,57 @@
         $(data).each(function(i,j){
 
 
-            if(j.mname == "MATCH_ODDS" || j.mname == "Bookmaker" || j.mname == "TIED_MATCH" || j.mname == "fancy1" || j.mname == "Normal") {
-
+            if(j.mname == "MATCH_ODDS" || j.mname == "Bookmaker" || j.mname == "TIED_MATCH" || j.mname == "Normal") {
+                if(sportname != 'cricket' && j.mname != "MATCH_ODDS"){
+                    return;
+                }
             // if(data.mname == "MATCH_ODDS" || data.mname == "Bookmaker" || data.mname == "TIED_MATCH" || data.mname == "fancy1" || data.mname == "Normal" || data.mname == "oddeven") {
 
                 let html = '';
                 
                 html += `
-                    <form>
+                    <form class="my-2 ${j.mname}">
                     <input type="hidden" name="eventId" class="eventId" value="${j.gmid}">
                     <input type="hidden" name="marketId" class="marketId" value="${j.mid}">
+                    <input type="hidden" name="mname" class="mname" value="${j.mname}">
                     <div class="market" data-marketId="${j.mid}" data-mname="${j.mname}">
                         <h3>${j.mname}</h3>
-                        <div class="mb-3">
-                            <label for="matchType" class="form-label"><span class="eventIdVal13"></span>Result</label>
-                            <select id="nat" name="result" class="form-select">
+                        <div class="flex flex-row items-center justify-evenly gap-3 divide-x divide-gray-300 mb-1">
+                            <div class="min-w-[60%] px-2">Result</div>
+                `;
+                if(j.mname == "Normal") {
+                    html += `<div class="px-2">Value</div>`;
+                }
+                html += `
+                        <div class="px-2">Action</div>
+                        </div>
+                        <div class="flex flex-row items-center justify-evenly gap-3 divide-x divide-gray-300 mb-1">
+                            <div class="min-w-[60%] px-2">
+                                <select id="nat" name="result" class="form-select marketResult">
                 `;
                 
                     $(j.section).each(function(i,j){
                         html+=`
-                            <option value="${i+1}">${this.nat}</option>
+                            <option value="${this.sid}">${this.nat}</option>
                         `;
                     });
                 html +=`
-                            </select>
+                                </select>
+                            </div>
+                `;
+                if(j.mname == "Normal") {
+                    html += `<div class="px-2">
+                                <input type="text" name="size" class="form-control" placeholder="Enter Value">
+                            </div>`;
+                }
+                html += `
+                            <a href="javascript:void(0)" class="px-2 sattleEvent btn btn-secondary">Save</a>
                         </div>
                     </div>
-                    <a href="javascript:void(0)" class="sattleEvent btn btn-secondary">Save</a>
                     </form>
                 `;
 
-                if(data.mname == "TIED_MATCH"){
+                if(j.mname == "TIED_MATCH"){
                     $('.market[data-mname=Bookmaker]').after(html);
                 } else{
                     $('.eventData').append(html);
@@ -203,19 +228,77 @@
         });
     }
 
+    let eventResult = {};
+    $('body').on('change','.marketResult',function(){
+        if($(this).parents('form').hasClass('Normal')) {
+            $(this).parents('form').find('.sattleEvent').removeClass('disabled');
+            $(this).parents('form').find('input[name="size"]').val('');
+        }
+    });
+
     $('body').on('click','.sattleEvent',function(){
         $(this).addClass('disabled');
         // let formData = new FormData($('#sattleEventForm')[0]);
         let formData = new FormData($(this).parents('form')[0]);
-        console.log('formdata--',formData);
+        eventResult['eventId'] = formData.get('eventId');
+        eventResult['marketId'] = formData.get('marketId');
+        eventResult['mname'] = formData.get('mname');
+        // Object.fromEntries(formData.entries())
+        let sid_result = {};
+
+        if(formData.get('mname') == "MATCH_ODDS" || formData.get('mname') == "Bookmaker" || formData.get('mname') == "TIED_MATCH") {
+            $(eventData).each(function(i,j){
+                if(j.mid == formData.get('marketId')) {
+                    
+                    $(j.section).each(function(i2,j2){
+                        if(j2.sid == formData.get('result')){
+                            sid_result[j2.sid] = 0;
+                        } else{
+                            sid_result[j2.sid] = 1;
+                        }
+                    });
+                }
+            });
+            
+            // eventResult[formData.get('marketId')] = sid_result;
+            eventResult['sid_results'] = sid_result;
+            // formData.set('result', JSON.stringify(resultObj));
+        } else if(formData.get('mname') == "Normal") {
+            if(formData.get('size') == ''){
+                ajaxResponseModal('please enter value');
+                $(this).removeClass('disabled');
+                return false;
+            }
+            $(eventData).each(function(i,j){
+                if(j.mid == formData.get('marketId')) {
+                    
+                    $(j.section).each(function(i2,j2){
+                        if(j2.sid == formData.get('result')){
+                            sid_result[j2.sid] = formData.get('size');
+                        }
+
+                    });
+                }
+            });
+            
+            // eventResult[formData.get('marketId')] = sid_result;
+            eventResult['sid_results'] = sid_result;
+
+        }
+        console.log('eventResult---',eventResult);
         
-        callAjaxFormData('post', `{{route('sattleEvent')}}`, formData, ajaxResponseModal);
-        // callApi('post', `{{route('sattleEvent')}}`, formData, ajaxResponseModal);
+        // eventResult = JSON.stringify(eventResult);
+        
+        // callAjaxFormData('post', `{{route('sattleEvent')}}`, formData, ajaxResponseModal);
+        
+        callApi('post', `{{route('sattleEvent')}}`, eventResult, ajaxResponseModal);
     });
 
     $('.editEvent').on('click',function(){
-        
+
+        sportname = $(this).attr('data-sportname');
         $('.sattleEvent').removeClass('disabled');
+        $(this).addClass('disabled');
         callApi('get',`{{route('user.getEventData')}}`,{eventId:$(this).attr('data-eventId')},getEventData);
         $('#sattleEventForm').find('.eventIdVal').val($(this).attr('data-eventId'));
         // $('#sattleEventForm').find('.teamA').text($(this).attr('data-teama'));

@@ -51,10 +51,18 @@
     });
 
     eventId = {{$eventId}};
+    @if($eventData->sportname == 'cricket')
     callApi('get',`{{route('user.getEventData')}}`,{eventId:{{$eventId}}},updateCricketEvent);
     // setInterval(() => {
     //     callApi('get',`{{route('user.getEventData')}}`,{eventId:{{$eventId}}},updateCricketEvent);
     // }, 500);
+    @else
+    
+    callApi('get',`{{route('user.getEventData')}}`,{eventId:{{$eventId}}},updateSoccerEvent);
+    // setInterval(() => {
+    //     callApi('get',`{{route('user.getEventData')}}`,{eventId:{{$eventId}}},updateSoccerEvent);
+    // }, 500);
+    @endif
 </script>
 
 @endsection

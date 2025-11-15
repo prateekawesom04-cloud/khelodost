@@ -11,12 +11,7 @@ class TransactionController extends Controller
     //
     
     public function paymentGatewayMethod(Request $request){
-        
         $data = [];
-        $data['app_id'] = env('LG_PAY_APP_ID');
-        $data['order_sn'] = time()."_p_".rand(0000,9999);
-        $data['money'] = $request->transfer_amount*100;
-        $data['notify_url'] = url('/').'/paymentCallback';
 
         $user = User::getCurrentUser();
         
@@ -49,6 +44,20 @@ class TransactionController extends Controller
                 return False;
             }
     
+
+            $data['versionNo'] = env('versionNo');
+            $data['mchNo'] = env('mchNo');
+            $data['price'] = $request->transfer_amount;
+            $data['orderDate'] = date(now(),'yyyyMMddHHmmss');
+            $data['tradeNo'] = 'TR'.time().rand(0000,9999);
+            $data['callbackUrl'] = env('APP_URL').'/payment/callback';
+            $data['payType'] = $request->payment_type;
+            // $data['encryptionKey'] = env('encryptionKey');
+            // $data['signatureKey'] = env('signatureKey');
+
+            $data['payload'] = json_encode($data);
+            $data['payload'] = base64_encode($data['payload']);
+
             $data['sign'] = (new AuthController)->md5_sign($data, env('LG_PAY_SECRET_KEY'));
             
             $payment_type = ($request->payment_type==1) ? 'deposit' : 'order';
