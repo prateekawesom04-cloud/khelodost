@@ -146,4 +146,15 @@ class TransactionController extends Controller
             return 'no';
         }
     }
+
+    public function updateTransaction(Request $request){
+        $transaction = Transaction::where('order_sn',$request->order_sn)->first();
+        $transaction->{$request->updateKey} = $request->{$request->updateKey};
+        $transaction->save();
+
+        return response()->json([
+            'message'=> 'Transaction Updated Successfully',
+            'response_code'=> '200'
+        ]);
+    }
 }
