@@ -164,12 +164,12 @@
     // update transaction
     $('.reject_deposit').on('click',function(){
         formData = {};
-        callApi('post', `admin/updateTransaction`, {order_sn:$(this).attr('data-order_sn'),updateKey:'status',status:0}, ajaxResponseModal);
+        callApi('post', `{{Route('admin.action.updateTransaction')}}`, {order_sn:$(this).attr('data-order_sn'),updateKey:'status',status:0}, ajaxResponseModal);
     });
     
     $('.approve_deposit').on('click',function(){
         formData = {};
-        callApi('post', `admin/updateTransaction`, {order_sn:$(this).attr('data-order_sn'),updateKey:'status',status:2}, ajaxResponseModal);
+        callApi('post', `{{Route('admin.action.updateTransaction')}}`, {order_sn:$(this).attr('data-order_sn'),updateKey:'status',status:2}, ajaxResponseModal);
     });
 
 
