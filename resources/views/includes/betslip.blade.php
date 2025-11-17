@@ -172,10 +172,24 @@
    }
 
    function loadBets(){
+      callApi('get','{{route('user.eventBets')}}',{gtype:0,eventId:eventId},openBetsBottom);
 
       if(Object.keys(user_bets).length){
          
+         var sid = {};
          $.each(user_bets, function(i,j){
+            
+            
+            sid[j.sid] = sid[j.sid]??{};
+            
+            if(!j.betType){
+               sid[j.sid]['loss'] = (sid[j.sid]['loss'] ?? 0) + j.bet_amount;
+               sid[j.sid]['profit'] = (sid[j.sid]['profit'] ?? 0) + j.profit;
+            } else{
+               sid[j.sid]['loss'] = Math.abs(j.bet_amount - (sid[j.sid]['loss'] ?? 0));
+               sid[j.sid]['profit'] = Math.abs(j.profit - (sid[j.sid]['profit'] ?? 0));
+            }
+            
             $('.loss').show();
             $('.profit').show();
             let market_row = $(`.market_${j.marketId}`).find(`.market_row_${j.sid}`);
@@ -186,22 +200,29 @@
             // let odd = $(market_row).find(`.odd-btn[data-tno='${j.tno}']`).find('span').html();
 
             if(j.mname == 'Normal'){
-               $(market_row).find('.profit').html(j.profit);
-               $(market_row).find('.loss').html(j.bet_amount);
+            
+               $(market_row).find('.loss').html(sid[j.sid]['loss']);
+               $(market_row).find('.profit').html(sid[j.sid]['profit']);
+               // $(market_row).find('.profit').html(j.profit);
+               // $(market_row).find('.loss').html(j.bet_amount);
 
                $(market_row).find('.normal_bet_range').remove();
                $(market_row).find(`.match_nat`).append(`
-                  <span class='normal_bet_range !bg-blue-600 btn text-white bg-blue-100 p-1 rounded-md' data-score='${j.oddVal}' data-size="${j.size}" data-amount='${j.bet_amount}' data-betType='${j.betType}' data-marketId='${j.marketId}'>Bets</span>
+                  <span class='normal_bet_range !bg-blue-600 btn text-white bg-blue-100 p-1 rounded-md' data-score='${j.oddVal}' data-size="${sid[j.sid]['profit']}" data-amount='${sid[j.sid]['loss']}' data-betType='${j.betType}' data-marketId='${j.marketId}'>Bets</span>
                `);
+            
 
             } else{
                $(other_rows).each(function(i,k){
-                  $(k).find('.loss').html(j.bet_amount);
+                  // $(k).find('.loss').html(j.bet_amount);
+                  $(k).find('.loss').html(sid[j.sid]['loss']);
                });
-               $(market_row).find('.profit').html(j.profit);
+               // $(market_row).find('.profit').html(j.profit);
+               $(market_row).find('.profit').html(sid[j.sid]['profit']);
             }
-
+            
          });
+         
       }
 
    }
@@ -238,17 +259,17 @@
       for(let i=score+6; i>=score-6 && i>=0; i--){
          
          let cls = '';
-         if($(normal_btn).attr('data-betType')==0){
+         // if($(normal_btn).attr('data-betType')==0){
             cls = (i<score) ? 'text-red-500' : 'text-green-500';
-            amount = (i<score) ? amount : size;
-         } else{
-            cls = (i>=score) ? 'text-red-500' : 'text-green-500';
-            amount = (i>=score) ? amount : size;
-         }
+            samount = (i<score) ? amount : size;
+         // } else{
+         //    cls = (i>=score) ? 'text-red-500' : 'text-green-500';
+         //    amount = (i>=score) ? amount : size;
+         // }
          html +=`
             <div class="flex flex-row items-center justify-evenly g-2 mb-3">
                <div class="score">${i}</div>
-               <div class="value ${cls}">${amount}</div>                
+               <div class="value ${cls}">${samount}</div>                
             </div>
          `;
       }
@@ -288,8 +309,8 @@
 
       let odd = $(market_row).find(`.odd-btn[data-oddId='${betslipData.oddId}']`).attr('data-oddVal');
 
-      console.log('odd-',odd);
-      console.log('betsffd-',betslipData);
+      
+      
       
       if(odd != betslipData.oddVal){
          responseToast('Odd changed');
@@ -310,11 +331,35 @@
       ajaxResponse(res);
       if(res.response_code == 200){
          $('.betslip').hide();
+         // $.extend({}, obj1, obj2)
+         if(user_bets[`${betslipData.marketId}_${betslipData.sid}_${betslipData.oddId}`]){
+            
+            bet = user_bets[`${betslipData.marketId}_${betslipData.sid}_${betslipData.oddId}`];
+            // $.each(bet,function(i,j){
+               
+               
+               // if(betslipData.mname == 'Normal'){
+
+               // } else{
+                  betslipData['bet_amount']=parseInt(bet['bet_amount']) + parseInt(betslipData['bet_amount']);
+                  betslipData['profit']=parseInt(bet['profit']) + parseInt(betslipData['profit']);
+                  // betslipData['profit']+=bet['profit'];
+               // }
+               
+               
+            // });
+            // user_bets[`${betslipData.marketId}_${betslipData.sid}_${betslipData.oddId}`] = betslipData;
+         // } else{
+         
+            
+         //    user_bets[`${betslipData.marketId}_${betslipData.sid}_${betslipData.oddId}`] = betslipData;
+         }
+         
          user_bets[`${betslipData.marketId}_${betslipData.sid}_${betslipData.oddId}`] = betslipData;
          localStorage.setItem('user_bets', JSON.stringify(user_bets));
          loadBets();
 
-         callApi('get','{{route('user.openbets')}}',null,openBets);
+         callApi('get','{{route('user.openbets')}}',null,openBetsBottom);
       }
    }
    
@@ -455,7 +500,7 @@
 
    $(document).ready(function(){
       // callApi('get','{{route('user.openbets')}}',null,openBets);
-      callApi('get','{{route('user.eventBets')}}',{gtype:0,eventId:eventId},openBetsBottom);
+      // callApi('get','{{route('user.eventBets')}}',{gtype:0,eventId:eventId},openBetsBottom);
    });
     
     $('.allBetCount').on('click',function(){
