@@ -47,9 +47,9 @@
                 <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.index') ? 'active' : '' }}" href="{{ route('admin.betlist') }}">🎯BetList</a>
             </li> --}}
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.index') ? 'active' : '' }}" href="{{ route('admin.market_analysis') }}">Market Analysis</a>
-            </li>
+            </li> --}}
             <li class="nav-item position-relative">
                 <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.index') ? 'active' : '' }} position-relative d-inline-block" href="{{ route('admin.deposit') }}">
                     💰Deposit
@@ -65,9 +65,9 @@
                 <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.index') ? 'active' : '' }}" href="{{ route('admin.payments') }}">🏧Payments</a>
             </li>
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.index') ? 'active' : '' }}" href="{{ route('admin.commission') }}">Commission</a>
-            </li>
+            </li> --}}
 
             <li class="nav-item dropdown">
                 <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.index') ? 'active' : '' }} dropdown-toggle" href="#" data-bs-toggle="dropdown">⚙️My Setting</a>

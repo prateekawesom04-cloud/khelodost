@@ -4,8 +4,8 @@
         <div class="modal-content">
 
             <!-- Modal Header -->
-            <div class="modal-header-dark">
-                <h5 class="modal-title" id="mainModalLabel">Add Method</h5>
+            <div class="modal-header-dark flex justify-between items-center">
+                <h5 class="modal-title mx-2" id="mainModalLabel">Add Method</h5>
                 <a type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></a>
             </div>
 

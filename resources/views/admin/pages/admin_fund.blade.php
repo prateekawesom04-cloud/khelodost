@@ -48,7 +48,7 @@
     $('.addFund').click(function(){
         // $(this).addClass('disabled');
         let formData = new FormData($('form')[0]);
-        callAdminApi('post','{{route("addFund")}}',formData,ajaxResponse);
+        callAjaxFormData('post','{{route("addFund")}}',formData,ajaxResponse);
     });
     
 </script>
