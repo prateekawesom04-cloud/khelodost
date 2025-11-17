@@ -347,7 +347,8 @@ class AdminDataController extends Controller
     
     public function payments(){
         $user = User::getCurrentUser();
-        $payments = Payment::where('admin_username',$user->username)->get();
+        // $payments = Payment::where('admin_username',$user->username)->get();
+        $payments = Payment::all();
         return view('admin.pages.payments',compact('payments'));
     }
 
