@@ -69,8 +69,10 @@ class AdminUserController extends Controller
             
         }
 
-        $request->password = Hash::make($request->password);
-        $request->phone = $request->username;
+        // $request->phone = $request->username;
+        // $request->password = Hash::make($request->password);
+        $request->merge(['password'=>Hash::make($request->password)]);
+        $request->merge(['phone'=>$request->username]);
 
         if(!$this->checkMasterPassword($request->masterPassword)){
             return response()->json([

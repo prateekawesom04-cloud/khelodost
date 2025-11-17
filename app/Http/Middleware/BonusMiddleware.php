@@ -31,7 +31,7 @@ class BonusMiddleware
         $shareBonus = [];
         $claim_bonus = 0;
 
-        if(count($bonuses) > 0){
+        if($bonuses && count($bonuses) > 0){
             $claim_bonus = 1;
 
             foreach($bonuses as $bonus){
