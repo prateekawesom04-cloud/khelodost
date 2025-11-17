@@ -94,7 +94,8 @@
    let betslipData = {};
    
    $('body').on('click','.odd-btn',function(){
-      
+      betslipData = {};
+      betslipData.eventId = eventId;
       betslipData.oddId = $(this).attr('data-oddId');
       betslipData.oddVal = $(this).attr('data-oddVal');
       betslipData.betType = $(this).attr('data-betType');
@@ -147,8 +148,8 @@
    // let bets = {!! json_encode($userData->bets) !!};
    let betsData = '';
    // bets = JSON.parse(betsData);
-   user_bets = (betsData && betsData!='') ? betsData : localStorage.getItem('user_bets') ? JSON.parse(localStorage.getItem('user_bets')) : {};
-   // user_bets = localStorage.getItem('user_bets') ? JSON.parse(localStorage.getItem('user_bets')) : {};
+   // user_bets = (betsData && betsData!='') ? betsData : localStorage.getItem('user_bets') ? JSON.parse(localStorage.getItem('user_bets')) : {};
+   user_bets = localStorage.getItem('user_bets') ? JSON.parse(localStorage.getItem('user_bets')) : {};
 
 
    function normalbet_range(score, amount){
@@ -306,9 +307,9 @@
    function postPlacebet(res){
    
       ajaxResponse(res);
-      if(res.code == 200){
+      if(res.response_code == 200){
          $('.betslip').hide();
-         user_bets[`${betslipData.marketId}_${betslipData.sid}`] = betslipData;
+         user_bets[`${betslipData.marketId}_${betslipData.sid}_${betslipData.oddId}`] = betslipData;
          localStorage.setItem('user_bets', JSON.stringify(user_bets));
          loadBets();
 
