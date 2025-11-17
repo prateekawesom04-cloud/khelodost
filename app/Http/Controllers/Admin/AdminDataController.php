@@ -324,7 +324,7 @@ class AdminDataController extends Controller
         $transactions = User::join('transactions','transactions.username','=','users.username')
         ->select('transactions.*','users.admin_username')
         ->where([
-            'admin_username'=>$user->username,
+            // 'admin_username'=>$user->username,
             'payment_type'=>0,
             'manual'=>1
         ])

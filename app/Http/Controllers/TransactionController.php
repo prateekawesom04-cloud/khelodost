@@ -138,7 +138,7 @@ class TransactionController extends Controller
 
             $transaction->transfer_amount = $request->money;
             $transaction->status = $request->status;
-            $transaction->manual = 0;
+            $transaction->manual = 1;
             $transaction->save();
 
             return 'ok';
