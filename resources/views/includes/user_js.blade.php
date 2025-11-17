@@ -334,7 +334,7 @@
                     html +=`
                         <div class="market_row market_row_${j.sid} flex flex-row flex-wrap items-center border-b border-gray-500" data-sid="${j.sid}" data-nat="${j.nat}">
                             <div class="flex flex-row justify-between items-center match_nat w-[60%]">
-                                <span class="match_nat_${i}">${j.nat}</span>
+                                <span class="match_nat_name match_nat_${i}">${j.nat}</span>
                                 <span class="loss mx-1 text-red-500"></span>
                                 <span class="profit mx-1 text-green-500"></span>
                             </div>

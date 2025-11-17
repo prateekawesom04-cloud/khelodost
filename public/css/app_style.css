@@ -77,3 +77,14 @@ a {
 .odd_change {
     background: #91c9f5 !important;
 }
+
+.activeTab.active {
+    background: #349afa;
+}
+
+.flexTableItem{
+    min-width: 150px;
+}
+th.flexTableItem {
+    background: #349afa !important;
+}

@@ -265,18 +265,52 @@ class UserController extends Controller
     }
     
     public function openBets(Request $request){
-        $openBets = SportookBet::where('username',$this->currentUser->username)->orderBy('id','desc')->get();
+        // $openBets = SportookBet::where('username',$this->currentUser->username)->where('status',0)->orderBy('id','desc')->get();
+        $openBets = SportookBet::where('username',$this->currentUser->username)->where('status',0)->orderBy('id','desc')->get();
+        
         // $openBets = SportookBet::where('username',$this->currentUser->username)->whereIn('status',[1])->orderBy('id','desc')->get();
 
         // dd($openBets);
         if(count($openBets)){
             return response()->json([
-                'code'=>'200',
+                'response_code'=>'200',
                 'data'=> $openBets
             ]);
         } else{
             return response()->json([
-                'code'=>'401',
+                'response_code'=>'401',
+                'data'=> 'No Openbets Available'
+            ]);
+        }
+    }
+
+    public function eventBets(Request $request){
+        if(isset($request->gtype)){
+
+            if($request->gtype==0){
+                $mname = ['MATCH_ODDS','Bookmaker','Tied Match','fancy1','Normal'];
+            } else if($request->gtype==1){
+                $mname = ['Normal'];
+            }
+            $openBets = SportookBet::where('username',$this->currentUser->username)->where('eventId',$request->eventId)->where('status',0)->whereIn('mname',$mname)->orderBy('id','desc')->get();
+
+            $normalBets = SportookBet::where('username',$this->currentUser->username)->where('eventId',$request->eventId)->where('status',0)->whereIn('mname',['Normal'])->orderBy('id','desc')->get();
+
+            if(count($openBets)){
+                return response()->json([
+                    'response_code'=>'200',
+                    'data'=> $openBets,
+                    'normalBets'=>count($normalBets)
+                ]);
+            } else{
+            return response()->json([
+                'response_code'=>'401',
+                'data'=> 'No Openbets Available'
+            ]);
+        }
+        } else{
+            return response()->json([
+                'response_code'=>'401',
                 'data'=> 'No Openbets Available'
             ]);
         }

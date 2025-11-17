@@ -101,6 +101,7 @@
       betslipData.betType = $(this).attr('data-betType');
       betslipData.size = $(this).attr('data-size');
       betslipData.sid = $(this).parents('.market_row').attr('data-sid');
+      betslipData.nat = $(this).parents('.market_row').find('.match_nat_name').text();
       betslipData.marketId = $(this).parents('.market').attr('data-marketId');
       betslipData.mname = $(this).parents('.market').attr('data-mname');
       betslipData.gtype = $(this).parents('.market').attr('data-gtype');
@@ -325,40 +326,147 @@
 
    function openBets(res){
       
-      if(res.code == 200){
+      if(res.response_code == 200){
          let bets = '';
 
+         bets +=`
+            <div class="flexTable flex flex-col rounded-md border border-[#747a87] p-2 mt-2">
+               
+               <div class="flexTableHead !bg-[#2888ef] flex flex-row gap-2 flex-1 mt-2 p-2">
+                  <span class="flexTableItem t_data">BetId</span>
+                  <span class="flexTableItem t_data">Date</span>
+                  <span class="flexTableItem t_data">Odd Value</span>
+                  <span class="flexTableItem t_data">Bet Amount</span>
+               </div>
+         `;
 
          $(res.data).each(function(i,j){
 
             bets +=`
-               <div class="flex flex-col rounded-md border border-[#747a87] p-2 mt-2">
-                  
-                  <div class="!bg-[#2888ef] flex flex-row gap-2 flex-1 mt-2 p-2">
-                     <span class="t_data w-[40%]">BetId</span>
-                     <span class="t_data w-[20%]">Date</span>
-                     <span class="t_data w-[20%]">Odd Value</span>
-                     <span class="t_data w-[20%]">Bet Amount</span>
+                  <div class="flexTableRow flex fex-row gap-2 flex-1">
+                     <div class="flexTableItem t_data">${this.betId}</div>
+                     <div class="flexTableItem t_data">${formatData(this.created_at)}</div>
+                     <div class="flexTableItem t_data">${this.oddVal}</div>
+                     <div class="flexTableItem t_data">${this.bet_amount}</div>
                   </div>
-                  <div class="flex fex-row gap-2 flex-1">
-                     <div class="t_data w-[40%]">${this.betId}</div>
-                     <div class="t_data w-[20%]">${formatData(this.created_at)}</div>
-                     <div class="t_data w-[20%]">${this.oddVal}</div>
-                     <div class="t_data w-[20%]">${this.bet_amount}</div>
-                  </div>
-                                 
-               </div>
+                        
             `;
 
          });
+         bets+=`           
+               </div>
+            `;
 
          $('#openbets').html(bets);
          $('#openBetsTab').tab('show');
       }
    }
+   
+   // function openBetsBottom(res){
+      
+   //    if(res.response_code == 200){
+   //       let bets = '';
+
+   //       bets +=`
+   //          <div class="flex flex-col rounded-md border border-[#747a87] p-2 mt-2 overflow-x-auto">
+               
+   //             <div class="!bg-[#2888ef] flex flex-row gap-2 flex-1 mt-2 p-2">
+   //                <span class="flexTableItem t_data">No.</span>
+   //                <span class="flexTableItem t_data">Bhaw</span>
+   //                <span class="flexTableItem t_data">BetType</span>
+   //                <span class="flexTableItem t_data">Time</span>
+   //                <span class="flexTableItem t_data">ip</span>
+   //             </div>
+   //       `;
+
+   //       $(res.data).each(function(i,j){
+
+   //          bets +=`
+   //                <div class="flex fex-row gap-2 flex-1">
+   //                   <div class="flexTableItem t_data">${i}</div>
+   //                   <div class="flexTableItem t_data">${this.oddVal}</div>
+   //                   <div class="flexTableItem t_data">${this.betOn?'Lay':'Back'}</div>
+   //                   <div class="flexTableItem t_data">${formatData(this.created_at)}</div>
+   //                   <div class="flexTableItem t_data">${this.ip}</div>
+   //                </div>
+                       
+   //          `;
+
+   //       });
+   //       bets+=`           
+   //             </div>
+   //          `;
+
+   //       $('.allBetList').html(bets);
+   //       $('#openBetsTab').tab('show');
+   //    }
+   // }
+
+   
+   function openBetsBottom(res){
+      
+      if(res.response_code == 200){
+         $('.allBetList').html('');
+         let bets = '';
+         
+         $('.allBetCount').find('span').html($(res.data).length);
+         $('.fancyBetCount').find('span').html(res.normalBets);
+
+         bets +=`
+            <table class="table text-center flex flex-col rounded-md border border-[#747a87] p-2 mt-2 overflow-x-auto">
+               
+               <thead class="flex flex-row gap-2 flex-1 mt-2">
+                  <tr class="!bg-[#349afa] w-100">
+                     <th class="flexTableItem t_data">No.</th>
+                     <th class="flexTableItem t_data">Runner</th>
+                     <th class="flexTableItem t_data">Bhaw</th>
+                     <th class="flexTableItem t_data">BetType</th>
+                     <th class="flexTableItem t_data">Time</th>
+                     <th class="flexTableItem t_data">ip</th>
+                  </tr>
+               </thead>
+         `;
+
+         $(res.data).each(function(i,j){
+
+            bets +=`
+               <tbody>
+                  <tr class="flex fex-row gap-2 flex-1">
+                     <td class="flexTableItem t_data">${i}</td>
+                     <td class="flexTableItem t_data">${this.nat}</td>
+                     <td class="flexTableItem t_data">${this.oddVal}</td>
+                     <td class="flexTableItem t_data">${this.betOn?'Lay':'Back'}</td>
+                     <td class="flexTableItem t_data">${formatData(this.created_at)}</td>
+                     <td class="flexTableItem t_data">${this.ip}</td>
+                  </tr>
+               </tbody>
+                       
+            `;
+
+         });
+         bets+=`           
+               </table>
+            `;
+
+         $('.allBetList').html(bets);
+         // $('#openBetsTab').tab('show');
+      }
+   }
 
    $(document).ready(function(){
-      callApi('get','{{route('user.openbets')}}',null,openBets);
+      // callApi('get','{{route('user.openbets')}}',null,openBets);
+      callApi('get','{{route('user.eventBets')}}',{gtype:0,eventId:eventId},openBetsBottom);
    });
+    
+    $('.allBetCount').on('click',function(){
+      $(this).parent().find('a').removeClass('active');
+      $(this).addClass('active');
+      callApi('get','{{route('user.eventBets')}}',{gtype:0,eventId:eventId},openBetsBottom);
+    });
+    $('.fancyBetCount').on('click',function(){
+      $(this).parent().find('a').removeClass('active');
+      $(this).addClass('active');
+      callApi('get','{{route('user.eventBets')}}',{gtype:1,eventId:eventId},openBetsBottom);
+    });
 
 </script>

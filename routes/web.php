@@ -64,6 +64,8 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
         Route::post('placebet', [SportookBetController::class,'placebet'])->name('user.placebet')->withoutMiddleware([VerifyCsrfToken::class]);
         
         Route::get('openbets', [UserController::class,'openbets'])->name('user.openbets')->withoutMiddleware([VerifyCsrfToken::class]);
+        
+        Route::get('eventBets', [UserController::class,'eventBets'])->name('user.eventBets')->withoutMiddleware([VerifyCsrfToken::class]);
 
         Route::get('bonus', [UserController::class,'bonus'])->name('user.bonus');
 

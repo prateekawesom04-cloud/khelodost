@@ -116,20 +116,24 @@
             <div class="balance-title fw-bold text-secondary fs-6 mb-3 d-flex align-items-center gap-2">
                 💳 Balance Information
             </div>
-
+{{-- 
             <div class="mb-3">
                 <div class="text-muted small fw-semibold">BALANCE</div>
                 <div class="balance-amount fs-6 fw-bold text-success">₹ {{$userData->wallet_amount}}</div>
-            </div>
+            </div> --}}
 
             <div class="d-flex justify-content-between mb-3">
-                <div>
+                {{-- <div>
                     <div class="text-muted small fw-semibold text-uppercase">Free Cash</div>
                     <div class="fs-6 fw-bold">₹ 0.00</div>
+                </div> --}}
+                <div class="">
+                    <div class="text-muted small fw-semibold">BALANCE</div>
+                    <div class="balance-amount fs-6 fw-bold text-success">₹ {{$userData->wallet_amount}}</div>
                 </div>
                 <div>
                     <div class="text-muted small fw-semibold text-uppercase">Net Exposure</div>
-                    <div class="fs-6 fw-bold">₹ 0.00</div>
+                    <div class="fs-6 fw-bold">₹ {{$userData->unsattled_amount}}</div>
                 </div>
             </div>
 
