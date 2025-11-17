@@ -80,6 +80,7 @@ class getSportFixture extends Command
                         $data['lay12'] = $item['lay12'] ?? '';
                         $data['section'] = $item['section'] ?? '';
                         $data['beventId'] = $item['beventId'] ?? '';
+                        $data['inPlay'] = $item['inPlay'] ?? '';
                         
                         $sportDataArray[] = $data;
 
@@ -105,6 +106,7 @@ class getSportFixture extends Command
                         $data['stime'] = $item['stime'] ?? '';
                         $data['section'] = $item['section'] ?? '';
                         $data['beventId'] = $item['beventId'] ?? '';
+                        $data['iplay'] = $item['iplay'] ?? '';
                         
                         $sportDataArray[] = $data;
                         $date = $item['stime'];

@@ -60,15 +60,15 @@
                                             $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
                                             $teamB = explode(' v ',$row->eventName)[1] ?? 'Series';
                                         @endphp
-                                        <td>{{(!$row->status)?'upcoming':(($row->status==1)?'inplay':'Sattled')}}</td>
+                                        <td>{{(!$row->status)?'upcoming':(($row->status==1)?'Going In-play':'Finished')}}</td>
                                         {{-- <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td> --}}
                                         <td>
-                                            <div class="flex flex-row items-center justify-evenly">
+                                            <div class="flex flex-row items-center justify-between">
                                                 {{-- <div class="p-[.1rem]">
                                                     <i data-eventName="{{$row->eventName}}" data-eventId="{{ $row->eventId }}" class="fas fa-{{($row->status)?'circle-xmark text-danger b_active':'check text-success b_deactive'}}" style="cursor: pointer;" title="Change Status"></i>
                                                 </div> --}}
                                                 <div>
-                                                    <i data-sportname="{{$row->sportname}}" data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent mx-2 fas fa-edit" style="cursor: pointer;" data-bs-target="#sattleEvent"></i>
+                                                    <i data-sportname="{{$row->sportname}}" data-eventName="{{$row->eventName}}" data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent mx-2 fas fa-edit" style="cursor: pointer;" data-bs-target="#sattleEvent"></i>
                                                     <i data-sportname="{{$row->sportname}}" data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="sattleEventBets mx-2 fas fa-check" style="cursor: pointer;"></i>
                                                     {{-- <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="{{($teamB=='Series')?'':'#sattleEvent'}}"></i> --}}
                                                     {{-- <i data-teamA="{{$explode(' v ',$row->eventName)[0]}}" data-teamB="{{explode(' v ',$row->eventName)[1]}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#sattleEvent"></i> --}}
@@ -110,7 +110,12 @@
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header modal-header-dark">
-                <h5 class="modal-title" id="mainModalLabel">Sattle Event</h5>
+                {{-- <h5 class="modal-title" id="mainModalLabel">Sattle Event</h5> --}}
+                    <div class="flex flex-row gap-2 items-center justify-center">
+                        <div>All ( <span class="market_count"></span> )</div>
+                        <div>Odds ( <span class="m_market_count"></span> )</div>
+                        <div>Fancy ( <span class="fancy_market_count"></span> )</div>
+                </div>
                 <a type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></a>
             </div>
             <div class="modal-body modal-header-dark">
@@ -160,6 +165,22 @@
         data = res.data;
         eventData = data;
 
+        let mcount = 0;
+        let fcount = 0;
+
+
+        $(data).filter(function(i,j){
+            if(j.mname == "MATCH_ODDS" || j.mname == "Bookmaker" || j.mname == "TIED_MATCH") {
+                mcount++;
+            }else{
+                fcount++;
+            }
+        });
+
+        $('.market_count').text(data.length);
+        $('.m_market_count').text(mcount);
+        $('.fancy_market_count').text(fcount);
+
         if(! data.length){
 
             return false;
@@ -177,47 +198,71 @@
 
                 let html = '';
                 
-                html += `
-                    <form class="my-2 ${j.mname}">
-                    <input type="hidden" name="eventId" class="eventId" value="${j.gmid}">
-                    <input type="hidden" name="marketId" class="marketId" value="${j.mid}">
-                    <input type="hidden" name="mname" class="mname" value="${j.mname}">
-                    <div class="market" data-marketId="${j.mid}" data-mname="${j.mname}">
-                        <h3>${j.mname}</h3>
-                        <div class="flex flex-row items-center justify-evenly gap-3 divide-x divide-gray-300 mb-1">
-                            <div class="min-w-[60%] px-2">Result</div>
-                `;
-                if(j.mname == "Normal") {
-                    html += `<div class="px-2">Value</div>`;
-                }
-                html += `
-                        <div class="px-2">Action</div>
-                        </div>
-                        <div class="flex flex-row items-center justify-evenly gap-3 divide-x divide-gray-300 mb-1">
-                            <div class="min-w-[60%] px-2">
-                                <select id="nat" name="result" class="form-select marketResult">
-                `;
-                
-                    $(j.section).each(function(i,j){
-                        html+=`
-                            <option value="${this.sid}">${this.nat}</option>
-                        `;
-                    });
-                html +=`
-                                </select>
+                if(j.mname != 'Normal'){
+                    
+                    html += `
+                        <form class="my-2 ${j.mname}">
+                        <input type="hidden" name="eventId" class="eventId" value="${j.gmid}">
+                        <input type="hidden" name="marketId" class="marketId" value="${j.mid}">
+                        <input type="hidden" name="mname" class="mname" value="${j.mname}">
+                        <div class="market" data-marketId="${j.mid}" data-mname="${j.mname}">
+                            <h3 class="!text-[14px] p-2 bg-[#0c0339] mt-4 mb-2 text-center">${j.mname}</h3>
+                            <div class="flex flex-row items-center justify-between gap-3 divide-xed divide-gray-300 mb-1">
+                                <div class="w-[60%] px-2">Result</div>
+                    
+                                <div class="px-2">Action</div>
                             </div>
-                `;
-                if(j.mname == "Normal") {
-                    html += `<div class="px-2">
-                                <input type="text" name="size" class="form-control" placeholder="Enter Value">
-                            </div>`;
-                }
-                html += `
-                            <a href="javascript:void(0)" class="px-2 sattleEvent btn btn-secondary">Save</a>
+                            <div class="flex flex-row items-center justify-between gap-3 mb-1">
+                                <div class="w-[60%] px-2">
+                                    <select id="nat" name="result" class="form-select marketResult">
+                        `;
+                        
+                        $(j.section).each(function(i,j){
+                            
+                                html += `
+                                    <option value="${this.sid}">${this.nat}</option>
+                                `;
+                        });
+
+                    html +=`
+                                    </select>
+                                </div>
+                                <a href="javascript:void(0)" class="px-2 sattleEvent btn btn-secondary">Save</a>
+                            </div>
                         </div>
-                    </div>
-                    </form>
-                `;
+                        </form>
+                    `;
+                } else{
+                    html +=`
+                        <div class="market" data-marketId="${j.mid}" data-mname="${j.mname}">
+                            <h3 class="!text-[14px] p-2 bg-[#0c0339] mt-4 mb-2 text-center">${j.mname}</h3>
+                            <div class="flex flex-row items-center justify-between gap-3 divide-xed divide-gray-300 mb-1">
+                                <div class="w-[60%] px-2">Runner</div>
+                    
+                                <div class="px-2">Result</div>
+                                <div class="px-2">Action</div>
+                            </div>
+                    `;
+                        $(j.section).each(function(i2,j2){
+                            
+                        html += `
+                            <form class="flex flex-row items-center justify-between gap-3 mb-1">
+                                <input type="hidden" name="eventId" class="eventId" value="${j.gmid}">
+                                <input type="hidden" name="marketId" class="marketId" value="${j.mid}">
+                                <input type="hidden" name="mname" class="mname" value="${j.mname}">
+                                <input type="hidden" name="result" class="result" value="${this.sid}">
+                                <div class="w-[60%] px-2">${this.nat}</div>
+                                <div class="px-2">
+                                    <input type="text" name="size" class="form-control" placeholder="Enter Value">
+                                </div>
+                                <a href="javascript:void(0)" class="px-2 sattleEvent btn btn-secondary">Save</a>
+                            </form>
+                        `;
+                        });
+                    html+=`
+                        </div>
+                    `;
+                }
 
                 if(j.mname == "TIED_MATCH"){
                     $('.market[data-mname=Bookmaker]').after(html);

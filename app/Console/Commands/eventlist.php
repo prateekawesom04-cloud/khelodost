@@ -41,17 +41,31 @@ class eventlist extends Command
                 $eventName = $event['ename'];
                 $date = $event['stime'];
                 $beventId = $event['beventId'];
-                $status = (strtotime(now()) > strtotime($date)) ? 1 : 0;
+
+                if($event['iplay']=="True") {
+                    $status = (strtotime(now()) > strtotime($date)) ? 1 : 0;
+                } else {
+                    $status = 2;
+                }
+
             } else {
                 $eventId = $event['gameId'];
                 $eventName = explode(' / ',$event['eventName'])[0];
                 $date = explode(' / ',$event['eventName'])[1];
                 $date = explode(' (IST)',$date)[0];
                 $beventId = $event['beventId'];
-                $status = (strtotime(now()) > strtotime($date)) ? 1 : 0;
+
+                if($event['inPlay']=="True") {
+                    $status = (strtotime(now()) > strtotime($date)) ? 1 : 0;
+                } else {
+                    $status = 2;
+                }
             }
 
-            $event = new Event();
+            $event = Event::where('eventId',$eventId)->first();
+            if(!$event){
+                $event = new Event();
+            }
             $event->eventId = $eventId;
             $event->eventName = $eventName;
             $event->eventDate = $date;

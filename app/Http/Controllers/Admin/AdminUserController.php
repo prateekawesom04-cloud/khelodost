@@ -69,6 +69,9 @@ class AdminUserController extends Controller
             
         }
 
+        $request->password = Hash::make($request->password);
+        $request->phone = $request->username;
+
         if(!$this->checkMasterPassword($request->masterPassword)){
             return response()->json([
                 'message'=> 'wrong master password',

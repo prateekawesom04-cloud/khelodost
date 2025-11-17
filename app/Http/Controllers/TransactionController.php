@@ -31,7 +31,7 @@ class TransactionController extends Controller
             $transaction->save();
             
             
-            $data['versionNo'] = env('versionNo');
+            $data['versionNo'] = 1;
             $data['mchNo'] = env('mchNo');
             $data['price'] = $request->transfer_amount;
             $data['orderDate'] = date('YmdHis');
@@ -59,12 +59,18 @@ class TransactionController extends Controller
             
 
             $data['payload'] = json_encode($data);
+
             $data['payload'] = (new AuthController)->aes256Encrypt(env('signatureKey'),$data['payload']);
 
             $data['sign'] = $data['payload'].env('signatureKey');
-
-            $data['sign'] = strtoupper(md5($data['payload']));
             
+            $sdata = [];
+
+            $sdata['mchNo'] = $data['mchNo'];
+            $sdata['payload'] = $data['payload'];
+            $sdata['sign'] = strtoupper(md5($data['sign']));
+            
+            // dd($sdata);
             // $data['sign'] = (new AuthController)->md5_sign($data, env('signatureKey'));
             
             $payment_type = ($request->payment_type==1) ? 'transferApply' : 'makeOrder';
@@ -83,7 +89,7 @@ class TransactionController extends Controller
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($sdata));
             curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_DEFAULT);
             curl_setopt($ch, CURLOPT_TIMEOUT, 120);
     
