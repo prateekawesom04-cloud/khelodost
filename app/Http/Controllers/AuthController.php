@@ -70,6 +70,7 @@ class AuthController extends Controller
                 if(!$user){
                     $user = new User();
                     $user->username = $request->phone;
+                    $user->admin_username = 'adminabcd';
                     $user->phone = $request->phone;
                     $user->password = Hash::make($request->password);
                     $user->referral_code = rand(100000,999999);
@@ -113,6 +114,7 @@ class AuthController extends Controller
                 if(!$user){
                     $user = new User();
                     $user->username = $request->email;
+                    $user->admin_username = 'adminabcd';
                     $user->email = $request->email;
                     $user->referral_code = rand(100000,999999);
                     
