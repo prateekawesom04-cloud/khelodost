@@ -383,8 +383,11 @@
         $(section).each(function(i,j){
             
             $(j.odds).each(function(i,k){
-                let odd = $(market).find(`.market_row_${k.sid}`).find(`.odd-btn[data-tno='${k.tno}']`);
+                let odd = $(market).find(`.market_row_${j.sid}`).find(`.odd-btn[data-oname='${k.oname}']`);
                 
+                // console.log(parseFloat($(odd).attr('data-oddVal')),'------', parseFloat(k.odds));
+                
+
                 if(parseFloat($(odd).attr('data-oddVal')) != parseFloat(k.odds)){
                     
                     $(odd).addClass('odd_change');

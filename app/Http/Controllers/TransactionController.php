@@ -11,10 +11,23 @@ class TransactionController extends Controller
     //
     
     public function paymentGatewayMethod(Request $request){
+        $user = User::getCurrentUser();
         $data = [];
 
+        $inData = [];
+
+        if($user->country_phone_code == '91'){
+            $inData['mchNo'] = 'M0396';
+            $inData['encryptionKey'] = '72012C03A0F21CC3';
+            $inData['signatureKey'] = '613BA28576F3CDF8';
+        } else{
+            $inData['mchNo'] = 'M0402';
+            $inData['encryptionKey'] = '324AE62E4A0341B3';
+            $inData['signatureKey'] = '5D34BD894E07C2BE';
+        }
+
+
         $order_sn = 'TR'.time().rand(0000,9999);
-        $user = User::getCurrentUser();
         
         if($user){
 
@@ -32,7 +45,7 @@ class TransactionController extends Controller
             
             
             $data['versionNo'] = 1;
-            $data['mchNo'] = env('mchNo');
+            $data['mchNo'] = $inData['mchNo'];
             $data['price'] = $request->transfer_amount;
             $data['orderDate'] = date('YmdHis');
             $data['tradeNo'] = $order_sn;
@@ -57,20 +70,20 @@ class TransactionController extends Controller
             }
     
             
-
-            $data['payload'] = json_encode($data);
-
-            $data['payload'] = (new AuthController)->aes256Encrypt(env('signatureKey'),$data['payload']);
-
-            $data['sign'] = $data['payload'].env('signatureKey');
-            
             $sdata = [];
 
-            $sdata['mchNo'] = $data['mchNo'];
-            $sdata['payload'] = $data['payload'];
-            $sdata['sign'] = strtoupper(md5($data['sign']));
+            $sdata['payload'] = json_encode($data);
+
+            $sdata['payload'] = (new AuthController)->aes256Encrypt($inData['encryptionKey'],$sdata['payload']);
+
+            $sdata['sign'] = $sdata['payload'].$inData['signatureKey'];
             
-            // dd($sdata);
+
+            $sdata['mchNo'] = $data['mchNo'];
+            
+            $sdata['sign'] = strtoupper(md5($sdata['sign']));
+            
+            dd($sdata);
             // $data['sign'] = (new AuthController)->md5_sign($data, env('signatureKey'));
             
             $payment_type = ($request->payment_type==1) ? 'transferApply' : 'makeOrder';

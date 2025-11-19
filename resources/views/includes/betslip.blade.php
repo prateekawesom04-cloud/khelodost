@@ -114,42 +114,137 @@
       stakeUpdate(100);
 
    });
+ 
+   function stakeUpdate(stakeVal){
+      if(stakeVal==''){
+         return false;
+      }
+      
+      betslipData.bet_amount = stakeVal;
+
+      betslipData.profit = betCalculation(betslipData);
+
+      user_bets['running_bet'] = betslipData;
+
+      resultCalculation(betslipData.marketId);
+
+      $('#stakeValue').val(stakeVal);
+      $('#oddVal').val(betslipData.oddVal);
+   
+      
+   }
 
    function betCalculation(betslipData){
       
       let profit = 0;
-      let market_row = $(`.market_${betslipData.marketId}`).find(`.market_row_${betslipData.sid}`);
-      let other_rows = $(`.market_${betslipData.marketId}`).find(`.market_row[data-sid!='${betslipData.sid}']`);
+      // let market_row = $(`.market_${betslipData.marketId}`).find(`.market_row_${betslipData.sid}`);
+      // let other_rows = $(`.market_${betslipData.marketId}`).find(`.market_row[data-sid!='${betslipData.sid}']`);
 
       if(betslipData.mname == 'Normal'){
          // $('#oddVal').val(betslipData.size);
          profit = parseFloat((betslipData.size * betslipData.bet_amount)/100).toFixed(2);
-         $(other_rows).each(function(i,j){
-            $(j).find('.loss').html('');
-            $(j).find('.profit').html('');
-         });
-         $(market_row).find('.loss').html(betslipData.bet_amount);
+         // $(other_rows).each(function(i,j){
+         //    $(j).find('.loss').html('');
+         //    $(j).find('.profit').html('');
+         // });
+         // $(market_row).find('.loss').html(betslipData.bet_amount);
       } else {
-         $(market_row).find('.loss').html('');
-         $(other_rows).each(function(i,j){
-            $(j).find('.loss').html(betslipData.bet_amount);
-            $(j).find('.profit').html('');
-         });
+         // $(market_row).find('.loss').html('');
+         // $(other_rows).each(function(i,j){
+         //    $(j).find('.loss').html(betslipData.bet_amount);
+         //    $(j).find('.profit').html('');
+         // });
          profit = parseFloat((betslipData.oddVal - 1) * betslipData.bet_amount).toFixed(2);
       }
-      $(`.market_${betslipData.marketId}`).find(`.market_row_${betslipData.sid}`).find('.profit').html(profit);
+      // $(`.market_${betslipData.marketId}`).find(`.market_row_${betslipData.sid}`).find('.profit').html(profit);
 
       return profit;
    }
 
+   function resultCalculation(marketId){
+      // let marketTotal = {};
+      
+      
+      let marketProfit = {};
+
+      let market = $(`.market_${marketId}`);
+      let market_row = $(market).find('.market_row');
+      
+      let marketBets = Object.values(user_bets).filter(i=>i.marketId == marketId);
+      
+
+      
+
+      if(!marketBets.length){
+         return false;
+      }
+
+      $(market_row).each(function(k,row){
+      
+         
+         let sid = $(row).attr('data-sid');
+         
+         marketProfit[sid] = marketProfit[sid] ?? 0;
+         
+         
+         $(marketBets).each(function(i,j){
+            
+            j.profit = parseFloat(j.profit);
+            j.bet_amount = parseFloat(j.bet_amount);
+
+            
+            if($(market).attr('data-mname') == 'Normal'){
+               
+               if(sid == j.sid){
+                  if(j.betType == '0'){
+                     marketProfit[sid] = marketProfit[sid] + j.profit;
+
+                  } else{
+                     marketProfit[sid] = marketProfit[sid] - j.profit;
+                  }
+               }
+            } else{
+               if(sid == j.sid){
+                  if(j.betType == '0'){
+                     marketProfit[sid] = marketProfit[sid] + j.profit;
+   
+                  } else{
+                     marketProfit[sid] = marketProfit[sid] - j.profit;
+                  }
+               } else{
+                  if(j.betType == '0'){
+                     marketProfit[sid] = marketProfit[sid] - j.bet_amount;
+   
+                  } else{
+                     marketProfit[sid] = marketProfit[sid] + j.bet_amount;
+                  }
+               }
+
+            }
+         });
+
+         
+         if(marketProfit[sid] < 0){
+            $(row).find('.profit').removeClass('text-success');
+            $(row).find('.profit').addClass('text-danger');
+         } else{
+            $(row).find('.profit').removeClass('text-danger');
+            $(row).find('.profit').addClass('text-success');
+         }
+         $(row).find('.profit').html(Math.abs(marketProfit[sid]));
+      });
+      
+   }
+
+
    let user_bets = {};
 
    @if($userData)
-   
    // let bets = {!! json_encode($userData->bets) !!};
-   let betsData = '';
+   // let betsData = '';
    // bets = JSON.parse(betsData);
    // user_bets = (betsData && betsData!='') ? betsData : localStorage.getItem('user_bets') ? JSON.parse(localStorage.getItem('user_bets')) : {};
+@endif
    user_bets = localStorage.getItem('user_bets') ? JSON.parse(localStorage.getItem('user_bets')) : {};
 
 
@@ -176,33 +271,62 @@
 
       if(Object.keys(user_bets).length){
          
-         var sid = {};
+         // let sid = {};
+
+         // let sidResult = {};
+         
          $.each(user_bets, function(i,j){
+
+            // sid[j.sid] = sid[j.sid]??{};
             
+            // sid[j.sid] = sid[j.sid]??0;
             
-            sid[j.sid] = sid[j.sid]??{};
-            
-            if(!j.betType){
-               sid[j.sid]['loss'] = (sid[j.sid]['loss'] ?? 0) + j.bet_amount;
-               sid[j.sid]['profit'] = (sid[j.sid]['profit'] ?? 0) + j.profit;
-            } else{
-               sid[j.sid]['loss'] = Math.abs(j.bet_amount - (sid[j.sid]['loss'] ?? 0));
-               sid[j.sid]['profit'] = Math.abs(j.profit - (sid[j.sid]['profit'] ?? 0));
-            }
-            
-            $('.loss').show();
-            $('.profit').show();
+
             let market_row = $(`.market_${j.marketId}`).find(`.market_row_${j.sid}`);
             let other_rows = $(`.market_${j.marketId}`).find(`.market_row[data-sid!='${j.sid}']`);
 
+            // // sidResult[j.marketId] = sidResult[j.marketId] ?? {};
             
-            let odd = $(market_row).find(`.odd-btn[data-tno='${j.tno}']`).attr('data-oddVal');
+            // $(other_rows).each(function(){
+            //    user_bets[this.marketId+'_'+this.sid+'_'+this.oddId]
+            // })
+
+            // let profit = 0;
+
+            
+            // if(j.betType){
+            //    sid[j.sid]['loss'] = (sid[j.sid]['loss'] ?? 0) + j.bet_amount;
+            //    sid[j.sid]['profit'] = (sid[j.sid]['profit'] ?? 0) + j.profit;
+            // } else{
+            //    sid[j.sid]['loss'] = Math.abs(j.bet_amount - (sid[j.sid]['loss'] ?? 0));
+            //    sid[j.sid]['profit'] = Math.abs(j.profit - (sid[j.sid]['profit'] ?? 0));
+            // }
+
+            // sid[j.sid][j.marketId] = sid[j.sid]['profit'] - sid[j.sid]['loss'];
+
+            // // sid[j.sid]['profit'] -= sid[j.sid]['loss'];
+            
+            // if(sid[j.sid]['profit'] < 0){
+            //    $(market_row).find('.profit').removeClass('text-success');
+            //    $(market_row).find('.profit').addClass('text-danger');
+            // } else{
+            //    $(market_row).find('.profit').removeClass('text-danger');
+            //    $(market_row).find('.profit').addClass('text-success');
+            // }
+            
+            $(market_row).find('.loss').html('');
+            // $(market_row).find('.loss').hide();
+            // $('.loss').show();
+            $('.profit').show();
+
+            
+            // let odd = $(market_row).find(`.odd-btn[data-tno='${j.tno}']`).attr('data-oddVal');
             // let odd = $(market_row).find(`.odd-btn[data-tno='${j.tno}']`).find('span').html();
 
             if(j.mname == 'Normal'){
             
-               $(market_row).find('.loss').html(sid[j.sid]['loss']);
-               $(market_row).find('.profit').html(sid[j.sid]['profit']);
+               // $(market_row).find('.loss').html(sid[j.sid]['loss']);
+               // $(market_row).find('.profit').html(sid[j.sid]['profit']);
                // $(market_row).find('.profit').html(j.profit);
                // $(market_row).find('.loss').html(j.bet_amount);
 
@@ -213,14 +337,21 @@
             
 
             } else{
-               $(other_rows).each(function(i,k){
+               // $(other_rows).each(function(i,k){
                   // $(k).find('.loss').html(j.bet_amount);
-                  $(k).find('.loss').html(sid[j.sid]['loss']);
-               });
+                  // $(k).find('.loss').html(sid[j.sid]['loss']);
+               // });
                // $(market_row).find('.profit').html(j.profit);
-               $(market_row).find('.profit').html(sid[j.sid]['profit']);
+               // $(market_row).find('.loss').html(sid[j.sid]['loss']);
+               // $(market_row).find('.profit').html(sid[j.sid]['profit']);
             }
             
+         });
+
+         // let allMarkets = [];
+         $('.market').each(function(){
+            // allMarkets[] = $(this).attr('data-marketId');
+            resultCalculation($(this).attr('data-marketId'));
          });
          
       }
@@ -230,7 +361,6 @@
    //    loadBets();
    // });
 
-   @endif
 
 
    $('#stakeValue').on('keyup',function(){
@@ -287,21 +417,7 @@
       $('#oddVal').val(betslipData.oddVal);
       // $('#nat').html(betslipData.nat);
    }
-   
-   function stakeUpdate(stakeVal){
-      if(stakeVal==''){
-         return false;
-      }
-      
-      betslipData.bet_amount = stakeVal;
-
-      betslipData.profit = betCalculation(betslipData);
-
-      $('#stakeValue').val(stakeVal);
-      $('#oddVal').val(betslipData.oddVal);
-   
-      
-   }
+  
 
    function placeBet(){
 
@@ -354,7 +470,7 @@
             
          //    user_bets[`${betslipData.marketId}_${betslipData.sid}_${betslipData.oddId}`] = betslipData;
          }
-         
+         delete user_bets['running_bet'];
          user_bets[`${betslipData.marketId}_${betslipData.sid}_${betslipData.oddId}`] = betslipData;
          localStorage.setItem('user_bets', JSON.stringify(user_bets));
          loadBets();
@@ -501,6 +617,9 @@
    $(document).ready(function(){
       // callApi('get','{{route('user.openbets')}}',null,openBets);
       // callApi('get','{{route('user.eventBets')}}',{gtype:0,eventId:eventId},openBetsBottom);
+
+      // let marketList = 
+
    });
     
     $('.allBetCount').on('click',function(){
