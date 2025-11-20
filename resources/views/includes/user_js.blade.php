@@ -271,7 +271,7 @@
         html += `
             <!-- ${data.mname} -->
             <div id="market_${data.mid}" class="flex flex-col market market_${data.mid} text-[12px]" data-gtype="${data.gtype}" data-mname="${data.mname}" data-marketId="${data.mid}">
-                <div class="bg-[#2888ef] mt-3 p-2">
+                <div class="bg-[#2888ef] mt-2 p-2 border-2 !border-[#0c0339] rounded-full font-bold">
                     ${(data.mname=='fancy1')?'TOSS':data.mname}
                 </div>
                 

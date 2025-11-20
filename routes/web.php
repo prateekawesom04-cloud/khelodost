@@ -95,6 +95,8 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
     Route::get('upcomingEventData', [SportbookController::class,'upcomingEventData'])->name('user.upcomingEventData');
 
     Route::get('otherSportEventPage/{eventId}', [SportbookController::class,'otherSportEventPage'])->name('user.otherSportEventPage');
+    
+    Route::get('exposure', [UserController::class,'exposure'])->name('user.exposure');
 
 
     Route::get('/', function () {

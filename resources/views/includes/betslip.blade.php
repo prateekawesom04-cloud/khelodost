@@ -148,6 +148,8 @@
          //    $(j).find('.profit').html('');
          // });
          // $(market_row).find('.loss').html(betslipData.bet_amount);
+      } else if(betslipData.mname == 'Bookmaker'){
+         profit = parseFloat(betslipData.oddVal).toFixed(2);
       } else {
          // $(market_row).find('.loss').html('');
          // $(other_rows).each(function(i,j){
@@ -172,7 +174,8 @@
       
       let marketBets = Object.values(user_bets).filter(i=>i.marketId == marketId);
       
-
+      // console.log("$(market).attr('data-mname')----",$(market).attr('data-mname'));
+      
       
 
       if(!marketBets.length){
@@ -194,6 +197,7 @@
 
             
             if($(market).attr('data-mname') == 'Normal'){
+               console.log('before---',marketProfit[sid]);
                
                if(sid == j.sid){
                   if(j.betType == '0'){
@@ -202,6 +206,7 @@
                   } else{
                      marketProfit[sid] = marketProfit[sid] - j.profit;
                   }
+               console.log('after---',marketProfit[sid]);
                }
             } else{
                if(sid == j.sid){
@@ -329,10 +334,12 @@
                // $(market_row).find('.profit').html(sid[j.sid]['profit']);
                // $(market_row).find('.profit').html(j.profit);
                // $(market_row).find('.loss').html(j.bet_amount);
-
+               let size = parseFloat($(market_row).find('.profit').text());
+               console.log('size--',size);
+               
                $(market_row).find('.normal_bet_range').remove();
                $(market_row).find(`.match_nat`).append(`
-                  <span class='normal_bet_range !bg-blue-600 btn text-white bg-blue-100 p-1 rounded-md' data-score='${j.oddVal}' data-size="${sid[j.sid]['profit']}" data-amount='${sid[j.sid]['loss']}' data-betType='${j.betType}' data-marketId='${j.marketId}'>Bets</span>
+                  <span class='normal_bet_range !bg-blue-600 btn text-white bg-blue-100 p-1 rounded-md mx-2' data-score='${j.oddVal}' data-size="${size}" data-amount='${j.bet_amount}' data-betType='${j.betType}' data-marketId='${j.marketId}' style="width: 20px;height: 20px;display: flex;align-items: center;justify-content: center;">i</span>
                `);
             
 

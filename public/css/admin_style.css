@@ -199,7 +199,8 @@ table tbody tr:hover {
     border-radius: 20px 20px 20px 20px;
 }
 .dropdown-menu {
-    position: absolute !important;
+    /* position: absolute !important; */
+    position: fixed !important;
     z-index: 9999 !important;
     /* background: linear-gradient(to bottom, #1f2327, #425063, #5d7581); */
     /* background: #0c0339; */
@@ -207,6 +208,8 @@ table tbody tr:hover {
     color: #000 !important;
     min-width: 180px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    left: 0 !important;
+    top: 0 !important;
 }
 
 .dropdown-menu li:not(:last-child) {
@@ -239,13 +242,13 @@ table tbody tr:hover {
     }
 
     
-    .dropdown-menu {
-        position: fixed !important;
+    /* .dropdown-menu {
+        position: fixed !important; */
         /* max-height: 200px; */
-        overflow-y: auto;
-        top: 101.3px !important;
-        left: 80% !important;
-    }
+        /* overflow-y: auto; */
+        /* top: 101.3px !important; */
+        /* left: 80% !important; */
+    /* } */
 
 /* Mobile scroll */
 @media (max-width: 991px) {
@@ -267,7 +270,7 @@ table tbody tr:hover {
         position: fixed !important;
         max-height: 200px;
         overflow-y: auto;
-        left: 50% !important;
+        /* left: 50% !important; */
     }
 }
 

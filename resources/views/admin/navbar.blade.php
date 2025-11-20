@@ -69,7 +69,7 @@
                 <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.index') ? 'active' : '' }}" href="{{ route('admin.commission') }}">Commission</a>
             </li> --}}
 
-            <li class="nav-item dropdown">
+            {{-- <li class="nav-item dropdown">
                 <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.index') ? 'active' : '' }} dropdown-toggle" href="#" data-bs-toggle="dropdown">⚙️My Setting</a>
                 <ul class="dropdown-menu">
                     @if($userData->status==0)
@@ -88,7 +88,7 @@
                     <li><a class="dropdown-item" href="{{ route('admin.add_number') }}">📞Add Number</a></li>
                     <li><a class="dropdown-item" href="{{ route('admin.add_bonus') }}">🎁Add Bonus</a></li>
                 </ul>
-            </li>
+            </li> --}}
             <li class="nav-item">
                 <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.index') ? 'active' : '' }} fw-bold" href="{{ route('admin.logout') }}"><strong>Logout 🔒</strong></a>
             </li>

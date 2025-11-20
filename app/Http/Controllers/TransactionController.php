@@ -12,19 +12,6 @@ class TransactionController extends Controller
     
     public function paymentGatewayMethod(Request $request){
         $user = User::getCurrentUser();
-        $data = [];
-
-        $inData = [];
-
-        if($user->country_phone_code == '91'){
-            $inData['mchNo'] = 'M0396';
-            $inData['encryptionKey'] = '72012C03A0F21CC3';
-            $inData['signatureKey'] = '613BA28576F3CDF8';
-        } else{
-            $inData['mchNo'] = 'M0402';
-            $inData['encryptionKey'] = '324AE62E4A0341B3';
-            $inData['signatureKey'] = '5D34BD894E07C2BE';
-        }
 
 
         $order_sn = 'TR'.time().rand(0000,9999);
@@ -43,12 +30,30 @@ class TransactionController extends Controller
             $transaction->remark = "remark001";
             $transaction->save();
             
+            // Api statements
             
+
+            $apiData = [];
+
+            if($user->country_phone_code == '91'){
+                $apiData['mchNo'] = 'M0396';
+                $apiData['encryptionKey'] = '72012C03A0F21CC3';
+                $apiData['signatureKey'] = '613BA28576F3CDF8';
+            } else{
+                $apiData['mchNo'] = 'M0402';
+                $apiData['encryptionKey'] = '324AE62E4A0341B3';
+                $apiData['signatureKey'] = '5D34BD894E07C2BE';
+            }
+            
+            $data = [];
+
             $data['versionNo'] = 1;
-            $data['mchNo'] = $inData['mchNo'];
+            $data['mchNo'] = $apiData['mchNo'];
             $data['price'] = $request->transfer_amount;
+            // $data['orderDate'] = date('YmdHis');
             $data['orderDate'] = date('YmdHis');
             $data['tradeNo'] = $order_sn;
+            $data['notifyUrl'] = env('APP_URL').'/paymentCallback';
 
             if($request->payment_type == 0){
     
@@ -58,7 +63,6 @@ class TransactionController extends Controller
             
             } elseif ($request->payment_type == 1) {
     
-                $data['notifyUrl'] = env('APP_URL').'/paymentCallback';
                 $data['mode'] = S1;
                 $data['accBankCode'] = $request->accBankCode;
                 $data['accName'] = $request->accName;
@@ -74,24 +78,26 @@ class TransactionController extends Controller
 
             $sdata['payload'] = json_encode($data);
 
-            $sdata['payload'] = (new AuthController)->aes256Encrypt($inData['encryptionKey'],$sdata['payload']);
+            $sdata['payload'] = (new AuthController)->aes256cbc($apiData['encryptionKey'],$sdata['payload']);
 
-            $sdata['sign'] = $sdata['payload'].$inData['signatureKey'];
+            $sdata['sign'] = $sdata['payload'].$apiData['signatureKey'];
             
-
             $sdata['mchNo'] = $data['mchNo'];
             
             $sdata['sign'] = strtoupper(md5($sdata['sign']));
             
-            dd($sdata);
+            // dd($sdata);
+
+            $sdata = json_encode($sdata);
             // $data['sign'] = (new AuthController)->md5_sign($data, env('signatureKey'));
             
             $payment_type = ($request->payment_type==1) ? 'transferApply' : 'makeOrder';
             
             // $url = "https://www.lg-pay.com/api/".$payment_type."/create";
 
-            $url = env('paying_url')."/".$payment_type;
-            
+            // $url = env('paying_url')."/".$payment_type;
+
+            $url = 'https://phpay.ipayment.vip/dgateway/ws/trans/nocard/transferApply';
             $ch = curl_init();
     
             curl_setopt($ch, CURLOPT_URL, $url);
@@ -102,7 +108,7 @@ class TransactionController extends Controller
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($sdata));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $sdata);
             curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_DEFAULT);
             curl_setopt($ch, CURLOPT_TIMEOUT, 120);
     

@@ -11,6 +11,14 @@ if($userData){
 }
 @endphp
 
+@section('head')
+    <style>
+        * {
+            font-weight: 700;
+        }
+    </style>
+@endsection
+
 @section('body')
     <div class="container-fluid p-0">
     <div class="layout-container">
