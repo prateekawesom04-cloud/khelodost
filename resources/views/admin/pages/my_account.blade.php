@@ -6,7 +6,7 @@
 
             <!-- Sidebar -->
             <div class="col-12 col-lg-3">
-                <div class="card shadow-sm h-100">
+                <div class="card shadow-sm">
                     <!-- <div class="card-header bg-primary fw-bold">
                         My Account
                     </div> -->
@@ -21,6 +21,11 @@
                         <li>
                             <a href="javascript:void(0);"
                                 class="list-group-item list-group-item-action sidebar-link"
+                                data-target="bethistory">Bet History</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);"
+                                class="list-group-item list-group-item-action sidebar-link"
                                 data-target="statement">Account Statement</a>
                         </li>
                         <li>
@@ -28,7 +33,7 @@
                                 class="list-group-item list-group-item-action sidebar-link"
                                 data-target="deposit_withdrawal">Deposit & Withdraw</a>
                         </li>
-                        @if($user->status==5)
+                        @if($user->status==2)
                         <li>
                             <a href="javascript:void(0);"
                                 class="list-group-item list-group-item-action sidebar-link"
@@ -38,7 +43,7 @@
                     </ul>
 
                     <!-- Mobile/Tablet Navigation -->
-                    <div class="d-block d-none p-2">
+                    {{-- <div class="d-block d-none p-2">
                         <div class="d-flex gap-1">
                             <a href="javascript:void(0);" class="btn btn-outline-primary sidebar-link active flex-fill"
                                 data-target="profile">Profile</a>
@@ -49,7 +54,7 @@
                             <a href="javascript:void(0);" class="btn btn-outline-primary sidebar-link flex-fill"
                                 data-target="activity">Activity</a>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -136,6 +141,42 @@
                     </div>
                 </div>
 
+                <!-- bethistory Section -->
+                <div id="bethistory-section" style="display: none;">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary fw-bold">Deposit & Withdraw</div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped mb-0">
+                                    <thead class="table-primary">
+                                        <tr>
+                                            <th class="text-nowrap">Sportname</th>
+                                            <th class="text-nowrap">Event Name</th>
+                                            <th class="text-nowrap">Market name</th>
+                                            <th class="text-nowrap">Result</th>
+                                            <th class="text-nowrap">Profit/Loss</th>
+                                            <th class="text-nowrap">Total Balance</th>
+                                            <th class="text-nowrap">Settle Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($sportbookBets as $transaction)
+                                        <tr>
+                                            <td>{{$transaction->sportname}}</td>
+                                            <td>{{$transaction->eventName}}</td>
+                                            <td>{{$transaction->mname}}</td>
+                                            <td>{{$transaction->nat}}</td>
+                                            <td>{{$transaction->profit}}</td>
+                                            <td>{{$transaction->wallet_before}}</td>
+                                            <td class="text-success fw-bold text-nowrap">{{$transaction->status? $transaction->updated_at : 'Unsattled'}}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- Statement Section -->
                 <div id="statement-section" style="display: none;">
                     <div class="card shadow-sm">
@@ -185,7 +226,7 @@
                         <div class="card-header bg-primary fw-bold">Deposit & Withdraw</div>
                         <div class="card-body p-0">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-dark mb-0">
+                                <table class="table table-bordered table-striped mb-0">
                                     <thead class="table-primary">
                                         <tr>
                                             <th class="text-nowrap">Date/Time</th>
@@ -232,7 +273,7 @@
                         <div class="card-header bg-primary fw-bold">Activity Log</div>
                         <div class="card-body p-0">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-dark mb-0">
+                                <table class="table table-bordered table-striped mb-0">
                                     <thead class="table-primary">
                                         <tr>
                                             <th class="text-nowrap">Login Date & Time</th>
@@ -267,6 +308,7 @@
         const links = document.querySelectorAll('.sidebar-link');
         const sections = {
             profile: document.getElementById('profile-section'),
+            bethistory: document.getElementById('bethistory-section'),
             statement: document.getElementById('statement-section'),
             deposit_withdrawal: document.getElementById('deposit-withdrawal-section'),
             activity: document.getElementById('activity-section'),

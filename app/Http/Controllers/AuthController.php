@@ -512,6 +512,17 @@ class AuthController extends Controller
         return $encrypted_base64;
 
     }
+    
+    public function aes256cbcDycrypt($secret_key,$string){
+        $method = "AES-256-CBC";
+        $encrypted_data = base64_decode($string);
+        $iv_length = opensssl_cipher_iv_length($method);
+        $iv = substr($encrypted_data, 0, $iv_length);
+        $encrypted = substr($encrypted_data, $iv_length);
+        $decrypted = openssl_decrypt($encrypted, $method, $secret_key, OPENSSL_RAW_DATA, $iv);
+        return $decrypted;
+
+    }
 
     public function md5_sign($data, $key,$unset=[]) {
         ksort($data);

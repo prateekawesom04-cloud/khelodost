@@ -16,6 +16,8 @@ use App\Models\Activity;
 use App\Models\Payment;
 use App\Models\Appdata;
 use App\Models\GameHistory;
+use App\Models\SportookBet;
+use App\Models\Event;
 
 class AdminUserController extends Controller
 {
@@ -133,9 +135,14 @@ class AdminUserController extends Controller
         $user = User::where('username',$request->username)->first();
         $activities = Activity::where('username',$request->username)->get();
         $transactions = Transaction::where('username',$request->username)->orderBy('payment_type')->get();
+        $sportbookBets = Event::join('sportook_bets','events.eventId','=','sportook_bets.eventId')
+        ->select('sportook_bets.*','events.eventName','events.sportname')
+        ->where('username',$request->username)
+        // ->where('sportook_bets.status',0)
+        ->orderBy('sportook_bets.id')->get();
         
         
-        return view('admin.pages.my_account',compact('user','activities','transactions'));
+        return view('admin.pages.my_account',compact('user','activities','transactions','sportbookBets'));
     }
     
     public function updateUserPhone(Request $request){

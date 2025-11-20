@@ -8,17 +8,17 @@
                 <div class="mb-2 relative" style="height: 285px;display:none;">
                     <iframe src="" frameborder="0" class="w-full h-full absolute top-0 left-0"></iframe>
                 </div>
-                <h4 class="my-1 border-b-2 border-gray-300">{{$eventData->eventName}}</h4>
+                <div class="my-1 border-b-2 border-gray-300">{{$eventData->eventName}}</div>
                 <div class="flex flex-row justify-evenly items-center my-1 border-b-2 border-gray-300">
                     <div class="iframetv">
                         <img class="w-10" src="{{asset('icons/iframetv.png')}}" alt="">
                     </div>
-                    {{-- <h5>Live</h5> --}}
-                    <h5>Scorecard</h5>
+                    {{-- <div>Live</div> --}}
+                    <div>Scorecard</div>
                 </div>
                 <div class="flex flex-row justify-evenly items-center my-1 border-b-2 border-gray-300 bg-[#0c0339] text-white py-2">
-                    <h5>Event Start Time</h5>
-                    <h5>{{$eventData->eventDate}}</h5>
+                    <div>Event Start Time</div>
+                    <div>{{$eventData->eventDate}}</div>
                 </div>
             </div>
             

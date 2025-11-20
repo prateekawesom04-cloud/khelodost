@@ -15,6 +15,7 @@ if($userData){
     <style>
         * {
             font-weight: 700;
+            font-size: 11px;
         }
     </style>
 @endsection

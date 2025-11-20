@@ -323,4 +323,8 @@ class UserController extends Controller
         // $bets = SportookBet::where('status',0)->get();
         return view('accounts.open_bets',compact('bets','openBets'));
     }
+
+    public function exposure(Request $request){
+        
+    }
 }

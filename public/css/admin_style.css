@@ -49,7 +49,8 @@ table {
 table th,
 table td {
     /* background-color: #323740 !important; */
-    color: #0d6efd !important;
+    /* color: #0d6efd !important; */
+    color: #000 !important;
     border: 1px solid #0c0339 !important;
     padding: 8px;
     text-align: left;
@@ -58,6 +59,12 @@ table td {
 table thead th {
     background-color: #0c0339 !important;
     color: #ffffff !important;
+    font-weight: bold;
+}
+
+table tbody td {
+    background-color: #fff !important;
+    /* color: #ffffff !important; */
     font-weight: bold;
 }
 
@@ -206,9 +213,10 @@ table tbody tr:hover {
     /* background: #0c0339; */
     /* border: 1px solid #4b4a5e; */
     color: #000 !important;
-    min-width: 180px;
+    /* min-width: 180px; */
+    width: 180px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    left: 0 !important;
+    right: 0 !important;
     top: 0 !important;
 }
 

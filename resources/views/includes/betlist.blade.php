@@ -1,10 +1,13 @@
 <div class="flex flex-col">
     <div class="flex flex-row mt-3 mb-1 gap-4 !bg-[#0c0339]">
         <a class="allBetCount activeTab p-3 !text-white active" href="#allBetList">
-            All Bets (<span></span>)
+            All Bets (<span>0</span>)
         </a>
         <a class="fancyBetCount activeTab p-3 !text-white" href="#fancyBetList">
-            Fancy Bets (<span></span>)
+            Fancy Bets (<span>0</span>)
+        </a>
+        <a class="activeTab p-3 !text-white">
+            Unmatched Bets (<span>0</span>)
         </a>
         {{-- <div>
             All Bets (<span class="allBetCount"></span>)

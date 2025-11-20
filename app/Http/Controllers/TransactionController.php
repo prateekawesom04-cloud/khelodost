@@ -138,7 +138,9 @@ class TransactionController extends Controller
     
     public function paymentCallback(Request $request){
 
-        $data =[];
+        $sdata = (new AuthController)->aes256cbcDycrypt($apiData['encryptionKey'],$sdata['payload']);
+        
+        $data = json_decode($sdata,true);
 
         $data['order_sn'] = $request->order_sn;
         $data['money'] = $request->money;
