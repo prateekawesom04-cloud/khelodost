@@ -507,7 +507,7 @@ class AuthController extends Controller
         $method = "AES-256-CBC";
         $iv_length = openssl_cipher_iv_length($method);
         $iv = openssl_random_pseudo_bytes($iv_length);
-        $encrypted = openssl_encrypt($data, $method, $key, OPENSSL_RAW_DATA, $iv);
+        $encrypted = openssl_encrypt($string, $method, $secret_key, OPENSSL_RAW_DATA, $iv);
         $encrypted_base64 = base64_encode($iv . $encrypted);
         return $encrypted_base64;
 

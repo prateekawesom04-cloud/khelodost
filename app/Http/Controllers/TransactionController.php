@@ -84,12 +84,12 @@ class TransactionController extends Controller
             
             $sdata['mchNo'] = $data['mchNo'];
             
+            // $data['sign'] = (new AuthController)->md5_sign($data, env('signatureKey'));
             $sdata['sign'] = strtoupper(md5($sdata['sign']));
             
             // dd($sdata);
 
             $sdata = json_encode($sdata);
-            // $data['sign'] = (new AuthController)->md5_sign($data, env('signatureKey'));
             
             $payment_type = ($request->payment_type==1) ? 'transferApply' : 'makeOrder';
             
@@ -97,7 +97,7 @@ class TransactionController extends Controller
 
             // $url = env('paying_url')."/".$payment_type;
 
-            $url = 'https://phpay.ipayment.vip/dgateway/ws/trans/nocard/transferApply';
+            $url = 'https://phpay.ipayment.vip/dgateway/ws/trans/nocard/makeOrder';
             $ch = curl_init();
     
             curl_setopt($ch, CURLOPT_URL, $url);
