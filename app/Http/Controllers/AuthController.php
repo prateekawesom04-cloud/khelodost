@@ -503,13 +503,13 @@ class AuthController extends Controller
         return $output;
     }
 
-    public function aes256cbc($secret_key,$string){
-        $method = "AES-256-CBC";
-        $iv_length = openssl_cipher_iv_length($method);
-        $iv = openssl_random_pseudo_bytes($iv_length);
+    public function aes128cbc($secret_key,$string){
+        $method = "AES-128-CBC";
+        // $iv_length = openssl_cipher_iv_length($method);
+        // $iv = openssl_random_pseudo_bytes($iv_length);
         $iv = '0102030405060708';
         $encrypted = openssl_encrypt($string, $method, $secret_key, OPENSSL_RAW_DATA, $iv);
-        $encrypted_base64 = base64_encode($iv . $encrypted);
+        $encrypted_base64 = base64_encode($encrypted);
         return $encrypted_base64;
 
     }
@@ -517,9 +517,10 @@ class AuthController extends Controller
     public function aes256cbcDycrypt($secret_key,$string){
         $method = "AES-256-CBC";
         $encrypted_data = base64_decode($string);
-        $iv_length = opensssl_cipher_iv_length($method);
-        $iv = substr($encrypted_data, 0, $iv_length);
-        $encrypted = substr($encrypted_data, $iv_length);
+        // $iv_length = opensssl_cipher_iv_length($method);
+        // $iv = substr($encrypted_data, 0, $iv_length);
+        $iv = '0102030405060708';
+        // $encrypted = substr($encrypted_data, $iv_length);
         $decrypted = openssl_decrypt($encrypted, $method, $secret_key, OPENSSL_RAW_DATA, $iv);
         return $decrypted;
 

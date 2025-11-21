@@ -48,7 +48,7 @@ class AdminDataController extends Controller
         // }
         
         //total event exposure
-        $allEvents = Event::where('status',1)->limit(20)->get();
+        // $allEvents = Event::where('status',1)->limit(20)->get();
 
         // $events = DB::table('sportook_bets')
         $eventsExposure = SportookBet::select('eventId', DB::raw('SUM(bet_amount) as exposure'))
@@ -67,6 +67,7 @@ class AdminDataController extends Controller
         $cricketEvents = $events->where('sportname','cricket')->get();
         $footballEvents = $events->where('sportname','football')->get();
         $tennisEvents = $events->where('sportname','tennis')->get();
+        $allEvents = $events->get();
         
 
         // dd($events);
@@ -478,7 +479,7 @@ class AdminDataController extends Controller
         ->where('username',$request->username)
         // ->where('sportook_bets.status',0)
         ->orderBy('sportook_bets.id')->get();
-        return view('pages.sattlement',compact('events'));
+        return view('pages.events',compact('events'));
     }
 
     public function sattleEvent(Request $request){

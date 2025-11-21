@@ -56,6 +56,7 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
     Route::middleware(['auth_check_middleware'])->group(function () {
         
         Route::post('paymentGatewayMethod', [TransactionController::class,'paymentGatewayMethod'])->name('paymentGatewayMethod')->withoutMiddleware([VerifyCsrfToken::class]);
+        Route::post('paymentCallback', [TransactionController::class,'paymentCallback'])->name('paymentCallback')->withoutMiddleware([VerifyCsrfToken::class]);
         
         Route::get('deposit', [UserController::class,'deposit'])->name('user.deposit');
         

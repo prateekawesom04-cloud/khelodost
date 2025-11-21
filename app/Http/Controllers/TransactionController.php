@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use App\Models\Transaction;
 
@@ -58,8 +59,8 @@ class TransactionController extends Controller
             if($request->payment_type == 0){
     
                 $data['callbackUrl'] = env('APP_URL');
-                $data['payType'] = 01;
-                $data['channelPayType'] = env('channelPayType');
+                $data['payType'] = '01';
+                $data['channelPayType'] = 'EWALLET_BKASH';
             
             } elseif ($request->payment_type == 1) {
     
@@ -82,10 +83,12 @@ class TransactionController extends Controller
 
             $sdata['sign'] = $sdata['payload'].$apiData['signatureKey'];
             
+            $sdata['sign'] = strtoupper(md5($sdata['sign']));
+            
             $sdata['mchNo'] = $data['mchNo'];
             
+            // dd($sdata['payload']);
             // $data['sign'] = (new AuthController)->md5_sign($data, env('signatureKey'));
-            $sdata['sign'] = strtoupper(md5($sdata['sign']));
             
             // dd($sdata);
 
@@ -137,6 +140,8 @@ class TransactionController extends Controller
     }
     
     public function paymentCallback(Request $request){
+
+        Log::info('payement callack----');
 
         $sdata = (new AuthController)->aes256cbcDycrypt($apiData['encryptionKey'],$sdata['payload']);
         

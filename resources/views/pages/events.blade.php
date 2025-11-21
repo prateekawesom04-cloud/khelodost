@@ -36,46 +36,42 @@
                     </div> --}}
                 </div>
 
-                <!-- Bet History Table -->
                 <div class="table-responsive">
                     <table class="table table-bordered text-center align-middle table-sm">
                         <thead class="table-light">
                             <tr>
+                                <th>Sportname</th>
                                 <th>Event ID</th>
                                 <th>Name</th>
+                                <th>Exposure</th>
                                 <th>Date</th>
-                                {{-- <th>Description</th> --}}
                                 <th>Status</th>
-                                <th>Action</th>
+                                {{-- <th>Action</th> --}}
                             </tr>
                         </thead>
                         <tbody>
-                            @if($events->count() > 0)
-                                @foreach($events as $row)
+                            @if($cricketEvents->count() > 0)
+                                @foreach($cricketEvents as $row)
                                     <tr>
+                                        <td>{{$row->sportname}}</td>
                                         <td>{{$row->eventId}}</td>
                                         <td>{{$row->eventName}}</td>
+                                        <td>{{$row->exposure}}</td>
                                         <td>{{$row->eventDate}}</td>
                                         @php
                                             $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
                                             $teamB = explode(' v ',$row->eventName)[1] ?? 'Series';
                                         @endphp
-                                        <td>{{(!$row->status)?'upcoming':(($row->status==1)?'Going In-play':'Finished')}}</td>
+                                        <td>{{(!$row->status)?'upcoming':'inplay'}}</td>
                                         {{-- <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td> --}}
-                                        <td>
-                                            <div class="flex flex-row items-center justify-between">
-                                                {{-- <div class="p-[.1rem]">
-                                                    <i data-eventName="{{$row->eventName}}" data-eventId="{{ $row->eventId }}" class="fas fa-{{($row->status)?'circle-xmark text-danger b_active':'check text-success b_deactive'}}" style="cursor: pointer;" title="Change Status"></i>
-                                                </div> --}}
+                                        {{-- <td>
+                                            <div class="flex flex-row items-center justify-evenly">
                                                 <div>
-                                                    <i data-sportname="{{$row->sportname}}" data-eventName="{{$row->eventName}}" data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent mx-2 fas fa-edit" style="cursor: pointer;" data-bs-target="#sattleEvent"></i>
-                                                    <i data-sportname="{{$row->sportname}}" data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="sattleEventBets mx-2 fas fa-check" style="cursor: pointer;"></i>
-                                                    {{-- <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="{{($teamB=='Series')?'':'#sattleEvent'}}"></i> --}}
-                                                    {{-- <i data-teamA="{{$explode(' v ',$row->eventName)[0]}}" data-teamB="{{explode(' v ',$row->eventName)[1]}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#sattleEvent"></i> --}}
+                                                    <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-target="#sattleEvent"></i>
                                                 </div>
 
                                             </div>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             @else
