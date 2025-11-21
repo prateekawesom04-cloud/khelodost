@@ -1,77 +1,156 @@
 @extends('admin.master')
-@section('body')
-    <section class="container-fluid p-4">
-        <div class="px-3">
-            <!-- Responsive Table Wrapper -->
-            <div class="table-responsive">
-                <table class="table table-sm table-bordered mb-0 text-center align-middle">
-                    <thead class="table-secondary">
-                        <tr>
-                            <th class="w-50 text-start" style="min-width: 150px;">Match</th>
-                            <th>1</th>
-                            <th>2</th>
-                            <th>Options</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Match Row -->
-                        <tr>
-                            <td class="text-start" style="white-space: normal;">
-                                <div><span class="text-success">●</span> <strong class="text-info">The Hundred -
-                                        Womens</strong></div>
-                                <div class="mt-1">
-                                    <span class="badge bg-success">In-Play</span>
-                                    <span class="badge bg-primary">📺</span>
-                                    <small class="text-white d-block d-md-inline">08/05/2025 06:30</small>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="d-flex flex-wrap justify-content-center gap-1">
-                                    <a class="btn btn-info btn-sm">9.02</a>
-                                    <a class="btn btn-danger btn-sm">3.03</a>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="d-flex flex-wrap justify-content-center gap-1">
-                                    <a class="btn btn-info btn-sm">3.03</a>
-                                    <a class="btn btn-danger btn-sm">9.02</a>
-                                </div>
-                            </td>
-                            <td>
-                                <a class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-map-pin"></i></a>
-                            </td>
-                        </tr>
-                        {{-- match-2 --}}
-                        <tr>
-                            <td class="text-start" style="white-space: normal;">
-                                <div><span class="text-success">●</span> <strong class="text-info">NBA Finals</strong></div>
-                                <div class="mt-1">
-                                    <span class="badge bg-success">Live</span>
-                                    <span class="badge bg-primary">📺</span>
-                                    <small class="text-white d-block d-md-inline">08/05/2025 22:00</small>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="d-flex flex-wrap justify-content-center gap-1">
-                                    <a class="btn btn-info btn-sm">9.02</a>
-                                    <a class="btn btn-danger btn-sm">3.03</a>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="d-flex flex-wrap justify-content-center gap-1">
-                                    <a class="btn btn-info btn-sm">3.03</a>
-                                    <a class="btn btn-danger btn-sm">9.02</a>
-                                </div>
-                            </td>
-                            <td>
-                                <a class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-map-pin"></i></a>
-                            </td>
-                        </tr>
 
-                    </tbody>
-                </table>
+@section('body')
+
+    <div class="container-fluid p-4">
+
+        <!-- Bet History Section -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header text-white">
+                <strong>Events</strong>
+            </div>
+            <div class="card-body">
+
+                <!-- Table Controls -->
+                <div class="d-flex flex-wrap flex-nowrap align-items-center mb-3">
+                    <div class="d-flex align-items-center me-3 flex-shrink-0">
+                        <label class="me-2 mb-0" for="show-entries">Show</label>
+                        <select id="show-entries" class="form-select w-auto">
+                            <option>10</option>
+                            <option>25</option>
+                            <option>50</option>
+                            <option>100</option>
+                        </select>
+                    </div>
+
+                    <div class="d-flex align-items-center ms-auto flex-grow-1">
+                        <label class="me-2 mb-0" for="search">Search:</label>
+                        <input type="search" id="search" class="form-control form-control-sm border border-primary"
+                            style="max-width: 250px;">
+                    </div>
+                    {{-- <div class="col-6 col-lg-3 px-2">
+                        <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#sattleEvent">Create Bonus</a>
+                    </div> --}}
+                    {{-- <div class="col-6 col-lg-3 px-2">
+                        <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#assignBonusModal">Update Event</a>
+                    </div> --}}
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center align-middle table-sm">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Event ID</th>
+                                <th>Sportname</th>
+                                <th>Name</th>
+                                <th>Exposure</th>
+                                <th>Total Bets</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                {{-- <th>Action</th> --}}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if($allEvents->count() > 0)
+                                @foreach($allEvents as $row)
+                                    <tr>
+                                        <td>{{$row->eventId}}</td>
+                                        <td>{{$row->sportname}}</td>
+                                        <td>{{$row->eventName}}</td>
+                                        <td>{{$row->exposure}}</td>
+                                        <td>{{$row->totalBets}}</td>
+                                        <td>{{$row->eventDate}}</td>
+                                        @php
+                                            $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
+                                            $teamB = explode(' v ',$row->eventName)[1] ?? 'Series';
+                                        @endphp
+                                        <td>{{(!$row->status)?'upcoming':'inplay'}}</td>
+                                        {{-- <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td> --}}
+                                        {{-- <td>
+                                            <div class="flex flex-row items-center justify-evenly">
+                                                <div>
+                                                    <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-target="#sattleEvent"></i>
+                                                </div>
+
+                                            </div>
+                                        </td> --}}
+                                    </tr>
+                                @endforeach
+                            @else
+                            <tr>
+                                <td colspan="10" class="text-white text-center">No data!</td>
+                            </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3">
+                    <div class="small text-white mb-2 mb-md-0">Showing 1 to 10 of 0 entries</div>
+                    <nav>
+                        <ul class="pagination pagination-sm mb-0">
+                            <li class="page-item disabled"><a class="page-link">First</a></li>
+                            <li class="page-item disabled"><a class="page-link">Previous</a></li>
+                            <li class="page-item disabled"><a class="page-link">Next</a></li>
+                            <li class="page-item disabled"><a class="page-link">Last</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Compact Reusable Modal with Form -->
+<div class="modal fade" id="sattleEvent" tabindex="-1" aria-labelledby="sattleEventLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header modal-header-dark">
+                {{-- <h5 class="modal-title" id="mainModalLabel">Sattle Event</h5> --}}
+                    <div class="flex flex-row gap-2 items-center justify-center">
+                        <div>All ( <span class="market_count"></span> )</div>
+                        <div>Odds ( <span class="m_market_count"></span> )</div>
+                        <div>Fancy ( <span class="fancy_market_count"></span> )</div>
+                </div>
+                <a type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></a>
+            </div>
+            <div class="modal-body modal-header-dark">
+                <div id="sattleEventForm">
+                    <input type="hidden" name="eventId" class="eventIdVal">
+                    {{-- <div class="mb-3">
+                        <label for="name" class="form-label">Amount</label>
+                        <input type="text" id="amount" name="amount" class="form-control">
+                    </div> --}}
+                    <!-- Bonus Type Dropdown -->
+                    {{-- <div class="mb-3">
+                        <label for="bonusType" class="form-label"><span class="eventIdVal"></span>Result</label>
+                        <select id="bonusType" name="type" class="form-select">
+                            <option value="1">Team A</option>
+                            <option value="2">Team B</option>
+                        </select>
+                    </div> --}}
+                    <div class="eventData">
+
+                    </div>
+
+                    {{-- <div class="flex gap-2">
+                        <input type="radio" name="result" id="" value="1"> <span class="mx-1 teamA"></span>wins
+                        <input type="radio" name="result" id="" value="2"> <span class="mx-1 teamB"></span>wins
+                        <input type="radio" name="result" id="" value="3"> <span class="mx-1">Draw</span>
+                    </div> --}}
+
+                </div>
+
+                {{-- <a href="javascript:void(0)" type="button" class="createBonus" class="btn btn-primary">Save</a> --}}
             </div>
 
+            {{-- <div class="modal-footer">
+                <a href="javascript:void(0)" type="button" class="sattleEvent btn btn-primary">Save</a>
+            </div> --}}
         </div>
-    </section>
+    </div>
+</div>
+
 @endsection

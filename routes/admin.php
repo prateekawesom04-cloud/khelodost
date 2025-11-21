@@ -105,9 +105,9 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
         return view('admin.pages.sampleTable');
             })->name('admin.sampleTable');
 
-        Route::get('/market_analysis', function () {
-        return view('admin.pages.market_analysis');
-            })->name('admin.market_analysis');
+        // Route::get('/market_analysis', function () {
+        // return view('admin.pages.market_analysis');
+        //     })->name('admin.market_analysis');
 
         // Route::get('/add_bonus', function () {
         // return view('admin.pages.add_bonus');
@@ -194,7 +194,7 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
         Route::post('updateSportResult', [AdminDataController::class,'updateSportResult'])->name('updateSportResult')->withoutMiddleware([VerifyCsrfToken::class]);
         
         Route::get('sattlement', [AdminDataController::class,'sattlement'])->name('sattlement');
-        Route::get('events', [AdminDataController::class,'events'])->name('events');
+        Route::get('market_analysis', [AdminDataController::class,'market_analysis'])->name('admin.market_analysis');
 
         Route::post('sattleEvent', [AdminDataController::class,'sattleEvent'])->name('sattleEvent')->withoutMiddleware([VerifyCsrfToken::class]);
 

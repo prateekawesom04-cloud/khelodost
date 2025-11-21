@@ -62,16 +62,16 @@ class AdminDataController extends Controller
 
         $events = Event::joinSub($eventsExposure,'eventsExposure',function($join){
             $join->on('events.eventId','=','eventsExposure.eventId');
-        })
-        ->where('status',1);
-        
+        });
+        $events = $events->where('status',1);
+        // dd($events->get());
+        $allEvents = $events->get();
         $cricketEvents = $events->where('sportname','cricket')->get();
         $footballEvents = $events->where('sportname','football')->get();
         $tennisEvents = $events->where('sportname','tennis')->get();
-        $allEvents = $events->get();
         
 
-        // dd($events);
+        // dd($allEvents);
         $user = User::whereIn('status', [2])->count();
         $userTotal = User::all()->count();
         // $totalBets = count($gameData);
@@ -474,13 +474,15 @@ class AdminDataController extends Controller
         return view('pages.sattlement',compact('events'));
     }
     
-    public function events(Request $request){
-        $sportbookBets = Event::join('sportook_bets','events.eventId','=','sportook_bets.eventId')
-        ->select('sportook_bets.*','events.eventName','events.sportname')
-        ->where('username',$request->username)
-        // ->where('sportook_bets.status',0)
-        ->orderBy('sportook_bets.id')->get();
-        return view('pages.events',compact('events'));
+    public function market_analysis(Request $request){
+        $eventsExposure = SportookBet::select('eventId', DB::raw('SUM(bet_amount) as exposure, COUNT(*) as totalBets'))
+        ->groupBy('eventId');
+        $events = Event::joinSub($eventsExposure,'eventsExposure',function($join){
+            $join->on('events.eventId','=','eventsExposure.eventId');
+        });
+        $events = $events->where('status',1);
+        $allEvents = $events->get();
+        return view('admin.pages.market_analysis',compact('allEvents'));
     }
 
     public function sattleEvent(Request $request){
