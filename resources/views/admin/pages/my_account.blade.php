@@ -18,11 +18,13 @@
                                 class="list-group-item list-group-item-action sidebar-link active"
                                 data-target="profile">Agent Profile</a>
                         </li>
+                        @if($user->status==2)
                         <li>
                             <a href="javascript:void(0);"
                                 class="list-group-item list-group-item-action sidebar-link"
                                 data-target="bethistory">Bet History</a>
                         </li>
+                        @endif
                         <li>
                             <a href="javascript:void(0);"
                                 class="list-group-item list-group-item-action sidebar-link"

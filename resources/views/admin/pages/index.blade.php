@@ -141,7 +141,7 @@
                                             <tr>
                                                 <td>{{$row->eventId}}</td>
                                                 <td>{{$row->eventName}}</td>
-                                                <td>{{$row->exposure}}</td>
+                                                <td class="text-danger">{{$row->exposure}}</td>
                                                 <td>{{$row->totalBets}}</td>
                                                 <td>{{$row->eventDate}}</td>
                                                 @php
@@ -197,7 +197,7 @@
                                             <tr>
                                                 <td>{{$row->eventId}}</td>
                                                 <td>{{$row->eventName}}</td>
-                                                <td>{{$row->exposure}}</td>
+                                                <td class="text-danger">{{$row->exposure}}</td>
                                                 <td>{{$row->totalBets}}</td>
                                                 <td>{{$row->eventDate}}</td>
                                                 @php
@@ -253,7 +253,7 @@
                                             <tr>
                                                 <td>{{$row->eventId}}</td>
                                                 <td>{{$row->eventName}}</td>
-                                                <td>{{$row->exposure}}</td>
+                                                <td class="text-danger">{{$row->exposure}}</td>
                                                 <td>{{$row->totalBets}}</td>
                                                 <td>{{$row->eventDate}}</td>
                                                 @php
@@ -309,7 +309,7 @@
                                             <tr>
                                                 <td>{{$row->eventId}}</td>
                                                 <td>{{$row->eventName}}</td>
-                                                <td>{{$row->exposure}}</td>
+                                                <td class="text-danger">{{$row->exposure}}</td>
                                                 <td>{{$row->totalBets}}</td>
                                                 <td>{{$row->eventDate}}</td>
                                                 @php

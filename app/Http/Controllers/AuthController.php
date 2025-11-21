@@ -37,6 +37,11 @@ class AuthController extends Controller
     }
 
     public function setUserSession($value){
+        // $user = User::where('username',$value)->first();
+        // $activity = new Activity();
+        // $activity->username = $user->username;
+        // $activity->ip = $request->ip();
+        // $activity->save();
         Session::put([
             'username'=>$value
         ]);
@@ -107,6 +112,10 @@ class AuthController extends Controller
                 }
                 
                 $this->setUserSession($user->username);
+                $activity = new Activity();
+                $activity->username = $user->username;
+                $activity->ip = $request->ip();
+                $activity->save();
             
             } else if($request->email){
                 
@@ -134,6 +143,10 @@ class AuthController extends Controller
                     $user->save();
                 }
                 $this->setUserSession($user->username);
+                $activity = new Activity();
+                $activity->username = $user->username;
+                $activity->ip = $request->ip();
+                $activity->save();
             } else{
                 return response()->json([
                     'message'=> 'please provide username',
@@ -194,6 +207,11 @@ class AuthController extends Controller
                 Session::put([
                     'username'=>$user->username
                 ]);
+                $activity = new Activity();
+                $activity->username = $user->username;
+                $activity->ip = $request->ip();
+                $activity->save();
+                
             } else{
                 return response()->json([
                     'message'=> 'Wrong Password',

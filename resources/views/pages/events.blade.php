@@ -56,7 +56,7 @@
                                         <td>{{$row->sportname}}</td>
                                         <td>{{$row->eventId}}</td>
                                         <td>{{$row->eventName}}</td>
-                                        <td>{{$row->exposure}}</td>
+                                        <td class="text-danger">{{$row->exposure}}</td>
                                         <td>{{$row->eventDate}}</td>
                                         @php
                                             $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';

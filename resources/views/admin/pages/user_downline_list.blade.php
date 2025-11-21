@@ -99,8 +99,8 @@
                                 <tr>
                                     
                                     <td><span class="badge bg-success">{{ ($user->loss_amount > 50000)?'VIP':'user'}}</span> {{ $user->username }}</td>
-                                    <td>{{ $user->wallet_amount }}</td>
-                                    <td>{{ $user->unsattled_amount }}</td>
+                                    <td class="text-success">{{ $user->wallet_amount }}</td>
+                                    <td class="text-danger">{{ $user->unsattled_amount }}</td>
                                     <!-- <td>200000</td> -->
                                     <td>{{$user->wallet_amount - $user->unsattled_amount }}</td>
                                     <!-- <td>1000</td> -->

@@ -61,9 +61,9 @@
             <li class="nav-item">
                 <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.withdraw') ? 'active' : '' }}" href="{{ route('admin.withdraw') }}">💸Withdraw</a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.index') ? 'active' : '' }}" href="{{ route('admin.payments') }}">🏧Payments</a>
-            </li>
+            </li> --}}
 
             {{-- <li class="nav-item">
                 <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.index') ? 'active' : '' }}" href="{{ route('admin.commission') }}">Commission</a>
