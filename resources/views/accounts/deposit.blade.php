@@ -120,10 +120,11 @@
     });
 
     function paymentGatewayMethod(response) {
-        response = JSON.parse(response.response);
+        // response = JSON.parse(response.response);
+        data = JSON.parse(response.data);
         if (response.response_code == 200) {
-            $('#paymentModel').modal('show');
-            window.location.href = response.data['pay_url'];
+            // $('#paymentModel').modal('show');
+            window.location.href = data['payUrl'];
             // $('.paymentModel').html(response.response);
 
         } else {

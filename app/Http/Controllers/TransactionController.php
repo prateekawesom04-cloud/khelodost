@@ -67,7 +67,7 @@ class TransactionController extends Controller
 
         return response()->json([
             'data'=> $payload,
-            'response_code'=> '105'
+            'response_code'=> '200'
         ]);
 
         if($response->code == 0){
