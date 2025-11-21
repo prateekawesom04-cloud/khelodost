@@ -144,7 +144,7 @@
                 <!-- bethistory Section -->
                 <div id="bethistory-section" style="display: none;">
                     <div class="card shadow-sm">
-                        <div class="card-header bg-primary fw-bold">Deposit & Withdraw</div>
+                        <div class="card-header bg-primary fw-bold">Profit/Loss History</div>
                         <div class="card-body p-0">
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped mb-0">
@@ -166,7 +166,7 @@
                                             <td>{{$transaction->eventName}}</td>
                                             <td>{{$transaction->mname}}</td>
                                             <td>{{$transaction->nat}}</td>
-                                            <td>{{$transaction->profit}}</td>
+                                            <td class="{{($transaction->status==2)? 'text-danger' : 'text-success'}}">{{$transaction->profit}}</td>
                                             <td>{{$transaction->wallet_before}}</td>
                                             <td class="text-success fw-bold text-nowrap">{{$transaction->status? $transaction->updated_at : 'Unsattled'}}</td>
                                         </tr>
@@ -180,6 +180,39 @@
                 <!-- Statement Section -->
                 <div id="statement-section" style="display: none;">
                     <div class="card shadow-sm">
+                        <div class="card-header bg-primary fw-bold">Profit/Loss History</div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped mb-0">
+                                    <thead class="table-primary">
+                                        <tr>
+                                            <th class="text-nowrap">Sportname</th>
+                                            <th class="text-nowrap">Event Name</th>
+                                            <th class="text-nowrap">Market name</th>
+                                            <th class="text-nowrap">Result</th>
+                                            <th class="text-nowrap">Profit/Loss</th>
+                                            <th class="text-nowrap">Total Balance</th>
+                                            <th class="text-nowrap">Settle Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($sportbookBets as $transaction)
+                                        <tr>
+                                            <td>{{$transaction->sportname}}</td>
+                                            <td>{{$transaction->eventName}}</td>
+                                            <td>{{$transaction->mname}}</td>
+                                            <td>{{$transaction->nat}}</td>
+                                            <td class="{{($transaction->status==2)? 'text-danger' : 'text-success'}}">{{$transaction->profit}}</td>
+                                            <td>{{$transaction->wallet_before}}</td>
+                                            <td class="text-success fw-bold text-nowrap">{{$transaction->status? $transaction->updated_at : 'Unsattled'}}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- <div class="card shadow-sm">
                         <div class="card-header bg-primary fw-bold">Account Statement</div>
                         <div class="card-body">
 
@@ -190,11 +223,11 @@
                                         <input type="hidden" name="username" value="{{$user->username}}">
                                         <select name="filter_type" class="form-control border-secondary filter_type">
                                             <option value="0">Deposit</option>
-                                            <option value="1">Withdrawal</option>
+                                            <option value="1">Withdrawal</option> --}}
                                             {{-- @foreach($providers as $provider)
                                             <option value="{{$provider->provider}}">{{$provider->provider}}</option>
                                             @endforeach --}}
-                                        </select>
+                                        {{-- </select>
                                     </form>
                                 </div>
                                 <div class="col-6 col-md-3">
@@ -217,7 +250,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <!-- Deposit Withdrawal Section -->
