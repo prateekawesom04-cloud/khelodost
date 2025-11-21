@@ -471,6 +471,15 @@ class AdminDataController extends Controller
         $events = Event::all();
         return view('pages.sattlement',compact('events'));
     }
+    
+    public function events(Request $request){
+        $sportbookBets = Event::join('sportook_bets','events.eventId','=','sportook_bets.eventId')
+        ->select('sportook_bets.*','events.eventName','events.sportname')
+        ->where('username',$request->username)
+        // ->where('sportook_bets.status',0)
+        ->orderBy('sportook_bets.id')->get();
+        return view('pages.sattlement',compact('events'));
+    }
 
     public function sattleEvent(Request $request){
         // dd($request->all());

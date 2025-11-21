@@ -140,7 +140,7 @@ class AdminUserController extends Controller
         ->where('username',$request->username)
         // ->where('sportook_bets.status',0)
         ->orderBy('sportook_bets.id')->get();
-        
+        $betStatment = $sportbookBets->where('status','!=',0)->get();
         
         return view('admin.pages.my_account',compact('user','activities','transactions','sportbookBets'));
     }

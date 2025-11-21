@@ -113,225 +113,225 @@
                     </div>
                 </div>
                 
-                    <div class="container-fluid p-4">
-                        
-                        <div class="card shadow-sm border-0 !mb-5">
-                            <div class="card-header text-white">
-                                <strong>All Events</strong>
-                            </div>
-                            <div class="card-body">
+            </div>
+            <div class="py-4">
+                
+                <div class="card shadow-sm border-0 !mb-5">
+                    <div class="card-header text-white">
+                        <strong>All Events</strong>
+                    </div>
+                    <div class="card-body">
 
-                                <div class="table-responsive">
-                                    <table class="table table-bordered text-center align-middle table-sm">
-                                        <thead class="table-light">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center align-middle table-sm">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Event ID</th>
+                                        <th>Name</th>
+                                        <th>Exposure</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        {{-- <th>Action</th> --}}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if($allEvents->count() > 0)
+                                        @foreach($allEvents as $row)
                                             <tr>
-                                                <th>Event ID</th>
-                                                <th>Name</th>
-                                                {{-- <th>Exposure</th> --}}
-                                                <th>Date</th>
-                                                <th>Status</th>
-                                                {{-- <th>Action</th> --}}
+                                                <td>{{$row->eventId}}</td>
+                                                <td>{{$row->eventName}}</td>
+                                                <td>{{$row->exposure}}</td>
+                                                <td>{{$row->eventDate}}</td>
+                                                @php
+                                                    $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
+                                                    $teamB = explode(' v ',$row->eventName)[1] ?? 'Series';
+                                                @endphp
+                                                <td>{{(!$row->status)?'upcoming':'inplay'}}</td>
+                                                {{-- <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td> --}}
+                                                {{-- <td>
+                                                    <div class="flex flex-row items-center justify-evenly">
+                                                        <div>
+                                                            <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-target="#sattleEvent"></i>
+                                                        </div>
+
+                                                    </div>
+                                                </td> --}}
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if($allEvents->count() > 0)
-                                                @foreach($allEvents as $row)
-                                                    <tr>
-                                                        <td>{{$row->eventId}}</td>
-                                                        <td>{{$row->eventName}}</td>
-                                                        {{-- <td>{{$row->exposure}}</td> --}}
-                                                        <td>{{$row->eventDate}}</td>
-                                                        @php
-                                                            $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
-                                                            $teamB = explode(' v ',$row->eventName)[1] ?? 'Series';
-                                                        @endphp
-                                                        <td>{{(!$row->status)?'upcoming':'inplay'}}</td>
-                                                        {{-- <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td> --}}
-                                                        {{-- <td>
-                                                            <div class="flex flex-row items-center justify-evenly">
-                                                                <div>
-                                                                    <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-target="#sattleEvent"></i>
-                                                                </div>
-
-                                                            </div>
-                                                        </td> --}}
-                                                    </tr>
-                                                @endforeach
-                                            @else
-                                            <tr>
-                                                <td colspan="10" class="text-white text-center">No data!</td>
-                                            </tr>
-                                            @endif
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                            </div>
-                        </div>
-                        
-                        <div class="card shadow-sm border-0 !mb-5">
-                            <div class="card-header text-white">
-                                <strong>Cricket</strong>
-                            </div>
-                            <div class="card-body">
-
-                                <div class="table-responsive">
-                                    <table class="table table-bordered text-center align-middle table-sm">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th>Event ID</th>
-                                                <th>Name</th>
-                                                <th>Exposure</th>
-                                                <th>Date</th>
-                                                <th>Status</th>
-                                                {{-- <th>Action</th> --}}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if($cricketEvents->count() > 0)
-                                                @foreach($cricketEvents as $row)
-                                                    <tr>
-                                                        <td>{{$row->eventId}}</td>
-                                                        <td>{{$row->eventName}}</td>
-                                                        <td>{{$row->exposure}}</td>
-                                                        <td>{{$row->eventDate}}</td>
-                                                        @php
-                                                            $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
-                                                            $teamB = explode(' v ',$row->eventName)[1] ?? 'Series';
-                                                        @endphp
-                                                        <td>{{(!$row->status)?'upcoming':'inplay'}}</td>
-                                                        {{-- <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td> --}}
-                                                        {{-- <td>
-                                                            <div class="flex flex-row items-center justify-evenly">
-                                                                <div>
-                                                                    <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-target="#sattleEvent"></i>
-                                                                </div>
-
-                                                            </div>
-                                                        </td> --}}
-                                                    </tr>
-                                                @endforeach
-                                            @else
-                                            <tr>
-                                                <td colspan="10" class="text-white text-center">No data!</td>
-                                            </tr>
-                                            @endif
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                            </div>
-                        </div>
-                        
-                        <div class="card shadow-sm border-0 !mb-5">
-                            <div class="card-header text-white">
-                                <strong>Soccer</strong>
-                            </div>
-                            <div class="card-body">
-
-                                <div class="table-responsive">
-                                    <table class="table table-bordered text-center align-middle table-sm">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th>Event ID</th>
-                                                <th>Name</th>
-                                                <th>Exposure</th>
-                                                <th>Date</th>
-                                                <th>Status</th>
-                                                {{-- <th>Action</th> --}}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if($footballEvents->count() > 0)
-                                                @foreach($footballEvents as $row)
-                                                    <tr>
-                                                        <td>{{$row->eventId}}</td>
-                                                        <td>{{$row->eventName}}</td>
-                                                        <td>{{$row->exposure}}</td>
-                                                        <td>{{$row->eventDate}}</td>
-                                                        @php
-                                                            $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
-                                                            $teamB = explode(' v ',$row->eventName)[1] ?? 'Series';
-                                                        @endphp
-                                                        <td>{{(!$row->status)?'upcoming':'inplay'}}</td>
-                                                        {{-- <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td> --}}
-                                                        {{-- <td>
-                                                            <div class="flex flex-row items-center justify-evenly">
-                                                                <div>
-                                                                    <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-target="#sattleEvent"></i>
-                                                                </div>
-
-                                                            </div>
-                                                        </td> --}}
-                                                    </tr>
-                                                @endforeach
-                                            @else
-                                            <tr>
-                                                <td colspan="10" class="text-white text-center">No data!</td>
-                                            </tr>
-                                            @endif
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                            </div>
-                        </div>
-                        
-                        <div class="card shadow-sm border-0 !mb-5">
-                            <div class="card-header text-white">
-                                <strong>Tennis</strong>
-                            </div>
-                            <div class="card-body">
-
-                                <div class="table-responsive">
-                                    <table class="table table-bordered text-center align-middle table-sm">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th>Event ID</th>
-                                                <th>Name</th>
-                                                <th>Exposure</th>
-                                                <th>Date</th>
-                                                <th>Status</th>
-                                                {{-- <th>Action</th> --}}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if($tennisEvents->count() > 0)
-                                                @foreach($tennisEvents as $row)
-                                                    <tr>
-                                                        <td>{{$row->eventId}}</td>
-                                                        <td>{{$row->eventName}}</td>
-                                                        <td>{{$row->exposure}}</td>
-                                                        <td>{{$row->eventDate}}</td>
-                                                        @php
-                                                            $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
-                                                            $teamB = explode(' v ',$row->eventName)[1] ?? 'Series';
-                                                        @endphp
-                                                        <td>{{(!$row->status)?'upcoming':'inplay'}}</td>
-                                                        {{-- <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td> --}}
-                                                        {{-- <td>
-                                                            <div class="flex flex-row items-center justify-evenly">
-                                                                <div>
-                                                                    <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-target="#sattleEvent"></i>
-                                                                </div>
-
-                                                            </div>
-                                                        </td> --}}
-                                                    </tr>
-                                                @endforeach
-                                            @else
-                                            <tr>
-                                                <td colspan="10" class="text-white text-center">No data!</td>
-                                            </tr>
-                                            @endif
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                            </div>
+                                        @endforeach
+                                    @else
+                                    <tr>
+                                        <td colspan="10" class="text-white text-center">No data!</td>
+                                    </tr>
+                                    @endif
+                                </tbody>
+                            </table>
                         </div>
 
                     </div>
+                </div>
+                
+                <div class="card shadow-sm border-0 !mb-5">
+                    <div class="card-header text-white">
+                        <strong>Cricket</strong>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center align-middle table-sm">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Event ID</th>
+                                        <th>Name</th>
+                                        <th>Exposure</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        {{-- <th>Action</th> --}}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if($cricketEvents->count() > 0)
+                                        @foreach($cricketEvents as $row)
+                                            <tr>
+                                                <td>{{$row->eventId}}</td>
+                                                <td>{{$row->eventName}}</td>
+                                                <td>{{$row->exposure}}</td>
+                                                <td>{{$row->eventDate}}</td>
+                                                @php
+                                                    $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
+                                                    $teamB = explode(' v ',$row->eventName)[1] ?? 'Series';
+                                                @endphp
+                                                <td>{{(!$row->status)?'upcoming':'inplay'}}</td>
+                                                {{-- <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td> --}}
+                                                {{-- <td>
+                                                    <div class="flex flex-row items-center justify-evenly">
+                                                        <div>
+                                                            <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-target="#sattleEvent"></i>
+                                                        </div>
+
+                                                    </div>
+                                                </td> --}}
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                    <tr>
+                                        <td colspan="10" class="text-white text-center">No data!</td>
+                                    </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div class="card shadow-sm border-0 !mb-5">
+                    <div class="card-header text-white">
+                        <strong>Soccer</strong>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center align-middle table-sm">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Event ID</th>
+                                        <th>Name</th>
+                                        <th>Exposure</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        {{-- <th>Action</th> --}}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if($footballEvents->count() > 0)
+                                        @foreach($footballEvents as $row)
+                                            <tr>
+                                                <td>{{$row->eventId}}</td>
+                                                <td>{{$row->eventName}}</td>
+                                                <td>{{$row->exposure}}</td>
+                                                <td>{{$row->eventDate}}</td>
+                                                @php
+                                                    $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
+                                                    $teamB = explode(' v ',$row->eventName)[1] ?? 'Series';
+                                                @endphp
+                                                <td>{{(!$row->status)?'upcoming':'inplay'}}</td>
+                                                {{-- <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td> --}}
+                                                {{-- <td>
+                                                    <div class="flex flex-row items-center justify-evenly">
+                                                        <div>
+                                                            <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-target="#sattleEvent"></i>
+                                                        </div>
+
+                                                    </div>
+                                                </td> --}}
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                    <tr>
+                                        <td colspan="10" class="text-white text-center">No data!</td>
+                                    </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div class="card shadow-sm border-0 !mb-5">
+                    <div class="card-header text-white">
+                        <strong>Tennis</strong>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center align-middle table-sm">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Event ID</th>
+                                        <th>Name</th>
+                                        <th>Exposure</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        {{-- <th>Action</th> --}}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if($tennisEvents->count() > 0)
+                                        @foreach($tennisEvents as $row)
+                                            <tr>
+                                                <td>{{$row->eventId}}</td>
+                                                <td>{{$row->eventName}}</td>
+                                                <td>{{$row->exposure}}</td>
+                                                <td>{{$row->eventDate}}</td>
+                                                @php
+                                                    $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
+                                                    $teamB = explode(' v ',$row->eventName)[1] ?? 'Series';
+                                                @endphp
+                                                <td>{{(!$row->status)?'upcoming':'inplay'}}</td>
+                                                {{-- <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td> --}}
+                                                {{-- <td>
+                                                    <div class="flex flex-row items-center justify-evenly">
+                                                        <div>
+                                                            <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-target="#sattleEvent"></i>
+                                                        </div>
+
+                                                    </div>
+                                                </td> --}}
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                    <tr>
+                                        <td colspan="10" class="text-white text-center">No data!</td>
+                                    </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
