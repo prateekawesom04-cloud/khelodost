@@ -51,9 +51,10 @@ class AdminDataController extends Controller
         // $allEvents = Event::where('status',1)->limit(20)->get();
 
         // $events = DB::table('sportook_bets')
-        $eventsExposure = SportookBet::select('eventId', DB::raw('SUM(bet_amount) as exposure'))
+        $eventsExposure = SportookBet::select('eventId', DB::raw('SUM(bet_amount) as exposure, COUNT(*) as totalBets'))
         // ->join('sportook_bets', 'events.eventId', '=', 'sportook_bets.eventId')
         ->groupBy('eventId');
+        // dd($eventsExposure->toSql());
         // ->select('events.eventId', DB::raw('SUM(sportook_bets.bet_amount) as total_bet_amount'))
         // ->where('events.status', 1)
         // ->get();

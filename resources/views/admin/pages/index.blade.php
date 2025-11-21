@@ -129,6 +129,7 @@
                                         <th>Event ID</th>
                                         <th>Name</th>
                                         <th>Exposure</th>
+                                        <th>Total Bets</th>
                                         <th>Date</th>
                                         <th>Status</th>
                                         {{-- <th>Action</th> --}}
@@ -141,6 +142,7 @@
                                                 <td>{{$row->eventId}}</td>
                                                 <td>{{$row->eventName}}</td>
                                                 <td>{{$row->exposure}}</td>
+                                                <td>{{$row->totalBets}}</td>
                                                 <td>{{$row->eventDate}}</td>
                                                 @php
                                                     $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
@@ -183,18 +185,20 @@
                                         <th>Event ID</th>
                                         <th>Name</th>
                                         <th>Exposure</th>
+                                        <th>Total Bets</th>
                                         <th>Date</th>
                                         <th>Status</th>
                                         {{-- <th>Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if($cricketEvents->count() > 0)
-                                        @foreach($cricketEvents as $row)
+                                    @if($allEvents->count() > 0)
+                                        @foreach($allEvents as $row)
                                             <tr>
                                                 <td>{{$row->eventId}}</td>
                                                 <td>{{$row->eventName}}</td>
                                                 <td>{{$row->exposure}}</td>
+                                                <td>{{$row->totalBets}}</td>
                                                 <td>{{$row->eventDate}}</td>
                                                 @php
                                                     $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
@@ -237,18 +241,20 @@
                                         <th>Event ID</th>
                                         <th>Name</th>
                                         <th>Exposure</th>
+                                        <th>Total Bets</th>
                                         <th>Date</th>
                                         <th>Status</th>
                                         {{-- <th>Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if($footballEvents->count() > 0)
-                                        @foreach($footballEvents as $row)
+                                    @if($allEvents->count() > 0)
+                                        @foreach($allEvents as $row)
                                             <tr>
                                                 <td>{{$row->eventId}}</td>
                                                 <td>{{$row->eventName}}</td>
                                                 <td>{{$row->exposure}}</td>
+                                                <td>{{$row->totalBets}}</td>
                                                 <td>{{$row->eventDate}}</td>
                                                 @php
                                                     $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
@@ -291,18 +297,20 @@
                                         <th>Event ID</th>
                                         <th>Name</th>
                                         <th>Exposure</th>
+                                        <th>Total Bets</th>
                                         <th>Date</th>
                                         <th>Status</th>
                                         {{-- <th>Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if($tennisEvents->count() > 0)
-                                        @foreach($tennisEvents as $row)
+                                    @if($allEvents->count() > 0)
+                                        @foreach($allEvents as $row)
                                             <tr>
                                                 <td>{{$row->eventId}}</td>
                                                 <td>{{$row->eventName}}</td>
                                                 <td>{{$row->exposure}}</td>
+                                                <td>{{$row->totalBets}}</td>
                                                 <td>{{$row->eventDate}}</td>
                                                 @php
                                                     $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
