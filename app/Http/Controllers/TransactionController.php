@@ -32,12 +32,21 @@ class TransactionController extends Controller
             
             // Api statements
 
-            $response = '';
+            $response = '3456';
+
+            $apiData = [];
 
             if($user->country_phone_code == '91'){
-                $response = $this->paymentGatewayIndMethod($request);
-            } else{
+
+                $apiData['mchNo'] = 'M0396';
+                $apiData['encryptionKey'] = '72012C03A0F21CC3';
+                $apiData['signatureKey'] = '613BA28576F3CDF8';
                 $response = $this->paymentGatewayBanMethod($request);
+            } else{
+                $apiData['mchNo'] = 'M0402';
+                $apiData['encryptionKey'] = '324AE62E4A0341B3';
+                $apiData['signatureKey'] = '5D34BD894E07C2BE';
+                $response = $this->paymentGatewayIndMethod($request);
             }
         } else{
             
@@ -48,21 +57,31 @@ class TransactionController extends Controller
 
         }
 
-        $response = json_decode($response);
+        $response = $response->getData();
         $response = json_decode($response->response);
 
-        // dd();
+            $payload = $response->payload;
+            $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
+        //     dd($payload);
+        // dd($response);
+
+        return response()->json([
+            'data'=> $payload,
+            'response_code'=> '105'
+        ]);
 
         if($response->code == 0){
             $mchNo = $response->mchNo;
             $payload = $response->payload;
-            $sign = $payload.$apiData['signatureKey'];
+            $sign = $payload.$apiData['signatureKey']; // concatinating the payload and signature key
             $sign = strtoupper(md5($sign));
-
+            dd($response->sign,'-----',$sign);
             if($response->sign == $sign){
+                // dd('if');
                 $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
-                dd($payload);
+                // dd($payload);
             } else{
+                dd('else');
                 return response()->json([
                     'message'=> 'Unable to verify Sign',
                     'response_code'=> '105'
@@ -75,6 +94,7 @@ class TransactionController extends Controller
     
     public function paymentGatewayBanMethod(Request $request){
             
+        // dd($request->all());
         $apiData = [];
 
         $apiData['mchNo'] = 'M0402';
@@ -87,7 +107,7 @@ class TransactionController extends Controller
         $data['mchNo'] = $apiData['mchNo'];
         $data['price'] = $request->transfer_amount;
         $data['orderDate'] = date('YmdHis');
-        $data['tradeNo'] = $order_sn;
+        $data['tradeNo'] = $request->order_sn;
         $data['notifyUrl'] = env('APP_URL').'/paymentCallback';
 
         if($request->payment_type == 0){
@@ -176,7 +196,7 @@ class TransactionController extends Controller
 
             $transaction = new Transaction();
             $transaction->username = $user->username;
-            $transaction->order_sn = $order_sn;
+            $transaction->order_sn = $request->order_sn;
             $transaction->wallet_before = $user->wallet_amount;
             $transaction->transfer_amount = $request->transfer_amount;
             $transaction->ip = $request->ip();

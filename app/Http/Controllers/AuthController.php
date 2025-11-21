@@ -518,10 +518,12 @@ class AuthController extends Controller
         $method = "AES-128-CBC";
         $encrypted_data = base64_decode($string);
         // $iv_length = opensssl_cipher_iv_length($method);
-        // $iv = substr($encrypted_data, 0, $iv_length);
         $iv = '0102030405060708';
-        // $encrypted = substr($encrypted_data, $iv_length);
-        $decrypted = openssl_decrypt($encrypted, $method, $secret_key, OPENSSL_RAW_DATA, $iv);
+        $iv_length = strlen($iv);
+        // $iv = substr($encrypted_data, 0, $iv_length);
+        $encrypted = substr($encrypted_data, $iv_length);
+        $decrypted = openssl_decrypt($encrypted_data, $method, $secret_key, OPENSSL_RAW_DATA, $iv);
+        // dd($encrypted_data);
         return $decrypted;
 
     }

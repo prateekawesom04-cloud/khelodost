@@ -120,11 +120,11 @@
     });
 
     function paymentGatewayMethod(response) {
-        // response = JSON.parse(response.response);
-        if (response.code == 200) {
+        response = JSON.parse(response.response);
+        if (response.response_code == 200) {
             $('#paymentModel').modal('show');
-            // window.location.href = response.data['pay_url'];
-            $('.paymentModel').html(response.response);
+            window.location.href = response.data['pay_url'];
+            // $('.paymentModel').html(response.response);
 
         } else {
             responseToast('Deposit Request failed');
