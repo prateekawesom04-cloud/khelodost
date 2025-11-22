@@ -20,7 +20,7 @@ class AuthCheckMiddleware
             if($request->ajax()){
                 return response()->json([
                     'mesaage'=> 'User Not Logged In',
-                    'code'=> '403',
+                    'response_code'=> '403',
                     'redirect'=> route('login')
                 ]);
             }

@@ -15,6 +15,7 @@ class TransactionController extends Controller
         $user = User::getCurrentUser();
 
         $request->merge(['order_sn'=>'TR'.time().rand(0000,9999)]);
+        $request->merge(['username'=>$user->username]);
         
         if($user){
 
@@ -208,6 +209,7 @@ class TransactionController extends Controller
 
             $data['callbackUrl'] = env('APP_URL').'/deposit';
             $data['payType'] = '01';
+            $data['payerName'] = $request->username;
         
         } elseif ($request->payment_type == 1) {
 
@@ -225,6 +227,8 @@ class TransactionController extends Controller
         $sdata = [];
 
         $sdata['payload'] = json_encode($data);
+
+        dd(json_encode($data));
 
         $sdata['payload'] = (new AuthController)->aes128cbc($apiData['encryptionKey'],$sdata['payload']);
 

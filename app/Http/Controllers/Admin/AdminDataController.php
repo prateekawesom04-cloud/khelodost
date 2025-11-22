@@ -93,6 +93,7 @@ class AdminDataController extends Controller
         return response()->json([
             'data'=> $table,
             'redirect'=> url()->previous(),
+            'message'=>'data updated successfully',
             'response_code'=>'200'
         ]);
     }
@@ -106,6 +107,7 @@ class AdminDataController extends Controller
         return response()->json([
             'data'=> $table,
             'redirect'=> url()->previous(),
+            'message'=>'data updated successfully',
             'response_code'=>'200'
         ]);
     }
@@ -187,7 +189,7 @@ class AdminDataController extends Controller
         $user = User::getCurrentUser();
         if(!Hash::check($request->masterPassword,$user->password)){
             return response()->json([
-                'error'=> 'wrong master password',
+                'message'=> 'wrong master password',
                 'response_code'=>'400'
             ]);
         }
@@ -212,6 +214,7 @@ class AdminDataController extends Controller
 
         return response()->json([
             'redirect'=> $request->previous_url,
+            'message'=>'data updated successfully',
             'response_code'=>'200'
         ]);
     }
@@ -223,6 +226,7 @@ class AdminDataController extends Controller
 
         return response()->json([
             'redirect'=> $request->previous_url,
+            'message'=>'data updated successfully',
             'response_code'=>'200'
         ]);
     }
@@ -257,6 +261,7 @@ class AdminDataController extends Controller
 
         return response()->json([
             'redirect'=> $request->previous_url,
+            'message'=>'data updated successfully',
             'response_code'=>'200'
         ]);
     }
@@ -274,6 +279,7 @@ class AdminDataController extends Controller
         return response()->json([
             'data'=> $table,
             'redirect'=> $request->previous_url,
+            'message'=>'data updated successfully',
             'response_code'=>'200'
         ]);
     }
@@ -289,6 +295,7 @@ class AdminDataController extends Controller
         
         return response()->json([
             'redirect'=> $request->previous_url,
+            'message'=>'data updated successfully',
             'response_code'=>'200'
         ]);
     }
@@ -315,6 +322,7 @@ class AdminDataController extends Controller
         
         return response()->json([
             'redirect'=> $request->previous_url,
+            'message'=>'data updated successfully',
             'response_code'=>'200'
         ]);
     }
@@ -362,7 +370,7 @@ class AdminDataController extends Controller
     public function addFund(Request $request){
         if(!$this->checkMasterPassword($request->masterPassword)){
             return response()->json([
-                'error'=> 'wrong master password',
+                'message'=> 'wrong master password',
                 'response_code'=>'400'
             ]);
         }
@@ -370,7 +378,7 @@ class AdminDataController extends Controller
         $user->wallet_amount += $request->depositFund;
         $user->save();
         return response()->json([
-            'error'=> 'Fund Added Successfully',
+            'message'=> 'Fund Added Successfully',
             'response_code'=>'200'
         ]);
     }
@@ -411,6 +419,7 @@ class AdminDataController extends Controller
 
         return response()->json([
             'redirect'=> url()->previous(),
+            'message'=>'data updated successfully',
             'response_code'=>'200'
         ]);
     }
@@ -427,6 +436,7 @@ class AdminDataController extends Controller
 
         return response()->json([
             'redirect'=> url()->previous(),
+            'message'=>'data updated successfully',
             'response_code'=>'200'
         ]);
     }
@@ -434,7 +444,7 @@ class AdminDataController extends Controller
     public function updatePhone(Request $request){
         if(!$this->checkMasterPassword($request->masterPassword)){
             return response()->json([
-                'error'=> 'wrong master password',
+                'message'=> 'wrong master password',
                 'response_code'=>'400'
             ]);
         }
@@ -442,7 +452,7 @@ class AdminDataController extends Controller
         $user->phone = $request->phone;
         $user->save();
         return response()->json([
-            'error'=> 'Phone Updated Successfully',
+            'message'=> 'Phone Updated Successfully',
             'response_code'=>'200'
         ]);
     }
@@ -450,13 +460,14 @@ class AdminDataController extends Controller
     public function deleteUser(Request $request){
         if(!$this->checkMasterPassword($request->masterPassword)){
             return response()->json([
-                'error'=> 'wrong master password',
+                'message'=> 'wrong master password',
                 'response_code'=>'400'
             ]);
         }
         $user = User::where('username',$request->username)->delete();
         return response()->json([
             'redirect'=> url()->previous(),
+            'message'=>'data updated successfully',
             'response_code'=>'200'
         ]);
     }

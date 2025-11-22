@@ -126,7 +126,7 @@
             formData['update_data_key'] = $(this).attr('name');
             formData['update_data_value'] = $(this).val();
             formData['m_key'] = 'transactions';
-            callAdminApi('post', `{{url('/admin')}}/updateModelData`, formData, ajax_response_reload);
+            callAjaxFormData('post', `{{url('/admin')}}/updateModelData`, formData, ajaxResponseModal);
         });
     </script>
     @endsection

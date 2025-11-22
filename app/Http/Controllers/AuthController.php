@@ -248,7 +248,7 @@ class AuthController extends Controller
                 $errors[] = $value[0];
             }
             return response()->json([
-                'error'=> $errors[0],
+                'message'=> $errors[0],
                 'error_code'=> '105'
             ]);
         } else{
@@ -279,7 +279,7 @@ class AuthController extends Controller
                 $errors[] = $value[0];
             }
             return response()->json([
-                'error'=>$errors[0]
+                'message'=>$errors[0]
             ]);
         } else{
             if($request->phone){
@@ -292,7 +292,7 @@ class AuthController extends Controller
                 ])->first();
             } else{
                 return response()->json([
-                    'error'=> 'Provide Some Id',
+                    'message'=> 'Provide Some Id',
                     'error_code'=> '402'
                 ]);
             }
@@ -300,7 +300,7 @@ class AuthController extends Controller
             // dd($user);
             if(!Hash::check($request->oldPassword,$user->password)){
                 return response()->json([
-                    'error'=> 'Old Password Mismatched',
+                    'message'=> 'Old Password Mismatched',
                     'error_code'=> '401'
                 ]);
             }
@@ -308,7 +308,7 @@ class AuthController extends Controller
             $user->save();
             
             return response()->json([
-                'error'=> 'success',
+                'message'=> 'success',
                 'error_code'=> '200'
             ]);
             
@@ -367,7 +367,7 @@ class AuthController extends Controller
             
             if(!$user){
                 return response()->json([
-                    'error'=> 'User not found',
+                    'message'=> 'User not found',
                     'error_code'=> '104'
                 ]);
             }
@@ -420,17 +420,17 @@ class AuthController extends Controller
                     $request->otptype.'_otp_'.$request->phone.'verified'=>True
                 ]);
                 return response()->json([
-                    'error'=> 'otp matched',
+                    'message'=> 'otp matched',
                     'err_code'=>101
                 ]);
             } else{
                 return response()->json([
-                    'error'=> 'otp mismatched'
+                    'message'=> 'otp mismatched'
                 ]);
             }
         }
         return response()->json([
-            'error'=> 'otp expired'
+            'message'=> 'otp expired'
         ]);
     }
 

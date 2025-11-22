@@ -40,7 +40,7 @@
     $('.updatePhone').click(function(){
         // $(this).addClass('disabled');
         let formData = new FormData($('#editMobileForm')[0]);
-        callAdminApi('post','{{route("updatePhone")}}',formData,ajaxResponse1);
+        callAjaxFormData('post','{{route("updatePhone")}}',formData,ajaxResponse1);
     });
     
 </script>

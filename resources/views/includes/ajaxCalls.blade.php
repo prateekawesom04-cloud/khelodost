@@ -139,7 +139,7 @@
         
         formData.append('previous_url', '{{url()->previous()}}');
 
-        callApiFormData('post', `{{url('/admin')}}/${url}`, formData, ajax_response_reload);
+        callApiFormData('post', `{{url('/admin')}}/${url}`, formData, ajaxResponseModal);
     }
     
     function submitFormGlobal(btn,user_uid){
@@ -151,7 +151,7 @@
         formData.append('admin_uid', user_uid);
         formData.append('previous_url', '{{url()->current()}}');
 
-        callApiFormData('post', `{{url('/admin')}}/createModelData`, formData, ajax_response_reload);
+        callApiFormData('post', `{{url('/admin')}}/createModelData`, formData, ajaxResponseModal);
     }
 
 </script>

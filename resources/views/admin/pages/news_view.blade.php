@@ -51,7 +51,7 @@
         
         let formData = new FormData($(this).parents('form')[0]);
         
-        callAdminApi('post', `{{url('/admin')}}/update_news`, formData, ajax_response_reload);
+        callAjaxFormData('post', `{{url('/admin')}}/update_news`, formData, ajaxResponseModal);
     });
     
     // $('.news_edit').on('click',function(){
@@ -61,13 +61,13 @@
     $('.delete_news').on('click',function(){
         let formData = new FormData();
         formData.append('news_id',$(this).attr('data-news_id'));
-        callAdminApi('post', `{{url('/admin')}}/delete_news`, formData, ajax_response_reload);
+        callAjaxFormData('post', `{{url('/admin')}}/delete_news`, formData, ajaxResponseModal);
     });
     
     $('.update_news').on('click',function(){
         let formData = new FormData($(this).parents('form')[0]);
         formData.append('news_id',$(this).attr('data-news_id'));
-        callAdminApi('post', `{{url('/admin')}}/update_news`, formData, ajax_response_reload);
+        callAjaxFormData('post', `{{url('/admin')}}/update_news`, formData, ajaxResponseModal);
     });
 </script>
 

@@ -50,6 +50,10 @@
         let formData = new FormData($('form')[0]);
         callAjaxFormData('post','{{route("addFund")}}',formData,ajaxResponse);
     });
+
+    $('#depositFund').on('keyup',function(){
+        $('#totalBalance').val(parseFloat($('#currentBalance').val()) + parseFloat($(this).val()));
+    })
     
 </script>
 
