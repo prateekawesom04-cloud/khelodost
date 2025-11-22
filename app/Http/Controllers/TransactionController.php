@@ -41,12 +41,12 @@ class TransactionController extends Controller
                 $apiData['mchNo'] = 'M0396';
                 $apiData['encryptionKey'] = '72012C03A0F21CC3';
                 $apiData['signatureKey'] = '613BA28576F3CDF8';
-                $response = $this->paymentGatewayBanMethod($request);
+                $response = $this->paymentGatewayIndMethod($request);
             } else{
                 $apiData['mchNo'] = 'M0402';
                 $apiData['encryptionKey'] = '324AE62E4A0341B3';
                 $apiData['signatureKey'] = '5D34BD894E07C2BE';
-                $response = $this->paymentGatewayIndMethod($request);
+                $response = $this->paymentGatewayBanMethod($request);
             }
         } else{
             
@@ -60,28 +60,28 @@ class TransactionController extends Controller
         $response = $response->getData();
         $response = json_decode($response->response);
 
-            $payload = $response->payload;
-            $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
+            // $payload = $response->payload;
+            // $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
         //     dd($payload);
         // dd($response);
 
-        return response()->json([
-            'data'=> $payload,
-            'response_code'=> '200'
-        ]);
 
         if($response->code == 0){
             $mchNo = $response->mchNo;
             $payload = $response->payload;
             $sign = $payload.$apiData['signatureKey']; // concatinating the payload and signature key
             $sign = strtoupper(md5($sign));
-            dd($response->sign,'-----',$sign);
+            // dd($response->sign,'-----',$sign);
             if($response->sign == $sign){
                 // dd('if');
                 $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
+            return response()->json([
+                'data'=> $payload,
+                'response_code'=> '200'
+            ]);
                 // dd($payload);
             } else{
-                dd('else');
+                // dd('else');
                 return response()->json([
                     'message'=> 'Unable to verify Sign',
                     'response_code'=> '105'

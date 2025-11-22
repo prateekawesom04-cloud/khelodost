@@ -129,7 +129,7 @@
 
         } else {
             responseToast('Deposit Request failed');
-            window.location.reload();
+            // window.location.reload();
         }
         
     }

@@ -539,9 +539,9 @@ class AuthController extends Controller
         $iv = '0102030405060708';
         $iv_length = strlen($iv);
         // $iv = substr($encrypted_data, 0, $iv_length);
-        $encrypted = substr($encrypted_data, $iv_length);
+        // $encrypted_data = substr($encrypted_data, $iv_length);
         $decrypted = openssl_decrypt($encrypted_data, $method, $secret_key, OPENSSL_RAW_DATA, $iv);
-        // dd($encrypted_data);
+        // dd($decrypted);
         return $decrypted;
 
     }
