@@ -63,7 +63,7 @@ class TransactionController extends Controller
 
             // $payload = $response->payload;
             // $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
-        //     dd($payload);
+            // dd($payload);
         // dd($response);
 
 
@@ -203,13 +203,15 @@ class TransactionController extends Controller
         // $data['orderDate'] = date('YmdHis');
         $data['orderDate'] = date('YmdHis');
         $data['tradeNo'] = $request->order_sn;
-        // $data['notifyUrl'] = env('APP_URL').'/paymentCallback';
+        $data['notifyUrl'] = env('APP_URL').'/paymentCallback';
 
         if($request->payment_type == 0){
 
             $data['callbackUrl'] = env('APP_URL').'/deposit';
             $data['payType'] = '01';
             $data['payerName'] = $request->username;
+            $data['payEmail'] = 'matchbhai@gmail.com';
+            $data['payMobile'] = '9090099099';
         
         } elseif ($request->payment_type == 1) {
 
@@ -228,7 +230,7 @@ class TransactionController extends Controller
 
         $sdata['payload'] = json_encode($data);
 
-        dd(json_encode($data));
+        // dd(json_encode($data));
 
         $sdata['payload'] = (new AuthController)->aes128cbc($apiData['encryptionKey'],$sdata['payload']);
 
@@ -286,6 +288,7 @@ class TransactionController extends Controller
     public function paymentCallback(Request $request){
 
         Log::info('payement callack----');
+        Log::info($request->all());
 
         $sdata = (new AuthController)->aes256cbcDycrypt($apiData['encryptionKey'],$sdata['payload']);
         

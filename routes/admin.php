@@ -129,9 +129,12 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
         return view('admin.pages.admin_fund');
             })->name('admin.admin_fund');
 
-            Route::get('/user_general_setting', function () {
-        return view('admin.pages.user_general_setting');
-            })->name('admin.user_general_setting');
+        // Route::get('/user_general_setting', function () {
+        //     return view('admin.pages.user_general_setting');
+        //     })->name('admin.user_general_setting');
+
+        Route::get('/user_general_setting', [AdminDataController::class,'user_general_setting'])->name('admin.user_general_setting')->withoutMiddleware([VerifyCsrfToken::class]);
+        Route::post('/user_general_setting', [AdminDataController::class,'user_general_setting'])->name('admin.action.user_general_setting')->withoutMiddleware([VerifyCsrfToken::class]);
 
             Route::get('/block_market', function () {
         return view('admin.pages.block_market');

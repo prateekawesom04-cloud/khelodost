@@ -19,6 +19,7 @@ use App\Models\Appdata;
 use App\Models\GameHistory;
 use App\Models\Event;
 use App\Models\SportookBet;
+use App\Models\UserGeneralSetting;
 
 class AdminDataController extends Controller
 {
@@ -748,6 +749,36 @@ class AdminDataController extends Controller
     
     public function updateSportResult(Request $request){
         $eventId = $request->eventId;
+        
+    }
+
+    public function user_general_setting(Request $request){
+
+        $admin = User::getCurrentUser();
+        
+        if($request->method()=='GET'){
+            $UserGeneralSetting = UserGeneralSetting::where('admin_username',$admin->username)->first();
+            return view('admin.pages.user_general_setting',compact('UserGeneralSetting'));
+        }
+
+
+        $UserGeneralSetting = UserGeneralSetting::where('admin_username',$admin->username)->first();
+        if(!$UserGeneralSetting){
+            $UserGeneralSetting = new UserGeneralSetting();
+            $UserGeneralSetting->admin_username = $admin->username;
+        }
+        $UserGeneralSetting->min_stake = $request->min_stake;
+        $UserGeneralSetting->max_stake = $request->max_stake;
+        $UserGeneralSetting->min_odds = $request->min_odds;
+        $UserGeneralSetting->max_odds = $request->max_odds;
+        $UserGeneralSetting->bet_delay = $request->bet_delay;
+        $UserGeneralSetting->save();
+
+        // return redirect()->back();
+        return response()->json([
+            'message'=> 'Data Updated Successfully',
+            'response_code'=> '200'
+        ]);
         
     }
     

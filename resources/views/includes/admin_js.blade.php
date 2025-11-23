@@ -114,12 +114,12 @@
 
     }
 
-    function ajaxResponse(response){
-        if(response.response_code == 200){
-            window.location.href = '{{url()->previous()}}';
-        }
-        responseToast(response.message,'bg-warning');
-    }
+    // function ajaxResponse(response){
+    //     if(response.response_code == 200){
+    //         window.location.href = '{{url()->previous()}}';
+    //     }
+    //     responseToast(response.message,'bg-warning');
+    // }
     
     function ajaxResponse1(response){
         if(response.response_code == 200){

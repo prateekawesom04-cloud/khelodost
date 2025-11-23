@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('user_general_settings', function (Blueprint $table) {
             $table->id();
+            $table->string('admin_username')->nullable();
             $table->string('min_stake');
             $table->string('max_stake');
-            $table->string('max_profit');
-            $table->string('max_loss');
-            $table->string('betdelay');
+            $table->string('min_odds');
+            $table->string('max_odds');
+            $table->string('bet_delay');
             $table->timestamps();
         });
     }
