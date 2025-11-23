@@ -1,11 +1,11 @@
-<div id="betslipData" class="flex betslip" style="display:none;">
+<div id="betslipData" class="flex betslip w-full relative" style="display:none;">
    <span id="bet_msg_error"></span>
    <span id="errmsg"></span>
    <div class="lds-dual-ring  loader" style="display:none"></div>
    <audio id="myAudio">
       <source src="https://khelodost.online/assets/images/beep.mp3" type="audio/mpeg">
    </audio>
-   <div id="placeBetSilp" class="flex flex-col items-center">
+   <div id="placeBetSilp" class="flex flex-col items-center w-full">
       
       {{-- <div class="flex flex-row gap-2">
          <span id="nat" class="my-1"></span>
@@ -84,6 +84,9 @@
             <button href="javascript:void(0)" class="!bg-[#15b526] text-white" onclick="placeBet();"> Place Bet</button>
          </div>
       </div>
+   </div>
+   <div class="placebetOverlay absolute w-full h-100 bg-[#050505de] text-white flex items-center justify-center" style="display:none;">
+      Please Wait...
    </div>
 </div>
 
@@ -427,25 +430,46 @@
   
 
    function placeBet(){
+      $('.placebetOverlay').show();
 
-      market_row = $(`.market_${betslipData.marketId}`).find(`.market_row_${betslipData.sid}`);
+      let min_stake = {{isset($UserGeneralSetting->min_stake)?$UserGeneralSetting->min_stake:100}};
+      let max_stake = {{isset($UserGeneralSetting->max_stake)?$UserGeneralSetting->max_stake:100000}};
+      let min_odds = {{isset($UserGeneralSetting->min_odds)?$UserGeneralSetting->min_odds:1}};
+      let max_odds = {{isset($UserGeneralSetting->max_odds)?$UserGeneralSetting->max_odds:40}};
+      let bet_delay = {{isset($UserGeneralSetting->bet_delay)?$UserGeneralSetting->bet_delay:2}};
 
-      let odd = $(market_row).find(`.odd-btn[data-oddId='${betslipData.oddId}']`).attr('data-oddVal');
+      setTimeout(() => {
 
-      
-      
-      
-      if(odd != betslipData.oddVal){
-         responseToast('Odd changed');
-         $('.betslip').hide();
-         return false;
-      }
+         $('.placebetOverlay').hide();
+         market_row = $(`.market_${betslipData.marketId}`).find(`.market_row_${betslipData.sid}`);
 
-      if($('#stakeValue').val() < 100){
-         responseToast('minimum stake value is 100');
-         return false;
-      }
-      callApi('post',`{{route('user.placebet')}}`,betslipData,postPlacebet);
+         let odd = $(market_row).find(`.odd-btn[data-oddId='${betslipData.oddId}']`).attr('data-oddVal');
+
+         if(odd != betslipData.oddVal){
+            responseToast('Odd changed');
+            $('.betslip').hide();
+            return false;
+         }
+         
+         if($('#stakeValue').val() < min_stake){
+            responseToast('Minimum stake value is '+min_stake);
+            return false;
+         }
+         if($('#stakeValue').val() > max_stake){
+            responseToast('Maximum stake value is '+max_stake);
+            return false;
+         }
+         if($('#oddVal').val() < min_odds){
+            responseToast('Minimum odd value is '+min_odds);
+            return false;
+         }
+         if($('#oddVal').val() > max_odds){
+            responseToast('Maximum odd value is '+max_odds);
+            return false;
+         }
+         callApi('post',`{{route('user.placebet')}}`,betslipData,postPlacebet);
+
+      }, bet_delay*1000);
 
    }
    

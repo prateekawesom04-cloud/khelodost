@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Appdata;
+use App\Models\UserGeneralSetting;
 
 class CustomSessionMiddleware
 {
@@ -36,10 +37,18 @@ class CustomSessionMiddleware
         if($userData){
 
             View::share('userData',$userData);
+            $UserGeneralSetting = UserGeneralSetting::where('admin_username',$userData->admin_username)->first();
+            
+            if($UserGeneralSetting){
+                View::share('UserGeneralSetting',$UserGeneralSetting);
+            } else{
+                View::share('UserGeneralSetting','');
+            }
 
         } else{
             
             View::share('userData',False);
+            View::share('UserGeneralSetting','');
 
         }
 
@@ -57,6 +66,7 @@ class CustomSessionMiddleware
         
         View::share('sports',$sports);
         View::share('providers',$providers);
+
 
         return $next($request);
     }
