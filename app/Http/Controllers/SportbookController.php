@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Storage;
 use App\Events\EventNotification;
 use App\Models\Event;
+use App\Models\Market;
 
 class SportbookController extends Controller
 {
@@ -62,7 +63,13 @@ class SportbookController extends Controller
     public function soccerEvent(Request $request){
         $eventId = $request->eventId;
         $eventData = Event::where('eventId',$request->eventId)->first();
-        return view('pages.soccerEventPage',compact('eventId','eventData'));
+        // $eventData = Event::where('eventId',$request->eventId);
+        // $market = Market::joinSub($eventData,'eventData',function($join){
+        //     $join->on('markets.name','=','eventData.sportname');
+        // })->get();
+        $market = Market::where('name',$eventData->sportname)->first();
+        // dd($market);
+        return view('pages.soccerEventPage',compact('eventId','eventData','market'));
     }
 
     public function soccerUpcomingEvent(Request $request){

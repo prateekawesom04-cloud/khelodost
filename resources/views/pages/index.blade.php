@@ -7,6 +7,13 @@
             <!-- 🔷 Banner Image Card -->
             <div class="mb-2">
                 <div class="rounded-4 text-center flex flex-row max-w-full overflow-hidden app_scroller">
+                    @if(isset($banners) && count($banners))
+                        @foreach($banners as $banner)
+                        <a href="{{ route('index') }}" class="min-w-full">
+                            <img src="{{ asset('storage').$banner->image }}" class="img-fluid" alt="Banner">
+                        </a>
+                        @endforeach
+                    @else
                     <a href="{{ route('index') }}" class="min-w-full">
                         <img src="{{ asset('banners/banner1.png') }}" class="img-fluid" alt="Banner">
                     </a>
@@ -19,6 +26,7 @@
                     <a href="{{ route('index') }}" class="min-w-full">
                         <img src="{{ asset('banners/banner4.png') }}" class="img-fluid" alt="Banner">
                     </a>
+                    @endif
                 </div>
             </div>
 

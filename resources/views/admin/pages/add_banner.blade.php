@@ -23,13 +23,35 @@
                         </tr>
                     </thead>
                     <tbody id="bannerTableBody">
+                        @if(count($banners))
+                            @foreach($banners as $banner)
                         <tr>
-                            <td>No data</td>
-                            <td></td>
+                            <td>
+                                <img src="{{asset('storage').$banner->image}}" alt="" srcset="" class="w-15">
+                            </td>
+                            <td>
+                                <label class="toggle-switch">
+                                    <input id="status" name="id" data-id="{{$banner->id}}" type="checkbox" {{$banner->status?'checked':''}} onchange="updateStatus(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </td>
                         </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
             </form>
         </div>
     </div>
+
+<script>
+
+    $('#status').on('change',function(){
+        $(this).attr('disabled','disabled');
+        callApi('post', `{{Route('admin.action.bannerUpdate')}}`, {id:$(this).attr('data-id')}, ajaxResponseModal);
+    });
+</script>
+
 @endsection
+
+

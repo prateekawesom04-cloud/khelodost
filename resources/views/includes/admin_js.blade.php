@@ -212,6 +212,23 @@
 
         $('.transaction_statement').html(html);
     }
-
     
+    function updateStatus(toggle) {
+        var statusCell = toggle.closest('tr').querySelector('.status');
+        var badge = statusCell.querySelector('.badge');
+        
+        if (toggle.checked) {
+            badge.textContent = 'Active';
+            badge.classList.remove('bg-danger');
+            badge.classList.add('bg-success');
+        } else {
+            badge.textContent = 'Inactive';
+            badge.classList.remove('bg-success');
+            badge.classList.add('bg-danger');
+        }
+    }
+
+    // $('.submit_modal').click(function(){
+    //     submitFormGlobal(this,'{{$userData->username}}');
+    // });
 </script>

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Appdata;
 use App\Models\UserGeneralSetting;
+use App\Models\Banner;
 
 class CustomSessionMiddleware
 {
@@ -62,10 +63,11 @@ class CustomSessionMiddleware
         
         $domain = $request->host();
 
-        
+        $banners = Banner::where('status',1)->get();
         
         View::share('sports',$sports);
         View::share('providers',$providers);
+        View::share('banners',$banners);
 
 
         return $next($request);

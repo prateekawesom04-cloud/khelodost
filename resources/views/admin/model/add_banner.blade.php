@@ -23,7 +23,7 @@
 
           <!-- Buttons -->
           <div class="form-group text-end">
-            <a href="javascript:0" class="btn btn-dark" onclick="document.getElementById('addBannerForm').submit(); return false;">Add</a>
+            <a href="javascript:void(0)" class="btn btn-dark add_banner">Add</a>
             <a href="javascript:0" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</a>
           </div>
         </form>
@@ -31,3 +31,12 @@
     </div>
   </div>
 </div>
+
+<script>
+    
+    $('.add_banner').on('click',function(){
+        formaData = new FormData($(this).parents('form')[0]);
+        callApiFormData('post', `{{Route('admin.action.add_banner')}}`, formaData, ajaxResponseModal);
+    });
+    
+</script>

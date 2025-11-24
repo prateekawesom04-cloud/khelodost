@@ -52,6 +52,8 @@
     });
 
     eventId = {{$eventId}};
+    let sportStatus = '{{$market->status}}';
+    let eventStatus = '{{$eventData->status}}';
     @if($eventData->sportname == 'cricket')
     callApi('get',`{{route('user.getEventData')}}`,{eventId:{{$eventId}}},updateCricketEvent);
     setInterval(() => {

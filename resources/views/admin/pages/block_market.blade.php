@@ -17,66 +17,20 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if(count($markets))
+                            @foreach($markets as $market)
                         <tr>
-                            <td>Soccer</td>
-                            <td class="status"><span class="badge bg-success text-white">Active</span></td>
+                            <td>{{$market->name}}</td>
+                            <td class="status"><span class="badge {{$market->status?'bg-success':'bg-danger'}} text-white">{{$market->status?'Active':''}}</span></td>
                             <td>
                                 <label class="toggle-switch">
-                                    <input type="checkbox" checked onchange="updateStatus(this)">
+                                    <input data-name="{{$market->name}}" type="checkbox" {{$market->status?'checked':''}} onchange="updateStatus(this)">
                                     <span class="toggle-slider"></span>
                                 </label>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Tennis</td>
-                            <td class="status"><span class="badge bg-success text-white">Active</span></td>
-                            <td>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" checked onchange="updateStatus(this)">
-                                    <span class="toggle-slider"></span>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Horse Racing</td>
-                            <td class="status"><span class="badge bg-success text-white">Active</span></td>
-                            <td>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" checked onchange="updateStatus(this)">
-                                    <span class="toggle-slider"></span>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Cricket</td>
-                            <td class="status"><span class="badge bg-success text-white">Active</span></td>
-                            <td>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" checked onchange="updateStatus(this)">
-                                    <span class="toggle-slider"></span>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Greyhound Racing</td>
-                            <td class="status"><span class="badge bg-success text-white">Active</span></td>
-                            <td>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" checked onchange="updateStatus(this)">
-                                    <span class="toggle-slider"></span>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Kabaddi</td>
-                            <td class="status"><span class="badge bg-success text-white">Active</span></td>
-                            <td>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" checked onchange="updateStatus(this)">
-                                    <span class="toggle-slider"></span>
-                                </label>
-                            </td>
-                        </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -85,19 +39,11 @@
 </div>
 
 <script>
-    function updateStatus(toggle) {
-        var statusCell = toggle.closest('tr').querySelector('.status');
-        var badge = statusCell.querySelector('.badge');
-        
-        if (toggle.checked) {
-            badge.textContent = 'Active';
-            badge.classList.remove('bg-danger');
-            badge.classList.add('bg-success');
-        } else {
-            badge.textContent = 'Inactive';
-            badge.classList.remove('bg-success');
-            badge.classList.add('bg-danger');
-        }
-    }
+
+    $('input').on('change',function(){
+        $(this).attr('disabled','disabled');
+        callApi('post', `{{Route('admin.action.block_market')}}`, {name:$(this).attr('data-name')}, ajaxResponseModal);
+    });
+    
 </script>
 @endsection

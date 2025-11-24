@@ -441,6 +441,12 @@
       setTimeout(() => {
 
          $('.placebetOverlay').hide();
+
+         if(!sportStatus || !eventStatus){
+            responseToast('Bet Placement Not Allowed');
+            $('.betslip').hide();
+            return false;
+         }
          market_row = $(`.market_${betslipData.marketId}`).find(`.market_row_${betslipData.sid}`);
 
          let odd = $(market_row).find(`.odd-btn[data-oddId='${betslipData.oddId}']`).attr('data-oddVal');

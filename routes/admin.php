@@ -16,6 +16,8 @@ use App\Http\Controllers\Admin\AdminDataController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\SportbookController;
+use App\Http\Controllers\MarketController;
+use App\Http\Controllers\BannerController;
 
 
 
@@ -135,10 +137,13 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
 
         Route::get('/user_general_setting', [AdminDataController::class,'user_general_setting'])->name('admin.user_general_setting')->withoutMiddleware([VerifyCsrfToken::class]);
         Route::post('/user_general_setting', [AdminDataController::class,'user_general_setting'])->name('admin.action.user_general_setting')->withoutMiddleware([VerifyCsrfToken::class]);
-
-            Route::get('/block_market', function () {
-        return view('admin.pages.block_market');
-            })->name('admin.block_market');
+        
+        Route::get('/block_market', [MarketController::class,'block_market'])->name('admin.block_market')->withoutMiddleware([VerifyCsrfToken::class]);
+        Route::post('/block_market', [MarketController::class,'marketUpdate'])->name('admin.action.block_market')->withoutMiddleware([VerifyCsrfToken::class]);
+        
+        //     Route::get('/block_market', function () {
+        // return view('admin.pages.block_market');
+        //     })->name('admin.block_market');
 
             Route::get('/event_wise_setting', function () {
         return view('admin.pages.event_wise_setting');
@@ -148,9 +153,15 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
         return view('admin.pages.betting');
             })->name('admin.betting');
 
-            Route::get('/add_banner', function () {
-        return view('admin.pages.add_banner');
-            })->name('admin.add_banner');
+        //     Route::get('/add_banner', function () {
+        // return view('admin.pages.add_banner');
+        //     })->name('admin.add_banner');
+            
+        Route::get('/add_banner', [BannerController::class,'add_banner'])->name('admin.add_banner')->withoutMiddleware([VerifyCsrfToken::class]);
+
+        Route::post('/add_banner', [BannerController::class,'addBanner'])->name('admin.action.add_banner')->withoutMiddleware([VerifyCsrfToken::class]);
+        
+        Route::post('/bannerUpdate', [BannerController::class,'bannerUpdate'])->name('admin.action.bannerUpdate')->withoutMiddleware([VerifyCsrfToken::class]);
 
             Route::get('/add_number', function () {
         return view('admin.pages.add_number');
