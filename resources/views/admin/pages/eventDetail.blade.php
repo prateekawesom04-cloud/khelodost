@@ -140,7 +140,7 @@
         @endif
         @else
         <div class="flex items-center justify-center">
-            <h1 class="text-[24px]">No Data Available</h1>
+            <h1 class="text-[24px] text-black">No Data Available</h1>
         </div>
         @endif
 
