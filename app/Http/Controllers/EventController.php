@@ -28,24 +28,28 @@ class EventController extends Controller
         // ->groupBy('mname','nat');
 
         $marketData = SportookBet::select('eventId','mname', 'nat', DB::raw('SUM(bet_amount) as exposure, COUNT(*) as totalBets'))
-        ->groupBy('eventId','mname','nat')
-        ->where('eventId',$request->eventId)->get();
+        ->groupBy('eventId','mname','nat','status')
+        ->where('eventId',$request->eventId)->where('status','1')->get();
 
         $MATCH_ODDS = SportookBet::select('eventId','mname', 'nat', DB::raw('SUM(bet_amount) as exposure, COUNT(*) as totalBets'))
-        ->groupBy('eventId','mname','nat')
-        ->where('mname','matchOdds')->get();
+        ->groupBy('eventId','mname','nat','status')
+        ->where('mname','matchOdds')
+        ->where('eventId',$request->eventId)->where('status','1')->get();
 
         $Bookmaker = SportookBet::select('eventId','mname', 'nat', DB::raw('SUM(bet_amount) as exposure, COUNT(*) as totalBets'))
-        ->groupBy('eventId','mname','nat')
-        ->where('mname','Bookmaker')->get();
+        ->groupBy('eventId','mname','nat','status')
+        ->where('mname','Bookmaker')
+        ->where('eventId',$request->eventId)->where('status','1')->get();
 
         $TIED_MATCH = SportookBet::select('eventId','mname', 'nat', DB::raw('SUM(bet_amount) as exposure, COUNT(*) as totalBets'))
-        ->groupBy('eventId','mname','nat')
-        ->where('mname','TIED_MATCH')->get();
+        ->groupBy('eventId','mname','nat','status')
+        ->where('mname','TIED_MATCH')
+        ->where('eventId',$request->eventId)->where('status','1')->get();
 
         $Normal = SportookBet::select('eventId','mname', 'nat', DB::raw('SUM(bet_amount) as exposure, COUNT(*) as totalBets'))
-        ->groupBy('eventId','mname','nat')
-        ->where('mname','Normal')->get();
+        ->groupBy('eventId','mname','nat','status')
+        ->where('mname','Normal')
+        ->where('eventId',$request->eventId)->where('status','1')->get();
 
 
 
