@@ -47,7 +47,7 @@
                                 <th>Total Bets</th>
                                 <th>Date</th>
                                 <th>Status</th>
-                                {{-- <th>Action</th> --}}
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,7 +64,19 @@
                                             $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
                                             $teamB = explode(' v ',$row->eventName)[1] ?? 'Series';
                                         @endphp
-                                        <td>{{(!$row->status)?'upcoming':'inplay'}}</td>
+                                        <td class="status"><span class="badge {{$row->status?'bg-success':'bg-secondary'}} text-white">{{$row->status?'inplay':'upcoming'}}</span></td>
+                                        {{-- <td>{{!$row->status?'upcoming':'inplay'}}</td> --}}
+                                        <td>
+                                            <div class="flex items-center justify-evenly w-30">
+                                                <label class="toggle-switch">
+                                                    <input id="status" name="status" data-eventId="{{$row->eventId}}" type="checkbox" {{$row->status?'checked':''}} onchange="updateStatus(this)">
+                                                    <span class="toggle-slider"></span>
+                                                </label>
+                                                <a href="{{route('admin.eventDetail',$row->eventId)}}">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                            </div>
+                                        </td>
                                         {{-- <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td> --}}
                                         {{-- <td>
                                             <div class="flex flex-row items-center justify-evenly">
@@ -152,5 +164,12 @@
         </div>
     </div>
 </div>
+<script>
+    $('#status').on('change',function(){
+        $(this).attr('disabled','disabled');
+        callApi('post', `{{Route('admin.action.eventStatus')}}`, {eventId:$(this).attr('data-eventId')}, ajaxResponseModal);
+    });
+
+</script>
 
 @endsection

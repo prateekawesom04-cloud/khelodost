@@ -35,6 +35,7 @@
 <script>
     
     $('.add_banner').on('click',function(){
+        $(this).addClass('disabled');
         formaData = new FormData($(this).parents('form')[0]);
         callApiFormData('post', `{{Route('admin.action.add_banner')}}`, formaData, ajaxResponseModal);
     });

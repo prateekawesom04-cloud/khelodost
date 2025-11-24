@@ -19,6 +19,7 @@
                     <thead>
                         <tr>
                             <th scope="col">Image</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -29,6 +30,7 @@
                             <td>
                                 <img src="{{asset('storage').$banner->image}}" alt="" srcset="" class="w-15">
                             </td>
+                            <td class="status"><span class="badge {{$banner->status?'bg-success':'bg-danger'}} text-white">{{$banner->status?'Active':''}}</span></td>
                             <td>
                                 <label class="toggle-switch">
                                     <input id="status" name="id" data-id="{{$banner->id}}" type="checkbox" {{$banner->status?'checked':''}} onchange="updateStatus(this)">

@@ -215,6 +215,8 @@
     
     function updateStatus(toggle) {
         var statusCell = toggle.closest('tr').querySelector('.status');
+        // console.log('statuscell',statusCell);
+        
         var badge = statusCell.querySelector('.badge');
         
         if (toggle.checked) {

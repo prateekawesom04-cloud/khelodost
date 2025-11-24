@@ -492,7 +492,7 @@ class AdminDataController extends Controller
         $events = Event::joinSub($eventsExposure,'eventsExposure',function($join){
             $join->on('events.eventId','=','eventsExposure.eventId');
         });
-        $events = $events->where('status',1);
+        $events = $events->whereIn('status',[0,1]);
         $allEvents = $events->get();
         return view('admin.pages.market_analysis',compact('allEvents'));
     }

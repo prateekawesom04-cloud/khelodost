@@ -319,14 +319,14 @@ class TransactionController extends Controller
         $apiData['encryptionKey'] = '72012C03A0F21CC3';
         $apiData['signatureKey'] = '613BA28576F3CDF8';
 
-        if($response->code == 0){
+        if($request->code == 0){
             $payload = $request->payload;
             
             $sign = $payload.$apiData['signatureKey']; // concatinating the payload and signature key
             
             $sign = strtoupper(md5($sign));
 
-            if($response->sign == $sign){
+            if($request->sign == $sign){
                 Log::info('payement callack--Ind--payment--success--');
                 $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
 
@@ -350,14 +350,14 @@ class TransactionController extends Controller
         $apiData['encryptionKey'] = '324AE62E4A0341B3';
         $apiData['signatureKey'] = '5D34BD894E07C2BE';
 
-        if($response->code == 0){
+        if($request->code == 0){
             $payload = $request->payload;
             
             $sign = $payload.$apiData['signatureKey']; // concatinating the payload and signature key
             
             $sign = strtoupper(md5($sign));
 
-            if($response->sign == $sign){
+            if($request->sign == $sign){
                 Log::info('payement callack--Ban--payment--success--');
                 $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
 
