@@ -36,7 +36,7 @@
     
                 <button class="account_btn rounded-[0.4rem] px-1 py-1 text-nowrap flex items-center gap-[0.6rem]" data-bs-toggle="offcanvas" data-bs-target="#accountPanel">
                     <span class="flex items-center gap-1 justify-center !text-[10px]">
-                        <img src="{{asset('icons/coins.png')}}" alt="" class="w-6"> : {{$userData->wallet_amount}} </a>
+                        <img src="{{asset('icons/coins.png')}}" alt="" class="w-6"> : {{isset($userData->wallet_amount)?$userData->wallet_amount:'00'}} </a>
                     </span>
                     <i class="bi bi-arrow-repeat"></i>
                 </button>
@@ -80,7 +80,7 @@
                         admin
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end fw-light" aria-labelledby="adminDropdown">
-                        <li><a class="dropdown-item d-flex flex-row" href="#"><img src="{{asset('icons/coins.png')}}" alt="" class="w-6"> : {{$userData->wallet_amount}} </a></span></li>
+                        <li><a class="dropdown-item d-flex flex-row" href="#"><img src="{{asset('icons/coins.png')}}" alt="" class="w-6"> : {{isset($userData->wallet_amount)?$userData->wallet_amount:'00'}} </a></span></li>
                         <li><a class="dropdown-item" href="#"><i class="fa-solid fa-lock me-2"></i>Change
                                 Password</a></li>
                     </ul>

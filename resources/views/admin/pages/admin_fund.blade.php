@@ -11,12 +11,12 @@
             <!-- Group 1: Current Balance, Remarks, Total Balance -->
             <div class="mb-3">
                 <label for="currentBalance" class="form-label">Current Balance</label>
-                <input type="text" class="form-control" id="currentBalance" value="{{$userData->wallet_amount}}" disabled>
+                <input type="text" class="form-control" id="currentBalance" value="{{isset($userData->wallet_amount)?$userData->wallet_amount:'00'}}" disabled>
             </div>
 
             <div class="mb-3">
                 <label for="totalBalance" class="form-label">Total Balance</label>
-                <input type="text" class="form-control" id="totalBalance" value="{{$userData->wallet_amount}}" disabled>
+                <input type="text" class="form-control" id="totalBalance" value="{{isset($userData->wallet_amount)?$userData->wallet_amount:'00'}}" disabled>
             </div>
 
             <!-- Group 2: Password, Deposit Fund -->

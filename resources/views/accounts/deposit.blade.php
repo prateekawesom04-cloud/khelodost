@@ -12,7 +12,7 @@
         <!-- Deposit Card -->
         <div class="card deposit-card border-0 rounded-3 p-4">
             <span class="badge bg-success p-2 px-3 rounded-pill shadow-sm">
-                Current Available Balance: ₹ {{$userData->wallet_amount}}
+                Current Available Balance: ₹ {{isset($userData->wallet_amount)?$userData->wallet_amount:'00'}}
             </span>
 
             <!-- Amount Section -->
@@ -55,7 +55,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (count($data) > 0)
+                    @if (isset($data) && count($data) > 0)
                         @foreach ($data as $value)
                             <tr class="text-center" style="background-color: #3e3e3e;">
                                 <td>{{ $value->payment_type ? 'Withdraw' : 'Deposit' }}</td>

@@ -57,7 +57,7 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
         
         Route::post('paymentGatewayMethod', [TransactionController::class,'paymentGatewayMethod'])->name('paymentGatewayMethod')->withoutMiddleware([VerifyCsrfToken::class]);
  
-        Route::get('deposit', [UserController::class,'deposit'])->name('user.deposit');
+        // Route::get('deposit', [UserController::class,'deposit'])->name('user.deposit');
         
         Route::post('addStake', [UserController::class,'addStake'])->name('user.post.addStake')->withoutMiddleware([VerifyCsrfToken::class]);
         
@@ -146,7 +146,8 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
     // Account page 
     // Route::get('/deposit', function () {
     //     return view('accounts.deposit');
-    // })->name('deposit'); 
+    // })->name('deposit');
+        Route::get('deposit', [UserController::class,'deposit'])->name('user.deposit'); 
 
     Route::get('/withdraw', function () {
         return view('accounts.withdraw');
@@ -180,5 +181,7 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
     })->name('logout');
             
     Route::post('paymentCallback', [TransactionController::class,'paymentCallback'])->name('paymentCallback')->withoutMiddleware([VerifyCsrfToken::class]);
+    Route::post('paymentCallbackInd', [TransactionController::class,'paymentCallbackInd'])->name('paymentCallbackInd')->withoutMiddleware([VerifyCsrfToken::class]);
+    Route::post('paymentCallbackBan', [TransactionController::class,'paymentCallbackBan'])->name('paymentCallbackBan')->withoutMiddleware([VerifyCsrfToken::class]);
        
 });

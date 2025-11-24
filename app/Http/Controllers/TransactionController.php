@@ -76,10 +76,10 @@ class TransactionController extends Controller
             if($response->sign == $sign){
                 // dd('if');
                 $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
-            return response()->json([
-                'data'=> $payload,
-                'response_code'=> '200'
-            ]);
+                return response()->json([
+                    'data'=> $payload,
+                    'response_code'=> '200'
+                ]);
                 // dd($payload);
             } else{
                 // dd('else');
@@ -93,100 +93,6 @@ class TransactionController extends Controller
 
     }
     
-    public function paymentGatewayBanMethod(Request $request){
-        
-        // dd($request->all());
-        $apiData = [];
-
-        $apiData['mchNo'] = 'M0402';
-        $apiData['encryptionKey'] = '324AE62E4A0341B3';
-        $apiData['signatureKey'] = '5D34BD894E07C2BE';
-        
-        $data = [];
-
-        $data['versionNo'] = 1;
-        $data['mchNo'] = $apiData['mchNo'];
-        $data['price'] = $request->transfer_amount;
-        $data['orderDate'] = date('YmdHis');
-        $data['tradeNo'] = $request->order_sn;
-        $data['notifyUrl'] = env('APP_URL').'/paymentCallback';
-
-        if($request->payment_type == 0){
-
-            $data['callbackUrl'] = env('APP_URL').'/deposit';
-            $data['payType'] = '01';
-            $data['channelPayType'] = 'EWALLET_BKASH';
-        
-        } elseif ($request->payment_type == 1) {
-
-            $data['mode'] = S1;
-            $data['accBankCode'] = $request->accBankCode;
-            $data['accName'] = $request->accName;
-            $data['accCardNo'] = $request->accCardNo;
-            $data['purpose'] = $request->purpose;
-            
-        } else{
-            return False;
-        }
-
-        
-        $sdata = [];
-
-        $sdata['payload'] = json_encode($data);
-
-        $sdata['payload'] = (new AuthController)->aes128cbc($apiData['encryptionKey'],$sdata['payload']);
-
-        $sdata['sign'] = $sdata['payload'].$apiData['signatureKey'];
-        
-        $sdata['sign'] = strtoupper(md5($sdata['sign']));
-        
-        $sdata['mchNo'] = $data['mchNo'];
-        
-        // dd($sdata['payload']);
-        // $data['sign'] = (new AuthController)->md5_sign($data, env('signatureKey'));
-        
-        // dd($sdata);
-
-        $sdata = json_encode($sdata);
-        
-        $payment_type = ($request->payment_type==1) ? 'transferApply' : 'makeOrder';
-        
-        // $url = "https://www.lg-pay.com/api/".$payment_type."/create";
-
-        // $url = env('paying_url')."/".$payment_type;
-
-        $url = 'https://phpay.ipayment.vip/dgateway/ws/trans/nocard/'.$payment_type;
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            "Content-Type: application/json"
-        ]);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $sdata);
-        curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_DEFAULT);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 120);
-
-        $response = curl_exec($ch);
-
-        if (curl_errno($ch)) {
-            return curl_error($ch);
-        } 
-
-        curl_close($ch);
-        
-        // dd($response);
-        return response()->json([
-            'message'=> 'Deposit Request Created Succesfully',
-            'response_code'=> '200',
-            'response'=>$response
-        ]);
-
-    }
-
     public function paymentGatewayIndMethod(Request $request){
         
         $apiData = [];
@@ -203,7 +109,7 @@ class TransactionController extends Controller
         // $data['orderDate'] = date('YmdHis');
         $data['orderDate'] = date('YmdHis');
         $data['tradeNo'] = $request->order_sn;
-        $data['notifyUrl'] = env('APP_URL').'/paymentCallback';
+        $data['notifyUrl'] = env('APP_URL').'/paymentCallbackInd';
 
         if($request->payment_type == 0){
 
@@ -284,39 +190,186 @@ class TransactionController extends Controller
         ]);
 
     }
+
+    public function paymentGatewayBanMethod(Request $request){
+        
+        // dd($request->all());
+        $apiData = [];
+
+        $apiData['mchNo'] = 'M0402';
+        $apiData['encryptionKey'] = '324AE62E4A0341B3';
+        $apiData['signatureKey'] = '5D34BD894E07C2BE';
+        
+        $data = [];
+
+        $data['versionNo'] = 1;
+        $data['mchNo'] = $apiData['mchNo'];
+        $data['price'] = $request->transfer_amount;
+        $data['orderDate'] = date('YmdHis');
+        $data['tradeNo'] = $request->order_sn;
+        $data['notifyUrl'] = env('APP_URL').'/paymentCallbackBan';
+
+        if($request->payment_type == 0){
+
+            $data['callbackUrl'] = env('APP_URL').'/deposit';
+            $data['payType'] = '01';
+            $data['channelPayType'] = 'EWALLET_BKASH';
+        
+        } elseif ($request->payment_type == 1) {
+
+            $data['mode'] = S1;
+            $data['accBankCode'] = $request->accBankCode;
+            $data['accName'] = $request->accName;
+            $data['accCardNo'] = $request->accCardNo;
+            $data['purpose'] = $request->purpose;
+            
+        } else{
+            return False;
+        }
+
+        
+        $sdata = [];
+
+        $sdata['payload'] = json_encode($data);
+
+        $sdata['payload'] = (new AuthController)->aes128cbc($apiData['encryptionKey'],$sdata['payload']);
+
+        $sdata['sign'] = $sdata['payload'].$apiData['signatureKey'];
+        
+        $sdata['sign'] = strtoupper(md5($sdata['sign']));
+        
+        $sdata['mchNo'] = $data['mchNo'];
+        
+        // dd($sdata['payload']);
+        // $data['sign'] = (new AuthController)->md5_sign($data, env('signatureKey'));
+        
+        // dd($sdata);
+
+        $sdata = json_encode($sdata);
+        
+        $payment_type = ($request->payment_type==1) ? 'transferApply' : 'makeOrder';
+        
+        // $url = "https://www.lg-pay.com/api/".$payment_type."/create";
+
+        // $url = env('paying_url')."/".$payment_type;
+
+        $url = 'https://phpay.ipayment.vip/dgateway/ws/trans/nocard/'.$payment_type;
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Content-Type: application/json"
+        ]);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $sdata);
+        curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_DEFAULT);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 120);
+
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            return curl_error($ch);
+        } 
+
+        curl_close($ch);
+        
+        // dd($response);
+        return response()->json([
+            'message'=> 'Deposit Request Created Succesfully',
+            'response_code'=> '200',
+            'response'=>$response
+        ]);
+
+    }
+
     
     public function paymentCallback(Request $request){
 
         Log::info('payement callack----');
         Log::info($request->all());
-
-        $sdata = (new AuthController)->aes256cbcDycrypt($apiData['encryptionKey'],$sdata['payload']);
         
-        $data = json_decode($sdata,true);
+        $transaction = Transaction::where('order_sn',$request->tradeNo);
 
-        $data['order_sn'] = $request->order_sn;
-        $data['money'] = $request->money;
-        $data['status'] = $request->status;
-        $data['pay_time'] = $request->pay_time;
-        $data['msg'] = $request->msg;
-        $data['remark'] = $request->remark;
-
-        // $model = YourModel::findOrFail($id);
-        // $model->fill(request()->all());
-        // $model->save();
-
-        $sign = md5_sign($data,env('LG_PAY_SECRET_KEY'));
-        if($sign == $request->sign){
-            $transaction = Transaction::where('order_sn',$request->order_sn);
+        
+        if($transaction){
 
             $transaction->transfer_amount = $request->money;
-            $transaction->status = $request->status;
-            $transaction->manual = 1;
+            $transaction->status = 2;
             $transaction->save();
 
-            return 'ok';
+            $user = User::where('username',$transaction->username)->first();
+            $user->wallet_amount = $user->wallet_amount + $request->price;
+            $user->save();
         } else{
-            return 'no';
+            return response()->json([
+                'message'=> 'Transaction not found',
+                'response_code'=> '105'
+            ]);
+        }
+
+    }
+
+    public function paymentCallbackInd(Request $request){
+
+        Log::info('payement callack--Ind--');
+        $apiData['mchNo'] = 'M0396';
+        $apiData['encryptionKey'] = '72012C03A0F21CC3';
+        $apiData['signatureKey'] = '613BA28576F3CDF8';
+
+        if($response->code == 0){
+            $payload = $request->payload;
+            
+            $sign = $payload.$apiData['signatureKey']; // concatinating the payload and signature key
+            
+            $sign = strtoupper(md5($sign));
+
+            if($response->sign == $sign){
+                Log::info('payement callack--Ind--payment--success--');
+                $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
+
+                $payload = json_decode($payload);
+
+                $callbackData = new Request();
+
+                $callbackData->merge($payload);
+
+                $this->paymentCallback($callbackData);
+            }
+
+        }
+    }
+    
+    public function paymentCallbackBan(Request $request){
+        
+        Log::info('payement callack--Ban--');
+
+        $apiData['mchNo'] = 'M0402';
+        $apiData['encryptionKey'] = '324AE62E4A0341B3';
+        $apiData['signatureKey'] = '5D34BD894E07C2BE';
+
+        if($response->code == 0){
+            $payload = $request->payload;
+            
+            $sign = $payload.$apiData['signatureKey']; // concatinating the payload and signature key
+            
+            $sign = strtoupper(md5($sign));
+
+            if($response->sign == $sign){
+                Log::info('payement callack--Ban--payment--success--');
+                $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
+
+                $payload = json_decode($payload);
+
+                $callbackData = new Request();
+
+                $callbackData->merge($payload);
+
+                $this->paymentCallback($callbackData);
+            }
+
         }
     }
 

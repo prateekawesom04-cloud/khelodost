@@ -47,13 +47,13 @@
                         <div class="col-6 col-md-2">
                             <div class="bg-success text-white p-3 rounded shadow-sm">
                                 <h6>Deposit</h6>
-                                <h5>{{$userData->wallet_amount}}</h5>
+                                <h5>{{isset($userData->wallet_amount)?$userData->wallet_amount:'00'}}</h5>
                             </div>
                         </div>
                         <div class="col-6 col-md-2">
                             <div class="bg-danger text-white p-3 rounded shadow-sm">
                                 <h6>Withdrawal</h6>
-                                <h5>{{$userData->wallet_amount}}</h5>
+                                <h5>{{isset($userData->wallet_amount)?$userData->wallet_amount:'00'}}</h5>
                             </div>
                         </div>
                         {{-- <div class="col-6 col-md-2">
