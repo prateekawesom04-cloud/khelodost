@@ -3,7 +3,7 @@
 @section('body')
 
     <div class="w-100 mx-auto p-4">
-
+        @if(count($marketData))
         <!-- Bet History Section -->
         @if(count($MATCH_ODDS))
         <div class="card shadow-sm border-0 mb-4">
@@ -136,6 +136,11 @@
                 </div>
 
             </div>
+        </div>
+        @endif
+        @else
+        <div class="flex items-center justify-center">
+            <h1 class="text-[24px]">No Data Available</h1>
         </div>
         @endif
 
