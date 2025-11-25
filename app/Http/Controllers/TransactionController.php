@@ -73,9 +73,13 @@ class TransactionController extends Controller
             $sign = $payload.$apiData['signatureKey']; // concatinating the payload and signature key
             $sign = strtoupper(md5($sign));
             // dd($response->sign,'-----',$sign);
+            Log::info('gateway payload--');
+            Log::info($response->payload);
             if($response->sign == $sign){
                 // dd('if');
                 $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
+                Log::info('decrypted payload');
+                Log::info($payload);
                 return response()->json([
                     'data'=> $payload,
                     'response_code'=> '200'
@@ -95,6 +99,8 @@ class TransactionController extends Controller
     
     public function paymentGatewayIndMethod(Request $request){
         
+        Log::info('paymentGatewayIndMethod');
+        Log::info($request->all());
         $apiData = [];
 
         $apiData['mchNo'] = 'M0396';
@@ -194,6 +200,8 @@ class TransactionController extends Controller
     public function paymentGatewayBanMethod(Request $request){
         
         // dd($request->all());
+        Log::info('paymentGatewayBanMethod');
+        Log::info($request->all());
         $apiData = [];
 
         $apiData['mchNo'] = 'M0402';
@@ -315,6 +323,9 @@ class TransactionController extends Controller
     public function paymentCallbackInd(Request $request){
 
         Log::info('payement callack--Ind--');
+        Log::info('payement callack--Ind-- Request--');
+        Log::info($request->all());
+        Log::info('payload---'.$request->payload);
         $apiData['mchNo'] = 'M0396';
         $apiData['encryptionKey'] = '72012C03A0F21CC3';
         $apiData['signatureKey'] = '613BA28576F3CDF8';
@@ -325,7 +336,10 @@ class TransactionController extends Controller
             $sign = $payload.$apiData['signatureKey']; // concatinating the payload and signature key
             
             $sign = strtoupper(md5($sign));
-
+            Log::info('$sign');
+            Log::info($sign);
+            Log::info('$request->sign');
+            Log::info($request->sign);
             if($request->sign == $sign){
                 Log::info('payement callack--Ind--payment--success--');
                 $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
@@ -345,7 +359,9 @@ class TransactionController extends Controller
     public function paymentCallbackBan(Request $request){
         
         Log::info('payement callack--Ban--');
-
+        Log::info('payement callack--Ban-- Request--');
+        Log::info($request->all());
+        Log::info('payload---'.$request->payload);
         $apiData['mchNo'] = 'M0402';
         $apiData['encryptionKey'] = '324AE62E4A0341B3';
         $apiData['signatureKey'] = '5D34BD894E07C2BE';

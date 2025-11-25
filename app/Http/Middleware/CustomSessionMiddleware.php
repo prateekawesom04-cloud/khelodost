@@ -24,6 +24,11 @@ class CustomSessionMiddleware
     {
         
         // $userData = User::getCurrentUser();
+        $url = url()->current();
+        if(str_contains($url,'paymentCallback')){
+            $request->headers->set('Accept', 'application/json');
+        }
+        
         if(str_contains(Session::get('username'), '@')){
             $userData = User::where('username', Session::get('username'))->first();
         } else{
