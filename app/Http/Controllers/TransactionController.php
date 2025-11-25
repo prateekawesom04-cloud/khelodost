@@ -306,18 +306,20 @@ class TransactionController extends Controller
         Log::info('payement callack----');
         Log::info($request->all());
         
-        if($request->status !='00'){
+        if($request->status != '00'){
+            Log::info($request->status.'--status---payement callack transaction failed----');
             return response()->json([
                 'message'=> 'Transaction Failed',
                 'response_code'=> '105'
             ]);
         }
-        $transaction = Transaction::where('order_sn',$request->tradeNo)->first();
+        $transaction = Transaction::where('order_sn',$request->tradeNo)->where('status',1)->first();
         Log::info('$request->tradeNo--'.$request->tradeNo);
         Log::info('$transaction--');
         Log::info(json_decode(json_encode($transaction),true));
         
         if($transaction){
+            Log::info('$transaction- done-');
 
             $transaction->transfer_amount = $request->price;
             $transaction->status = 2;
