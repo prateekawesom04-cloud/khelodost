@@ -134,7 +134,7 @@ class TransactionController extends Controller
         
         } elseif ($request->payment_type == 1) {
 
-            $data['mode'] = S1;
+            $data['mode'] = 'S1';
             $data['accBankCode'] = $request->accBankCode;
             $data['accName'] = $request->accName;
             $data['accCardNo'] = $request->accCardNo;

@@ -152,6 +152,7 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
     Route::get('/withdraw', function () {
         return view('accounts.withdraw');
     })->name('user.withdraw');
+        Route::get('withdraw', [UserController::class,'withdraw'])->name('user.withdraw'); 
 
     Route::get('/account_statement', function () {
         return view('accounts.account_statement');

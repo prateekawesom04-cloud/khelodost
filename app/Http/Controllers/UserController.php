@@ -64,6 +64,22 @@ class UserController extends Controller
 
     }
     
+    public function withdraw(Request $request){
+        
+        $user = $this->currentUser;
+        if($user){
+            $agent = User::where('username',$user->username)->where('status','>',0)->first();
+            $data = Transaction::where([
+                'username'=>$user->username,
+                'payment_type'=>'1'
+            ])->get();
+            return view('accounts.withdraw',compact('data','agent'));
+        }
+        return view('accounts.withdraw');
+        // $payments = Payment::where('admin_username',$user->admin_username)->get();
+
+    }
+    
     public function withdrawal(Request $request){
         
         $user = $this->currentUser;
