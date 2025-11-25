@@ -122,9 +122,15 @@
     function paymentGatewayMethod(response) {
         // response = JSON.parse(response.response);
         data = JSON.parse(response.data);
+        console.log('res msg',response.message,'data--',data);
+        
         if (response.response_code == 200) {
             // $('#paymentModel').modal('show');
-            window.location.href = data['payUrl'];
+            if(data['payUrl']){
+                window.location.href = data['payUrl'];
+            } else{
+                responseToast(response.message);
+            }
             // $('.paymentModel').html(response.response);
 
         } else {

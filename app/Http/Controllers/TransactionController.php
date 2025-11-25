@@ -67,7 +67,7 @@ class TransactionController extends Controller
         // dd($response);
 
 
-        if($response->code == 0){
+        if(isset($response->code) && $response->code == 0){
             $mchNo = $response->mchNo;
             $payload = $response->payload;
             $sign = $payload.$apiData['signatureKey']; // concatinating the payload and signature key
@@ -80,8 +80,10 @@ class TransactionController extends Controller
                 $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
                 Log::info('decrypted payload');
                 Log::info($payload);
+                $payloadData = json_decode($payload);
                 return response()->json([
                     'data'=> $payload,
+                    'message'=>$payloadData->statusDesc,
                     'response_code'=> '200'
                 ]);
                 // dd($payload);
@@ -92,6 +94,11 @@ class TransactionController extends Controller
                     'response_code'=> '105'
                 ]);
             }
+        } else{
+            return response()->json([
+                'message'=> 'Something Went Wrong',
+                'response_code'=> '105'
+            ]);
         }
             
 
@@ -299,18 +306,30 @@ class TransactionController extends Controller
         Log::info('payement callack----');
         Log::info($request->all());
         
-        $transaction = Transaction::where('order_sn',$request->tradeNo);
-
+        if($request->status !='00'){
+            return response()->json([
+                'message'=> 'Transaction Failed',
+                'response_code'=> '105'
+            ]);
+        }
+        $transaction = Transaction::where('order_sn',$request->tradeNo)->first();
+        Log::info('$request->tradeNo--'.$request->tradeNo);
+        Log::info('$transaction--');
+        Log::info(json_decode(json_encode($transaction),true));
         
         if($transaction){
 
-            $transaction->transfer_amount = $request->money;
+            $transaction->transfer_amount = $request->price;
             $transaction->status = 2;
             $transaction->save();
 
             $user = User::where('username',$transaction->username)->first();
-            $user->wallet_amount = $user->wallet_amount + $request->price;
+            $user->wallet_amount = floatval($user->wallet_amount) + floatval($request->price);
             $user->save();
+            return response()->json([
+                'message'=> 'Transaction Successfull',
+                'response_code'=> '200'
+            ]);
         } else{
             return response()->json([
                 'message'=> 'Transaction not found',
@@ -330,6 +349,8 @@ class TransactionController extends Controller
         $apiData['encryptionKey'] = '72012C03A0F21CC3';
         $apiData['signatureKey'] = '613BA28576F3CDF8';
 
+        $request->payload = str_replace(' ','+',$request->payload);
+        Log::info('payload- replaced spaces--'.$request->payload);
         if($request->code == 0){
             $payload = $request->payload;
             
@@ -344,7 +365,10 @@ class TransactionController extends Controller
                 Log::info('payement callack--Ind--payment--success--');
                 $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
 
-                $payload = json_decode($payload);
+                Log::info('payload- replaced dycrypted--'.$payload);
+                $payload = json_decode($payload,true);
+                Log::info('payload-  dycrypted json_decode--');
+                Log::info($payload);
 
                 $callbackData = new Request();
 
@@ -366,18 +390,27 @@ class TransactionController extends Controller
         $apiData['encryptionKey'] = '324AE62E4A0341B3';
         $apiData['signatureKey'] = '5D34BD894E07C2BE';
 
+        $request->payload = str_replace(' ','+',$request->payload);
+        Log::info('payload- replaced spaces--'.$request->payload);
         if($request->code == 0){
             $payload = $request->payload;
             
             $sign = $payload.$apiData['signatureKey']; // concatinating the payload and signature key
             
             $sign = strtoupper(md5($sign));
+            Log::info('$sign');
+            Log::info($sign);
+            Log::info('$request->sign');
+            Log::info($request->sign);
 
             if($request->sign == $sign){
                 Log::info('payement callack--Ban--payment--success--');
                 $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
 
-                $payload = json_decode($payload);
+                Log::info('payload- replaced dycrypted--'.$payload);
+                $payload = json_decode($payload,true);
+                Log::info('payload-  dycrypted json_decode--');
+                Log::info($payload);
 
                 $callbackData = new Request();
 
