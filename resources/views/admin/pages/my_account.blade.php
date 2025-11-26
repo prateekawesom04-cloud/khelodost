@@ -269,6 +269,7 @@
                                             <th class="text-nowrap">Deposit</th>
                                             <th class="text-nowrap">WithDraw</th>
                                             <th class="text-nowrap">Available Balance</th>
+                                            <th class="text-nowrap">Status</th>
                                             <th class="text-nowrap">Remark</th>
                                         </tr>
                                     </thead>
@@ -292,6 +293,7 @@
                                             <td>{{($transaction->payment_type)?'-':$transaction->transfer_amount}}</td>
                                             <td>{{($transaction->payment_type)?$transaction->transfer_amount:'-'}}</td>
                                             <td>{{$available_balance}}</td>
+                                            <td>{{($transaction->status==2)?'success':(($transaction->status==1)?'processing':'failed')}}</td>
                                             <td class="text-success fw-bold text-nowrap">Patna</td>
                                         </tr>
                                         @endforeach

@@ -13,6 +13,7 @@ use App\Models\Payment;
 use App\Models\UserBank;
 use App\Models\SportookBet;
 use App\Models\Event;
+use App\Models\Activity;
 
 class UserController extends Controller
 {
@@ -398,7 +399,7 @@ class UserController extends Controller
     }
 
     public function profit_loss_event(Request $request){
-        $eventsExposure = SportookBet::where('status',1)
+        $eventsExposure = SportookBet::where('username',$this->currentUser->username)->where('status',1)
         ->select('eventId', \DB::raw('SUM(bet_amount) as exposure,SUM(profit) as totalProfit, COUNT(*) as totalBets'),'mname')
         ->groupBy('eventId','mname');
         $events = Event::joinSub($eventsExposure,'eventsExposure',function($join){
@@ -410,8 +411,20 @@ class UserController extends Controller
         // dd($events);
 
         // $openBets = SportookBet::where('username',$this->currentUser->username)->where('status',0)->get();
+        
+        $userData = User::getCurrentUser();
+        
+        $activities = Activity::where('username',$userData->username)->orderBy('id','desc')->get();
+        // $transactions = Transaction::where('username',$userData->username)->orderBy('payment_type')->get();
 
-        return view('accounts.profit_loss_event',compact('events'));
+        $transactions = Transaction::where('username',$userData->username)->orderBy('id','desc')->get();
+        $sportbookBets = Event::join('sportook_bets','events.eventId','=','sportook_bets.eventId')
+        ->select('sportook_bets.*','events.eventName','events.sportname')
+        ->where('username',$userData->username)
+        // ->where('sportook_bets.status',0)
+        ->orderBy('id','desc')->get();
+
+        return view('accounts.profit_loss_event',compact('events','activities','transactions','sportbookBets'));
     }
 
     public function exposure(Request $request){

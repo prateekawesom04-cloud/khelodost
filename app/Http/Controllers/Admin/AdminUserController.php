@@ -134,7 +134,8 @@ class AdminUserController extends Controller
         // $userData = User::getCurrentUser();
         $user = User::where('username',$request->username)->first();
         $activities = Activity::where('username',$request->username)->get();
-        $transactions = Transaction::where('username',$request->username)->orderBy('payment_type')->get();
+        // $transactions = Transaction::where('username',$request->username)->orderBy('payment_type')->get();
+        $transactions = Transaction::where('username',$request->username)->orderBy('id')->get();
         $sportbookBets = Event::join('sportook_bets','events.eventId','=','sportook_bets.eventId')
         ->select('sportook_bets.*','events.eventName','events.sportname')
         ->where('username',$request->username)

@@ -3,7 +3,7 @@
 @section('sports_body')
 <style>
     .main-container{background:#e9ecef;min-height:100vh;padding:30px}
-    .page-title{color:#0c9971;font-size:20px;font-weight:600;margin-bottom:20px}
+    .page-title{color:#0c9971;font-size:20px;font-weight:600;margin-bottom:10px}
     .form-card{background:white;border-radius:10px;padding:30px;box-shadow:0 2px 4px rgba(0,0,0,0.1);margin-bottom:20px}
     .form-row{margin-bottom:20px}
     .form-control,.form-select{height:50px;border:2px solid #ced4da;border-radius:5px;font-size:14px}
@@ -29,65 +29,154 @@
 
 <main class="layout-content-center p-3">
     <div class="main-container">
-        <h2 class="page-title">Profit & Loss By Event Markets</h2>
-        {{-- <div class="form-card">
-            <form>
-                <div class="row form-row">
-                    <div class="col-12">
-                        <select class="form-select">
-                            <option selected>ALL</option>
-                            <option value="1">D & W</option>
-                            <option value="2">WCO</option>
-                            <option value="3">Sports</option>
-                        </select>
+        <div class="nav nav-tabs flex flex-row gap-2 items-center justify-center" id="statement_tabs" role="tablist">
+            <a href="javascript:void(0)" class="!w-[25%] !flex justify-center items-center active btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#profit_loss">Profit/Loss</a>
+            <a href="javascript:void(0)" class="!w-[25%] !flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#transaction">Deposit/Withdraw</a>
+            <a href="javascript:void(0)" class="!w-[25%] !flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#activity">Activity</a>
+        </div>
+        <div class="tab-content mt-3">
+            <div class="tab-pane fade show active" id="profit_loss" role="tabpanel">
+                <h2 class="page-title">Profit & Loss By Event Markets</h2>
+                {{-- <div class="form-card">
+                    <form>
+                        <div class="row form-row">
+                            <div class="col-12">
+                                <select class="form-select">
+                                    <option selected>ALL</option>
+                                    <option value="1">D & W</option>
+                                    <option value="2">WCO</option>
+                                    <option value="3">Sports</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-row">
+                            <div class="col-6">
+                                <input type="date" class="form-control" value="2025-08-27">
+                            </div>
+                            <div class="col-6">
+                                <input type="date" class="form-control" value="2025-09-27">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="submit" class="btn-submit">Submit</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="reset" class="btn-reset">Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                </div> --}}
+                <div class="table-card">
+                    <div class="scroll-container">
+                        <table class="data-table">
+                            <thead class="table-header">
+                                <tr>
+                                    <th class="text-nowrap">Sportname</th>
+                                    <th class="text-nowrap">Event Name</th>
+                                    <th class="text-nowrap">Market name</th>
+                                    <th class="text-nowrap">Result</th>
+                                    <th class="text-nowrap">Profit/Loss</th>
+                                    <th class="text-nowrap">Total Balance</th>
+                                    <th class="text-nowrap">Settle Time</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body">
+                                @if(count($sportbookBets))
+                                    @foreach($sportbookBets as $transaction)
+                                    <tr>
+                                        <td>{{$transaction->sportname}}</td>
+                                        <td>{{$transaction->eventName}}</td>
+                                        <td>{{$transaction->mname}}</td>
+                                        <td>{{$transaction->nat}}</td>
+                                        <td class="{{($transaction->status==2)? 'text-danger' : 'text-success'}}">{{$transaction->profit}}</td>
+                                        <td>{{$transaction->wallet_before}}</td>
+                                        <td class="text-success fw-bold text-nowrap">{{$transaction->status? $transaction->updated_at : 'Unsattled'}}</td>
+                                    </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="row form-row">
-                    <div class="col-6">
-                        <input type="date" class="form-control" value="2025-08-27">
-                    </div>
-                    <div class="col-6">
-                        <input type="date" class="form-control" value="2025-09-27">
+                
+            </div>
+            
+            <div class="tab-pane fade" id="transaction" role="tabpanel">
+                <h2 class="page-title">Deposit & Withdraw</h2>
+                <div class="table-card">
+                    <div class="scroll-container">
+                        <table class="data-table">
+                            <thead class="table-header">
+                                <tr>
+                                    <th>Date/Time</th>
+                                    <th>Total Balance</th>
+                                    <th>Deposit</th>
+                                    <th>WithDraw</th>
+                                    <th>Available Balance</th>
+                                    <th>Status</th>
+                                    <th>Remark</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body">
+                                @foreach($transactions as $transaction)
+                                    @php
+                                        if($transaction->status==2){
+                                            if($transaction->payment_type){
+                                                $available_balance = (int) $transaction->wallet_before - (int) $transaction->transfer_amount;
+                                            } else{
+                                                $available_balance = (int) $transaction->wallet_before + (int) $transaction->transfer_amount;
+                                            }
+
+                                        } else{
+                                            $available_balance = (int) $transaction->wallet_before;
+                                        }
+                                    @endphp
+                                <tr>
+                                    <td>{{$transaction->created_at}}</td>
+                                    <td>{{$transaction->wallet_before}}</td>
+                                    <td>{{($transaction->payment_type)?'-':$transaction->transfer_amount}}</td>
+                                    <td>{{($transaction->payment_type)?$transaction->transfer_amount:'-'}}</td>
+                                    <td>{{$available_balance}}</td>
+                                    <td>{{($transaction->status==2)?'success':(($transaction->status==1)?'processing':'failed')}}</td>
+                                    <td class="text-success fw-bold text-nowrap">Patna</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        <button type="submit" class="btn-submit">Submit</button>
-                    </div>
-                    <div class="col-6">
-                        <button type="reset" class="btn-reset">Reset</button>
+                
+            </div>
+            
+            <div class="tab-pane fade" id="activity" role="tabpanel">
+                <h2 class="page-title">Activity Log</h2>
+                <div class="table-card">
+                    <div class="scroll-container">
+                        <table class="data-table">
+                            <thead class="table-header">
+                                <tr>
+                                    <th class="text-nowrap">Login Date & Time</th>
+                                    <th class="text-nowrap">IP</th>
+                                    <th class="text-nowrap">City/State/Country</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body">
+                                @foreach($activities as $activity)
+                                <tr>
+                                    <td class="text-nowrap">{{$activity->created_at}}</td>
+                                    <td>{{$activity->ip}}</td>
+                                    <td class="text-success fw-bold text-nowrap">Patna</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </form>
-        </div> --}}
-        <div class="table-card">
-            <div class="scroll-container">
-                <table class="data-table">
-                    <thead class="table-header">
-                        <tr>
-                            <th>Sport Name</th>
-                            <th>Event Name</th>
-                            {{-- <th>Market Id</th> --}}
-                            <th>Market Name</th>
-                            <th>Result</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-body">
-                        @if(count($events))
-                        @foreach($events as $bet)
-                        <tr>
-                            <td>{{$bet->sportname}}</td>
-                            <td>{{$bet->eventName}}</td>
-                            <td>{{$bet->mname}}</td>
-                            <td>{{$bet->status?'Sattled':'Unsattled'}}</td>
-                            {{-- <td>{{$bet->eventName}}</td> --}}
-                        </tr>
-                        @endforeach
-                        @endif
-                    </tbody>
-                </table>
+                
             </div>
         </div>
     </div>
+
 </main>
 @endsection

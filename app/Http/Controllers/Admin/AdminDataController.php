@@ -481,8 +481,8 @@ class AdminDataController extends Controller
 
     public function sattlement(Request $request){
         // $eventId = $request->eventId;
-        // $events = Event::where('status',1)->get();
-        $events = Event::all();
+        $events = Event::orderBy('status','asc')->get();
+        // $events = Event::all();
         return view('pages.sattlement',compact('events'));
     }
     
