@@ -163,7 +163,7 @@
 
   <!-- Session Section -->
   <div class="section-card">
-    <div class="open-bets-header">Bets</div>
+        <h2 class="page-title">Bets</h2>
     {{-- <div class="section-label">Bets</div> --}}
     
     <div class="table-responsive">
@@ -182,7 +182,7 @@
             <th>Status</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="table-body">
             @if($bets->count() > 0)
                   @foreach ($bets as $bet)
                       <tr>

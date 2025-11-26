@@ -53,9 +53,9 @@
             <li class="nav-item position-relative">
                 <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.deposit') ? 'active' : '' }} position-relative d-inline-block" href="{{ route('admin.deposit') }}">
                     💰Deposit
-                    <span class="position-absolute badge rounded-pill bg-danger badge-notification">
+                    {{-- <span class="position-absolute badge rounded-pill bg-danger badge-notification">
                         3
-                    </span>
+                    </span> --}}
                 </a>
             </li>
             <li class="nav-item">

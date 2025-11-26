@@ -110,7 +110,7 @@ class UserController extends Controller
             $data = Transaction::where([
                 'username'=>$user->username,
                 'payment_type'=>'0'
-            ])->get();
+            ])->orderBy('id','desc')->get();
             return view('accounts.deposit',compact('data','agent'));
         }
         return view('accounts.deposit');
@@ -398,13 +398,14 @@ class UserController extends Controller
     }
 
     public function profit_loss_event(Request $request){
-        $eventsExposure = SportookBet::select('eventId', \DB::raw('SUM(bet_amount) as exposure,SUM(profit) as totalProfit, COUNT(*) as totalBets'),'mname')
+        $eventsExposure = SportookBet::where('status',1)
+        ->select('eventId', \DB::raw('SUM(bet_amount) as exposure,SUM(profit) as totalProfit, COUNT(*) as totalBets'),'mname')
         ->groupBy('eventId','mname');
         $events = Event::joinSub($eventsExposure,'eventsExposure',function($join){
             $join->on('events.eventId','=','eventsExposure.eventId');
         });
-        $events = $events->where('status',1)
-        ->get();
+        // $events = $events->where('events.status',1)
+        $events = $events->get();
 
         // dd($events);
 

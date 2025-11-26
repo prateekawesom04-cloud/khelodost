@@ -337,9 +337,9 @@ class AdminDataController extends Controller
         ->where([
             // 'admin_username'=>$user->username,
             'payment_type'=>0,
-            'manual'=>1
+            // 'manual'=>1
         ])
-        ->get();
+        ->orderBy('id','desc')->get();
         return view('admin.pages.deposit',compact('transactions'));
     }
     
