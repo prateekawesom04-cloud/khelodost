@@ -131,6 +131,8 @@
 
       resultCalculation(betslipData.marketId);
 
+      loadBets();
+
       $('#stakeValue').val(stakeVal);
       $('#oddVal').val(betslipData.oddVal);
    
@@ -508,6 +510,7 @@
          //    user_bets[`${betslipData.marketId}_${betslipData.sid}_${betslipData.oddId}`] = betslipData;
          }
          delete user_bets['running_bet'];
+         $('.betslip').hide();
          user_bets[`${betslipData.marketId}_${betslipData.sid}_${betslipData.oddId}`] = betslipData;
          localStorage.setItem('user_bets', JSON.stringify(user_bets));
          loadBets();
@@ -518,8 +521,10 @@
    
    function cancelBet(){
       $('.betslip').hide();
-      $('.loss').html('');
-      $('.profit').html('');
+      // $('.loss').html('');
+      // $('.profit').html('');
+      delete user_bets['running_bet'];
+      loadBets();
    }
 
    function openBets(res){

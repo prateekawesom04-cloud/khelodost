@@ -249,7 +249,7 @@ class AuthController extends Controller
             }
             return response()->json([
                 'message'=> $errors[0],
-                'error_code'=> '105'
+                'response_code'=> '105'
             ]);
         } else{
             $user = User::where([
@@ -293,7 +293,7 @@ class AuthController extends Controller
             } else{
                 return response()->json([
                     'message'=> 'Provide Some Id',
-                    'error_code'=> '402'
+                    'response_code'=> '402'
                 ]);
             }
             // $user = User::getCurrentUser();
@@ -301,7 +301,7 @@ class AuthController extends Controller
             if(!Hash::check($request->oldPassword,$user->password)){
                 return response()->json([
                     'message'=> 'Old Password Mismatched',
-                    'error_code'=> '401'
+                    'response_code'=> '401'
                 ]);
             }
             $user->password = Hash::make($request->newPassword);
@@ -309,7 +309,7 @@ class AuthController extends Controller
             
             return response()->json([
                 'message'=> 'success',
-                'error_code'=> '200'
+                'response_code'=> '200'
             ]);
             
         }
@@ -368,7 +368,7 @@ class AuthController extends Controller
             if(!$user){
                 return response()->json([
                     'message'=> 'User not found',
-                    'error_code'=> '104'
+                    'response_code'=> '104'
                 ]);
             }
         }

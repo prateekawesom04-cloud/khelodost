@@ -336,7 +336,7 @@
                             <div class="flex flex-row justify-between items-center match_nat w-[60%]">
                                 <span class="match_nat_name match_nat_${i}">${j.nat}</span>
                                 <span class="loss mx-1 text-red-500"></span>
-                                <span class="profit mx-1 text-green-500"></span>
+                                <span class="profit mx-1 text-green-500">0</span>
                             </div>
                             <div class="flex flex-1 justify-end relative">
                         `;

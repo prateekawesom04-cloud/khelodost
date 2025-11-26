@@ -10,7 +10,7 @@
                 if (beforeAction) beforeAction();
             },
             success: (response) => {
-                if(response.error_code == '409'){
+                if(response.response_code == '409'){
                     alert(response.error);
                     setTimeout(() => {
                         window.location.href = response.redirect;
@@ -40,7 +40,7 @@
                 if (beforeAction) beforeAction();
             },
             success: (response) => {
-                if(response.error_code == '409'){
+                if(response.response_code == '409'){
                     alert(response.error);
                     setTimeout(() => {
                         window.location.href = response.redirect;
@@ -73,7 +73,7 @@
                 if (beforeAction) beforeAction();
             },
             success: (response) => {
-                if(response.error_code == '409'){
+                if(response.response_code == '409'){
                     alert(response.error);
                     setTimeout(() => {
                         window.location.href = response.redirect;
@@ -108,7 +108,7 @@
                 if (beforeAction) beforeAction();
             },
             success: (response) => {
-                if(response.error_code == '409'){
+                if(response.response_code == '409'){
                     alert(response.error);
                     setTimeout(() => {
                         window.location.href = response.redirect;

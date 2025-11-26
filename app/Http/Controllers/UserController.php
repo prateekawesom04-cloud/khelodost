@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Bonus;
 use App\Models\Payment;
 use App\Models\UserBank;
 use App\Models\SportookBet;
+use App\Models\Event;
 
 class UserController extends Controller
 {
@@ -24,6 +26,58 @@ class UserController extends Controller
         }
     }
 
+    public function changePassword(Request $request){
+        // dd($request->all());
+        $rules = [
+            'oldPassword' => 'required',
+            'newPassword' => 'required|min:6',
+            'confirmPassword' => 'required|same:newPassword',
+        ];
+        
+        $validator = Validator::make($request->all(), $rules);
+        $errors = [];
+        if($validator->fails()){
+            foreach ($validator->errors()->messages() as $key => $value) {
+                $errors[] = $value[0];
+            }
+            return response()->json([
+                'message'=>$errors[0]
+            ]);
+        } else{
+            if($request->phone){
+                $user = User::where([
+                    'phone'=>$request->phone
+                ])->first();
+            } else if($request->username){
+                $user = User::where([
+                'username'=>$request->username
+                ])->first();
+            } else{
+                return response()->json([
+                    'message'=> 'Provide Some Id',
+                    'response_code'=> '402'
+                ]);
+            }
+            // $user = User::getCurrentUser();
+            // dd($user);
+            if(!Hash::check($request->oldPassword,$user->password)){
+                return response()->json([
+                    'message'=> 'Old Password Mismatched',
+                    'response_code'=> '401'
+                ]);
+            }
+            $user->password = Hash::make($request->newPassword);
+            $user->save();
+            
+            return response()->json([
+                'message'=> 'success',
+                'response_code'=> '200'
+            ]);
+            
+        }
+
+    }
+    
     public function profile(Request $request){
         if(Session::get('user_session')=='demo_user_demo'){
             $data = [
@@ -105,7 +159,7 @@ class UserController extends Controller
         
         return response()->json([
             'message'=> 'Stake added',
-            'error_code'=> '200'
+            'response_code'=> '200'
         ]);
     }
 
@@ -341,6 +395,22 @@ class UserController extends Controller
 
         // $bets = SportookBet::where('status',0)->get();
         return view('accounts.open_bets',compact('bets','openBets'));
+    }
+
+    public function profit_loss_event(Request $request){
+        $eventsExposure = SportookBet::select('eventId', \DB::raw('SUM(bet_amount) as exposure,SUM(profit) as totalProfit, COUNT(*) as totalBets'),'mname')
+        ->groupBy('eventId','mname');
+        $events = Event::joinSub($eventsExposure,'eventsExposure',function($join){
+            $join->on('events.eventId','=','eventsExposure.eventId');
+        });
+        $events = $events->where('status',1)
+        ->get();
+
+        // dd($events);
+
+        // $openBets = SportookBet::where('username',$this->currentUser->username)->where('status',0)->get();
+
+        return view('accounts.profit_loss_event',compact('events'));
     }
 
     public function exposure(Request $request){

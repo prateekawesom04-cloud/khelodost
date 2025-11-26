@@ -162,13 +162,16 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
     //     return view('accounts.open_bets');
     // })->name('open_bets');
 
-    Route::get('/profit_loss_event', function () {
-        return view('accounts.profit_loss_event');
-    })->name('profit_loss_event');
+    // Route::get('/profit_loss_event', function () {
+    //     return view('accounts.profit_loss_event');
+    // })->name('profit_loss_event');
+        Route::get('profit_loss_event', [UserController::class,'profit_loss_event'])->name('profit_loss_event'); 
 
     Route::get('/change_password', function () {
         return view('accounts.change_password');
     })->name('change_password');
+
+    Route::post('changePassword', [UserController::class,'changePassword'])->name('user.changePassword')->withoutMiddleware([VerifyCsrfToken::class]);
 
     Route::get('/account_setting', function () {
         return view('accounts.account_setting');

@@ -30,7 +30,7 @@
 <main class="layout-content-center p-3">
     <div class="main-container">
         <h2 class="page-title">Profit & Loss By Event Markets</h2>
-        <div class="form-card">
+        {{-- <div class="form-card">
             <form>
                 <div class="row form-row">
                     <div class="col-12">
@@ -59,7 +59,7 @@
                     </div>
                 </div>
             </form>
-        </div>
+        </div> --}}
         <div class="table-card">
             <div class="scroll-container">
                 <table class="data-table">
@@ -67,26 +67,23 @@
                         <tr>
                             <th>Sport Name</th>
                             <th>Event Name</th>
-                            <th>Market Id</th>
+                            {{-- <th>Market Id</th> --}}
                             <th>Market Name</th>
                             <th>Result</th>
                         </tr>
                     </thead>
                     <tbody class="table-body">
+                        @if(count($events))
+                        @foreach($events as $bet)
                         <tr>
-                            <td>Cricket</td>
-                            <td>India vs Australia</td>
-                            <td>1.123456</td>
-                            <td>Match Odds</td>
-                            <td>+1500</td>
+                            <td>{{$bet->sportname}}</td>
+                            <td>{{$bet->eventName}}</td>
+                            <td>{{$bet->mname}}</td>
+                            <td>{{$bet->status?'Sattled':'Unsattled'}}</td>
+                            {{-- <td>{{$bet->eventName}}</td> --}}
                         </tr>
-                        <tr>
-                            <td>Football</td>
-                            <td>Manchester vs Chelsea</td>
-                            <td>1.234567</td>
-                            <td>Over/Under</td>
-                            <td>-800</td>
-                        </tr>
+                        @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>

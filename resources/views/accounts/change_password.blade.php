@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('sports_master')
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Khelodost Change Password</title>
+@section('head')
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
   <style>
@@ -19,9 +15,10 @@
     a:hover { text-decoration: underline; }
     .small { color: #fde68a; }
   </style>
-</head>
+@endsection
+@section('sports_body')
 
-<body class="d-flex align-items-center justify-content-center bg-light" style="height:100vh; margin:0;">
+<div class="d-flex align-items-center justify-content-center bg-light" style="height:100vh; margin:0;">
   <div class="bg-custom-green p-4 rounded-3 text-center text-white shadow" style="width: 380px;">
     <!-- Logo -->
     <a>
@@ -34,7 +31,8 @@
       <div class="mb-3">
         <div class="input-group">
           <span class="input-group-text input-group-text-yellow"><i class="bi bi-lock"></i></span>
-          <input type="password" name="old_password" class="form-control rounded-end" placeholder="Enter old password" />
+          <input type="hidden" name="username" value="{{$userData->username}}" class="form-control rounded-end" placeholder="Enter old password" />
+          <input type="password" name="oldPassword" class="form-control rounded-end" placeholder="Enter old password" />
         </div>
       </div>
 
@@ -42,7 +40,7 @@
       <div class="mb-3">
         <div class="input-group">
           <span class="input-group-text input-group-text-yellow"><i class="bi bi-lock"></i></span>
-          <input type="password" name="new_password" class="form-control rounded-end" placeholder="Enter new password" />
+          <input type="password" name="newPassword" class="form-control rounded-end" placeholder="Enter new password" />
         </div>
       </div>
 
@@ -50,17 +48,31 @@
       <div class="mb-3">
         <div class="input-group">
           <span class="input-group-text input-group-text-yellow"><i class="bi bi-lock"></i></span>
-          <input type="password" name="confirm_password" class="form-control rounded-end" placeholder="Confirm new password" />
+          <input type="password" name="confirmPassword" class="form-control rounded-end" placeholder="Confirm new password" />
         </div>
       </div>
 
       <!-- Change Password Button -->
       <div class="d-grid gap-2 mb-3">
-        <a href="javascript:void(0)" class="btn btn-yellow text-center">Change Password</a>
+        <a href="javascript:void(0)" class="btn btn-yellow text-center changePassword">Change Password</a>
       </div>
     </form>
   </div>
+  </div>
+
+
+@endsection
+
+
+@section('js')
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+  <script>
+    $('.changePassword').on('click',function(){
+        formData = new FormData($(this).parents('form')[0]);
+      callApiFormData('post',`{{route('user.changePassword')}}`,formData,ajaxResponseModal);
+    });
+
+  </script>
+
+@endsection
