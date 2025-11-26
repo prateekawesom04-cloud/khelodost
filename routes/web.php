@@ -72,6 +72,47 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
         Route::post('claimBonus', [UserController::class,'claimBonus'])->name('user.post.claimBonus')->withoutMiddleware([VerifyCsrfToken::class]);
 
         Route::get('betlist', [UserController::class,'betlist'])->name('user.betlist');
+        
+        Route::get('live_game_bet_history', [UserController::class,'live_game_bet_history'])->name('user.live_game_bet_history');
+        Route::get('transaction_history', [UserController::class,'transaction_history'])->name('user.transaction_history');
+        
+        Route::get('/withdraw', function () {
+            return view('accounts.withdraw');
+        })->name('user.withdraw');
+            // Route::get('withdraw', [UserController::class,'withdraw'])->name('user.withdraw'); 
+
+        // Route::get('/account_statement', function () {
+        //     return view('accounts.account_statement');
+        // })->name('account_statement');
+        Route::get('account_statement', [UserController::class,'account_statement'])->name('account_statement'); 
+
+        // Route::get('/open_bets', function () {
+        //     return view('accounts.open_bets');
+        // })->name('open_bets');
+
+        // Route::get('/profit_loss_event', function () {
+        //     return view('accounts.profit_loss_event');
+        // })->name('profit_loss_event');
+        Route::get('profit_loss_event', [UserController::class,'profit_loss_event'])->name('profit_loss_event'); 
+        
+        Route::get('referred_users', [UserController::class,'referred_users'])->name('user.referred_users'); 
+
+        Route::get('/change_password', function () {
+            return view('accounts.change_password');
+        })->name('change_password');
+
+        Route::post('changePassword', [UserController::class,'changePassword'])->name('user.changePassword')->withoutMiddleware([VerifyCsrfToken::class]);
+
+        Route::get('/account_setting', function () {
+            return view('accounts.account_setting');
+        })->name('account_setting');
+
+        
+        Route::get('logout', function () {
+            session()->forget('username');
+            // Session::flush('username');
+            return redirect()->route('index');
+        })->name('logout');
     });
 
     Route::get('eventPage/{eventId}', [SportbookController::class,'eventPage'])->name('user.eventPage');
@@ -149,40 +190,6 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
     // })->name('deposit');
         Route::get('deposit', [UserController::class,'deposit'])->name('user.deposit'); 
 
-    Route::get('/withdraw', function () {
-        return view('accounts.withdraw');
-    })->name('user.withdraw');
-        Route::get('withdraw', [UserController::class,'withdraw'])->name('user.withdraw'); 
-
-    Route::get('/account_statement', function () {
-        return view('accounts.account_statement');
-    })->name('account_statement');
-
-    // Route::get('/open_bets', function () {
-    //     return view('accounts.open_bets');
-    // })->name('open_bets');
-
-    // Route::get('/profit_loss_event', function () {
-    //     return view('accounts.profit_loss_event');
-    // })->name('profit_loss_event');
-        Route::get('profit_loss_event', [UserController::class,'profit_loss_event'])->name('profit_loss_event'); 
-
-    Route::get('/change_password', function () {
-        return view('accounts.change_password');
-    })->name('change_password');
-
-    Route::post('changePassword', [UserController::class,'changePassword'])->name('user.changePassword')->withoutMiddleware([VerifyCsrfToken::class]);
-
-    Route::get('/account_setting', function () {
-        return view('accounts.account_setting');
-    })->name('account_setting');
-
-    
-    Route::get('logout', function () {
-        session()->forget('username');
-        // Session::flush('username');
-        return redirect()->route('index');
-    })->name('logout');
             
     Route::post('paymentCallback', [TransactionController::class,'paymentCallback'])->name('paymentCallback')->withoutMiddleware([VerifyCsrfToken::class]);
     Route::post('paymentCallbackInd', [TransactionController::class,'paymentCallbackInd'])->name('paymentCallbackInd')->withoutMiddleware([VerifyCsrfToken::class]);

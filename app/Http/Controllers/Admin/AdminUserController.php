@@ -229,19 +229,25 @@ class AdminUserController extends Controller
         if($request->payment_type == 0){
             $user->wallet_amount += $request->transfer_amount;
         } else{
+            if($user->wallet_amount<$request->transfer_amount){
+                return response()->json([
+                    'message'=> 'User Balance is lower then withdraw amount',
+                    'response_code'=>'401'
+                ]);
+            }
             $user->wallet_amount -= $request->transfer_amount;
         }
         $user->save();
         
         $transaction = new Transaction();
         $transaction->username = $request->username;
-        $transaction->order_sn = time()."_p_".time().rand(0000,9999);
+        $transaction->order_sn = "ADM_".time().rand(0000,9999);
         $transaction->wallet_before = $wallet_before;
         $transaction->transfer_amount = $request->transfer_amount;
         $transaction->ip = $request->ip();
         $transaction->status = 2;
         $transaction->payment_type = $request->payment_type;
-        $transaction->manual = 0;
+        $transaction->manual = 1;
         $transaction->currency = "INR";
         $transaction->remark = $request->remark;
         $transaction->save();

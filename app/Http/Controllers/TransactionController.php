@@ -28,7 +28,7 @@ class TransactionController extends Controller
             $transaction->status = 1;
             $transaction->payment_type = $request->payment_type;
             $transaction->currency = "INR";
-            $transaction->remark = "remark001";
+            $transaction->remark = "Deposit of ".$request->transfer_amount;
             $transaction->save();
             
             // Api statements

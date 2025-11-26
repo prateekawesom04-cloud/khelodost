@@ -33,26 +33,22 @@
         <div class="tab-content mt-3">
             
             <div class="tab-pane fade show active" id="profit_loss" role="tabpanel">
-                <h2 class="page-title">Profit & Loss By Event Markets</h2>
+                <h2 class="page-title">Referral Users</h2>
                 <div class="table-card">
                     <div class="scroll-container">
                         <table class="data-table">
                             <thead class="table-header">
                                 <tr>
                                     <th class="text-nowrap">Date</th>
-                                    <th class="text-nowrap">Event Name</th>
-                                    <th class="text-nowrap">Profit</th>
-                                    <th class="text-nowrap">Loss</th>
+                                    <th class="text-nowrap">User Name</th>
                                 </tr>
                             </thead>
                             <tbody class="table-body">
-                                @if(count($sportbookBets))
-                                    @foreach($sportbookBets as $transaction)
+                                @if(count($referrals))
+                                    @foreach($referrals as $transaction)
                                     <tr>
                                         <td>{{$transaction->created_at}}</td>
-                                        <td>{{$transaction->eventName}}</td>
-                                        <td class="text-success">{{($transaction->status==1)? '-' : $transaction->profit}}</td>
-                                        <td class="text-danger">{{($transaction->status==2)? $transaction->profit : '-'}}</td>
+                                        <td>{{$transaction->username}}</td>
                                     </tr>
                                     @endforeach
                                 @endif

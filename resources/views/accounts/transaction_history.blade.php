@@ -147,10 +147,10 @@ $d = 0;
 <main class="layout-content-center !p-3">
     <div class="main-container">
       <div class="flex flex-row gap-2 items-center justify-start mt-3" id="statement_tabs" role="tablist">
-          <a href="javascript:void(0)" class="!flex justify-center items-center active btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#all_transaction">All</a>
-          <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#transaction">Deposit/Withdraw</a>
-          <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#profit_loss">Profit/Loss</a>
-          <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#bonusTransaction">Bonus</a>
+          <a href="javascript:void(0)" class="!flex justify-center items-center active btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#all_transaction">All Transactions</a>
+          <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#transaction">Pending</a>
+          <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#profit_loss">Confirmed</a>
+          <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#bonusTransaction">Rejected</a>
           {{-- <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#activity">Activity</a> --}}
       </div>
         
@@ -376,58 +376,5 @@ $d = 0;
       </div>
     </div>
 
-  <!-- Page Title -->
-  {{-- <div class="account-title">Account Statement</div> --}}
-{{-- 
-  <div class="table-card">
-    <div class="table-responsive">
-      <table class="w-100">
-        <thead class="table-header">
-          <tr>
-            <th>S.No.</th>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Credit</th>
-            <th>Debit</th>
-            <th>From / To</th>
-            <th>Balance</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody class="table-body">
-          @foreach($transactions as $transaction)
-              @php
-                  $counter = 0;
-                  if($transaction->status==2){
-                      if($transaction->payment_type){
-                          $available_balance = (int) $transaction->wallet_before - (int) $transaction->transfer_amount;
-                      } else{
-                          $available_balance = (int) $transaction->wallet_before + (int) $transaction->transfer_amount;
-                      }
-
-                  } else{
-                      $available_balance = (int) $transaction->wallet_before;
-                  }
-              @endphp
-          <tr>
-            <td>{{$counter+=1}}</td>
-            <td>{{$transaction->created_at}}</td>
-            <td>{{$transaction->remark}}</td>
-            <td>{{($transaction->payment_type==1)?$transaction->transfer_amount:'-'}}</td>
-            <td>{{($transaction->payment_type)?'-':$transaction->transfer_amount}}</td>
-            <td>{{$transaction->manual?'Admin -> User':'Deposit by User'}}</td>
-            <td>{{$available_balance}}</td>
-            <td>{{($transaction->status==2)?'success':(($transaction->status==1)?'processing':'failed')}}</td>
-          </tr>
-          @endforeach
-        </tbody>
-      </table>
-      
-      <!-- No Records Message -->
-      <div class="no-records">
-        No records found
-      </div>
-    </div>
-  </div> --}}
 </main>
 @endsection

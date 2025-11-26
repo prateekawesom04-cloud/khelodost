@@ -145,18 +145,27 @@
 
         <!-- Statements Section -->
         <div class="menu-title fw-bold text-secondary fs-6 mt-1 ml-1 mb-2">
-            📄 Statements
+            📄 Report
         </div>
 
         <div class="ms-3 border-top">
-            {{-- <a href="{{ route('account_statement') }}" class="d-block py-2 px-3 text-decoration-none text-dark border-bottom">📥 Deposit &
-                Withdraw</a> --}}
-            <a href="{{ route('user.betlist') }}" class="d-block py-2 px-3 text-decoration-none text-dark border-bottom">📊 Open Bets</a>
-            @if($userData->bonus)
-            <a href="{{ route('user.bonus') }}" class="d-block py-2 px-3 text-decoration-none text-dark border-bottom">🎁 Bonuses</a>
-            @endif
-            <a href="{{ route('profit_loss_event') }}" class="d-block py-2 px-3 text-decoration-none text-dark border-bottom">📃 Account
+            <a href="{{ route('account_statement') }}" class="d-block py-2 px-3 text-decoration-none text-dark border-bottom">📥 Account
                 Statement</a>
+            <a href="{{ route('profit_loss_event') }}" class="d-block py-2 px-3 text-decoration-none text-dark border-bottom">📃 Profit & Loss</a>
+            <a href="{{ route('user.betlist') }}" class="d-block py-2 px-3 text-decoration-none text-dark border-bottom">📊 Bets History</a>
+            <a href="{{ route('user.live_game_bet_history') }}" class="d-block py-2 px-3 text-decoration-none text-dark border-bottom">📊 Live Game Bets History</a>
+        </div>
+        @if($userData->bonus)
+        <div class="menu-title fw-bold text-secondary fs-6 ml-1 mt-2 mb-2">
+            <a href="{{ route('user.bonus') }}" class="text-decoration-none text-secondary">🎁 Bonuses</a>
+        </div>
+        @endif
+        
+        <div class="menu-title fw-bold text-secondary fs-6 ml-1 mt-1 mb-2">
+            <a href="{{ route('user.transaction_history') }}" class="text-decoration-none text-secondary">📃 Transaction History</a>
+        </div>
+        <div class="menu-title fw-bold text-secondary fs-6 ml-1 mt-1 mb-2">
+            <a href="{{ route('user.referred_users') }}" class="text-decoration-none text-secondary">📃 Referral Users</a>
         </div>
 
         <!-- Settings Section -->
@@ -169,7 +178,7 @@
         </div> --}}
 
         <!-- Account Actions Section -->
-        <div class="menu-title fw-bold text-secondary fs-6 ml-1 mt-4 mb-2">
+        <div class="menu-title fw-bold text-secondary fs-6 ml-1 mt-1 mb-2">
             🔐 Account Actions
         </div>
 

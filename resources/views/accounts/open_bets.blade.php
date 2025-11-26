@@ -97,85 +97,197 @@
 </style>
 
 <main class="layout-content-center p-3">
-  <!-- Open Bets Section -->
-  <div class="section-card">
-        <h2 class="page-title">Open Bets</h2>
-    
-    {{-- <div class="section-label">Match Odds</div> --}}
-    
-    <div class="table-responsive">
-      <table>
-        <thead class="table-header">
-          <tr>
-            {{-- <th>Sport Name</th> --}}
-            <th>BetId</th>
-            <th>EventId</th>
-            {{-- <th>Market</th>
-            <th>Selection</th>
-            <th>Type</th> --}}
-            <th>Odds</th>
-            <th>Bet Amount</th>
-            <th>Profit/Loss</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody class="table-body">
-            @if($openBets->count() > 0)
-                  @foreach ($openBets as $bet)
-                      <tr>
-                          {{-- <td class="">{{ $bet->username ?? 'N/A' }}</td> --}}
-                          <td class="">{{ $bet->betId }}</td>
-                          <td class="">{{ $bet->eventId }}</td>
-                          <td class="">{{ $bet->oddVal }}</td>
-                          {{-- <td class="">{{ $bet->stakeValue }}</td> --}}
-                          <td class="">{{ $bet->bet_amount }}</td>
-                          <td class="">{{ $bet->profit ?? 'N/A'}}</td>
-                          <td class="">
-                              @if($bet->status == 0)
-                                  Unsettled
-                                  {{-- <span class="">Unsettled</span> --}}
-                              @elseif($bet->status == 1)
-                                  <span class="text-success">Won</span>
-                              @elseif($bet->status == 2)
-                                  <span class="text-danger">Lost</span>
-                              @else
-                                  N/A
-                              @endif
-                          </td>
-                      </tr>
-                  @endforeach
-              @else
-              <tr>
-                  <td colspan="10" class="">No data!</td>
-              </tr>
-              @endif
-        </tbody>
-      </table>
-      
-      @if(!$bets->count())
-      <div class="no-data">
-        <div class="no-data-icon">📄</div>
-        <div>No data</div>
+
+    <div class="main-container">
+      <div class="flex flex-row gap-2 items-center justify-start mt-3" id="statement_tabs" role="tablist">
+        <a href="javascript:void(0)" class="!flex justify-center items-center active btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#all_transaction">All</a>
+        <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#transaction">Open</a>
+        <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#profit_loss">Sattled</a>
+        {{-- <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#bonusTransaction">Bonus</a> --}}
+        {{-- <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#activity">Activity</a> --}}
       </div>
-      @endif
+        
+      <!-- Filter Section -->
+      {{-- <div class="filter-card">
+        <div class="filter-responsive">
+          <div class="date-row">
+            <input type="date" class="date-input" value="2025-09-20">
+            <input type="date" class="date-input" value="2025-09-27">
+          </div>
+          <div class="button-row">
+            <button class="btn-submit">Submit</button>
+            <button class="btn-reset">Reset</button>
+          </div>
+        </div>
+      </div> --}}
+
+@php
+$a = 0;
+$b = 0;
+$c = 0;
+$d = 0;
+@endphp
+      <!-- Table Section -->
+      <div class="tab-content mt-3">
+          <div class="tab-pane fade show active" id="all_transaction" role="tabpanel">
+            <h2 class="page-title">All Bets</h2>
+            <div class="table-card">
+              <div class="scroll-container">
+                @if($bets->count() > 0)
+                <table class="data-table">
+                  <thead class="table-header">
+                    <tr>
+                      <th>S.No.</th>
+                      <th>Date</th>
+                      <th>Description</th>
+                      <th>Selection</th>
+                      <th>Type</th>
+                      <th>Bhaw</th>
+                      <th>Amount</th>
+                      <th>Profit</th>
+                      <th>Loss</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-body">
+                      @foreach ($bets as $transaction)
+                      <tr>
+                        <td>{{$a+=1}}</td>
+                        <td>{{$transaction->created_at}}</td>
+                        <td>{{$transaction->mname}}</td>
+                        <td>{{$transaction->nat}}</td>
+                        <td>{{$transaction->betOn?'Lay':'Back'}}</td>
+                        <td>{{$transaction->oddVal}}</td>
+                        <td>{{$transaction->bet_amount}}</td>
+                        <td>{{$transaction->profit}}</td>
+                        <td>{{($transaction->status==0)?'--':(($transaction->status==1)?'0':$transaction->bet_amount)}}</td>
+                      </tr>
+                      @endforeach
+                  </tbody>
+                </table>
+                
+                <!-- No Records Message -->
+                      @else
+                <div class="no-records py-3 text-center">
+                  No records found
+                </div>
+                    @endif
+              </div>
+            </div>
+              
+          </div>
+          
+          <div class="tab-pane fade" id="transaction" role="tabpanel">
+            <h2 class="page-title">Open Bets</h2>
+            <div class="table-card">
+              <div class="scroll-container">
+                @if($openBets->count() > 0)
+                <table class="data-table">
+                  <thead class="table-header">
+                    <tr>
+                      <th>S.No.</th>
+                      <th>Date</th>
+                      <th>Description</th>
+                      <th>Selection</th>
+                      <th>Type</th>
+                      <th>Bhaw</th>
+                      <th>Amount</th>
+                      <th>Profit</th>
+                      <th>Loss</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-body">
+                    @foreach ($openBets as $transaction)
+                    <tr>
+                      <td>{{$a+=1}}</td>
+                      <td>{{$transaction->created_at}}</td>
+                      <td>{{$transaction->nat}}</td>
+                      <td>{{$transaction->betOn?'Lay':'Back'}}</td>
+                      <td>{{$transaction->oddVal}}</td>
+                      <td>{{$transaction->bet_amount}}</td>
+                      <td>{{$transaction->profit}}</td>
+                      <td>{{($transaction->status==0)?'--':(($transaction->status==1)?'0':$transaction->bet_amount)}}</td>
+                    </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+                @else
+                
+                <!-- No Records Message -->
+                <div class="no-records py-3 text-center">
+                  No records found
+                </div>
+                @endif
+              </div>
+            </div>
+              
+          </div>
+
+          <div class="tab-pane fade" id="profit_loss" role="tabpanel">
+            <h2 class="page-title">Sattled Bets</h2>
+              
+            <div class="table-card">
+              <div class="scroll-container">
+                @if($sattledBets->count() > 0)
+                <table class="data-table">
+                  <thead class="table-header">
+                    <tr>
+                      <th>S.No.</th>
+                      <th>Date</th>
+                      <th>Description</th>
+                      <th>Selection</th>
+                      <th>Type</th>
+                      <th>Bhaw</th>
+                      <th>Amount</th>
+                      <th>Profit</th>
+                      <th>Loss</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-body">
+                      @foreach ($sattledBets as $transaction)
+                      <tr>
+                        <td>{{$b+=1}}</td>
+                        <td>{{$transaction->created_at}}</td>
+                        <td>{{$transaction->mname}}</td>
+                        <td>{{$transaction->nat}}</td>
+                        <td>{{$transaction->betOn?'Lay':'Back'}}</td>
+                        <td>{{$transaction->oddVal}}</td>
+                        <td>{{$transaction->bet_amount}}</td>
+                        <td>{{$transaction->profit}}</td>
+                        <td>{{($transaction->status==0)?'--':(($transaction->status==1)?'0':$transaction->bet_amount)}}</td>
+                      </tr>
+                      @endforeach
+                  </tbody>
+                </table>
+                  
+                  <!-- No Records Message -->
+                      @else
+                <div class="no-records py-3 text-center">
+                  No records found
+                </div>
+                    @endif
+              </div>
+            </div>
+              
+          </div>
+          
+          
+      </div>
     </div>
-  </div>
 
   <!-- Session Section -->
-  <div class="section-card">
+  {{-- <div class="section-card">
         <h2 class="page-title">Bets</h2>
-    {{-- <div class="section-label">Bets</div> --}}
     
     <div class="table-responsive">
       <table>
         <thead class="table-header">
           <tr>
-            {{-- <th>Sport Name</th> --}}
+            <th>Sport Name</th>
             <th>BetId</th>
             <th>EventId</th>
-            {{-- <th>Market</th>
+            <th>Market</th>
             <th>Selection</th>
-            <th>Type</th> --}}
+            <th>Type</th>
             <th>Odds</th>
             <th>Bet Amount</th>
             <th>Profit/Loss</th>
@@ -186,17 +298,17 @@
             @if($bets->count() > 0)
                   @foreach ($bets as $bet)
                       <tr>
-                          {{-- <td class="">{{ $bet->username ?? 'N/A' }}</td> --}}
+                          <td class="">{{ $bet->username ?? 'N/A' }}</td>
                           <td class="">{{ $bet->betId }}</td>
                           <td class="">{{ $bet->eventId }}</td>
                           <td class="">{{ $bet->oddVal }}</td>
-                          {{-- <td class="">{{ $bet->stakeValue }}</td> --}}
+                          <td class="">{{ $bet->stakeValue }}</td>
                           <td class="">{{ $bet->bet_amount }}</td>
                           <td class="">{{ $bet->profit ?? 'N/A'}}</td>
                           <td class="">
                               @if($bet->status == 0)
                                   Unsettled
-                                  {{-- <span class="">Unsettled</span> --}}
+                                  <span class="">Unsettled</span>
                               @elseif($bet->status == 1)
                                   <span class="text-success">Won</span>
                               @elseif($bet->status == 2)
@@ -222,6 +334,6 @@
       </div>
       @endif
     </div>
-  </div>
+  </div> --}}
 </main>
 @endsection

@@ -58,7 +58,7 @@
                     @if (isset($data) && count($data) > 0)
                         @foreach ($data as $value)
                             <tr class="text-center" style="background-color: #3e3e3e;">
-                                <td>{{ $value->payment_type ? 'Withdraw' : 'Deposit' }}</td>
+                                <td>{{ $value->payment_type ? 'Withdraw' : ($value->payment_type==0?'Deposit':'Bonus') }}</td>
                                 <td>{{ $value->transfer_amount }}</td>
                                 <td>{{ $value->status == 2 ? 'Success' : 'Processing' }}</td>
                                 <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d M Y') }}</td>

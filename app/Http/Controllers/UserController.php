@@ -264,6 +264,19 @@ class UserController extends Controller
         } else{
             // add request to add amount in walletP
             // if($bonus->type == 2){
+
+                $transaction = new Transaction();
+                $transaction->username = $userData->username;
+                $transaction->order_sn = 'BON_'.time().rand(0000,9999);
+                $transaction->wallet_before = $userData->wallet_amount;
+                $transaction->transfer_amount = $bonus_amount;
+                $transaction->ip = $request->ip();
+                $transaction->status = 2;
+                $transaction->payment_type = 2;
+                $transaction->currency = "INR";
+                $transaction->remark = $bonus->description;
+                $transaction->save();
+                
                 $bonuses = json_decode($userData->bonus,true);
                 unset($bonuses[$request->bonus_uid]);
                 $userData->bonus = json_encode($bonuses);
@@ -392,10 +405,56 @@ class UserController extends Controller
 
     public function betlist(Request $request){
         $bets = SportookBet::where('username',$this->currentUser->username)->get();
+        
         $openBets = SportookBet::where('username',$this->currentUser->username)->where('status',0)->get();
+        
+        $sattledBets = SportookBet::where('username',$this->currentUser->username)->where('status','!=',0)->get();
 
         // $bets = SportookBet::where('status',0)->get();
-        return view('accounts.open_bets',compact('bets','openBets'));
+        return view('accounts.open_bets',compact('bets','openBets','sattledBets'));
+    }
+
+    public function live_game_bet_history(Request $request){
+        
+        $eventsExposure = SportookBet::where('username',$this->currentUser->username)->where('status',0);
+
+        $bets = Event::joinSub($eventsExposure,'eventsExposure',function($join){
+            $join->on('events.eventId','=','eventsExposure.eventId');
+        })->get();
+
+        return view('accounts.live_game_bet_history',compact('bets'));
+
+    }
+
+    public function account_statement(Request $request){
+        
+        $userData = User::getCurrentUser();
+
+        $allTransactions = Transaction::where('username',$userData->username)->orderBy('id','desc')->get();
+
+        $transactions = Transaction::where('username',$userData->username)->where('payment_type','<',2)->orderBy('id','desc')->get();
+
+        $plTransactions = Transaction::where('username',$userData->username)->where('payment_type','>',2)->orderBy('id','desc')->get();
+
+        $bonusTransaction = Transaction::where('username',$userData->username)->where('payment_type',2)->orderBy('id','desc')->get();
+
+       
+        return view('accounts.account_statement',compact('allTransactions','transactions','plTransactions','bonusTransaction'));
+    }
+
+    public function transaction_history(Request $request){
+        
+        $userData = User::getCurrentUser();
+
+        $allTransactions = Transaction::where('username',$userData->username)->orderBy('id','desc')->get();
+
+        $transactions = Transaction::where('username',$userData->username)->where('status',1)->orderBy('id','desc')->get();
+
+        $plTransactions = Transaction::where('username',$userData->username)->where('status',2)->orderBy('id','desc')->get();
+
+        $bonusTransaction = Transaction::where('username',$userData->username)->where('status',0)->orderBy('id','desc')->get();
+
+        return view('accounts.transaction_history',compact('allTransactions','transactions','plTransactions','bonusTransaction'));
     }
 
     public function profit_loss_event(Request $request){
@@ -415,19 +474,27 @@ class UserController extends Controller
         $userData = User::getCurrentUser();
         
         $activities = Activity::where('username',$userData->username)->orderBy('id','desc')->get();
+
         // $transactions = Transaction::where('username',$userData->username)->orderBy('payment_type')->get();
 
         $transactions = Transaction::where('username',$userData->username)->orderBy('id','desc')->get();
+
+        // $sportbookBets = Event::join('sportook_bets','events.eventId','=','sportook_bets.eventId')
+        // ->select('sportook_bets.*','events.eventName','events.sportname')
+
         $sportbookBets = Event::join('sportook_bets','events.eventId','=','sportook_bets.eventId')
         ->select('sportook_bets.*','events.eventName','events.sportname')
         ->where('username',$userData->username)
-        // ->where('sportook_bets.status',0)
+        ->where('sportook_bets.status','!=',0)
         ->orderBy('id','desc')->get();
 
         return view('accounts.profit_loss_event',compact('events','activities','transactions','sportbookBets'));
     }
 
-    public function exposure(Request $request){
+    public function referred_users(Request $request){
         
+        $userData = User::getCurrentUser();
+        $referrals = User::where('referral',$userData->username)->get();
+        return view('accounts.referred_users',compact('referrals'));
     }
 }
