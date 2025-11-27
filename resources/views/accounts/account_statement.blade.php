@@ -206,8 +206,8 @@ $e = 0;
                       <td>{{$a+=1}}</td>
                       <td>{{$transaction->created_at}}</td>
                       <td>{{$transaction->remark}}</td>
-                      <td>{{($transaction->payment_type==1)?$transaction->transfer_amount:'-'}}</td>
                       <td>{{($transaction->payment_type)?'-':$transaction->transfer_amount}}</td>
+                      <td>{{($transaction->payment_type)?$transaction->transfer_amount:'-'}}</td>
                       <td>{{$available_balance}}</td>
                       <td>{{($transaction->status==2)?'success':(($transaction->status==1)?'processing':'failed')}}</td>
                     </tr>
@@ -258,8 +258,8 @@ $e = 0;
                       <td>{{$b+=1}}</td>
                       <td>{{$transaction->created_at}}</td>
                       <td>{{$transaction->remark}}</td>
-                      <td>{{($transaction->payment_type==1)?$transaction->transfer_amount:'-'}}</td>
                       <td>{{($transaction->payment_type)?'-':$transaction->transfer_amount}}</td>
+                      <td>{{($transaction->payment_type)?$transaction->transfer_amount:'-'}}</td>
                       <td>{{$available_balance}}</td>
                       <td>{{($transaction->status==2)?'success':(($transaction->status==1)?'processing':'failed')}}</td>
                     </tr>
