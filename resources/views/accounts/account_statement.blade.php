@@ -142,6 +142,7 @@ $a = 0;
 $b = 0;
 $c = 0;
 $d = 0;
+$e = 0;
 @endphp
 
 <main class="layout-content-center !p-3">
@@ -151,6 +152,7 @@ $d = 0;
           <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#transaction">Deposit/Withdraw</a>
           <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#profit_loss">Profit/Loss</a>
           <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#bonusTransaction">Bonus</a>
+          <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#sportTransaction">Sport</a>
           {{-- <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#activity">Activity</a> --}}
       </div>
         
@@ -272,7 +274,7 @@ $d = 0;
           </div>
 
           <div class="tab-pane fade" id="profit_loss" role="tabpanel">
-            <h2 class="page-title">Profit & Loss By Event Markets</h2>
+            <h2 class="page-title">Profit & Loss</h2>
               
             <div class="table-card">
               <div class="table-responsive">
@@ -282,34 +284,34 @@ $d = 0;
                       <th>S.No.</th>
                       <th>Date</th>
                       <th>Description</th>
-                      <th>Credit</th>
-                      <th>Debit</th>
-                      <th>Balance</th>
-                      <th>Status</th>
+                      <th>Profit</th>
+                      <th>Loss</th>
+                      {{-- <th>Balance</th> --}}
+                      {{-- <th>Status</th> --}}
                     </tr>
                   </thead>
                   <tbody class="table-body">
                     @foreach($plTransactions as $transaction)
-                        @php
+                        {{-- @php
                           if($transaction->status==2){
                               if($transaction->payment_type){
-                                  $available_balance = (int) $transaction->wallet_before - (int) $transaction->transfer_amount;
+                                  $available_balance = (int) $transaction->wallet_before - (int) $transaction->loss;
                               } else{
-                                  $available_balance = (int) $transaction->wallet_before + (int) $transaction->transfer_amount;
+                                  $available_balance = (int) $transaction->wallet_before + (int) $transaction->profit;
                               }
 
                           } else{
                               $available_balance = (int) $transaction->wallet_before;
                           }
-                        @endphp
+                        @endphp --}}
                     <tr>
                       <td>{{$c+=1}}</td>
                       <td>{{$transaction->created_at}}</td>
-                      <td>{{$transaction->remark}}</td>
-                      <td>{{($transaction->payment_type==1)?$transaction->transfer_amount:'-'}}</td>
-                      <td>{{($transaction->payment_type)?'-':$transaction->transfer_amount}}</td>
-                      <td>{{$available_balance}}</td>
-                      <td>{{($transaction->status==2)?'success':(($transaction->status==1)?'processing':'failed')}}</td>
+                      <td>{{$transaction->eventName}}</td>
+                      <td class="text-success">{{($transaction->status)?$transaction->profit:'-'}}</td>
+                      <td class="text-danger">{{($transaction->status==2)?'-':$transaction->loss}}</td>
+                      {{-- <td>{{$available_balance}}</td> --}}
+                      {{-- <td>{{($transaction->status==2)?'success':(($transaction->status==1)?'processing':'failed')}}</td> --}}
                     </tr>
                     @endforeach
                   </tbody>
@@ -325,7 +327,7 @@ $d = 0;
           </div>
           
           <div class="tab-pane fade" id="bonusTransaction" role="tabpanel">
-            <h2 class="page-title">Profit & Loss By Event Markets</h2>
+            <h2 class="page-title">Bonus</h2>
               
             <div class="table-card">
               <div class="table-responsive">
@@ -336,33 +338,52 @@ $d = 0;
                       <th>Date</th>
                       <th>Description</th>
                       <th>Credit</th>
-                      <th>Debit</th>
                       <th>Balance</th>
-                      <th>Status</th>
                     </tr>
                   </thead>
                   <tbody class="table-body">
-                    @foreach($plTransactions as $transaction)
+                    @foreach($bonusTransaction as $transaction)
                         @php
-                          if($transaction->status==2){
-                              if($transaction->payment_type){
-                                  $available_balance = (int) $transaction->wallet_before - (int) $transaction->transfer_amount;
-                              } else{
-                                  $available_balance = (int) $transaction->wallet_before + (int) $transaction->transfer_amount;
-                              }
-
-                          } else{
-                              $available_balance = (int) $transaction->wallet_before;
-                          }
+                          
+                                  $available_balance = (float) $transaction->wallet_before + (float) $transaction->transfer_amount;
                         @endphp
                     <tr>
                       <td>{{$d+=1}}</td>
-                      <td>{{$bonusTransaction->created_at}}</td>
+                      <td>{{$transaction->created_at}}</td>
                       <td>{{$transaction->remark}}</td>
-                      <td>{{($transaction->payment_type==1)?$transaction->transfer_amount:'-'}}</td>
-                      <td>{{($transaction->payment_type)?'-':$transaction->transfer_amount}}</td>
+                      <td>{{$transaction->transfer_amount}}</td>
                       <td>{{$available_balance}}</td>
-                      <td>{{($transaction->status==2)?'success':(($transaction->status==1)?'processing':'failed')}}</td>
+                    </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+                
+              </div>
+            </div>
+              
+          </div>
+          
+          <div class="tab-pane fade" id="sportTransaction" role="tabpanel">
+            <h2 class="page-title">Sports</h2>
+              
+            <div class="table-card">
+              <div class="table-responsive">
+                <table class="w-100">
+                  <thead class="table-header">
+                    <tr>
+                      <th>S.No.</th>
+                      <th>Sportname</th>
+                      <th>Profit</th>
+                      <th>Loss</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-body">
+                    @foreach($bets as $transaction)
+                    <tr>
+                      <td>{{$e+=1}}</td>
+                      <td>{{$transaction->sportname}}</td>
+                      <td>{{$transaction->profit}}</td>
+                      <td>{{$transaction->loss}}</td>
                     </tr>
                     @endforeach
                   </tbody>

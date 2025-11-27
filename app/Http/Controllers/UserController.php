@@ -434,12 +434,72 @@ class UserController extends Controller
 
         $transactions = Transaction::where('username',$userData->username)->where('payment_type','<',2)->orderBy('id','desc')->get();
 
-        $plTransactions = Transaction::where('username',$userData->username)->where('payment_type','>',2)->orderBy('id','desc')->get();
+        $plTransactions = SportookBet::where('username',$this->currentUser->username)
+        ->where('status','!=',0)
+        ->select('eventId',\DB::raw('
+        SUM(
+            case
+            when status=1 then profit
+            else 0
+            end
+        ) as profit,
+        SUM(
+            case
+            when status=2 then bet_amount
+            else 0
+            end
+        ) as loss'),'created_at','status'
+        )
+        ->groupBy('eventId','created_at','status');
+        // ->groupBy('eventId')
+        // ->get();
 
-        $bonusTransaction = Transaction::where('username',$userData->username)->where('payment_type',2)->orderBy('id','desc')->get();
+        $plTransactions = Event::joinSub($plTransactions,'plTransactions',function($join){
+            $join->on('events.eventId','=','plTransactions.eventId');
+        })
+        ->select('eventName',\DB::raw('SUM(profit) as profit,SUM(loss) as loss'),'plTransactions.created_at','plTransactions.status')
+        ->groupBy('eventName','plTransactions.created_at','plTransactions.status')
+
+        ->get();
+        // dd($plTransactions);
+
+        $bonusTransaction = Transaction::where('username',$userData->username)
+        ->where('status','!=',1)
+        ->where('payment_type',2)->orderBy('id','desc')->get();
+        
+        $bets = SportookBet::where('username',$this->currentUser->username)
+        ->where('status','!=',0)
+        ->select('eventId',\DB::raw('
+        SUM(
+            case
+            when status=1 then profit
+            else 0
+            end
+        ) as profit,
+        SUM(
+            case
+            when status=2 then bet_amount
+            else 0
+            end
+        ) as loss'),'created_at'
+        )
+        ->groupBy('eventId','created_at');
+        // ->groupBy('eventId')
+        // ->get();
+        // dd($bets);
+
+        $bets = Event::joinSub($bets,'bets',function($join){
+            $join->on('events.eventId','=','bets.eventId');
+        })
+        ->select('sportname',\DB::raw('SUM(profit) as profit,SUM(loss) as loss'))
+        ->groupBy('sportname')
+
+        ->get();
+
+        // dd($bets);
 
        
-        return view('accounts.account_statement',compact('allTransactions','transactions','plTransactions','bonusTransaction'));
+        return view('accounts.account_statement',compact('allTransactions','transactions','plTransactions','bonusTransaction','bets'));
     }
 
     public function transaction_history(Request $request){
