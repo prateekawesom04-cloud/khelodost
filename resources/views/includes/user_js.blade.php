@@ -910,4 +910,5 @@
 
         return formattedDate;
     }
+
 </script>

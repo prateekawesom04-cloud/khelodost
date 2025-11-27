@@ -802,3 +802,13 @@ h3,h4,h5 {
   background: #0c0339;
   color: #fff;
 }
+
+.bi-arrow-repeat {
+    /* Define the transition property, duration, and easing */
+    transition: transform 0.5s ease-in-out;
+}
+
+.bi-arrow-repeat.rotated {
+    /* The final state after the class is added */
+    transform: rotate(180deg);
+}

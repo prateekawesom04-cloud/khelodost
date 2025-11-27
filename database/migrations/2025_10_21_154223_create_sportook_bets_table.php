@@ -20,13 +20,14 @@ return new class extends Migration
             $table->string('marketId');
             $table->string('sid');
             $table->tinyInteger('betOn');
+            $table->string('nat');
             $table->string('oddVal');
             $table->string('size');
             $table->string('bet_amount');
             $table->string('profit');
             $table->string('wallet_before');
             $table->string('wallet_after')->nullable();
-            // $table->string('loss');
+            $table->string('gtype');
             $table->string('ip')->nullable();
             $table->tinyInteger('status');
             $table->json('additional_data')->nullable();

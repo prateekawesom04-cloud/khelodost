@@ -45,7 +45,7 @@ class SportookBetController extends Controller
         $bet->oddVal = $request->oddVal;
         $bet->bet_amount = $request->bet_amount;
         $bet->profit = $request->profit;
-        // $bet->loss = $request->loss;
+        $bet->gtype = $request->gtype;
         $bet->ip = $request->ip();
         $bet->status = 0;
         $bet->save();

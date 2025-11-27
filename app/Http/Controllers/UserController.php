@@ -458,37 +458,43 @@ class UserController extends Controller
     }
 
     public function profit_loss_event(Request $request){
-        $eventsExposure = SportookBet::where('username',$this->currentUser->username)->where('status',1)
-        ->select('eventId', \DB::raw('SUM(bet_amount) as exposure,SUM(profit) as totalProfit, COUNT(*) as totalBets'),'mname')
-        ->groupBy('eventId','mname');
-        $events = Event::joinSub($eventsExposure,'eventsExposure',function($join){
-            $join->on('events.eventId','=','eventsExposure.eventId');
-        });
-        // $events = $events->where('events.status',1)
-        $events = $events->get();
 
-        // dd($events);
+        $bets = SportookBet::where('username',$this->currentUser->username)
+        ->where('status','!=',0)
+        ->select('eventId',\DB::raw('
+        SUM(
+            case
+            when status=1 then profit
+            else 0
+            end
+        ) as profit,
+        SUM(
+            case
+            when status=2 then bet_amount
+            else 0
+            end
+        ) as loss'),'created_at'
+        )
+        ->groupBy('eventId','created_at');
+        // ->groupBy('eventId')
 
-        // $openBets = SportookBet::where('username',$this->currentUser->username)->where('status',0)->get();
+        // $bets = $bets->join('events','events.eventId','=','sportook_bets.eventId')
+        // ->select('sportook_bets.eventId','eventName','profit','loss')
+        // ->get();
+
+        // dd($bets);
+
+        $bets = Event::joinSub($bets,'bets',function($join){
+            $join->on('events.eventId','=','bets.eventId');
+        })
+        ->select('bets.created_at','eventName','profit','loss')
+        ->get();
+
+        $activities = Activity::where('username',$this->currentUser->username)->orderBy('id','desc')->get();
+
+        // dd($bets);
         
-        $userData = User::getCurrentUser();
-        
-        $activities = Activity::where('username',$userData->username)->orderBy('id','desc')->get();
-
-        // $transactions = Transaction::where('username',$userData->username)->orderBy('payment_type')->get();
-
-        $transactions = Transaction::where('username',$userData->username)->orderBy('id','desc')->get();
-
-        // $sportbookBets = Event::join('sportook_bets','events.eventId','=','sportook_bets.eventId')
-        // ->select('sportook_bets.*','events.eventName','events.sportname')
-
-        $sportbookBets = Event::join('sportook_bets','events.eventId','=','sportook_bets.eventId')
-        ->select('sportook_bets.*','events.eventName','events.sportname')
-        ->where('username',$userData->username)
-        ->where('sportook_bets.status','!=',0)
-        ->orderBy('id','desc')->get();
-
-        return view('accounts.profit_loss_event',compact('events','activities','transactions','sportbookBets'));
+        return view('accounts.profit_loss_event',compact('bets','activities'));
     }
 
     public function referred_users(Request $request){
@@ -496,5 +502,14 @@ class UserController extends Controller
         $userData = User::getCurrentUser();
         $referrals = User::where('referral',$userData->username)->get();
         return view('accounts.referred_users',compact('referrals'));
+    }
+
+    public function userBalance(Request $request){
+        $userData = User::getCurrentUser();
+        // $user = User::where('username',$request->username)->get();
+        return response()->json([
+            'response_code'=>'200',
+            'wallet_amount'=> $userData->wallet_amount
+        ]);
     }
 }

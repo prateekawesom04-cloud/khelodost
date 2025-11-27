@@ -485,6 +485,7 @@
    
       ajaxResponse(res);
       if(res.response_code == 200){
+         refreshWallet();
          $('.betslip').hide();
          // $.extend({}, obj1, obj2)
          if(user_bets[`${betslipData.marketId}_${betslipData.sid}_${betslipData.oddId}`]){

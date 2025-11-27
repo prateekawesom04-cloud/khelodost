@@ -32,7 +32,7 @@
                 {{-- <div class="flex flex-col sm:flex-row gap-2"> --}}
 
                     <button class="account_btn rounded-[0.4rem] px-1 py-1 text-nowrap flex items-center gap-[0.6rem]" data-bs-toggle="offcanvas" data-bs-target="#accountPanel"><span class="flex items-center gap-1 justify-center !text-[10px]">
-                    <img src="{{asset('icons/coins.png')}}" alt="" class="w-6"> : {{isset($userData->wallet_amount)?$userData->wallet_amount:'00'}} </a></span><i class="bi bi-arrow-repeat"></i></button>
+                    <img src="{{asset('icons/coins.png')}}" alt="" class="w-6"> : <span class="userBalance !text-[10px]">{{isset($userData->wallet_amount)?$userData->wallet_amount:'00'}}</span> </a></span><i class="bi bi-arrow-repeat"></i></button>
     
                     {{-- <button class="account_btn rounded-[0.4rem] px-1 py-1 text-nowrap flex items-center gap-[0.6rem]" data-bs-toggle="offcanvas" data-bs-target="#accountPanel"><span class="!text-[8px]">Exp. : {{$userData->unsattled_amount}} </a></span><i class="bi bi-arrow-repeat"></i></button> --}}
 
@@ -119,7 +119,7 @@
 {{-- 
             <div class="mb-3">
                 <div class="text-muted small fw-semibold">BALANCE</div>
-                <div class="balance-amount fs-6 fw-bold text-success">₹ {{isset($userData->wallet_amount)?$userData->wallet_amount:'00'}}</div>
+                <div class="balance-amount fs-6 fw-bold text-success">₹ <span class="userBalance">{{isset($userData->wallet_amount)?$userData->wallet_amount:'00'}}</span></div>
             </div> --}}
 
             <div class="d-flex justify-content-between mb-3">
@@ -129,7 +129,7 @@
                 </div> --}}
                 <div class="">
                     <div class="text-muted small fw-semibold">BALANCE</div>
-                    <div class="balance-amount fs-6 fw-bold text-success">₹ {{isset($userData->wallet_amount)?$userData->wallet_amount:'00'}}</div>
+                    <div class="balance-amount fs-6 fw-bold text-success">₹ <span class="userBalance fs-6">{{isset($userData->wallet_amount)?$userData->wallet_amount:'00'}}</span></div>
                 </div>
                 <div>
                     <div class="text-muted small fw-semibold text-uppercase">Net Exposure</div>

@@ -61,10 +61,10 @@
                                     <td>{{$transaction->created_at}}</td>
                                     <td>{{$transaction->sportname}}</td>
                                     <td>{{$transaction->eventId}}</td>
-                                    <td>{{$transaction->mname}}</td>
+                                    <td>{{$transaction->eventName}}/{{$transaction->mname}}/{{$transaction->nat}}</td>
                                     <td>{{$transaction->nat}}</td>
                                     <td>{{$transaction->betOn?'Lay':'Back'}}</td>
-                                    <td>{{$transaction->mname}}</td>
+                                    <td>{{$transaction->gtype}}</td>
                                     <td>{{$transaction->oddVal}}</td>
                                     <td>{{$transaction->bet_amount}}</td>
                                     <td class="{{$transaction->profit>0?'text-success':'text-danger'}}">{{$transaction->profit}}</td>

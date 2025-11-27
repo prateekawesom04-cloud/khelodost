@@ -66,5 +66,19 @@
 
     });
 
+    function refreshWallet(){
+        $('.bi-arrow-repeat').toggleClass('rotated');
+      callApi('get','{{route('user.userBalance')}}',{},userBalance);
+    }
+
+    function userBalance(res){
+        if(res.response_code == 200){
+            $('.userBalance').html(res.wallet_amount);
+        }
+    }
+
+    $('.bi-arrow-repeat').on('click',function(){
+        refreshWallet();
+    });
 
 </script>

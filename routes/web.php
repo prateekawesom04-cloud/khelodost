@@ -68,6 +68,8 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
         Route::get('eventBets', [UserController::class,'eventBets'])->name('user.eventBets')->withoutMiddleware([VerifyCsrfToken::class]);
 
         Route::get('bonus', [UserController::class,'bonus'])->name('user.bonus');
+        
+        Route::get('userBalance', [UserController::class,'userBalance'])->name('user.userBalance');
 
         Route::post('claimBonus', [UserController::class,'claimBonus'])->name('user.post.claimBonus')->withoutMiddleware([VerifyCsrfToken::class]);
 

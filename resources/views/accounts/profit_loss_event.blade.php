@@ -46,13 +46,13 @@
                                 </tr>
                             </thead>
                             <tbody class="table-body">
-                                @if(count($sportbookBets))
-                                    @foreach($sportbookBets as $transaction)
+                                @if(count($bets))
+                                    @foreach($bets as $transaction)
                                     <tr>
                                         <td>{{$transaction->created_at}}</td>
                                         <td>{{$transaction->eventName}}</td>
-                                        <td class="text-success">{{($transaction->status==1)? '-' : $transaction->profit}}</td>
-                                        <td class="text-danger">{{($transaction->status==2)? $transaction->profit : '-'}}</td>
+                                        <td class="text-success">{{$transaction->profit}}</td>
+                                        <td class="text-danger">{{$transaction->loss}}</td>
                                     </tr>
                                     @endforeach
                                 @endif
