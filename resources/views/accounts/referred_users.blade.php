@@ -2,42 +2,158 @@
 
 @section('sports_body')
 <style>
-    .main-container{background:#e9ecef;min-height:100vh;padding:30px}
-    .page-title{color:#0c9971;font-size:20px;font-weight:600;margin-bottom:10px}
-    .form-card{background:white;border-radius:10px;padding:30px;box-shadow:0 2px 4px rgba(0,0,0,0.1);margin-bottom:20px}
-    .form-row{margin-bottom:20px}
-    .form-control,.form-select{height:50px;border:2px solid #ced4da;border-radius:5px;font-size:14px}
-    .btn-submit{background:#0c9971;color:white;border:none;height:50px;border-radius:5px;font-weight:500;width:100%}
-    .btn-reset{background:#929292;color:white;border:none;height:50px;border-radius:5px;font-weight:500;width:100%}
-    .table-card{background:white;border-radius:10px;overflow:hidden;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
-    .table-header{background:#0c9971;color:white}
-    .table-header th{padding:18px 15px;font-weight:500;border:none;text-align:center;white-space:nowrap;min-width:120px}
-    .table-body td{padding:15px;border-bottom:1px solid #dee2e6;text-align:center;white-space:nowrap;min-width:120px}
-    .scroll-container{overflow-x:auto;-webkit-overflow-scrolling:touch}
-    .data-table{width:100%;margin:0;border-collapse:collapse;min-width:800px}
-    @media(max-width:768px){
-        .main-container{padding:15px}.form-card{padding:20px}.page-title{font-size:18px;text-align:center}
-        .form-row{margin-bottom:15px}.form-control,.form-select,.btn-submit,.btn-reset{height:45px}
-        .table-header th,.table-body td{padding:12px 8px;font-size:13px;min-width:100px}.data-table{min-width:600px}
+  .account-title {
+    color: #0c9971;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .filter-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+  }
+
+  .date-input {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 14px;
+    background: white;
+  }
+
+  .btn-submit {
+    background-color: #0c9971;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 25px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .btn-reset {
+    background-color: #e9ecef;
+    color: #666;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 25px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .table-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .table-responsive table {
+    min-width: 600px;
+    border-collapse: collapse;
+  }
+  
+  .table-body {
+    background: white;
+  }
+  
+  .table-body td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    min-width: max-content;
+  }
+
+  .table-header {
+    background-color: #0c9971;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .table-header th {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.2);
+    min-width: max-content;
+  }
+
+  .no-records {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    padding: 40px;
+    font-size: 16px;
+  }
+
+  .pagination-arrow {
+    color: #999;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .date-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .date-row .date-input {
+    flex: 1;
+  }
+  
+  .button-row {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .button-row button {
+    flex: 1;
+  }
+  
+  .page-title{color:#0c9971;font-size:20px;font-weight:600;margin-bottom:10px}
+
+  @media (max-width: 768px) {
+    .filter-card {
+      padding: 20px;
     }
-    @media(max-width:480px){
-        .main-container{padding:10px}.form-card{padding:15px}.page-title{font-size:16px}
-        .form-control,.form-select,.btn-submit,.btn-reset{height:40px;font-size:13px}
-        .table-header th,.table-body td{padding:10px 6px;font-size:12px;min-width:80px}
+    
+    .filter-responsive .d-flex {
+      flex-direction: column;
     }
+    
+    .account-title {
+      font-size: 20px;
+    }
+
+    .page-title{font-size:18px;text-align:start}
+  }
 </style>
 
-<main class="layout-content-center p-3">
+<div class="flex items-center justify-between p-2 !bg-[#0552cc]">
+  <h2 class="page-title !text-white m-0">Referral Users</h2>
+  <a href="{{url()->previous()}}" class="px-2 py-1 rounded-2 btn-submit !bg-[#0c0339]">Back</a>
+</div>
+<main class="layout-content-center !p-0">
     <div class="main-container">
 
         <div class="tab-content mt-3">
             
             <div class="tab-pane fade show active" id="profit_loss" role="tabpanel">
-                <h2 class="page-title">Referral Users</h2>
+                {{-- <h2 class="page-title">Referral Users</h2> --}}
                 <div class="table-card">
-                    <div class="scroll-container">
-                        <table class="data-table">
-                            <thead class="table-header">
+                    <div class="table-responsive">
+                        <table class="w-100">
+                            <thead class="table-header !text-[#444] !bg-[#fff]">
                                 <tr>
                                     <th class="text-nowrap">Date</th>
                                     <th class="text-nowrap">User Name</th>

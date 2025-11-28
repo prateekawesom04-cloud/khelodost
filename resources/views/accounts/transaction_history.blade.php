@@ -70,6 +70,7 @@
     text-align: center;
     border: 1px solid #ddd;
     font-size: 14px;
+    min-width: max-content;
   }
 
   .table-header {
@@ -83,6 +84,7 @@
     padding: 15px;
     text-align: center;
     border: 1px solid rgba(255,255,255,0.2);
+    min-width: max-content;
   }
 
   .no-records {
@@ -133,7 +135,7 @@
       font-size: 20px;
     }
 
-    .page-title{font-size:18px;text-align:center}
+    .page-title{font-size:18px;text-align:start}
   }
 </style>
 
@@ -144,38 +146,85 @@ $c = 0;
 $d = 0;
 @endphp
 
-<main class="layout-content-center !p-3">
+<div class="flex items-center justify-between p-2 !bg-[#0552cc]">
+  <h2 class="page-title !text-white m-0">Account Statement</h2>
+  <a href="{{url()->current()}}" class="px-2 py-1 rounded-2 btn-submit !bg-[#0c0339]">Back</a>
+</div>
+<main class="layout-content-center !p-0">
     <div class="main-container">
-      <div class="flex flex-row gap-2 items-center justify-start mt-3" id="statement_tabs" role="tablist">
-          <a href="javascript:void(0)" class="!flex justify-center items-center active btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#all_transaction">All Transactions</a>
-          <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#transaction">Pending</a>
-          <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#profit_loss">Confirmed</a>
-          <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#bonusTransaction">Rejected</a>
+      
+      <div class="flex flex-row gap-2 items-center justify-start mt-3 mx-2 flex-wrap" id="statement_tabs" role="tablist">
+        <div class="!flex justify-center items-center gap-1">
+          <input class="form-check-input !bg-[#000] checked:!bg-[#0552cc]" type="radio" name="filter" value="1" id="flexCheckDefault" checked>
+          <label for="flexCheckDefault" href="javascript:void(0)" class="active" data-bs-toggle="tab" data-bs-target="#all_transaction">
+            All Transactions
+          </label>
+        </div>
+        <div class="!flex justify-center items-center gap-1">
+          <input class="form-check-input !bg-[#000] checked:!bg-[#0552cc]" type="radio" name="filter" value="2" id="flexCheckDefault2">
+          <label for="flexCheckDefault2" href="javascript:void(0)" data-bs-toggle="tab" data-bs-target="#transaction">
+            Pending
+            </label>
+        </div>
+        <div class="!flex justify-center items-center gap-1">
+          <input class="form-check-input !bg-[#000] checked:!bg-[#0552cc]" type="radio" name="filter" value="2" id="flexCheckDefault3">
+          <label for="flexCheckDefault3" href="javascript:void(0)" data-bs-toggle="tab" data-bs-target="#profit_loss">
+            Confirmed
+            </label>
+        </div>
+        <div class="!flex justify-center items-center gap-1">
+          <input class="form-check-input !bg-[#000] checked:!bg-[#0552cc]" type="radio" name="filter" value="4 " id="flexCheckDefault4">
+          <label for="flexCheckDefault4" href="javascript:void(0)" data-bs-toggle="tab" data-bs-target="#bonusTransaction">
+            Rejected
+            </label>
+        </div>
+          {{-- <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#transaction">Deposit/Withdraw</a>
+          <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#profit_loss">Profit/Loss</a>
+          <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#bonusTransaction">Bonus</a>
+          <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#sportTransaction">Sport</a> --}}
           {{-- <a href="javascript:void(0)" class="!flex justify-center items-center btn btn-success fw-semibold px-4 rounded-2 btn-submit" data-bs-toggle="tab" data-bs-target="#activity">Activity</a> --}}
       </div>
         
       <!-- Filter Section -->
-      {{-- <div class="filter-card">
+      <div class="filter-card my-2 !p-2">
         <div class="filter-responsive">
           <div class="date-row">
-            <input type="date" class="date-input" value="2025-09-20">
-            <input type="date" class="date-input" value="2025-09-27">
+            <div class="input-group date" id="datetimepicker">
+              <input type="text" class="date-input datetimepicker form-control" name="iTime" value="{{date('Y-m-d h:m')}}" />
+              <span class="input-group-text">
+                  <i class="bi bi-calendar"></i> 
+              </span>
+            </div>
+            <div class="input-group date" id="datetimepicker">
+              <input type="text" class="date-input datetimepicker form-control" name="eTime" value="{{date('Y-m-d h:m')}}" />
+              <span class="input-group-text">
+                  <i class="bi bi-calendar"></i> 
+              </span>
+            </div>
           </div>
-          <div class="button-row">
-            <button class="btn-submit">Submit</button>
-            <button class="btn-reset">Reset</button>
+          <div class="flex flex-row gap-2 items-center">
+            <div class="input-group !w-1/2" id="datetimepicker">
+              <input type="text" class="date-input form-control" name="search" placeholder="search..." />
+              <span class="input-group-text">
+                  <i class="bi bi-search"></i> 
+              </span>
+            </div>
+            <div class="button-row flex flex-row gap-2 items-center !w-1/2">
+              <button class="btn-submit">Filter</button>
+              <button class="btn-reset">Clear</button>
+            </div>
           </div>
         </div>
-      </div> --}}
+      </div>
 
       <!-- Table Section -->
       <div class="tab-content mt-3">
           <div class="tab-pane fade show active" id="all_transaction" role="tabpanel">
-            <h2 class="page-title">All</h2>
+            {{-- <h2 class="page-title">All</h2> --}}
             <div class="table-card">
               <div class="table-responsive">
                 <table class="w-100">
-                  <thead class="table-header">
+                  <thead class="table-header !text-[#444] !bg-[#fff]">
                     <tr>
                       <th>S.No.</th>
                       <th>Date</th>
@@ -223,11 +272,11 @@ $d = 0;
           </div>
           
           <div class="tab-pane fade" id="transaction" role="tabpanel">
-            <h2 class="page-title">Deposit & Withdraw</h2>
+            {{-- <h2 class="page-title">Deposit & Withdraw</h2> --}}
             <div class="table-card">
               <div class="table-responsive">
                 <table class="w-100">
-                  <thead class="table-header">
+                  <thead class="table-header !text-[#444] !bg-[#fff]">
                     <tr>
                       <th>S.No.</th>
                       <th>Date</th>
@@ -272,12 +321,12 @@ $d = 0;
           </div>
 
           <div class="tab-pane fade" id="profit_loss" role="tabpanel">
-            <h2 class="page-title">Profit & Loss By Event Markets</h2>
+            {{-- <h2 class="page-title">Profit & Loss By Event Markets</h2> --}}
               
             <div class="table-card">
               <div class="table-responsive">
                 <table class="w-100">
-                  <thead class="table-header">
+                  <thead class="table-header !text-[#444] !bg-[#fff]">
                     <tr>
                       <th>S.No.</th>
                       <th>Date</th>
@@ -325,12 +374,12 @@ $d = 0;
           </div>
           
           <div class="tab-pane fade" id="bonusTransaction" role="tabpanel">
-            <h2 class="page-title">Profit & Loss By Event Markets</h2>
+            {{-- <h2 class="page-title">Profit & Loss By Event Markets</h2> --}}
               
             <div class="table-card">
               <div class="table-responsive">
                 <table class="w-100">
-                  <thead class="table-header">
+                  <thead class="table-header !text-[#444] !bg-[#fff]">
                     <tr>
                       <th>S.No.</th>
                       <th>Date</th>

@@ -70,6 +70,7 @@
     text-align: center;
     border: 1px solid #ddd;
     font-size: 14px;
+    min-width: max-content;
   }
 
   .table-header {
@@ -83,6 +84,7 @@
     padding: 15px;
     text-align: center;
     border: 1px solid rgba(255,255,255,0.2);
+    min-width: max-content;
   }
 
   .no-records {
@@ -145,41 +147,41 @@ $d = 0;
 $e = 0;
 @endphp
 
-<div class="flex items-center justify-between p-3 !bg-[#0552cc]">
+<div class="flex items-center justify-between p-2 !bg-[#0552cc]">
   <h2 class="page-title !text-white m-0">Account Statement</h2>
-  <a href="{{url()->current()}}" class="px-2 rounded-2 btn-submit !bg-[#0c0339]">Back</a>
+  <a href="{{url()->current()}}" class="px-2 py-1 rounded-2 btn-submit !bg-[#0c0339]">Back</a>
 </div>
-<main class="layout-content-center !p-3">
+<main class="layout-content-center !p-0">
     <div class="main-container">
       
-      <div class="flex flex-row gap-3 items-center justify-start mt-3" id="statement_tabs" role="tablist">
-        <div class="!flex justify-center items-center gap-2">
-          <input class="form-check-input" type="radio" name="filter" value="1" id="flexCheckDefault" checked>
+      <div class="flex flex-row gap-2 items-center justify-start mt-3 mx-2 flex-wrap" id="statement_tabs" role="tablist">
+        <div class="!flex justify-center items-center gap-1">
+          <input class="form-check-input !bg-[#000] checked:!bg-[#0552cc]" type="radio" name="filter" value="1" id="flexCheckDefault" checked>
           <label for="flexCheckDefault" href="javascript:void(0)" class="active" data-bs-toggle="tab" data-bs-target="#all_transaction">
             All
           </label>
         </div>
-        <div class="!flex justify-center items-center gap-2">
-          <input class="form-check-input" type="radio" name="filter" value="2" id="flexCheckDefault2">
-          <label for="flexCheckDefault2" href="javascript:void(0)" class="!flex justify-center items-center gap-2" data-bs-toggle="tab" data-bs-target="#transaction">
+        <div class="!flex justify-center items-center gap-1">
+          <input class="form-check-input !bg-[#000] checked:!bg-[#0552cc]" type="radio" name="filter" value="2" id="flexCheckDefault2">
+          <label for="flexCheckDefault2" href="javascript:void(0)" data-bs-toggle="tab" data-bs-target="#transaction">
             Deposit/Withdraw
             </label>
         </div>
-        <div class="!flex justify-center items-center gap-2">
-          <input class="form-check-input" type="radio" name="filter" value="2" id="flexCheckDefault3">
-          <label for="flexCheckDefault3" href="javascript:void(0)" class="!flex justify-center items-center gap-2" data-bs-toggle="tab" data-bs-target="#profit_loss">
+        <div class="!flex justify-center items-center gap-1">
+          <input class="form-check-input !bg-[#000] checked:!bg-[#0552cc]" type="radio" name="filter" value="2" id="flexCheckDefault3">
+          <label for="flexCheckDefault3" href="javascript:void(0)" data-bs-toggle="tab" data-bs-target="#profit_loss">
             Profit/Loss
             </label>
         </div>
-        <div class="!flex justify-center items-center gap-2">
-          <input class="form-check-input" type="radio" name="filter" value="4 " id="flexCheckDefault4">
-          <label for="flexCheckDefault4" href="javascript:void(0)" class="!flex justify-center items-center gap-2" data-bs-toggle="tab" data-bs-target="#bonusTransaction">
+        <div class="!flex justify-center items-center gap-1">
+          <input class="form-check-input !bg-[#000] checked:!bg-[#0552cc]" type="radio" name="filter" value="4 " id="flexCheckDefault4">
+          <label for="flexCheckDefault4" href="javascript:void(0)" data-bs-toggle="tab" data-bs-target="#bonusTransaction">
             Bonus
             </label>
         </div>
-        <div class="!flex justify-center items-center gap-2">
-          <input class="form-check-input" type="radio" name="filter" value="5" id="flexCheckDefault5">
-          <label for="flexCheckDefault5" href="javascript:void(0)" class="!flex justify-center items-center gap-2" data-bs-toggle="tab" data-bs-target="#sportTransaction">
+        <div class="!flex justify-center items-center gap-1">
+          <input class="form-check-input !bg-[#000] checked:!bg-[#0552cc]" type="radio" name="filter" value="5" id="flexCheckDefault5">
+          <label for="flexCheckDefault5" href="javascript:void(0)" data-bs-toggle="tab" data-bs-target="#sportTransaction">
             Sport
             </label>
         </div>
@@ -191,7 +193,7 @@ $e = 0;
       </div>
         
       <!-- Filter Section -->
-      <div class="filter-card my-2">
+      <div class="filter-card my-2 !p-2">
         <div class="filter-responsive">
           <div class="date-row">
             <div class="input-group date" id="datetimepicker">
@@ -229,7 +231,7 @@ $e = 0;
             <div class="table-card">
               <div class="table-responsive">
                 <table class="w-100">
-                  <thead class="table-header">
+                  <thead class="table-header !text-[#444] !bg-[#fff]">
                     <tr>
                       <th>S.No.</th>
                       <th>Date</th>
