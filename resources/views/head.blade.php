@@ -26,10 +26,13 @@
 <link rel="stylesheet" href="{{ asset('css') }}/Montserrat_font.css">
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <link rel="stylesheet" href="{{ asset('css/app_style.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datetime-picker@2.4.4/css/bootstrap-datetimepicker.min.css">
 
 <script src="{{ asset('js') }}/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="{{ asset('js') }}/tailwind.min.js"></script>
 <script src="{{ asset('js') }}/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-datetime-picker@2.4.4/js/bootstrap-datetimepicker.min.js"></script>
 
 <!-- Flatpickr JS -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

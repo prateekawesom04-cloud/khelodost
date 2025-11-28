@@ -64,6 +64,11 @@
             // $('.app_scroller').scrollLeft($('.app_scroller').scrollLeft()+window.innerWidth)
         }, 3000);
 
+        $(function () {
+            $('.datetimepicker').datetimepicker({
+                // format: 'MM/DD/YYYY HH:mm' // Example format: Month/Day/Year Hour:Minute
+            });
+        });
     });
 
     function refreshWallet(){
@@ -80,5 +85,6 @@
     $('.bi-arrow-repeat').on('click',function(){
         refreshWallet();
     });
+
 
 </script>
