@@ -169,13 +169,13 @@
         </div>
 
         <!-- Settings Section -->
-        {{-- <div class="menu-title fw-bold text-secondary fs-6 ml-1 mt-4 mb-2">
+        <div class="menu-title fw-bold text-secondary fs-6 ml-1 mt-4 mb-2">
             ⚙️ Account Settings
         </div>
 
         <div class="ms-3 border-top">
             <a href="{{ route('account_setting') }}" class="d-block py-2 px-3 text-decoration-none text-dark border-bottom">🛠️ Settings</a>
-        </div> --}}
+        </div>
 
         <!-- Account Actions Section -->
         <div class="menu-title fw-bold text-secondary fs-6 ml-1 mt-1 mb-2">
