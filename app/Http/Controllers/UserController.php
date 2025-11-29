@@ -32,7 +32,7 @@ class UserController extends Controller
         $rules = [
             'oldPassword' => 'required',
             'newPassword' => 'required|min:6',
-            'confirmPassword' => 'required|same:newPassword',
+            'confirm_password' => 'required|same:newPassword',
         ];
         
         $validator = Validator::make($request->all(), $rules);

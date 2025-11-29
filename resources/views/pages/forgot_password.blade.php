@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Playcrickgg Update</title>
+  <title>MatchBhai</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
   <style>
@@ -95,6 +95,7 @@
       }
     }
   </style>
+<link rel="stylesheet" href="{{ asset('css/app_style.css') }}">
 </head>
 
 <body>
@@ -103,39 +104,49 @@
     <div class="bg-custom-green p-4 rounded-3 text-center text-white shadow" style="width: 380px;">
       <!-- Logo -->
       <a>
-        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="mb-4" style="max-width:180px;" />
+        <img src="{{ asset('logo/logo.png') }}" alt="Logo" class="mb-4" style="max-width:180px;" />
       </a>
 
       <!-- Form -->
       <form>
         <!-- Mobile Number + Get OTP -->
-        <div class="mb-3">
+        <div class="mb-3 otp_not_verified">
           <div class="input-group">
-            <input type="text" name="phone" class="form-control" placeholder="+91 Enter Your 10 Digit Number" />
-            <button type="button" class="btn btn-yellow">Get OTP</button>
+            <input type="text" name="phone" class="form-control" minlength="10" maxlength="10" placeholder="+91 Enter Your 10 Digit Number" />
+            <button type="button" class="btn btn-yellow getOtp">Get OTP</button>
           </div>
         </div>
 
         <!-- OTP -->
         <div class="mb-3">
-          <input type="text" name="otp" class="form-control" placeholder="Enter OTP" />
+          <input type="text" name="otp" class="form-control" minlength="6" maxlength="6" placeholder="Enter OTP" />
         </div>
 
-        <!-- Password -->
-        <div class="mb-3 input-group">
-          <span class="input-group-text input-group-text-yellow"><i class="bi bi-lock"></i></span>
-          <input type="password" name="password" class="form-control rounded-end" placeholder="Password" />
+        <!-- New Password -->
+        <div class="mb-3 otp_verified">
+          <div class="input-group">
+            <span class="input-group-text input-group-text-yellow"><i class="bi bi-lock"></i></span>
+            <input type="password" name="newPassword" class="form-control rounded-end" placeholder="Enter new password" />
+          </div>
+        </div>
+
+        <!-- Confirm New Password -->
+        <div class="mb-3 otp_verified">
+          <div class="input-group">
+            <span class="input-group-text input-group-text-yellow"><i class="bi bi-lock"></i></span>
+            <input type="password" name="confirm_password" class="form-control rounded-end" placeholder="Confirm new password" />
+          </div>
         </div>
 
         <!-- Remember Me -->
-        <div class="form-check text-start mb-3">
+        {{-- <div class="form-check text-start mb-3">
           <input class="form-check-input" type="checkbox" value="" id="rememberMe" />
           <label class="form-check-label small" for="rememberMe">REMEMBER ME</label>
-        </div>
+        </div> --}}
 
         <!-- Update Button -->
-        <div class="d-grid mb-3">
-          <button type="submit" class="btn btn-yellow">Update</button>
+        <div class="mb-3 otp_verified">
+          <a id="update" type="submit" class="btn btn-yellow w-100">Update</a>
         </div>
 
         <!-- Already have account -->
@@ -145,6 +156,129 @@
       </form>
     </div>
   </main>
+  @include('includes.app_toast')
+  <script src="{{ asset('js') }}/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+@include('includes.ajaxCalls')
+@include('includes.script')
+
+<script>
+  $(document).ready(function(){
+    $('.otp_verified').hide();
+  });
+
+  let otpVerified = false;
+
+  let data = {
+    phone:'',
+    otp:'',
+    otpTimer: null,
+    otpTimeLeft: 60,
+    newPassword:'',
+    confirm_password:''
+  }
+
+  $('input').on('change',function(e){
+    if(otpVerified && $(this).attr('name')=='phone'){
+      e.preventDefault();
+      return false;
+    }
+    data[$(this).attr('name')] = $(this).val();
+  });
+  
+  $('.getOtp').on('click',function(){
+    
+    if(otpVerified){
+      return;
+    }
+
+    if(data.phone.length < 10){
+      alert('Please Enter Correct Number');
+      return;
+    }
+
+    $(this).prop('disabled');
+
+    callApi('get', '{{route('user.getOtp')}}', data, getOtp);
+  });
+
+  function startOtpCountdown(button) {
+
+    $(button).prop('disabled', true).text(`Retry in ${data.otpTimeLeft}s`);
+
+    data.otpTimer = setInterval(() => {
+      data.otpTimeLeft--;
+
+      if (data.otpTimeLeft > 0) {
+        $(button).prop('disabled', true).text(`Retry in ${data.otpTimeLeft}s`);
+      } else {
+        if (!otpVerified) {
+        // if (!localStorage.getItem('user_otp') || localStorage.getItem('user_otp') != data.phone) {
+          $(button).prop('disabled', false).text('Get OTP');
+        }
+        clearInterval(data.otpTimer);
+      }
+    }, 1000);
+
+  }
+
+  function getOtp(res){
+    console.log(res);
+    
+    if(res.response_code == 200){
+      responseToast('Please Enter Otp');
+      startOtpCountdown('.getOtp');
+      
+      localStorage.setItem('user_otp', data.phone);
+    } else{
+      $('.getOtp').prop('disabled', false);
+      responseToast(res.message,'bg-danger');
+    }
+  }
+
+  $('input[name=otp]').on('keyup',function(e) {
+    if (!localStorage.getItem('user_otp') || localStorage.getItem('user_otp') != data.phone) {
+      $(this).val('');
+      responseToast('Otp not send yet...','bg-warning');
+      return false;
+    }
+    
+    if ($(this).val().length == 6) {
+      // let data = {};
+      data.otp = $(this).val();
+      data.phone = data.phone;
+
+      callApi('get', '{{route('user.verifyOtp')}}', data, verifyOtp);
+    }
+  });
+
+  function verifyOtp(response) {
+    if (response.response_code == 200) {
+      otpVerified = true;
+
+      $('input[name=password]').prop('disabled', false);
+      $('input[name=confirm_password]').prop('disabled', false);
+
+      $('a.getOtp').prop('disabled', true).text('OTP Verified');
+
+      $('.otp_verified').show();
+      $('.otp_not_verified').hide();
+
+      if (data.otpTimer) {
+        clearInterval(data.otpTimer);
+        data.otpTimer = null;
+      }
+    } else {
+      responseToast('Invalid OTP');
+      $('.getOtp').prop('disabled', false).text('Get OTP');
+    }
+  }
+
+
+  
+
+  
+
+</script>
 </body>
 </html>

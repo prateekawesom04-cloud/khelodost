@@ -269,7 +269,7 @@ class AuthController extends Controller
         $rules = [
             'oldPassword' => 'required',
             'newPassword' => 'required|min:6',
-            'confirmPassword' => 'required|same:newPassword',
+            'confirm_password' => 'required|same:newPassword',
         ];
         
         $validator = Validator::make($request->all(), $rules);
@@ -360,9 +360,9 @@ class AuthController extends Controller
     
     public function getOtp(Request $request){
         
-        if($request->otptype == 'login'){
+        // if($request->otptype == 'login'){
             $user = User::where([
-                'phone'=>$request->phone
+                'username'=>$request->phone
             ])->first();
             
             if(!$user){
@@ -371,12 +371,12 @@ class AuthController extends Controller
                     'response_code'=> '104'
                 ]);
             }
-        }
+        // }
         
         $otp = random_int(100000, 999999);
 
-        Session::put('user'.$request->otptype.'_otp_'.$request->phone,$otp);
-        Session::put($request->otptype.'otp_expiry_time',time() + (60));
+        Session::put('user_otp_'.$request->phone,$otp);
+        Session::put('otp_expiry_time_'.$request->phone,time() + (60));
 
         $data = [
             'APIKey'=>env('SMS_API_KEY'),
@@ -409,28 +409,31 @@ class AuthController extends Controller
 
         return response()->json([
             'phone'=>$request->phone,
-            'smsResponse'=>$response
+            'response'=>$response,
+            'response_code'=>'200'
         ]);
     }
 
     public function verifyOtp(Request $request){
-        if (time() < session($request->otptype.'otp_expiry_time')){
-            if($request->otp == Session::get('user'.$request->otptype.'_otp_'.$request->phone)){
+        if (time() < session('otp_expiry_time_'.$request->phone)){
+            if($request->otp == Session::get('user_otp_'.$request->phone)){
                 Session::put([
-                    $request->otptype.'_otp_'.$request->phone.'verified'=>True
+                    'user_otp_'.$request->phone.'verified'=>True
                 ]);
                 return response()->json([
                     'message'=> 'otp matched',
-                    'err_code'=>101
+                    'response_code'=>200
                 ]);
             } else{
                 return response()->json([
-                    'message'=> 'otp mismatched'
+                    'message'=> 'otp mismatched',
+                    'response_code'=>101
                 ]);
             }
         }
         return response()->json([
-            'message'=> 'otp expired'
+            'message'=> 'otp expired',
+            'response_code'=>101
         ]);
     }
 

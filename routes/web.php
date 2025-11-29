@@ -39,6 +39,10 @@ Route::middleware(['auth_middleware'])->group(function () {
         return view('pages.forgot_password');
     })->name('forgot_password');
 
+    Route::get('getOtp', [AuthController::class,'getOtp'])->name('user.getOtp');
+
+    Route::get('verifyOtp', [AuthController::class,'verifyOtp'])->name('user.verifyOtp');
+
     Route::get('social', [AuthController::class,'social'])->name('api.login.social');
 
     Route::get('callback/{redirect}', [AuthController::class,'callback'])->name('api.login.callback');

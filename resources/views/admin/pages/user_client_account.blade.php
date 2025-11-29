@@ -66,12 +66,12 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
-                        <label for="confirmPassword" class="form-label small">
+                        <label for="confirm_password" class="form-label small">
                             <i class="fas fa-lock me-1 text-success d-none d-md-inline"></i> Retype Password
                         </label>
                         <div class="position-relative">
-                            <input name="confirm_password" id="confirmPassword" type="password" class="form-control border-2" style="padding-right: 45px;" required>
-                            <span class="position-absolute top-50 end-0 translate-middle-y me-3" style="cursor: pointer; z-index: 10;" onclick="togglePassword('confirmPassword', this)">
+                            <input name="confirm_password" id="confirm_password" type="password" class="form-control border-2" style="padding-right: 45px;" required>
+                            <span class="position-absolute top-50 end-0 translate-middle-y me-3" style="cursor: pointer; z-index: 10;" onclick="togglePassword('confirm_password', this)">
                                 <i class="fas fa-eye text-muted"></i>
                             </span>
                         </div>

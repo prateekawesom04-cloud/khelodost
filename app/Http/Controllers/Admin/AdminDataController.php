@@ -640,6 +640,19 @@ class AdminDataController extends Controller
 
             foreach ($wonUsers as $user) {
                 $userData = User::where('username',$user->username)->first();
+
+                $transaction = new Transaction();
+                $transaction->username = $user->username;
+                $transaction->order_sn = 'WON_'.time().rand(0,1000);
+                $transaction->wallet_before = $user->wallet_amount;
+                $transaction->transfer_amount = $user->bet_amount;
+                $transaction->ip = $user->ip();
+                $transaction->status = 1;
+                $transaction->payment_type = 2;
+                $transaction->currency = "INR";
+                $transaction->remark = "Won amount ".$user->bet_amount;
+                $transaction->save();
+
                 $userData->wallet_amount += $user->profit+$user->bet_amount;
                 // $userData->wallet_amount += ($user->bet_amount * $user->oddVal);
                 $userData->unsattled_amount -= $user->bet_amount;
@@ -651,6 +664,19 @@ class AdminDataController extends Controller
         if($lossUsers->count()){
             foreach ($lossUsers as $user) {
                 $userData = User::where('username',$user->username)->first();
+
+                $transaction = new Transaction();
+                $transaction->username = $user->username;
+                $transaction->order_sn = 'WON_'.time().rand(0,1000);
+                $transaction->wallet_before = $user->wallet_amount;
+                $transaction->transfer_amount = $user->bet_amount;
+                $transaction->ip = $user->ip();
+                $transaction->status = 1;
+                $transaction->payment_type = 0;
+                $transaction->currency = "INR";
+                $transaction->remark = "Loss amount ".$user->bet_amount;
+                $transaction->save();
+
                 $userData->wallet_amount -= $user->bet_amount;
                 // $userData->wallet_amount += ($user->bet_amount * $user->oddVal);
                 $userData->unsattled_amount -= $user->bet_amount;

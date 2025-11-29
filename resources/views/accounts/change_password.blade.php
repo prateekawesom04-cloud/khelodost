@@ -48,7 +48,7 @@
       <div class="mb-3">
         <div class="input-group">
           <span class="input-group-text input-group-text-yellow"><i class="bi bi-lock"></i></span>
-          <input type="password" name="confirmPassword" class="form-control rounded-end" placeholder="Confirm new password" />
+          <input type="password" name="confirm_password" class="form-control rounded-end" placeholder="Confirm new password" />
         </div>
       </div>
 
