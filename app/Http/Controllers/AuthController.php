@@ -190,16 +190,13 @@ class AuthController extends Controller
         // dd('request',$request);
         // return response()->json($request);
         if($request->phone){
-            $user = User::where([
-                'phone'=>$request->phone,
-                'status'=>2
-            ])->first();
+            $user = User::where('phone',$request->phone)->whereIn('status',[1,2])->first();
 
         }
 
         if(empty($user)){
             return response()->json([
-                'message'=> 'User not found',
+                'message'=> 'User not found or blocked, please contact support',
                 'response_code'=> '104'
             ]);
         } else{

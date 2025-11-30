@@ -113,6 +113,8 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
             return view('accounts.account_setting');
         })->name('account_setting');
 
+    
+        Route::get('eventDetail/{eventId}', [SportbookController::class,'soccerEvent'])->name('user.eventDetail');
         
         Route::get('logout', function () {
             session()->forget('username');
@@ -124,8 +126,6 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
     Route::get('eventPage/{eventId}', [SportbookController::class,'eventPage'])->name('user.eventPage');
     
     Route::get('soccerEvent/{eventId}', [SportbookController::class,'soccerEvent'])->name('user.soccerEvent');
-    
-    Route::get('eventDetail/{eventId}', [SportbookController::class,'soccerEvent'])->name('user.eventDetail');
     
     Route::get('sport/{sportname}', [SportbookController::class,'sport'])->name('user.sport');
     

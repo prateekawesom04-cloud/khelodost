@@ -33,11 +33,26 @@ class AdminUserController extends Controller
     }
 
     public function user_downline_list(Request $request,$username){
-        $users = User::where([
+        // $users = User::where([
             // 'admin_username'=>$username,
-            'status'=>2
-        ])->get();
+        //     'status'=>2
+        // ])->get();
+
+        $users = User::where('status','!=',0)->get();
+
         return view('admin.pages.user_downline_list',compact('users'));
+    }
+    
+    public function blockUser(Request $request){
+
+        $user = User::where('username',$request->username)->first();
+        $user->status = $request->status;
+        $user->save();
+
+        return response()->json([
+            'message'=> 'User Status Updated',
+            'response_code'=> '200'
+        ]);
     }
 
     public function master_downline_list(Request $request){

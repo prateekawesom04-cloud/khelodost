@@ -105,12 +105,12 @@
                                     <td>{{$user->wallet_amount - $user->unsattled_amount }}</td>
                                     <!-- <td>1000</td> -->
                                     <!-- <td>{{$user->partnership_percentage }}</td> -->
-                                    <td><input type="checkbox" name="u_lock" /></td>
-                                    <td><input type="checkbox" name="b_lock" /></td>
+                                    <td><input data-username="{{ $user->username }}" value="{{ $user->status == 3 ? '2' : '3' }}" class="lock" type="checkbox" name="u_lock" {{ $user->status == 3 ? 'checked' : '' }} /></td>
+                                    <td><input data-username="{{ $user->username }}" value="{{ $user->status == 1 || $user->status == 3 ? '2' : '1' }}" class="lock" type="checkbox" name="b_lock" {{ $user->status == 1 || $user->status == 3 ? 'checked' : '' }} /></td>
                                     <!-- <td>10%</td> -->
                                     <td>
                                         <span class="badge bg-{{ $user->status == 3 ? 'danger' : 'success' }}">
-                                            {{ $user->status == 6 ? 'inactive' : 'active' }}
+                                            {{ $user->status == 3 ? 'inactive' : 'active' }}
                                         </span>
                                     </td>
                                     <td>
@@ -174,6 +174,11 @@
         // $('.btn-password-change').click(function(){
         //     $('#changePasswordModal').find('form').attr('data-url','');
         // });
+        
+        $('.lock').on('click',function(){
+            $(this).attr('disabled','true');
+            callApi('post', `{{Route('admin.action.blockUser')}}`, {status:$(this).val(),username:$(this).attr('data-username')}, ajaxResponseModal);
+        });
 
     </script>
 @endsection

@@ -64,6 +64,8 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
         
         // Route::get('/user_downline_list', [AdminUserController::class,'user_downline_list'])->name('admin.user_downline_list');
         
+        Route::post('/blockUser', [AdminUserController::class,'blockUser'])->name('admin.action.blockUser')->withoutMiddleware([VerifyCsrfToken::class]);
+        
         Route::post('/add_user_client', [AdminUserController::class,'add_user_client'])->name('admin.action.add_user_client');
         
         Route::post('/updateUserPhone', [AdminUserController::class,'updateUserPhone'])->name('admin.action.updateUserPhone');

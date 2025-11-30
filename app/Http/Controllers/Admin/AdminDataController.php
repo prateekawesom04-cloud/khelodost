@@ -626,7 +626,7 @@ class AdminDataController extends Controller
             // 'betOn'=>$result,
             'marketid'=>$request->marketId
             ])
-            ->select('username','bet_amount','oddVal','profit')->get();
+            ->select('username','bet_amount','oddVal','profit','ip')->get();
 
         $lossUsers = SportookBet::where(
             [
@@ -634,7 +634,7 @@ class AdminDataController extends Controller
             'eventId'=>$eventId,
             'marketid'=>$request->marketId
             ])
-            ->select('username','bet_amount','oddVal','profit')->get();
+            ->select('username','bet_amount','oddVal','profit','ip')->get();
 
         if($wonUsers->count()){
 
@@ -646,7 +646,7 @@ class AdminDataController extends Controller
                 $transaction->order_sn = 'WON_'.time().rand(0,1000);
                 $transaction->wallet_before = $user->wallet_amount;
                 $transaction->transfer_amount = $user->bet_amount;
-                $transaction->ip = $user->ip();
+                $transaction->ip = $user->ip;
                 $transaction->status = 1;
                 $transaction->payment_type = 2;
                 $transaction->currency = "INR";
@@ -670,7 +670,7 @@ class AdminDataController extends Controller
                 $transaction->order_sn = 'WON_'.time().rand(0,1000);
                 $transaction->wallet_before = $user->wallet_amount;
                 $transaction->transfer_amount = $user->bet_amount;
-                $transaction->ip = $user->ip();
+                $transaction->ip = $user->ip;
                 $transaction->status = 1;
                 $transaction->payment_type = 0;
                 $transaction->currency = "INR";
