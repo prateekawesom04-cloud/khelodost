@@ -27,6 +27,13 @@ class SportookBetController extends Controller
             ]);
         }
 
+        if($user->status != 2){
+            return response()->json([
+                'response_code'=>'401',
+                'message'=> 'Unable to bet please contact support'
+            ]);
+        }
+
         $request->username = $user->username;
 
         $request->betId = substr($user->username,0,5).'_'.rand(1000,9999).'_'.substr(time(),6,strlen(time())-1);
