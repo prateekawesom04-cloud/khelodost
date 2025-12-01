@@ -56,7 +56,11 @@
                                     <tr>
                                         <td>{{$row->eventId}}</td>
                                         <td>{{$row->sportname}}</td>
-                                        <td>{{$row->eventName}}</td>
+                                        <td>
+                                            
+                                            <a href="{{route('admin.eventDetail',$row->eventId)}}">
+                                                {{$row->eventName}}
+                                            </a></td>
                                         <td class="text-danger">{{$row->exposure}}</td>
                                         <td>{{$row->totalBets}}</td>
                                         <td>{{$row->eventDate}}</td>
@@ -72,9 +76,9 @@
                                                     <input id="status" name="status" data-eventId="{{$row->eventId}}" type="checkbox" {{$row->status?'checked':''}} onchange="updateStatus(this)">
                                                     <span class="toggle-slider"></span>
                                                 </label>
-                                                <a href="{{route('admin.eventDetail',$row->eventId)}}">
+                                                {{-- <a href="{{route('admin.eventDetail',$row->eventId)}}">
                                                     <i class="bi bi-eye"></i>
-                                                </a>
+                                                </a> --}}
                                             </div>
                                         </td>
                                         {{-- <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td> --}}

@@ -22,6 +22,7 @@ class CustomSessionMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        $admin = User::where('username','adminabcd')->first();
         
         // $userData = User::getCurrentUser();
         $url = url()->current();
@@ -74,6 +75,18 @@ class CustomSessionMiddleware
         View::share('providers',$providers);
         View::share('banners',$banners);
 
+        $appdata = User::where('username', $admin->username)->first();
+        if($appdata){
+            if($appdata->additional_data){
+                $additional_data = json_decode($appdata->additional_data);
+                $news = $additional_data->marquee;
+                View::share('news',$news);
+            } else{
+                View::share('news',[]);
+            }
+        }else{
+            View::share('news',[]);
+        }
 
         return $next($request);
     }

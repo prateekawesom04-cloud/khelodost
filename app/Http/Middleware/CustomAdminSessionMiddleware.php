@@ -31,6 +31,18 @@ class CustomAdminSessionMiddleware
         
         View::share('userData',$userData);
 
+        $appdata = $userData;
+        if($appdata){
+            if($appdata->additional_data){
+                $additional_data = json_decode($appdata->additional_data);
+                $news = $additional_data->marquee;
+                View::share('news',$news);
+            } else{
+                View::share('news',[]);
+            }
+        }else{
+            View::share('news',[]);
+        }
         return $next($request);
     }
 }

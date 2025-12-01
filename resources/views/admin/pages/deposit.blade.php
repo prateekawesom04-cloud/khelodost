@@ -35,6 +35,7 @@
                         <table class="table table-bordered table-striped acc-table">
                             <thead class="table-secondary">
                                 <tr>
+                                    <th>Action</th>
                                     <th>Date/Time</th>
                                     <th>UID</th>
                                     <th>Transaction ID</th>
@@ -45,7 +46,6 @@
                                     <th>Screenshot</th>
                                     <th>Status</th>
                                     <th>Remark</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -63,17 +63,8 @@
                                     }
                                     @endphp
                                 <tr>
-                                    <td>{{$transaction->created_at}}</td>
-                                    <td>{{$transaction->username}}</td>
-                                    <td>{{$transaction->order_sn}}</td>
-                                    <td>{{$transaction->wallet_before}}</td>
-                                    <td>{{($transaction->payment_type)?'-':$transaction->transfer_amount}}</td>
-                                    <td>{{($transaction->payment_type)?$transaction->transfer_amount:'-'}}</td>
-                                    <td>{{$available_balance}}</td>
-                                    <td><img src="{{asset('storage').$transaction->payment_proof}}" class="img-fluid rounded" style="width:40px;" onerror="$(this).remove()"></td>
-                                    <td>{{($transaction->status==2)?'Success':(($transaction->status==1)?'Processing':'Failed')}}</td>
-                                    <td>{{$transaction->remark}}</td>
                                     <td>
+                                        @if($transaction->status==1)
                                         <flex class="flex flex-row items-center justify-evenly">
                                             <div class="p-[.1rem]">
                                                 <i data-order_sn="{{ $transaction->order_sn }}" class="fas fa-circle-xmark text-danger reject_deposit" style="cursor: pointer;" title="reject" data-bs-toggle="modal"
@@ -87,7 +78,20 @@
                                             </div>
 
                                         </flex>
+                                        @else
+                                        --
+                                        @endif
                                     </td>
+                                    <td>{{$transaction->created_at}}</td>
+                                    <td>{{$transaction->username}}</td>
+                                    <td>{{$transaction->order_sn}}</td>
+                                    <td>{{$transaction->wallet_before}}</td>
+                                    <td>{{($transaction->payment_type)?'-':$transaction->transfer_amount}}</td>
+                                    <td>{{($transaction->payment_type)?$transaction->transfer_amount:'-'}}</td>
+                                    <td>{{$available_balance}}</td>
+                                    <td><img src="{{asset('storage').$transaction->payment_proof}}" class="img-fluid rounded" style="width:40px;" onerror="$(this).remove()"></td>
+                                    <td>{{($transaction->status==2)?'Success':(($transaction->status==1)?'Processing':'Failed')}}</td>
+                                    <td>{{$transaction->remark}}</td>
                                     
                                 </tr>
                                 @endforeach

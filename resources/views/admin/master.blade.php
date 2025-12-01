@@ -22,7 +22,7 @@
     @include('admin.model.deposit_withdraw')
     @include('admin.model.rolling_commission')
     @include('admin.model.sports_setting')
-    {{--@include('admin.model.news_edit')--}}
+    @include('admin.model.news_edit')
     @include('admin.model.number_edit')
     @include('admin.model.change_phone')
     {{-- @include('admin.model.edit_bonus')
