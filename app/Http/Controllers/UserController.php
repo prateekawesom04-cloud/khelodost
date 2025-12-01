@@ -122,6 +122,12 @@ class UserController extends Controller
     public function withdraw(Request $request){
         
         $user = $this->currentUser;
+
+        $userBank = UserBank::where('username',$user->username)->first();
+        // dd($userBank);
+        if(!$userBank){
+            return view('accounts.account_setting');
+        }
         if($user){
             $agent = User::where('username',$user->username)->where('status','>',0)->first();
             $data = Transaction::where([
@@ -293,62 +299,6 @@ class UserController extends Controller
             'message'=> 'You have successfully claimed the bonus',
             'response_code'=> '200'
         ]);
-    }
-
-    public function addBank(Request $request){
-
-        $rules = [
-            'username'=>'required',
-            'account_holder'=>'required',
-            'account_number'=>'required|numeric',
-            'confirm_account_number' => 'required|same:account_number',
-            'bank_name'=>'required',
-            'ifsc_code'=>'required|max:11',
-            'upi_id'=>'required'
-        ];
-
-        
-        $validator = Validator::make($request->all(), $rules);
-        $errors = [];
-        if($validator->fails()){
-            foreach ($validator->errors()->messages() as $key => $value) {
-                $errors[] = $value[0];
-            }
-            return response()->json([
-                'message'=> $errors[0],
-                'response_code'=> '305'
-            ]);
-            
-        } else{
-
-            $userBank = UserBank::where('username',$request->username)->first();
-    
-            if($userBank){
-                $userBank->username = $request->username;
-                $userBank->account_holder = $request->account_holder;
-                $userBank->account_number = $request->account_number;
-                $userBank->bank_name = $request->bank_name;
-                $userBank->ifsc_code = $request->ifsc_code;
-                $userBank->upi_id = $request->upi_id;
-                $userBank->save();
-            } else{
-                $userBank = new UserBank();
-                $userBank->username = $request->username;
-                $userBank->account_holder = $request->account_holder;
-                $userBank->account_number = $request->account_number;
-                $userBank->bank_name = $request->bank_name;
-                $userBank->ifsc_code = $request->ifsc_code;
-                $userBank->upi_id = $request->upi_id;
-                $userBank->save();
-            }
-    
-            return response()->json([
-                'message'=> 'Account Updated',
-                'response_code'=> '200'
-            ]);
-
-        }
-
     }
     
     public function openBets(Request $request){

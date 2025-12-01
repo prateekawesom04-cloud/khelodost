@@ -11,6 +11,40 @@ class TransactionController extends Controller
 {
     //
     
+    public function withdrawalRequest(Request $request){
+
+        $user = User::getCurrentUser();
+
+        if($user->wallet_amount < $request->transfer_amount){
+            return response()->json([
+                'message'=> 'Amount Unvailable in your wallet',
+                'response_code'=> '105'
+            ]);
+        }
+        
+        $oldTransaction = Transaction::where('username',$user->username)->where('payment_type',0)->get();
+
+        if(!count($oldTransaction)){
+            return response()->json([
+                'message'=> 'To withdraw amount you need minimum 1 deposit',
+                'response_code'=> '105'
+            ]);
+        }
+
+        $transaction = new Transaction();
+        $transaction->username = $user->username;
+        $transaction->order_sn = 'REQ_'.time().rand(0000,0000);
+        $transaction->wallet_before = $user->wallet_amount;
+        $transaction->transfer_amount = $request->transfer_amount;
+        $transaction->ip = $request->ip();
+        $transaction->status = 1;
+        $transaction->payment_type = $request->payment_type;
+        $transaction->currency = "INR";
+        $transaction->remark = "Deposit of ".$request->transfer_amount;
+        $transaction->save();
+    }
+    
+    
     public function paymentGatewayMethod(Request $request){
         $user = User::getCurrentUser();
 

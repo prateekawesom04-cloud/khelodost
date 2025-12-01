@@ -7,6 +7,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserBankController;
 use App\Http\Controllers\SportbookController;
 use App\Http\Controllers\SportookBetController;
 
@@ -80,16 +81,19 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
         Route::get('betlist', [UserController::class,'betlist'])->name('user.betlist');
         
         Route::get('live_game_bet_history', [UserController::class,'live_game_bet_history'])->name('user.live_game_bet_history');
+        
         Route::get('transaction_history', [UserController::class,'transaction_history'])->name('user.transaction_history');
         
-        Route::get('/withdraw', function () {
-            return view('accounts.withdraw');
-        })->name('user.withdraw');
-            // Route::get('withdraw', [UserController::class,'withdraw'])->name('user.withdraw'); 
+        // Route::get('/withdraw', function () {
+        //     return view('accounts.withdraw');
+        // })->name('user.withdraw');
+
+        Route::get('withdraw', [UserController::class,'withdraw'])->name('user.withdraw'); 
 
         // Route::get('/account_statement', function () {
         //     return view('accounts.account_statement');
         // })->name('account_statement');
+
         Route::get('account_statement', [UserController::class,'account_statement'])->name('account_statement'); 
 
         // Route::get('/open_bets', function () {
@@ -109,10 +113,13 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
 
         Route::post('changePassword', [UserController::class,'changePassword'])->name('user.changePassword')->withoutMiddleware([VerifyCsrfToken::class]);
 
-        Route::get('/account_setting', function () {
-            return view('accounts.account_setting');
-        })->name('account_setting');
+        // Route::get('/account_setting', function () {
+        //     return view('accounts.account_setting');
+        // })->name('account_setting');
+        
+        Route::get('account_setting', [UserBankController::class,'account_setting'])->name('user.account_setting');
 
+        Route::post('/addBank', [UserBankController::class,'addBank'])->name('user.action.addBank')->withoutMiddleware([VerifyCsrfToken::class]);
     
         Route::get('eventDetail/{eventId}', [SportbookController::class,'soccerEvent'])->name('user.eventDetail');
         

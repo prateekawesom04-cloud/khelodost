@@ -636,7 +636,7 @@
             bets +=`
                <tbody>
                   <tr class="flex fex-row gap-2 flex-1">
-                     <td class="flexTableItem t_data">${i}</td>
+                     <td class="flexTableItem t_data">${i+1}</td>
                      <td class="flexTableItem t_data">${this.nat}</td>
                      <td class="flexTableItem t_data">${this.oddVal}</td>
                      <td class="flexTableItem t_data">${this.betOn?'Lay':'Back'}</td>

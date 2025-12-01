@@ -799,8 +799,9 @@ h3,h4,h5 {
 
 
 .table th {
-  background: #0c0339;
-  color: #fff;
+  /* background: #0c0339; */
+  background: #fff;
+  color: #0c0339;
 }
 
 .bi-arrow-repeat {

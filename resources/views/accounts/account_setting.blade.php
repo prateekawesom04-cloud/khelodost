@@ -4,7 +4,7 @@
 <main class="layout-content-center p-3">
 
     <!-- Edit Stack Card -->
-    <div class="card deposit-card border-0 rounded-3 p-4 shadow-sm">
+    {{-- <div class="card deposit-card border-0 rounded-3 p-4 shadow-sm">
         
         <!-- Title -->
         <div class="mb-4">
@@ -14,7 +14,7 @@
         <!-- Amount Input -->
         <div class="input-group mb-2">
             <span class="input-group-text bg-light border-end-0">₹</span>
-            <input type="number" id="amount" class="form-control border-start-0 border-end-0" 
+            <input type="number" id="amount" name="amount" class="form-control border-start-0 border-end-0" value="{{$userBank->account_id?$userBank->account_id:''}}" 
                    placeholder="Enter Amount" min="100" max="500000">
             <span class="input-group-text bg-light border-start-0">INR</span>
         </div>
@@ -39,13 +39,13 @@
                 Submit
             </a>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Spacer / Divider -->
     <hr class="my-5">
 
     <!-- Add/Edit Payment Card -->
-    <div class="card deposit-card border-0 rounded-3 p-4 shadow-sm">
+    <form class="card deposit-card border-0 rounded-3 p-4 shadow-sm">
         
         <!-- Title -->
         <div class="mb-4">
@@ -54,35 +54,41 @@
 
         <!-- Account No. -->
         <div class="mb-3">
-            <label for="account_no" class="form-label fw-semibold">Account No.</label>
-            <input type="text" id="account_no" class="form-control" placeholder="Enter Account Number">
+            <label for="account_id" class="form-label fw-semibold">Account ID</label>
+            <input type="text" id="account_id" name="account_id" class="form-control" placeholder="Account No./Card No./Upi ID" value="{{$userBank->account_id?$userBank->account_id:''}}">
+        </div>
+        
+        <!-- Confirm Account No. -->
+        <div class="mb-3">
+            <label for="account_id" class="form-label fw-semibold">Confirm Account ID</label>
+            <input type="text" id="confirm_account_id" name="confirm_account_id" class="form-control" placeholder="Account No./Card No./Upi ID" value="">
         </div>
 
         <!-- Account Holder Name -->
         <div class="mb-3">
             <label for="account_holder" class="form-label fw-semibold">Account Holder Name</label>
-            <input type="text" id="account_holder" class="form-control" placeholder="Enter Account Holder Name">
+            <input type="text" id="account_holder" name="account_holder" class="form-control" placeholder="Enter Account Holder Name" value="{{$userBank->account_holder?$userBank->account_holder:''}}">
         </div>
 
         <!-- IFSC Code -->
         <div class="mb-3">
             <label for="ifsc_code" class="form-label fw-semibold">IFSC Code</label>
-            <input type="text" id="ifsc_code" class="form-control" placeholder="Enter IFSC Code">
+            <input type="text" id="ifsc_code" name="ifsc_code" class="form-control" placeholder="Enter IFSC Code" value="{{$userBank->ifsc_code?$userBank->ifsc_code:''}}">
         </div>
 
         <!-- Bank Name -->
         <div class="mb-4">
             <label for="bank_name" class="form-label fw-semibold">Bank Name</label>
-            <input type="text" id="bank_name" class="form-control" placeholder="Enter Bank Name">
+            <input type="text" id="bank_name" name="bank_name" class="form-control" placeholder="Enter Bank Name" value="{{$userBank->bank_name?$userBank->bank_name:''}}">
         </div>
 
         <!-- Save Button -->
         <div class="text-end">
-            <a href="javascript:void(0)" class="btn btn-success fw-semibold px-4 rounded-2">
+            <a href="javascript:void(0)" class="btn btn-success fw-semibold px-4 rounded-2 addBank">
                 Save
             </a>
         </div>
-    </div>
+    </form>
 
 </main>
 
@@ -91,5 +97,11 @@
     function setAmount(value) {
         document.getElementById('amount').value = value;
     }
+
+    $('.addBank').on('click',function(){
+        $(this).attr('disabled','true');
+        formData = new FormData($(this).parents('form')[0]);
+        callApiFormData('post',`{{route('user.action.addBank')}}`,formData,ajaxResponseModal);
+    });
 </script>
 @endsection

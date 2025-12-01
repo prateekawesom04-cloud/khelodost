@@ -174,7 +174,7 @@
         </div>
 
         <div class="ms-3 border-top">
-            <a href="{{ route('account_setting') }}" class="d-block py-2 px-3 text-decoration-none text-dark border-bottom">🛠️ Settings</a>
+            <a href="{{ route('user.account_setting') }}" class="d-block py-2 px-3 text-decoration-none text-dark border-bottom">🛠️ Settings</a>
         </div>
 
         <!-- Account Actions Section -->

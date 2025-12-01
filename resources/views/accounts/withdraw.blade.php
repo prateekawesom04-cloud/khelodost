@@ -53,7 +53,7 @@
   <!-- Table Section -->
   <div class="table-responsive rounded mt-4" style="white-space: nowrap;">
       <table class="table table-bordered text-white mb-0">
-          <thead class="text-center">
+            <thead class="table-header !text-[#444] !bg-[#fff]">
               <tr>
                   <th>Payment Type</th>
                   <th>Amount</th>
@@ -106,33 +106,13 @@
         if (transfer_amount >= 500) {
             data.transfer_amount = transfer_amount;
 
-            callAjax('post', 'paymentGatewayMethod', data, paymentGatewayMethod);
+            callAjax('post', 'withdrawalRequest', data, ajaxResponseModal);
             
         } else {
             alert('Please Enter Amount more than 100');
         }
     });
 
-    function paymentGatewayMethod(response) {
-        // response = JSON.parse(response.response);
-        data = JSON.parse(response.data);
-        console.log('res msg',response.message,'data--',data);
-        
-        if (response.response_code == 200) {
-            // $('#paymentModel').modal('show');
-            if(data['payUrl']){
-                window.location.href = data['payUrl'];
-            } else{
-                responseToast(response.message);
-            }
-            // $('.paymentModel').html(response.response);
-
-        } else {
-            responseToast('Deposit Request failed');
-            // window.location.reload();
-        }
-        
-    }
 
 </script>
 
