@@ -37,6 +37,32 @@ class BannerController extends Controller
         }
     }
     
+    public function bannerUpdateImage(Request $request){
+        
+        if (!empty($request->allFiles())) {
+            $file = $request->file('image');
+            $request->image = '/img/'.time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('', $request->image, 'public'); // Store in 'public/uploads'
+
+            $banner = Banner::where('id',$request->id)->first();
+            // dd($banner);
+            // $banners = new Banner();
+            $banner->image = $request->image;
+            $banner->save();
+            
+            return response()->json([
+                'message'=> 'Banner Updated Successfully',
+                'response_code'=> '200',
+            ]);
+
+        } else{
+            return response()->json([
+                'message'=> 'Upload not available',
+                'response_code'=> '101',
+            ]);
+        }
+    }
+
     public function bannerUpdate(Request $request){
         $banner = Banner::where('id',$request->id)->first();
         $banner->status = $banner->status?0:1;
@@ -44,6 +70,15 @@ class BannerController extends Controller
         
         return response()->json([
             'message'=> 'Banner Updated Successfully',
+            'response_code'=> '200',
+        ]);
+    }
+
+    public function deleteBanner(Request $request){
+        
+        $user = Banner::where('id',$request->id)->delete();
+        return response()->json([
+            'message'=> 'Banner Delete Successfully',
             'response_code'=> '200',
         ]);
     }

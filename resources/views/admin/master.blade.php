@@ -12,6 +12,7 @@
     @yield('body')
     @include('admin.model.add_method')
     @include('admin.model.add_banner')
+    @include('admin.model.edit_banner')
     @include('admin.model.add_downline')
     @include('admin.model.game_controller')
     @include('admin.model.add_message')

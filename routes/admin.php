@@ -165,6 +165,10 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
         Route::post('/add_banner', [BannerController::class,'addBanner'])->name('admin.action.add_banner')->withoutMiddleware([VerifyCsrfToken::class]);
         
         Route::post('/bannerUpdate', [BannerController::class,'bannerUpdate'])->name('admin.action.bannerUpdate')->withoutMiddleware([VerifyCsrfToken::class]);
+        
+        Route::post('/bannerUpdateImage', [BannerController::class,'bannerUpdateImage'])->name('admin.action.bannerUpdateImage')->withoutMiddleware([VerifyCsrfToken::class]);
+        
+        Route::post('/deleteBanner', [BannerController::class,'deleteBanner'])->name('admin.action.deleteBanner')->withoutMiddleware([VerifyCsrfToken::class]);
 
         Route::post('/eventStatus', [EventController::class,'eventStatus'])->name('admin.action.eventStatus')->withoutMiddleware([VerifyCsrfToken::class]);
 

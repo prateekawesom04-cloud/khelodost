@@ -20,6 +20,7 @@
                         <tr>
                             <th scope="col">Image</th>
                             <th scope="col">Status</th>
+                            <th scope="col">Edit</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -32,10 +33,19 @@
                             </td>
                             <td class="status"><span class="badge {{$banner->status?'bg-success':'bg-danger'}} text-white">{{$banner->status?'Active':''}}</span></td>
                             <td>
-                                <label class="toggle-switch">
-                                    <input id="status" name="id" data-id="{{$banner->id}}" type="checkbox" {{$banner->status?'checked':''}} onchange="updateStatus(this)">
-                                    <span class="toggle-slider"></span>
-                                </label>
+                                <a href="#" data-id="{{$banner->id}}" class="btn btn-warning btn-sm px-3 py-1 news_edit"data-bs-toggle="modal"
+                                    data-bs-target="#bannerUpdateImage{{$banner->id}}" data-bs-placement="top" title="Edit">
+                                    ✍️
+                                </a>
+                            </td>
+                            <td>
+                                <div class="flex items-center justify-center gap-2">
+                                    <label class="toggle-switch">
+                                        <input id="status" name="id" data-id="{{$banner->id}}" type="checkbox" {{$banner->status?'checked':''}} onchange="updateStatus(this)">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <a href="#" class="btn-sm px-3 py-1 btn-btn-danger deleteBanner" data-id="{{$banner->id}}" data-bs-placement="top" title="Delete">🗑️</a>
+                                </div>
                             </td>
                         </tr>
                             @endforeach
@@ -52,6 +62,12 @@
         $(this).attr('disabled','disabled');
         callApi('post', `{{Route('admin.action.bannerUpdate')}}`, {id:$(this).attr('data-id')}, ajaxResponseModal);
     });
+    
+    $('.deleteBanner').on('click',function(){
+        $(this).attr('disabled','disabled');
+        callApi('post', `{{Route('admin.action.deleteBanner')}}`, {id:$(this).attr('data-id')}, ajaxResponseModal);
+    });
+    
 </script>
 
 @endsection
