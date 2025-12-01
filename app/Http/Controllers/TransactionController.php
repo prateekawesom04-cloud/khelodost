@@ -22,8 +22,8 @@ class TransactionController extends Controller
             ]);
         }
         
-        $oldTransaction = Transaction::where('username',$user->username)->where('payment_type',0)->get();
-
+        $oldTransaction = Transaction::where('username',$user->username)->where('payment_type',0)->sum('transfer_amount')->get();
+        dd($oldTransaction);
         if(!count($oldTransaction)){
             return response()->json([
                 'message'=> 'To withdraw amount you need minimum 1 deposit',

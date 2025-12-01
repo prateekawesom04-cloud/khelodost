@@ -14,7 +14,7 @@
         <!-- Amount Input -->
         <div class="input-group mb-2">
             <span class="input-group-text bg-light border-end-0">₹</span>
-            <input type="number" id="amount" name="amount" class="form-control border-start-0 border-end-0" value="{{$userBank->account_id?$userBank->account_id:''}}" 
+            <input type="number" id="amount" name="amount" class="form-control border-start-0 border-end-0" value="{{isset($userBank->account_id)?$userBank->account_id:''}}" 
                    placeholder="Enter Amount" min="100" max="500000">
             <span class="input-group-text bg-light border-start-0">INR</span>
         </div>
@@ -55,7 +55,7 @@
         <!-- Account No. -->
         <div class="mb-3">
             <label for="account_id" class="form-label fw-semibold">Account ID</label>
-            <input type="text" id="account_id" name="account_id" class="form-control" placeholder="Account No./Card No./Upi ID" value="{{$userBank->account_id?$userBank->account_id:''}}">
+            <input type="text" id="account_id" name="account_id" class="form-control" placeholder="Account No./Card No./Upi ID" value="{{isset($userBank->account_id)?$userBank->account_id:''}}">
         </div>
         
         <!-- Confirm Account No. -->
@@ -67,19 +67,19 @@
         <!-- Account Holder Name -->
         <div class="mb-3">
             <label for="account_holder" class="form-label fw-semibold">Account Holder Name</label>
-            <input type="text" id="account_holder" name="account_holder" class="form-control" placeholder="Enter Account Holder Name" value="{{$userBank->account_holder?$userBank->account_holder:''}}">
+            <input type="text" id="account_holder" name="account_holder" class="form-control" placeholder="Enter Account Holder Name" value="{{isset($userBank->account_holder)?$userBank->account_holder:''}}">
         </div>
 
         <!-- IFSC Code -->
         <div class="mb-3">
             <label for="ifsc_code" class="form-label fw-semibold">IFSC Code</label>
-            <input type="text" id="ifsc_code" name="ifsc_code" class="form-control" placeholder="Enter IFSC Code" value="{{$userBank->ifsc_code?$userBank->ifsc_code:''}}">
+            <input type="text" id="ifsc_code" name="ifsc_code" class="form-control" placeholder="Enter IFSC Code" value="{{isset($userBank->ifsc_code)?$userBank->ifsc_code:''}}">
         </div>
 
         <!-- Bank Name -->
         <div class="mb-4">
             <label for="bank_name" class="form-label fw-semibold">Bank Name</label>
-            <input type="text" id="bank_name" name="bank_name" class="form-control" placeholder="Enter Bank Name" value="{{$userBank->bank_name?$userBank->bank_name:''}}">
+            <input type="text" id="bank_name" name="bank_name" class="form-control" placeholder="Enter Bank Name" value="{{isset($userBank->bank_name)?$userBank->bank_name:''}}">
         </div>
 
         <!-- Save Button -->
