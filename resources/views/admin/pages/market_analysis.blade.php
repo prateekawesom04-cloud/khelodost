@@ -73,7 +73,7 @@
                                         <td>
                                             <div class="flex items-center justify-evenly w-30">
                                                 <label class="toggle-switch">
-                                                    <input class="statusInput" id="status_{{$row->eventId}}" name="status" data-eventId="{{$row->eventId}}" type="checkbox" {{$row->status==1?'checked':''}} onchange="updateStatus(this)">
+                                                    <input class="statusInput" id="status_{{$row->eventId}}" name="status" data-eventId="{{$row->eventId}}" type="checkbox" {{$row->status!=0?'checked':''}} onchange="updateStatus(this)">
                                                     <span class="toggle-slider"></span>
                                                 </label>
                                                 {{-- <a href="{{route('admin.eventDetail',$row->eventId)}}">
