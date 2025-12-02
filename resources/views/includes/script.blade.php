@@ -121,8 +121,9 @@
       return;
     }
 
-    $(this).prop('disabled');
+    $(this).prop('disabled', true);
 
+        data.otpTimeLeft = 60;
     callApi('get', '{{route('user.getOtp')}}', data, getOtp);
   });
 
@@ -136,7 +137,9 @@
       if (data.otpTimeLeft > 0) {
         $(button).prop('disabled', true).text(`Retry in ${data.otpTimeLeft}s`);
       } else {
+        data.otpTimeLeft = 60;
         if (!otpVerified) {
+        localStorage.setItem('user_otp', 0);
         // if (!localStorage.getItem('user_otp') || localStorage.getItem('user_otp') != data.phone) {
           $(button).prop('disabled', false).text('Get OTP');
         }
@@ -147,10 +150,10 @@
   }
 
   function getOtp(res){
-    console.log(res);
+    // console.log(res);
     
     if(res.response_code == 200){
-      responseToast('Please Enter Otp');
+      responseToast('Please Enter Otp','bg-warning');
       startOtpCountdown('.getOtp');
       
       localStorage.setItem('user_otp', data.phone);
@@ -189,12 +192,13 @@
       $('.otp_not_verified').hide();
 
       if (data.otpTimer) {
-        clearInterval(data.otpTimer);
+        // clearInterval(data.otpTimer);
         data.otpTimer = null;
       }
     } else {
-      responseToast('Invalid OTP');
-      $('.getOtp').prop('disabled', false).text('Get OTP');
+      responseToast('Invalid OTP','bg-danger');
+    //   clearInterval(data.otpTimer);
+    //   $('.getOtp').removeAttr('disabled').text('Get OTP');
     }
   }
 

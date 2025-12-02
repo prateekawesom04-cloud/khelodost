@@ -262,7 +262,7 @@ class AuthController extends Controller
     }
 
     public function changePassword(Request $request){
-        // dd($request->all());
+        dd($request->all());
         $rules = [
             'oldPassword' => 'required',
             'newPassword' => 'required|min:6',
@@ -358,16 +358,16 @@ class AuthController extends Controller
     public function getOtp(Request $request){
         
         // if($request->otptype == 'login'){
-            $user = User::where([
-                'username'=>$request->phone
-            ])->first();
+            // $user = User::where([
+            //     'username'=>$request->phone
+            // ])->first();
             
-            if(!$user){
-                return response()->json([
-                    'message'=> 'User not found',
-                    'response_code'=> '104'
-                ]);
-            }
+            // if(!$user){
+            //     return response()->json([
+            //         'message'=> 'User not found',
+            //         'response_code'=> '104'
+            //     ]);
+            // }
         // }
         
         $otp = random_int(100000, 999999);
@@ -391,7 +391,7 @@ class AuthController extends Controller
         ];
 
         $string = http_build_query($data);
-
+        // dd($string);
         $smsUrl = "http://bulksms.actinnsol.com/api/mt/SendSMS?".$string;
 
         $ch = curl_init();

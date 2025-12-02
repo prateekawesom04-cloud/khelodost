@@ -96,12 +96,12 @@
       </div> -->
 
       <!-- OTP -->
-      <div class="mb-3">
+      <div class="mb-3 otp_not_verified">
         <input type="text" name="otp" class="form-control" minlength="6" maxlength="6" placeholder="Enter OTP" />
       </div>
       
       <!-- Password -->
-      <div class="otp_verified input-group mb-3">
+      <div class="otp_verified input-group mb-3" style="display: none;">
         <span class="input-group-text input-group-text-yellow"><i class="bi bi-lock text-warning"></i></span>
         <input type="password" name="password" class="form-control rounded-0 rounded-end" placeholder="Password" />
         <a href="#" class="btn btn-outline-secondary p_eye" aria-label="Toggle password visibility">
@@ -110,7 +110,7 @@
       </div>
 
       <!-- Confirm Password -->
-      <div class="otp_verified input-group mb-3">
+      <div class="otp_verified input-group mb-3" style="display: none;">
         <span class="input-group-text input-group-text-yellow"><i class="bi bi-lock text-warning"></i></span>
         <input type="password" name="confirm_password" class="form-control rounded-0 rounded-end" placeholder="Confirm Password" />
         <a href="#" class="btn btn-outline-secondary p_eye" aria-label="Toggle confirm password visibility">
@@ -119,7 +119,7 @@
       </div>
 
       <!-- Referral Code -->
-      <div class="otp_verified mb-3">
+      <div class="otp_verified mb-3" style="display: none;">
         <input type="text" name="referral_code" value="{{Session::get('referral_code')}}" class="form-control rounded-3" placeholder="Referral Code (optional)" />
       </div>
 

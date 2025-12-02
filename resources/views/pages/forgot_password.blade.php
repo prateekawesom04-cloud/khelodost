@@ -136,12 +136,12 @@
         </div>
 
         <!-- OTP -->
-        <div class="mb-3">
+        <div class="mb-3 otp_not_verified">
           <input type="text" name="otp" class="form-control" minlength="6" maxlength="6" placeholder="Enter OTP" />
         </div>
 
         <!-- New Password -->
-        <div class="mb-3 otp_verified">
+        <div class="mb-3 otp_verified" style="display: none;">
           <div class="input-group">
             <span class="input-group-text input-group-text-yellow"><i class="bi bi-lock"></i></span>
             <input type="password" name="newPassword" class="form-control rounded-end" placeholder="Enter new password" />
@@ -149,7 +149,7 @@
         </div>
 
         <!-- Confirm New Password -->
-        <div class="mb-3 otp_verified">
+        <div class="mb-3 otp_verified" style="display: none;">
           <div class="input-group">
             <span class="input-group-text input-group-text-yellow"><i class="bi bi-lock"></i></span>
             <input type="password" name="confirm_password" class="form-control rounded-end" placeholder="Confirm new password" />
@@ -163,8 +163,8 @@
         </div> --}}
 
         <!-- Update Button -->
-        <div class="mb-3 otp_verified">
-          <a id="update" type="submit" class="btn btn-yellow w-100">Update</a>
+        <div class="mb-3 otp_verified" style="display: none;">
+          <a id="update" type="submit" class="btn btn-yellow w-100 login">Update</a>
         </div>
 
         <!-- Already have account -->
@@ -195,7 +195,7 @@
     
   $('.login').click(function(){
     let formData = new FormData($('form')[0]);
-    callAjaxFormData('post',"{{route('post.login')}}",formData,ajaxResponse);
+    callAjaxFormData('post',"{{route('post.user.changePassword')}}",formData,ajaxResponse);
   });
 
   </script>

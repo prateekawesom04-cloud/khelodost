@@ -172,7 +172,7 @@
   <script>
     $('.changePassword').on('click',function(){
         formData = new FormData($(this).parents('form')[0]);
-      callApiFormData('post',`{{route('user.changePassword')}}`,formData,ajaxResponseModal);
+      callApiFormData('post',`{{route('post.user.changePassword')}}`,formData,ajaxResponseModal);
     });
 
   </script>
