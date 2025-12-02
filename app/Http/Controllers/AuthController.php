@@ -231,7 +231,7 @@ class AuthController extends Controller
 
 
     public function forgetPassword(Request $request){
-        
+        // dd($request->all());
         $rules = [
             'phone' => 'required|numeric|digits:10',
             'password' => 'required|min:6',
@@ -255,7 +255,11 @@ class AuthController extends Controller
             $user->password = Hash::make($request->password);
             $user->save();
             
-            return True;
+            return response()->json([
+                'message'=> 'password updated successfully',
+                'response_code'=> '200',
+                'redirect'=>route('login')
+            ]);
             
         }
 

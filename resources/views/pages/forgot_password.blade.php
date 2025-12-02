@@ -144,7 +144,7 @@
         <div class="mb-3 otp_verified" style="display: none;">
           <div class="input-group">
             <span class="input-group-text input-group-text-yellow"><i class="bi bi-lock"></i></span>
-            <input type="password" name="newPassword" class="form-control rounded-end" placeholder="Enter new password" />
+            <input type="password" name="password" class="form-control rounded-end" placeholder="Enter new password" />
           </div>
         </div>
 
@@ -185,13 +185,13 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    function demoLogin() {
-      let formData = new FormData();
-      formData.append('_token', '{{ csrf_token() }}');
-      formData.append('phone', '9999999999');
-      formData.append('password', 'abcd1234');
-      callAjaxFormData('post',"{{route('post.login')}}",formData,ajaxResponse);
-    }
+    // function demoLogin() {
+    //   let formData = new FormData();
+    //   formData.append('_token', '{{ csrf_token() }}');
+    //   formData.append('phone', '9999999999');
+    //   formData.append('password', 'abcd1234');
+    //   callAjaxFormData('post',"{{route('post.login')}}",formData,ajaxResponse);
+    // }
     
   $('.login').click(function(){
     let formData = new FormData($('form')[0]);

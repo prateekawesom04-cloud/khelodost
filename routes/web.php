@@ -40,6 +40,8 @@ Route::middleware(['auth_middleware'])->group(function () {
         return view('pages.forgot_password');
     })->name('forgot_password');
 
+    Route::post('forgetPassword', [AuthController::class,'forgetPassword'])->name('post.user.forgetPassword')->withoutMiddleware([VerifyCsrfToken::class]);
+
     Route::get('getOtp', [AuthController::class,'getOtp'])->name('user.getOtp');
 
     Route::get('verifyOtp', [AuthController::class,'verifyOtp'])->name('user.verifyOtp');
@@ -113,7 +115,6 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
             return view('accounts.change_password');
         })->name('change_password');
 
-        Route::post('forgetPassword', [UserController::class,'forgetPassword'])->name('post.user.forgetPassword')->withoutMiddleware([VerifyCsrfToken::class]);
         Route::post('changePassword', [UserController::class,'changePassword'])->name('post.user.changePassword')->withoutMiddleware([VerifyCsrfToken::class]);
 
         // Route::get('/account_setting', function () {
