@@ -34,12 +34,12 @@
             <button class="flex flex-row gap-2 align-items-center dropdown-toggle cursor-pointer" data-bs-toggle="dropdown">
                 {{-- <div class="flex flex-col sm:flex-row gap-2"> --}}
     
-                <button class="account_btn rounded-[0.4rem] px-1 py-1 text-nowrap flex items-center gap-[0.6rem]">
+                <div class="account_btn rounded-[0.4rem] px-1 py-1 text-nowrap flex items-center gap-[0.6rem]">
                     <span class="flex items-center gap-1 justify-center !text-[10px]">
                         <img src="{{asset('icons/coins.png')}}" alt="" class="w-6"> : {{isset($userData->wallet_amount)?$userData->wallet_amount:'00'}} </a>
                     </span>
                     <i class="bi bi-arrow-repeat"></i>
-                </button>
+                </div>
     
                     {{-- <button class="account_btn rounded-[0.4rem] px-1 py-1 text-nowrap flex items-center gap-[0.6rem]" data-bs-toggle="offcanvas" data-bs-target="#accountPanel"><span class="!text-[8px]">Exp. : {{$userData->unsattled_amount}} </a></span><i class="bi bi-arrow-repeat"></i></button> --}}
     
