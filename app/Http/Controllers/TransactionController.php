@@ -142,7 +142,86 @@ class TransactionController extends Controller
             
 
     }
-    
+     
+    public function paymentGatewayWithdrawMethod(Request $request){
+        $user = User::getCurrentUser();
+        // $transaction = Transaction::where
+        
+        if($user){
+            
+            // Api statements
+
+            $response = '3456';
+
+            $apiData = [];
+
+            if($user->country_phone_code == '91'){
+
+                $apiData['mchNo'] = 'M0396';
+                $apiData['encryptionKey'] = '72012C03A0F21CC3';
+                $apiData['signatureKey'] = '613BA28576F3CDF8';
+                $response = $this->paymentGatewayIndMethod($request);
+            } else{
+                $apiData['mchNo'] = 'M0402';
+                $apiData['encryptionKey'] = '324AE62E4A0341B3';
+                $apiData['signatureKey'] = '5D34BD894E07C2BE';
+                $response = $this->paymentGatewayBanMethod($request);
+            }
+        } else{
+            
+            return response()->json([
+                'message'=> 'login required',
+                'response_code'=> '105'
+            ]);
+
+        }
+
+        $response = $response->getData();
+        $response = json_decode($response->response);
+
+            // $payload = $response->payload;
+            // $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
+            // dd($payload);
+        // dd($response);
+
+
+        if(isset($response->code) && $response->code == 0){
+            $mchNo = $response->mchNo;
+            $payload = $response->payload;
+            $sign = $payload.$apiData['signatureKey']; // concatinating the payload and signature key
+            $sign = strtoupper(md5($sign));
+            // dd($response->sign,'-----',$sign);
+            Log::info('gateway payload--');
+            Log::info($response->payload);
+            if($response->sign == $sign){
+                // dd('if');
+                $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
+                Log::info('decrypted payload');
+                Log::info($payload);
+                $payloadData = json_decode($payload);
+                return response()->json([
+                    'data'=> $payload,
+                    'message'=>$payloadData->statusDesc,
+                    'response_code'=> '200'
+                ]);
+                // dd($payload);
+            } else{
+                // dd('else');
+                return response()->json([
+                    'message'=> 'Unable to verify Sign',
+                    'response_code'=> '105'
+                ]);
+            }
+        } else{
+            return response()->json([
+                'message'=> 'Something Went Wrong',
+                'response_code'=> '105'
+            ]);
+        }
+            
+
+    }
+
     public function paymentGatewayIndMethod(Request $request){
         
         Log::info('paymentGatewayIndMethod');
@@ -174,10 +253,10 @@ class TransactionController extends Controller
         } elseif ($request->payment_type == 1) {
 
             $data['mode'] = 'S1';
-            $data['accBankCode'] = $request->accBankCode;
-            $data['accName'] = $request->accName;
-            $data['accCardNo'] = $request->accCardNo;
-            $data['purpose'] = $request->purpose;
+            $data['accCardNo'] = $request->account_id;
+            $data['accBankCode'] = $request->ifsc_code;
+            $data['accName'] = $request->account_holder;
+            $data['purpose'] = $request->remark;
             
         } else{
             return False;
@@ -469,9 +548,38 @@ class TransactionController extends Controller
         if($request->status == 2){
             
             $user = User::where('username',$transaction->username)->first();
-            if($transaction->payment_type == 0){
+
+            if($transaction->payment_type != 1){
                 $user->wallet_amount = floatval($user->wallet_amount) + floatval($transaction->transfer_amount);
             } else{
+
+                
+                $request->merge(['username'=>$user->username]);
+                $request->merge([
+                    'account_id'=>$userank->account_id,
+                    'ifsc_code'=>$userank->ifsc_code,
+                    'account_holder'=>$userank->account_holder,
+                    'remark'=>$transaction->remark
+                ]);
+
+                // Api statements
+
+                $response = '3456';
+
+                $apiData = [];
+
+                if($user->country_phone_code == '91'){
+
+                    $apiData['mchNo'] = 'M0396';
+                    $apiData['encryptionKey'] = '72012C03A0F21CC3';
+                    $apiData['signatureKey'] = '613BA28576F3CDF8';
+                    $response = $this->paymentGatewayIndMethod($request);
+                } else{
+                    $apiData['mchNo'] = 'M0402';
+                    $apiData['encryptionKey'] = '324AE62E4A0341B3';
+                    $apiData['signatureKey'] = '5D34BD894E07C2BE';
+                    $response = $this->paymentGatewayBanMethod($request);
+                }
                 $user->wallet_amount = floatval($user->wallet_amount) - floatval($transaction->transfer_amount);
             }
             $user->save();

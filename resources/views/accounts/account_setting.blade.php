@@ -60,7 +60,7 @@
         
         <!-- Confirm Account No. -->
         <div class="mb-3">
-            <label for="account_id" class="form-label fw-semibold">Confirm Account ID</label>
+            <label for="confirm_account_id" class="form-label fw-semibold">Confirm Account ID</label>
             <input type="text" id="confirm_account_id" name="confirm_account_id" class="form-control" placeholder="Account No./Card No./Upi ID" value="">
         </div>
 

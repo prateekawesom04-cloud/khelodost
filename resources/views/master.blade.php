@@ -5,6 +5,8 @@
     @include('head')
 
     @yield('head')
+    <script src="//code.jivosite.com/widget/O2AMREX4Ch" async></script>
+
 </head>
 
 <body>
