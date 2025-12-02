@@ -61,7 +61,7 @@ class CustomSessionMiddleware
 
         $userAgent = $_SERVER['HTTP_USER_AGENT'];
 
-        $sports = ["Cricket","Football","Tennis"];
+        $sports = ["cricket","cootball","cennis"];
 
         $providers = Storage::disk('local')->get('games_data/providers.json');
         

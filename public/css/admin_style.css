@@ -216,7 +216,7 @@ table tbody tr:hover {
     /* min-width: 180px; */
     width: 180px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    right: 0 !important;
+    /* right: 0 !important; */
     top: 0 !important;
 }
 
@@ -275,7 +275,7 @@ table tbody tr:hover {
     }
 
     .dropdown-menu {
-        position: fixed !important;
+        /* position: fixed !important; */
         max-height: 200px;
         overflow-y: auto;
         /* left: 50% !important; */
