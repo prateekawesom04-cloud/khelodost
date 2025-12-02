@@ -195,7 +195,7 @@
     
   $('.login').click(function(){
     let formData = new FormData($('form')[0]);
-    callAjaxFormData('post',"{{route('post.user.changePassword')}}",formData,ajaxResponse);
+    callAjaxFormData('post',"{{route('post.user.forgetPassword')}}",formData,ajaxResponse);
   });
 
   </script>

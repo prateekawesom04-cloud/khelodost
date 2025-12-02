@@ -113,6 +113,7 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
             return view('accounts.change_password');
         })->name('change_password');
 
+        Route::post('forgetPassword', [UserController::class,'forgetPassword'])->name('post.user.forgetPassword')->withoutMiddleware([VerifyCsrfToken::class]);
         Route::post('changePassword', [UserController::class,'changePassword'])->name('post.user.changePassword')->withoutMiddleware([VerifyCsrfToken::class]);
 
         // Route::get('/account_setting', function () {
