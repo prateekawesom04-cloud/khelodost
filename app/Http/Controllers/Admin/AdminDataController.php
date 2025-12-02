@@ -505,7 +505,7 @@ class AdminDataController extends Controller
         });
         
         $events = $events->whereIn('events.status',[0,1]);
-        $allEvents = $events->select('events.*','eventsExposure.exposure','eventsExposure.totalBets')->get();
+        $allEvents = $events->select('events.*','eventsExposure.exposure','eventsExposure.totalBets')->orderBy('status','asc')->orderBy('id','asc')->get();
         // dd($allEvents);
         return view('admin.pages.market_analysis',compact('allEvents'));
     }
@@ -517,7 +517,7 @@ class AdminDataController extends Controller
             $join->on('events.eventId','=','eventsExposure.eventId');
         });
         $events = $events->where('sportname','cricket')->whereIn('status',[0,1]);
-        $allEvents = $events->select('events.*','eventsExposure.exposure','eventsExposure.totalBets')->get();
+        $allEvents = $events->select('events.*','eventsExposure.exposure','eventsExposure.totalBets')->orderBy('status','asc')->orderBy('id','asc')->get();
         return view('admin.pages.market_analysis',compact('allEvents'));
     }
         
@@ -528,7 +528,7 @@ class AdminDataController extends Controller
             $join->on('events.eventId','=','eventsExposure.eventId');
         });
         $events = $events->where('sportname','soccer')->whereIn('status',[0,1]);
-        $allEvents = $events->select('events.*','eventsExposure.exposure','eventsExposure.totalBets')->get();
+        $allEvents = $events->select('events.*','eventsExposure.exposure','eventsExposure.totalBets')->orderBy('status','asc')->orderBy('id','asc')->get();
         return view('admin.pages.market_analysis',compact('allEvents'));
     }
         
@@ -539,7 +539,7 @@ class AdminDataController extends Controller
             $join->on('events.eventId','=','eventsExposure.eventId');
         });
         $events = $events->where('sportname','tennis')->whereIn('status',[0,1]);
-        $allEvents = $events->select('events.*','eventsExposure.exposure','eventsExposure.totalBets')->get();
+        $allEvents = $events->select('events.*','eventsExposure.exposure','eventsExposure.totalBets')->orderBy('status','asc')->orderBy('id','asc')->get();
         return view('admin.pages.market_analysis',compact('allEvents'));
     }
 

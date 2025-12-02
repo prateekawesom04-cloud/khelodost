@@ -283,7 +283,7 @@ $e = 0;
             <div class="table-card">
               <div class="table-responsive">
                 <table class="w-100">
-                  <thead class="table-header">
+                  <thead class="table-header !text-[#444] !bg-[#fff]">
                     <tr>
                       <th>S.No.</th>
                       <th>Date</th>
@@ -333,7 +333,7 @@ $e = 0;
             <div class="table-card">
               <div class="table-responsive">
                 <table class="w-100">
-                  <thead class="table-header">
+                  <thead class="table-header !text-[#444] !bg-[#fff]">
                     <tr>
                       <th>S.No.</th>
                       <th>Date</th>
@@ -386,7 +386,7 @@ $e = 0;
             <div class="table-card">
               <div class="table-responsive">
                 <table class="w-100">
-                  <thead class="table-header">
+                  <thead class="table-header !text-[#444] !bg-[#fff]">
                     <tr>
                       <th>S.No.</th>
                       <th>Date</th>
@@ -423,7 +423,7 @@ $e = 0;
             <div class="table-card">
               <div class="table-responsive">
                 <table class="w-100">
-                  <thead class="table-header">
+                  <thead class="table-header !text-[#444] !bg-[#fff]">
                     <tr>
                       <th>S.No.</th>
                       <th>Sportname</th>
@@ -457,7 +457,7 @@ $e = 0;
   <div class="table-card">
     <div class="table-responsive">
       <table class="w-100">
-        <thead class="table-header">
+        <thead class="table-header !text-[#444] !bg-[#fff]">
           <tr>
             <th>S.No.</th>
             <th>Date</th>

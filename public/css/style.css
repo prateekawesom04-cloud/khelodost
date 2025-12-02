@@ -813,3 +813,7 @@ h3,h4,h5 {
     /* The final state after the class is added */
     transform: rotate(180deg);
 }
+
+.table-header {
+    border-bottom: #0c0339 0.2rem solid;
+}

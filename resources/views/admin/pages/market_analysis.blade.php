@@ -68,12 +68,12 @@
                                             $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
                                             $teamB = explode(' v ',$row->eventName)[1] ?? 'Series';
                                         @endphp
-                                        <td class="status"><span class="badge {{$row->status?'bg-success':'bg-secondary'}} text-white">{{$row->status?'inplay':'upcoming'}}</span></td>
+                                        <td class="status"><span class="badge {{$row->status?'bg-success':'bg-danger'}} text-white">{{$row->status==1?'inplay':'inactive'}}</span></td>
                                         {{-- <td>{{!$row->status?'upcoming':'inplay'}}</td> --}}
                                         <td>
                                             <div class="flex items-center justify-evenly w-30">
                                                 <label class="toggle-switch">
-                                                    <input id="status" name="status" data-eventId="{{$row->eventId}}" type="checkbox" {{$row->status?'checked':''}} onchange="updateStatus(this)">
+                                                    <input class="statusInput" id="status_{{$row->eventId}}" name="status" data-eventId="{{$row->eventId}}" type="checkbox" {{$row->status==1?'checked':''}} onchange="updateStatus(this)">
                                                     <span class="toggle-slider"></span>
                                                 </label>
                                                 {{-- <a href="{{route('admin.eventDetail',$row->eventId)}}">
@@ -169,7 +169,9 @@
     </div>
 </div>
 <script>
-    $('#status').on('change',function(){
+    $('.statusInput').on('change',function(){
+        console.log('sdfghj');
+        
         $(this).attr('disabled','disabled');
         callApi('post', `{{Route('admin.action.eventStatus')}}`, {eventId:$(this).attr('data-eventId')}, ajaxResponseModal);
     });

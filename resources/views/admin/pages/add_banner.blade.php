@@ -41,7 +41,7 @@
                             <td>
                                 <div class="flex items-center justify-center gap-2">
                                     <label class="toggle-switch">
-                                        <input id="status" name="id" data-id="{{$banner->id}}" type="checkbox" {{$banner->status?'checked':''}} onchange="updateStatus(this)">
+                                        <input class="statusInput" id="status_{{$banner->id}}" name="id" data-id="{{$banner->id}}" type="checkbox" {{$banner->status?'checked':''}} onchange="updateStatus(this)">
                                         <span class="toggle-slider"></span>
                                     </label>
                                     <a href="#" class="btn-sm px-3 py-1 btn-btn-danger deleteBanner" data-id="{{$banner->id}}" data-bs-placement="top" title="Delete">🗑️</a>
@@ -58,7 +58,7 @@
 
 <script>
 
-    $('#status').on('change',function(){
+    $('.statusInput').on('change',function(){
         $(this).attr('disabled','disabled');
         callApi('post', `{{Route('admin.action.bannerUpdate')}}`, {id:$(this).attr('data-id')}, ajaxResponseModal);
     });
