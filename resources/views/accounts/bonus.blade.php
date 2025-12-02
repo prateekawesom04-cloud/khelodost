@@ -62,7 +62,7 @@
     $('.claimBonus').on('click',function(){
         $(this).addClass('disabled');
         formData = {};
-        callApi('post', `{{Route('user.action.addBank')}}`, {id:$(this).attr('data-id')}, 
+        callApi('post', `claimBonus`, {bonus_uid:$(this).attr('data-bonus_uid')}, claimBonus);
     });
 </script>
 
