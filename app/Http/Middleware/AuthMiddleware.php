@@ -22,7 +22,7 @@ class AuthMiddleware
         if(Session::has('username')) {
             return redirect()->route('index');
         }
-        $country_phone_code = Country::pluck('country_phone_code');
+        $country_phone_code = Country::where('country_phone_code','91')->pluck('country_phone_code');
         View::share('country_phone_code',$country_phone_code);
         return $next($request);
     }

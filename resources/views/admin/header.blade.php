@@ -66,6 +66,7 @@
                 <li><a class="dropdown-item" href="{{ route('admin.add_banner') }}">🖼️Add Banner</a></li>
                 <li><a class="dropdown-item" href="{{ route('admin.add_number') }}">📞Add Number</a></li>
                 <li><a class="dropdown-item" href="{{ route('admin.bonusData') }}">🎁Add Bonus</a></li>
+                {{-- <li><a class="dropdown-item" href="#"><i class="fa-solid fa-lock me-2"></i>Change Password</a></li> --}}
                 <li><a class="dropdown-item" href="{{ route('admin.logout') }}">Logout</a></li>
             </ul>
         </div>

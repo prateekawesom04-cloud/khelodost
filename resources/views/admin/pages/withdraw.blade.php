@@ -40,7 +40,7 @@
                                     <th>UID</th>
                                     <th>Transaction ID</th>
                                     <th>Total Balance</th>
-                                    <th>Deposit</th>
+                                    {{-- <th>Deposit</th> --}}
                                     <th>WithDraw</th>
                                     <th>Available Balance</th>
                                     {{-- <th>Screenshot</th> --}}
@@ -81,7 +81,7 @@
                                     <td>{{$transaction->username}}</td>
                                     <td>{{$transaction->order_sn}}</td>
                                     <td>{{$transaction->wallet_before}}</td>
-                                    <td>{{($transaction->payment_type)?'-':$transaction->transfer_amount}}</td>
+                                    {{-- <td>{{($transaction->payment_type)?'-':$transaction->transfer_amount}}</td> --}}
                                     <td>{{($transaction->payment_type)?$transaction->transfer_amount:'-'}}</td>
                                     <td>{{$available_balance}}</td>
                                     {{-- <td>--</td> --}}

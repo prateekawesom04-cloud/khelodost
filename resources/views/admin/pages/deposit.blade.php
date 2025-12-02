@@ -41,9 +41,9 @@
                                     <th>Transaction ID</th>
                                     <th>Total Balance</th>
                                     <th>Deposit</th>
-                                    <th>WithDraw</th>
+                                    {{-- <th>WithDraw</th> --}}
                                     <th>Available Balance</th>
-                                    <th>Screenshot</th>
+                                    {{-- <th>Screenshot</th> --}}
                                     <th>Status</th>
                                     <th>Remark</th>
                                 </tr>
@@ -87,9 +87,9 @@
                                     <td>{{$transaction->order_sn}}</td>
                                     <td>{{$transaction->wallet_before}}</td>
                                     <td>{{($transaction->payment_type)?'-':$transaction->transfer_amount}}</td>
-                                    <td>{{($transaction->payment_type)?$transaction->transfer_amount:'-'}}</td>
+                                    {{-- <td>{{($transaction->payment_type)?$transaction->transfer_amount:'-'}}</td> --}}
                                     <td>{{$available_balance}}</td>
-                                    <td><img src="{{asset('storage').$transaction->payment_proof}}" class="img-fluid rounded" style="width:40px;" onerror="$(this).remove()"></td>
+                                    {{-- <td><img src="{{asset('storage').$transaction->payment_proof}}" class="img-fluid rounded" style="width:40px;" onerror="$(this).remove()"></td> --}}
                                     <td>{{($transaction->status==2)?'Success':(($transaction->status==1)?'Processing':'Failed')}}</td>
                                     <td>{{$transaction->remark}}</td>
                                     

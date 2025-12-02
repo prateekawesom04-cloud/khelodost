@@ -22,11 +22,11 @@ class TransactionController extends Controller
             ]);
         }
         
-        $oldTransaction = Transaction::where('username',$user->username)->where('payment_type',0)->sum('transfer_amount')->get();
-        dd($oldTransaction);
-        if(!count($oldTransaction)){
+        $oldTransaction = Transaction::where('username',$user->username)->where('payment_type',0)->where('status',2)->sum('transfer_amount');
+        // dd($oldTransaction);
+        if(!$oldTransaction || $oldTransaction <500){
             return response()->json([
-                'message'=> 'To withdraw amount you need minimum 1 deposit',
+                'message'=> 'To withdraw amount you need minimum 1 deposit with amount of 500',
                 'response_code'=> '105'
             ]);
         }
@@ -40,8 +40,13 @@ class TransactionController extends Controller
         $transaction->status = 1;
         $transaction->payment_type = $request->payment_type;
         $transaction->currency = "INR";
-        $transaction->remark = "Deposit of ".$request->transfer_amount;
+        $transaction->remark = "Withdraw Request for ".$request->transfer_amount;
         $transaction->save();
+
+        return response()->json([
+            'message'=> 'Withdraw Request Created Successfully',
+            'response_code'=> '200'
+        ]);
     }
     
     
@@ -460,7 +465,18 @@ class TransactionController extends Controller
 
     public function updateTransaction(Request $request){
         $transaction = Transaction::where('order_sn',$request->order_sn)->first();
-        $transaction->{$request->updateKey} = $request->{$request->updateKey};
+
+        if($request->status == 2){
+            
+            $user = User::where('username',$transaction->username)->first();
+            if($transaction->payment_type == 0){
+                $user->wallet_amount = floatval($user->wallet_amount) + floatval($transaction->transfer_amount);
+            } else{
+                $user->wallet_amount = floatval($user->wallet_amount) - floatval($transaction->transfer_amount);
+            }
+            $user->save();
+        }
+        $transaction->status = $request->status;
         $transaction->save();
 
         return response()->json([

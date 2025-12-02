@@ -50,6 +50,15 @@
             <li class="nav-item">
                 <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.market_analysis') ? 'active' : '' }}" href="{{ route('admin.market_analysis') }}">Market Analysis</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.cricket_analysis') ? 'active' : '' }}" href="{{ route('admin.cricket_analysis') }}">Cricket Analysis</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.soccer_analysis') ? 'active' : '' }}" href="{{ route('admin.soccer_analysis') }}">Soccer Analysis</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.tennis_analysis') ? 'active' : '' }}" href="{{ route('admin.tennis_analysis') }}">Tennis Analysis</a>
+            </li>
             <li class="nav-item position-relative">
                 <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('admin.deposit') ? 'active' : '' }} position-relative d-inline-block" href="{{ route('admin.deposit') }}">
                     💰Deposit

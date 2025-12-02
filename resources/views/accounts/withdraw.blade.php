@@ -106,7 +106,7 @@
         if (transfer_amount >= 500) {
             data.transfer_amount = transfer_amount;
 
-            callAjax('post', 'withdrawalRequest', data, ajaxResponseModal);
+            callApi('post', '{{route('user.withdrawalRequest')}}', data, ajaxResponseModal);
             
         } else {
             alert('Please Enter Amount more than 100');

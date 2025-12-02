@@ -496,6 +496,39 @@ class AdminDataController extends Controller
         $allEvents = $events->get();
         return view('admin.pages.market_analysis',compact('allEvents'));
     }
+        
+    public function cricket_analysis(Request $request){
+        $eventsExposure = SportookBet::select('eventId', DB::raw('SUM(bet_amount) as exposure, COUNT(*) as totalBets'))
+        ->groupBy('eventId');
+        $events = Event::joinSub($eventsExposure,'eventsExposure',function($join){
+            $join->on('events.eventId','=','eventsExposure.eventId');
+        });
+        $events = $events->where('sportname','cricket')->whereIn('status',[0,1]);
+        $allEvents = $events->get();
+        return view('admin.pages.market_analysis',compact('allEvents'));
+    }
+        
+    public function soccer_analysis(Request $request){
+        $eventsExposure = SportookBet::select('eventId', DB::raw('SUM(bet_amount) as exposure, COUNT(*) as totalBets'))
+        ->groupBy('eventId');
+        $events = Event::joinSub($eventsExposure,'eventsExposure',function($join){
+            $join->on('events.eventId','=','eventsExposure.eventId');
+        });
+        $events = $events->where('sportname','soccer')->whereIn('status',[0,1]);
+        $allEvents = $events->get();
+        return view('admin.pages.market_analysis',compact('allEvents'));
+    }
+        
+    public function tennis_analysis(Request $request){
+        $eventsExposure = SportookBet::select('eventId', DB::raw('SUM(bet_amount) as exposure, COUNT(*) as totalBets'))
+        ->groupBy('eventId');
+        $events = Event::joinSub($eventsExposure,'eventsExposure',function($join){
+            $join->on('events.eventId','=','eventsExposure.eventId');
+        });
+        $events = $events->where('sportname','tennis')->whereIn('status',[0,1]);
+        $allEvents = $events->get();
+        return view('admin.pages.market_analysis',compact('allEvents'));
+    }
 
     public function sattleEvent(Request $request){
         // dd($request->all());

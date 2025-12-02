@@ -78,17 +78,15 @@
     <form action="{{route('post.signin')}}" method="POST">
       @csrf
       <!-- Phone -->
-      <div class="input-group mb-3 rounded">
+      <div class="input-group mb-3 rounded otp_not_verified">
 
         <!-- <span class="input-group-text input-group-text-yellow"><i class="bi bi-phone text-warning"></i> +91</span> -->
         <select class="input-group-text input-group-text-yellow" name="country_phone_code" id="country_phone_code">
-          <!-- <option value="{{$country_phone_code[2]}}"><img src='{{asset('icons')}}/flags/{{$country_phone_code[2]}}.svg' width='15'> +{{$country_phone_code[2]}}</option>       
-          @foreach($country_phone_code as $code)
-            <option value="{{$code}}"><img src='{{asset('icons')}}/flags/{{$code}}.svg' width='15'> +{{$code}}</option>
-          @endforeach -->
+          
           
         </select>
-        <input type="text" name="phone" class="form-control !border-l-0" placeholder="Enter your phone number" maxlength="10" />
+        <input type="text" name="phone" class="form-control !border-l-0" placeholder="Enter your phone number" minlength="10" maxlength="10" />
+        <button type="button" class="btn btn-yellow getOtp">Get OTP</button>
         <!-- <a href="javascript:void(0)" class="btn btn-yellow rounded-0 rounded-end text-center">Get OTP</a> -->
       </div>
 
@@ -97,8 +95,13 @@
         <input type="text" name="otp" class="form-control rounded-3" placeholder="Enter OTP" maxlength="6" />
       </div> -->
 
+      <!-- OTP -->
+      <div class="mb-3">
+        <input type="text" name="otp" class="form-control" minlength="6" maxlength="6" placeholder="Enter OTP" />
+      </div>
+      
       <!-- Password -->
-      <div class="input-group mb-3">
+      <div class="otp_verified input-group mb-3">
         <span class="input-group-text input-group-text-yellow"><i class="bi bi-lock text-warning"></i></span>
         <input type="password" name="password" class="form-control rounded-0 rounded-end" placeholder="Password" />
         <a href="#" class="btn btn-outline-secondary p_eye" aria-label="Toggle password visibility">
@@ -107,7 +110,7 @@
       </div>
 
       <!-- Confirm Password -->
-      <div class="input-group mb-3">
+      <div class="otp_verified input-group mb-3">
         <span class="input-group-text input-group-text-yellow"><i class="bi bi-lock text-warning"></i></span>
         <input type="password" name="confirm_password" class="form-control rounded-0 rounded-end" placeholder="Confirm Password" />
         <a href="#" class="btn btn-outline-secondary p_eye" aria-label="Toggle confirm password visibility">
@@ -116,12 +119,12 @@
       </div>
 
       <!-- Referral Code -->
-      <div class="mb-3">
+      <div class="otp_verified mb-3">
         <input type="text" name="referral_code" value="{{Session::get('referral_code')}}" class="form-control rounded-3" placeholder="Referral Code (optional)" />
       </div>
 
       <!-- Remember Me -->
-      <div class="form-check mb-3 text-start">
+      <div class="otp_verified form-check mb-3 text-start">
         <input class="form-check-input" type="checkbox" id="remember" name="age_confirm" />
         <label class="form-check-label small fw-semibold" for="remember">I am over 18 years and have read and accepted Terms & Conditions.</label>
       </div>

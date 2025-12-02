@@ -222,6 +222,10 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
         
         Route::get('market_analysis', [AdminDataController::class,'market_analysis'])->name('admin.market_analysis');
 
+        Route::get('cricket_analysis', [AdminDataController::class,'cricket_analysis'])->name('admin.cricket_analysis');
+        Route::get('soccer_analysis', [AdminDataController::class,'soccer_analysis'])->name('admin.soccer_analysis');
+        Route::get('tennis_analysis', [AdminDataController::class,'tennis_analysis'])->name('admin.tennis_analysis');
+
         Route::post('sattleEvent', [AdminDataController::class,'sattleEvent'])->name('sattleEvent')->withoutMiddleware([VerifyCsrfToken::class]);
 
         Route::post('sattleEventBets', [AdminDataController::class,'sattleEventBets'])->name('admin.sattleEventBets')->withoutMiddleware([VerifyCsrfToken::class]);
