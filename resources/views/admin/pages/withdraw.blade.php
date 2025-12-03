@@ -62,13 +62,11 @@
                                         @if($transaction->status==1)
                                         <flex class="flex flex-row items-center justify-evenly">
                                             <div class="p-[.1rem]">
-                                                <i data-order_sn="{{ $transaction->order_sn }}" class="fas fa-circle-xmark text-danger" style="cursor: pointer;" title="reject" data-bs-toggle="modal"
-                                                    data-bs-target="#updateTransaction">
+                                                <i data-order_sn="{{ $transaction->order_sn }}" class="fas fa-circle-xmark text-danger reject_withdraw" style="cursor: pointer;" title="reject">
                                                 </i>
                                             </div>
                                             <div class="p-[.1rem]">
-                                                <i data-order_sn="{{ $transaction->order_sn }}" class="fas fa-check text-primary" style="cursor: pointer;" title="approve" data-bs-toggle="modal"
-                                                    data-bs-target="#updateTransaction">
+                                                <i data-order_sn="{{ $transaction->order_sn }}" class="fas fa-check text-primary approve_withdraw" style="cursor: pointer;" title="approve">
                                                 </i>
                                             </div>
 

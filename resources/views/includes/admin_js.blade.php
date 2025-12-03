@@ -171,6 +171,16 @@
         formData = {};
         callApi('post', `{{Route('admin.action.updateTransaction')}}`, {order_sn:$(this).attr('data-order_sn'),updateKey:'status',status:2}, ajaxResponseModal);
     });
+    
+    $('.reject_withdraw').on('click',function(){
+        formData = {};
+        callApi('post', `{{Route('admin.action.updateTransaction')}}`, {order_sn:$(this).attr('data-order_sn'),updateKey:'status',status:0}, ajaxResponseModal);
+    });
+    
+    $('.approve_withdraw').on('click',function(){
+        formData = {};
+        callApi('post', `{{Route('admin.action.updateTransaction')}}`, {order_sn:$(this).attr('data-order_sn'),updateKey:'status',status:2}, ajaxResponseModal);
+    });
 
 
     // Transaction Data

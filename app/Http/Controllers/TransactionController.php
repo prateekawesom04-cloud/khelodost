@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
+use App\Models\UserBank;
 use App\Models\Transaction;
 
 class TransactionController extends Controller
@@ -549,6 +550,8 @@ class TransactionController extends Controller
             
             $user = User::where('username',$transaction->username)->first();
 
+            $userBank = UserBank::where('username',$user->username)->first();
+
             if($transaction->payment_type != 1){
                 $user->wallet_amount = floatval($user->wallet_amount) + floatval($transaction->transfer_amount);
             } else{
@@ -556,9 +559,9 @@ class TransactionController extends Controller
                 
                 $request->merge(['username'=>$user->username]);
                 $request->merge([
-                    'account_id'=>$userank->account_id,
-                    'ifsc_code'=>$userank->ifsc_code,
-                    'account_holder'=>$userank->account_holder,
+                    'account_id'=>$userBank->account_id,
+                    'ifsc_code'=>$userBank->ifsc_code,
+                    'account_holder'=>$userBank->account_holder,
                     'remark'=>$transaction->remark
                 ]);
 
@@ -580,6 +583,7 @@ class TransactionController extends Controller
                     $apiData['signatureKey'] = '5D34BD894E07C2BE';
                     $response = $this->paymentGatewayBanMethod($request);
                 }
+                dd($response);
                 $user->wallet_amount = floatval($user->wallet_amount) - floatval($transaction->transfer_amount);
             }
             $user->save();
