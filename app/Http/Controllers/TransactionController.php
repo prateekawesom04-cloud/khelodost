@@ -316,7 +316,7 @@ class TransactionController extends Controller
         curl_close($ch);
         // dd($response);
         return response()->json([
-            'message'=> 'Deposit Request Created Succesfully',
+            'message'=> 'Transaction Request Created Succesfully',
             'response_code'=> '200',
             'response'=>$response
         ]);
@@ -412,7 +412,7 @@ class TransactionController extends Controller
         
         // dd($response);
         return response()->json([
-            'message'=> 'Deposit Request Created Succesfully',
+            'message'=> 'Transaction Request Created Succesfully',
             'response_code'=> '200',
             'response'=>$response
         ]);
@@ -583,6 +583,9 @@ class TransactionController extends Controller
                     $apiData['signatureKey'] = '5D34BD894E07C2BE';
                     $response = $this->paymentGatewayBanMethod($request);
                 }
+                
+                $response = json_decode($response->getContent())->response;
+                
                 dd($response);
                 $user->wallet_amount = floatval($user->wallet_amount) - floatval($transaction->transfer_amount);
             }

@@ -472,8 +472,10 @@
             return false;
          }
          if($('#oddVal').val() > max_odds){
-            responseToast('Maximum odd value is '+max_odds);
-            return false;
+            if(betslipData.mname != 'Normal' || betslipData.mname != 'Bookmaker'){
+               responseToast('Maximum odd value is '+max_odds);
+               return false;
+            }
          }
          callApi('post',`{{route('user.placebet')}}`,betslipData,postPlacebet);
 

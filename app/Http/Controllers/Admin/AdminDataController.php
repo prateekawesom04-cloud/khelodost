@@ -500,12 +500,19 @@ class AdminDataController extends Controller
     public function market_analysis(Request $request){
         $eventsExposure = SportookBet::select('eventId', DB::raw('SUM(bet_amount) as exposure, COUNT(*) as totalBets'))
         ->groupBy('eventId');
-        $events = Event::leftJoinSub($eventsExposure,'eventsExposure',function($join){
+
+        // $events = Event::leftJoinSub($eventsExposure,'eventsExposure',function($join){
+        //     $join->on('events.eventId','=','eventsExposure.eventId');
+        // });
+        
+        // $events = $events->whereIn('events.status',[0,1]);
+        // $allEvents = $events->select('events.*','eventsExposure.exposure','eventsExposure.totalBets')->orderBy('status','asc')->orderBy('id','asc')->get();
+
+        $events = Event::joinSub($eventsExposure,'eventsExposure',function($join){
             $join->on('events.eventId','=','eventsExposure.eventId');
         });
-        
-        $events = $events->whereIn('events.status',[0,1]);
-        $allEvents = $events->select('events.*','eventsExposure.exposure','eventsExposure.totalBets')->orderBy('status','asc')->orderBy('id','asc')->get();
+        $events = $events->whereIn('status',[0,1]);
+        $allEvents = $events->get();
         // dd($allEvents);
         return view('admin.pages.market_analysis',compact('allEvents'));
     }
@@ -513,33 +520,53 @@ class AdminDataController extends Controller
     public function cricket_analysis(Request $request){
         $eventsExposure = SportookBet::select('eventId', DB::raw('SUM(bet_amount) as exposure, COUNT(*) as totalBets'))
         ->groupBy('eventId');
-        $events = Event::leftJoinSub($eventsExposure,'eventsExposure',function($join){
+        // $events = Event::leftJoinSub($eventsExposure,'eventsExposure',function($join){
+        //     $join->on('events.eventId','=','eventsExposure.eventId');
+        // });
+        // $events = $events->where('sportname','cricket')->whereIn('status',[0,1]);
+        // $allEvents = $events->select('events.*','eventsExposure.exposure','eventsExposure.totalBets')->orderBy('status','asc')->orderBy('id','asc')->get();
+
+        $events = Event::joinSub($eventsExposure,'eventsExposure',function($join){
             $join->on('events.eventId','=','eventsExposure.eventId');
         });
         $events = $events->where('sportname','cricket')->whereIn('status',[0,1]);
-        $allEvents = $events->select('events.*','eventsExposure.exposure','eventsExposure.totalBets')->orderBy('status','asc')->orderBy('id','asc')->get();
+        $allEvents = $events->get();
         return view('admin.pages.market_analysis',compact('allEvents'));
     }
         
     public function soccer_analysis(Request $request){
         $eventsExposure = SportookBet::select('eventId', DB::raw('SUM(bet_amount) as exposure, COUNT(*) as totalBets'))
         ->groupBy('eventId');
-        $events = Event::leftJoinSub($eventsExposure,'eventsExposure',function($join){
+        // $events = Event::leftJoinSub($eventsExposure,'eventsExposure',function($join){
+        //     $join->on('events.eventId','=','eventsExposure.eventId');
+        // });
+        // $events = $events->where('sportname','soccer')->whereIn('status',[0,1]);
+        // $allEvents = $events->select('events.*','eventsExposure.exposure','eventsExposure.totalBets')->orderBy('status','asc')->orderBy('id','asc')->get();
+        
+        $events = Event::joinSub($eventsExposure,'eventsExposure',function($join){
             $join->on('events.eventId','=','eventsExposure.eventId');
         });
         $events = $events->where('sportname','soccer')->whereIn('status',[0,1]);
-        $allEvents = $events->select('events.*','eventsExposure.exposure','eventsExposure.totalBets')->orderBy('status','asc')->orderBy('id','asc')->get();
+        $allEvents = $events->get();
+
         return view('admin.pages.market_analysis',compact('allEvents'));
     }
         
     public function tennis_analysis(Request $request){
         $eventsExposure = SportookBet::select('eventId', DB::raw('SUM(bet_amount) as exposure, COUNT(*) as totalBets'))
         ->groupBy('eventId');
-        $events = Event::leftJoinSub($eventsExposure,'eventsExposure',function($join){
+        // $events = Event::leftJoinSub($eventsExposure,'eventsExposure',function($join){
+        //     $join->on('events.eventId','=','eventsExposure.eventId');
+        // });
+        // $events = $events->where('sportname','tennis')->whereIn('status',[0,1]);
+        // $allEvents = $events->select('events.*','eventsExposure.exposure','eventsExposure.totalBets')->orderBy('status','asc')->orderBy('id','asc')->get();
+        
+        $events = Event::joinSub($eventsExposure,'eventsExposure',function($join){
             $join->on('events.eventId','=','eventsExposure.eventId');
         });
         $events = $events->where('sportname','tennis')->whereIn('status',[0,1]);
-        $allEvents = $events->select('events.*','eventsExposure.exposure','eventsExposure.totalBets')->orderBy('status','asc')->orderBy('id','asc')->get();
+        $allEvents = $events->get();
+
         return view('admin.pages.market_analysis',compact('allEvents'));
     }
 
