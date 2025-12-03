@@ -13,7 +13,7 @@
                 <form id="balance_form_deposit" class="balance_form form">
                     @csrf
                     <input name="username" type="hidden" id="username" class="form-control" value="">
-                    <input type="hidden" name="payment_type" value="2">
+                    <input type="hidden" name="payment_type" value="0">
                     <!-- Balance -->
                     <div class="mb-3">
                         <div class="flex flex-row justify-between items-center">
@@ -63,7 +63,7 @@
                 <form id="balance_form_withdraw" class="balance_form form">
                     @csrf
                     <input name="username" type="hidden" id="username" class="form-control" value="">
-                    <input type="hidden" name="payment_type" value="0">
+                    <input type="hidden" name="payment_type" value="1">
                     <!-- Balance -->
                     <div class="mb-3">
                         <div class="flex flex-row justify-between items-center">

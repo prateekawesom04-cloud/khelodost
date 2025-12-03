@@ -406,7 +406,7 @@ $d = 0;
                         @endphp
                     <tr>
                       <td>{{$d+=1}}</td>
-                      <td>{{$bonusTransaction->created_at}}</td>
+                      <td>{{$transaction->created_at}}</td>
                       <td>{{$transaction->remark}}</td>
                       <td>{{($transaction->payment_type)?'-':$transaction->transfer_amount}}</td>
                       <td>{{($transaction->payment_type)?$transaction->transfer_amount:'-'}}</td>

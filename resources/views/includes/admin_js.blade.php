@@ -89,6 +89,7 @@
     });
 
     $('.updateWalletSubmit').on('click',function(){
+        $(this).attr('disabled',true);
         let exitLoop = true;
         let formData = new FormData($(this).parents('form')[0]);
         let formInputs = $(this).parents('form').find('input');

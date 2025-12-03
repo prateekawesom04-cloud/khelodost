@@ -531,7 +531,7 @@ class AdminDataController extends Controller
         });
         $events = $events->where('sportname','cricket')->whereIn('status',[0,1]);
         $allEvents = $events->get();
-        return view('admin.pages.market_analysis',compact('allEvents'));
+        return view('admin.pages.cricket_analysis',compact('allEvents'));
     }
         
     public function soccer_analysis(Request $request){
@@ -549,7 +549,7 @@ class AdminDataController extends Controller
         $events = $events->where('sportname','soccer')->whereIn('status',[0,1]);
         $allEvents = $events->get();
 
-        return view('admin.pages.market_analysis',compact('allEvents'));
+        return view('admin.pages.soccer_analysis',compact('allEvents'));
     }
         
     public function tennis_analysis(Request $request){
@@ -567,7 +567,7 @@ class AdminDataController extends Controller
         $events = $events->where('sportname','tennis')->whereIn('status',[0,1]);
         $allEvents = $events->get();
 
-        return view('admin.pages.market_analysis',compact('allEvents'));
+        return view('admin.pages.tennis_analysis',compact('allEvents'));
     }
 
     public function sattleEvent(Request $request){
