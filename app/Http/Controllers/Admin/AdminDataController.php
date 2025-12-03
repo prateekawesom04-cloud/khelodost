@@ -492,9 +492,23 @@ class AdminDataController extends Controller
 
     public function sattlement(Request $request){
         // $eventId = $request->eventId;
-        $events = Event::orderBy('status','asc')->get();
+        if($request->sport == 'all' || $request->sport==''){
+            $events = Event::orderBy('id','desc')->get();
+        } else{
+            if($request->sport == 'cricket'){
+                $events = Event::where('sportname','cricket');
+            }
+            if($request->sport == 'soccer'){
+                $events = Event::where('sportname','soccer');
+            }
+            if($request->sport == 'tennis'){
+                $events = Event::where('sportname','tennis');
+            }
+            $events = $events->orderBy('id','desc')->get();
+        }
         // $events = Event::all();
-        return view('pages.sattlement',compact('events'));
+        $sport = $request->sport;
+        return view('pages.sattlement',compact('events','sport'));
     }
     
     public function market_analysis(Request $request){
@@ -512,7 +526,7 @@ class AdminDataController extends Controller
             $join->on('events.eventId','=','eventsExposure.eventId');
         });
         $events = $events->whereIn('status',[0,1]);
-        $allEvents = $events->get();
+        $allEvents = $events->orderBy('id','desc')->get();
         // dd($allEvents);
         return view('admin.pages.market_analysis',compact('allEvents'));
     }
@@ -530,7 +544,7 @@ class AdminDataController extends Controller
             $join->on('events.eventId','=','eventsExposure.eventId');
         });
         $events = $events->where('sportname','cricket')->whereIn('status',[0,1]);
-        $allEvents = $events->get();
+        $allEvents = $events->orderBy('id','desc')->get();
         return view('admin.pages.cricket_analysis',compact('allEvents'));
     }
         
@@ -547,7 +561,7 @@ class AdminDataController extends Controller
             $join->on('events.eventId','=','eventsExposure.eventId');
         });
         $events = $events->where('sportname','soccer')->whereIn('status',[0,1]);
-        $allEvents = $events->get();
+        $allEvents = $events->orderBy('id','desc')->get();
 
         return view('admin.pages.soccer_analysis',compact('allEvents'));
     }
@@ -565,7 +579,7 @@ class AdminDataController extends Controller
             $join->on('events.eventId','=','eventsExposure.eventId');
         });
         $events = $events->where('sportname','tennis')->whereIn('status',[0,1]);
-        $allEvents = $events->get();
+        $allEvents = $events->orderBy('id','desc')->get();
 
         return view('admin.pages.tennis_analysis',compact('allEvents'));
     }

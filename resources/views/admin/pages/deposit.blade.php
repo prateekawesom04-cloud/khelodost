@@ -65,13 +65,13 @@
                                 <tr>
                                     <td>
                                         @if($transaction->status==1)
-                                        <flex class="flex flex-row items-center justify-evenly">
-                                            <div class="p-[.1rem]">
+                                        <flex class="flex flex-row items-center justify-evenly gap-3">
+                                            <div class="p-[.3rem] border-2 !border-[#0d6efd] solid flex">
                                                 <i data-order_sn="{{ $transaction->order_sn }}" class="fas fa-circle-xmark text-danger reject_deposit" style="cursor: pointer;" title="reject" data-bs-toggle="modal"
                                                     data-bs-target="#updateTransaction">
                                                 </i>
                                             </div>
-                                            <div class="p-[.1rem]">
+                                            <div class="p-[.3rem] border-2 !border-[#0d6efd] solid flex">
                                                 <i data-order_sn="{{ $transaction->order_sn }}" class="fas fa-check text-primary approve_deposit" style="cursor: pointer;" title="approve" data-bs-toggle="modal"
                                                     data-bs-target="#updateTransaction">
                                                 </i>

@@ -88,8 +88,10 @@
         $('.balance_form input[name=username]').val($(this).attr('data-username'));
     });
 
-    $('.updateWalletSubmit').on('click',function(){
-        $(this).attr('disabled',true);
+    $('.updateWalletSubmit').on('click',async function(){
+        $(this).addClass('disabled');
+        console.log('$(this)---',$(this));
+        
         let exitLoop = true;
         let formData = new FormData($(this).parents('form')[0]);
         let formInputs = $(this).parents('form').find('input');
@@ -106,7 +108,8 @@
             
         });
         if(exitLoop){
-            callAjaxFormData('post', `{{url('/admin')}}/updateWallet`, formData, ajaxResponseModal);
+            await callAjaxFormData('post', `{{url('/admin')}}/updateWallet`, formData, ajaxResponseModal);
+            $(this).removeClass('disabled');
         }
     });
 

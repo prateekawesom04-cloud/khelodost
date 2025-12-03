@@ -5,9 +5,17 @@
     <div class="container-fluid p-4">
 
         <!-- Bet History Section -->
+        <div class="flex flex-row flex-wrap items-center justify-center gap-2">
+            <a href="{{route('sattlement','all')}}" class="btn btn-primary btn-sm min-w-20">All Events</a>
+            <a href="{{route('sattlement','cricket')}}" class="btn btn-primary btn-sm min-w-20">Cricket</a>
+            <a href="{{route('sattlement','soccer')}}" class="btn btn-primary btn-sm min-w-20">Soccer</a>
+            <a href="{{route('sattlement','tennis')}}" class="btn btn-primary btn-sm min-w-20">Tennis</a>
+            
+            
+        </div>
         <div class="card shadow-sm border-0 mb-4">
             <div class="card-header text-white">
-                <strong>Events</strong>
+                <strong class="text-capitalize">{{$sport}} Events</strong>
             </div>
             <div class="card-body">
 

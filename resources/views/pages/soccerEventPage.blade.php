@@ -5,7 +5,7 @@
     <div class="card shadow-sm mb-4">
         <div class="card-body p-0">
             <div class="text-center">
-                <div class="mb-2 relative" style="height: 285px;display:none;">
+                <div class="mb-2 relative" style="height: 205px;display:none;">
                     <iframe src="" frameborder="0" class="w-full h-full absolute top-0 left-0"></iframe>
                 </div>
                 <div class="my-1 border-b-2 border-gray-300">{{$eventData->eventName}}</div>
