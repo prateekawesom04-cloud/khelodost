@@ -626,6 +626,7 @@
                      <th class="flexTableItem t_data">No.</th>
                      <th class="flexTableItem t_data">Runner</th>
                      <th class="flexTableItem t_data">Bhaw</th>
+                     <th class="flexTableItem t_data">Amount</th>
                      <th class="flexTableItem t_data">BetType</th>
                      <th class="flexTableItem t_data">Time</th>
                      <th class="flexTableItem t_data">ip</th>
@@ -639,8 +640,9 @@
                <tbody>
                   <tr class="flex fex-row gap-2 flex-1">
                      <td class="flexTableItem t_data">${i+1}</td>
-                     <td class="flexTableItem t_data">${this.nat}</td>
+                     <td class="flexTableItem t_data">${this.mname}/${this.nat}</td>
                      <td class="flexTableItem t_data">${this.oddVal}</td>
+                     <td class="flexTableItem t_data">${this.bet_amount}</td>
                      <td class="flexTableItem t_data">${this.betOn?'Lay':'Back'}</td>
                      <td class="flexTableItem t_data">${formatData(this.created_at)}</td>
                      <td class="flexTableItem t_data">${this.ip}</td>

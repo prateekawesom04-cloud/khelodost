@@ -201,5 +201,16 @@
     //   $('.getOtp').removeAttr('disabled').text('Get OTP');
     }
   }
+  
+  $('input[name="search"], input[type="search"]').on('keyup', function() {
+    console.log('searching---');
+    
+      var searchText = $(this).val().toLowerCase(); // Get search text and convert to lowercase
 
+      $('table tbody tr').filter(function() {
+          // Filter rows based on whether their text content contains the search text
+          $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
+      });
+  });
+  
 </script>

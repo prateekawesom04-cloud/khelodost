@@ -354,11 +354,18 @@ class UserController extends Controller
     }
 
     public function betlist(Request $request){
-        $bets = SportookBet::where('username',$this->currentUser->username)->orderBy('id','desc')->get();
         
-        $openBets = SportookBet::where('username',$this->currentUser->username)->where('status',0)->orderBy('id','desc')->get();
+        $data = SportookBet::join('events','events.eventId','=','sportook_bets.eventId')->select('sportook_bets.*','events.eventName','events.sportname')->where('username',$this->currentUser->username)->orderBy('id','desc');
+
+        if($request->sport != 'all'){
+            $data = $data->where('sportname',$request->sport);
+        }
+        $bets = $data->get();
         
-        $sattledBets = SportookBet::where('username',$this->currentUser->username)->where('status','!=',0)->orderBy('id','desc')->get();
+        $openBets = $data->get();
+        // dd($openBets);
+        
+        $sattledBets = $data->get();
 
         // $bets = SportookBet::where('status',0)->get();
         return view('accounts.open_bets',compact('bets','openBets','sattledBets'));

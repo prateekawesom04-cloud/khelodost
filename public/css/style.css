@@ -817,3 +817,13 @@ h3,h4,h5 {
 .table-header {
     border-bottom: #0c0339 0.2rem solid;
 }
+.table-header th {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #000 !important;
+    min-width: max-content;
+}
+
+.table-body td {
+    min-width: max-content;
+}

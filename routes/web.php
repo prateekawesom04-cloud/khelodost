@@ -82,7 +82,7 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
 
         Route::post('claimBonus', [UserController::class,'claimBonus'])->name('user.post.claimBonus')->withoutMiddleware([VerifyCsrfToken::class]);
 
-        Route::get('betlist', [UserController::class,'betlist'])->name('user.betlist');
+        Route::get('betlist/{sport}', [UserController::class,'betlist'])->name('user.betlist');
         
         Route::get('live_game_bet_history', [UserController::class,'live_game_bet_history'])->name('user.live_game_bet_history');
         

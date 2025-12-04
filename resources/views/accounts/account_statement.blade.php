@@ -338,8 +338,11 @@ $e = 0;
                       <th>S.No.</th>
                       <th>Date</th>
                       <th>Description</th>
-                      <th>Profit</th>
-                      <th>Loss</th>
+                      {{-- <th>Profit</th>
+                      <th>Loss</th> --}}
+                      <th>Credit</th>
+                      <th>Debit</th>
+                      <th>Balance</th>
                       {{-- <th>Balance</th> --}}
                       {{-- <th>Status</th> --}}
                     </tr>
@@ -427,8 +430,10 @@ $e = 0;
                     <tr>
                       <th>S.No.</th>
                       <th>Sportname</th>
-                      <th>Profit</th>
-                      <th>Loss</th>
+                      {{-- <th>Profit</th>
+                      <th>Loss</th> --}}
+                      <th>Credit</th>
+                      <th>Debit</th>
                     </tr>
                   </thead>
                   <tbody class="table-body">

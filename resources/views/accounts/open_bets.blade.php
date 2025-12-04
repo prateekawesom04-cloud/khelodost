@@ -204,6 +204,12 @@
         </div>
       </div>
 
+      <div class="flex items-center justify-center gap-2">
+        <a href="{{ route('user.betlist','cricket') }}" class="px-3 py-1 !bg-[#0c0339] text-white">Cricket</a>
+        <a href="{{ route('user.betlist','soccer') }}" class="px-3 py-1 !bg-[#0c0339] text-white">Soccer</a>
+        <a href="{{ route('user.betlist','tennis') }}" class="px-3 py-1 !bg-[#0c0339] text-white">Tennis</a>
+      </div>
+
 @php
 $a = 0;
 $b = 0;
@@ -231,6 +237,8 @@ $d = 0;
                       <th>Amount</th>
                       <th>Profit</th>
                       <th>Loss</th>
+                      <th>BetType</th>
+                      <th>ID</th>
                     </tr>
                   </thead>
                   <tbody class="table-body">
@@ -238,13 +246,15 @@ $d = 0;
                       <tr>
                         <td>{{$a+=1}}</td>
                         <td>{{$transaction->created_at}}</td>
-                        <td>{{$transaction->mname}}</td>
+                        <td>{{$transaction->sportname}}/{{$transaction->eventName}}/{{$transaction->mname}}</td>
                         <td>{{$transaction->nat}}</td>
                         <td>{{$transaction->betOn?'Lay':'Back'}}</td>
                         <td>{{$transaction->oddVal}}</td>
                         <td>{{$transaction->bet_amount}}</td>
                         <td class="text-success">{{$transaction->profit}}</td>
                         <td class="text-danger">{{($transaction->status==0)?'--':(($transaction->status==1)?'0':$transaction->bet_amount)}}</td>
+                        <td>{{$transaction->gtype}}</td>
+                        <td>{{$transaction->betId}}</td>
                       </tr>
                       @endforeach
                   </tbody>
@@ -279,6 +289,8 @@ $d = 0;
                       <th>Bhaw</th>
                       <th>Amount</th>
                       <th>Profit</th>
+                      <th>BetType</th>
+                      <th>ID</th>
                       {{-- <th>Loss</th> --}}
                     </tr>
                   </thead>
@@ -287,12 +299,14 @@ $d = 0;
                     <tr>
                       <td>{{$a+=1}}</td>
                       <td>{{$transaction->created_at}}</td>
-                      <td>{{$transaction->mname}}</td>
+                      <td>{{$transaction->sportname}}/{{$transaction->eventName}}/{{$transaction->mname}}</td>
                       <td>{{$transaction->nat}}</td>
                       <td>{{$transaction->betOn?'Lay':'Back'}}</td>
                       <td>{{$transaction->oddVal}}</td>
                       <td>{{$transaction->bet_amount}}</td>
                       <td>{{$transaction->profit}}</td>
+                      <td>{{$transaction->gtype}}</td>
+                      <td>{{$transaction->betId}}</td>
                       {{-- <td>{{($transaction->status==0)?'--':(($transaction->status==1)?'0':$transaction->bet_amount)}}</td> --}}
                     </tr>
                     @endforeach
@@ -330,6 +344,8 @@ $d = 0;
                       <th>Amount</th>
                       <th>Profit</th>
                       <th>Loss</th>
+                      <th>BetType</th>
+                      <th>ID</th>
                     </tr>
                   </thead>
                   <tbody class="table-body">
@@ -337,13 +353,15 @@ $d = 0;
                       <tr>
                         <td>{{$b+=1}}</td>
                         <td>{{$transaction->created_at}}</td>
-                        <td>{{$transaction->mname}}</td>
+                        <td>{{$transaction->sportname}}/{{$transaction->eventName}}/{{$transaction->mname}}</td>
                         <td>{{$transaction->nat}}</td>
                         <td>{{$transaction->betOn?'Lay':'Back'}}</td>
                         <td>{{$transaction->oddVal}}</td>
                         <td>{{$transaction->bet_amount}}</td>
                         <td class="text-success">{{$transaction->profit}}</td>
                         <td class="text-danger">{{($transaction->status==0)?'--':(($transaction->status==1)?'0':$transaction->bet_amount)}}</td>
+                        <td>{{$transaction->gtype}}</td>
+                        <td>{{$transaction->betId}}</td>
                       </tr>
                       @endforeach
                   </tbody>
