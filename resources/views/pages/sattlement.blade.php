@@ -75,8 +75,11 @@
                                                 {{-- <div class="p-[.1rem]">
                                                     <i data-eventName="{{$row->eventName}}" data-eventId="{{ $row->eventId }}" class="fas fa-{{($row->status)?'circle-xmark text-danger b_active':'check text-success b_deactive'}}" style="cursor: pointer;" title="Change Status"></i>
                                                 </div> --}}
-                                                <div>
+                                                <div class="flex flex-row items-center justify-evenly gap-3">
+                                                    <div class="p-[.3rem] border-2 !border-[#0d6efd] solid flex">
                                                     <i data-sportname="{{$row->sportname}}" data-eventName="{{$row->eventName}}" data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent mx-2 fas fa-edit" style="cursor: pointer;" data-bs-target="#sattleEvent"></i>
+                                                </div>
+                                                <div class="p-[.3rem] border-2 !border-[#0d6efd] solid flex">
                                                     <i data-sportname="{{$row->sportname}}" data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="sattleEventBets mx-2 fas fa-check" style="cursor: pointer;"></i>
                                                     {{-- <i data-teama="{{$teamA}}" data-teamb="{{$teamB}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="{{($teamB=='Series')?'':'#sattleEvent'}}"></i> --}}
                                                     {{-- <i data-teamA="{{$explode(' v ',$row->eventName)[0]}}" data-teamB="{{explode(' v ',$row->eventName)[1]}}" data-eventId="{{ $row->eventId }}" class="editEvent fas fa-edit" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#sattleEvent"></i> --}}

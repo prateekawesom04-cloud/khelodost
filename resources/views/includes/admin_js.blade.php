@@ -168,22 +168,22 @@
     // update transaction
     $('.reject_deposit').on('click',function(){
         formData = {};
-        callApi('post', `{{Route('admin.action.updateTransaction')}}`, {order_sn:$(this).attr('data-order_sn'),updateKey:'status',status:0}, ajaxResponseModal);
+        callApi('post', `{{Route('admin.action.updateTransaction')}}`, {order_sn:$(this).attr('data-order_sn'),payment_type:0,status:0}, ajaxResponseModal);
     });
     
     $('.approve_deposit').on('click',function(){
         formData = {};
-        callApi('post', `{{Route('admin.action.updateTransaction')}}`, {order_sn:$(this).attr('data-order_sn'),updateKey:'status',status:2}, ajaxResponseModal);
+        callApi('post', `{{Route('admin.action.updateTransaction')}}`, {order_sn:$(this).attr('data-order_sn'),payment_type:0,status:2}, ajaxResponseModal);
     });
     
     $('.reject_withdraw').on('click',function(){
         formData = {};
-        callApi('post', `{{Route('admin.action.updateTransaction')}}`, {order_sn:$(this).attr('data-order_sn'),updateKey:'status',status:0}, ajaxResponseModal);
+        callApi('post', `{{Route('admin.action.updateTransaction')}}`, {order_sn:$(this).attr('data-order_sn'),payment_type:1,status:0}, ajaxResponseModal);
     });
     
     $('.approve_withdraw').on('click',function(){
         formData = {};
-        callApi('post', `{{Route('admin.action.updateTransaction')}}`, {order_sn:$(this).attr('data-order_sn'),updateKey:'status',status:2}, ajaxResponseModal);
+        callApi('post', `{{Route('admin.action.updateTransaction')}}`, {order_sn:$(this).attr('data-order_sn'),payment_type:1,status:2}, ajaxResponseModal);
     });
 
 

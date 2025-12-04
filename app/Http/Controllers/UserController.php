@@ -133,7 +133,7 @@ class UserController extends Controller
             $data = Transaction::where([
                 'username'=>$user->username,
                 'payment_type'=>'1'
-            ])->get();
+            ])->orderBy('id','desc')->get();
             return view('accounts.withdraw',compact('data','agent'));
         }
         return view('accounts.withdraw');
@@ -354,11 +354,11 @@ class UserController extends Controller
     }
 
     public function betlist(Request $request){
-        $bets = SportookBet::where('username',$this->currentUser->username)->get();
+        $bets = SportookBet::where('username',$this->currentUser->username)->orderBy('id','desc')->get();
         
-        $openBets = SportookBet::where('username',$this->currentUser->username)->where('status',0)->get();
+        $openBets = SportookBet::where('username',$this->currentUser->username)->where('status',0)->orderBy('id','desc')->get();
         
-        $sattledBets = SportookBet::where('username',$this->currentUser->username)->where('status','!=',0)->get();
+        $sattledBets = SportookBet::where('username',$this->currentUser->username)->where('status','!=',0)->orderBy('id','desc')->get();
 
         // $bets = SportookBet::where('status',0)->get();
         return view('accounts.open_bets',compact('bets','openBets','sattledBets'));
@@ -370,7 +370,7 @@ class UserController extends Controller
 
         $bets = Event::joinSub($eventsExposure,'eventsExposure',function($join){
             $join->on('events.eventId','=','eventsExposure.eventId');
-        })->get();
+        })->orderBy('eventsExposure.id','desc')->get();
 
         return view('accounts.live_game_bet_history',compact('bets'));
 

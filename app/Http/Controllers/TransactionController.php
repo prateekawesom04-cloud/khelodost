@@ -257,6 +257,8 @@ class TransactionController extends Controller
             $data['accCardNo'] = $request->account_id;
             $data['accBankCode'] = $request->ifsc_code;
             $data['accName'] = $request->account_holder;
+            $data['accTel'] = '9090099099';
+            $data['accEmail'] = 'matchbhai@gmail.com';
             $data['purpose'] = $request->remark;
             
         } else{
@@ -286,7 +288,7 @@ class TransactionController extends Controller
         $sdata = json_encode($sdata);
         
         $payment_type = ($request->payment_type==1) ? 'transferApply' : 'makeOrder';
-        
+        // dd($request->transfer_amount);
         // $url = "https://www.lg-pay.com/api/".$payment_type."/create";
 
         // $url = env('paying_url')."/".$payment_type;
@@ -445,8 +447,16 @@ class TransactionController extends Controller
             $transaction->save();
 
             $user = User::where('username',$transaction->username)->first();
-            $user->wallet_amount = floatval($user->wallet_amount) + floatval($request->price);
-            $user->save();
+
+            if($transaction->payment_type != 1){
+                $user->wallet_amount = floatval($user->wallet_amount) + floatval($request->price);
+                $user->save();
+            } else{
+                $user->wallet_amount = floatval($user->wallet_amount) - floatval($request->price);
+                $user->save();
+            }
+
+
             return response()->json([
                 'message'=> 'Transaction Successfull',
                 'response_code'=> '200'
@@ -555,14 +565,15 @@ class TransactionController extends Controller
             if($transaction->payment_type != 1){
                 $user->wallet_amount = floatval($user->wallet_amount) + floatval($transaction->transfer_amount);
             } else{
-
                 
                 $request->merge(['username'=>$user->username]);
                 $request->merge([
                     'account_id'=>$userBank->account_id,
                     'ifsc_code'=>$userBank->ifsc_code,
                     'account_holder'=>$userBank->account_holder,
-                    'remark'=>$transaction->remark
+                    'remark'=>$transaction->remark,
+                    'transfer_amount'=>$transaction->transfer_amount,
+                    'payment_type'=>$transaction->payment_type
                 ]);
 
                 // Api statements
@@ -584,10 +595,50 @@ class TransactionController extends Controller
                     $response = $this->paymentGatewayBanMethod($request);
                 }
                 
-                $response = json_decode($response->getContent())->response;
-                
-                dd($response);
-                $user->wallet_amount = floatval($user->wallet_amount) - floatval($transaction->transfer_amount);
+                $response = $response->getData();
+                $response = json_decode($response->response);
+                // dd($response);
+                if(isset($response->code) && $response->code == 0){
+                    $mchNo = $response->mchNo;
+                    $payload = $response->payload;
+                    $sign = $payload.$apiData['signatureKey']; // concatinating the payload and signature key
+                    $sign = strtoupper(md5($sign));
+                    // dd($response->sign,'-----',$sign);
+                    Log::info('gateway payload--');
+                    Log::info($response->payload);
+                    if($response->sign == $sign){
+                        // dd('if');
+                        $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
+                        Log::info('decrypted payload');
+                        Log::info($payload);
+                        // dd('payload--',$payload);
+                        $payloadData = json_decode($payload);
+                        return response()->json([
+                            'data'=> $payload,
+                            'message'=>$payloadData->statusDesc,
+                            'response_code'=> '200'
+                        ]);
+                        // dd($payload);
+                    } else{
+                        // dd('else');
+                        return response()->json([
+                            'message'=> 'Unable to verify Sign',
+                            'response_code'=> '105'
+                        ]);
+                    }
+                } else{
+
+                    $response =  $this->transferQueryIndMethod($request);
+
+                    if($response){
+                        $user->wallet_amount = floatval($user->wallet_amount) - floatval($transaction->transfer_amount);
+                    } else{
+                        return response()->json([
+                            'message'=> 'transaction in Process, please try again in sometime.',
+                            'response_code'=> '105'
+                        ]);
+                    }
+                }
             }
             $user->save();
         }
@@ -599,4 +650,124 @@ class TransactionController extends Controller
             'response_code'=> '200'
         ]);
     }
+
+    public function transferQueryIndMethod(Request $request){
+        
+        Log::info('transferQueryIndMethod');
+        Log::info($request->all());
+        $apiData = [];
+
+        $apiData['mchNo'] = 'M0396';
+        $apiData['encryptionKey'] = '72012C03A0F21CC3';
+        $apiData['signatureKey'] = '613BA28576F3CDF8';
+        
+        $data = [];
+
+        $data['versionNo'] = 1;
+        $data['mchNo'] = $apiData['mchNo'];
+        $data['tradeNo'] = $request->order_sn;
+
+        $sdata = [];
+
+        $sdata['payload'] = json_encode($data);
+
+        // dd(json_encode($data));
+
+        $sdata['payload'] = (new AuthController)->aes128cbc($apiData['encryptionKey'],$sdata['payload']);
+
+        $sdata['sign'] = $sdata['payload'].$apiData['signatureKey'];
+        
+        $sdata['sign'] = strtoupper(md5($sdata['sign']));
+        
+        $sdata['mchNo'] = $data['mchNo'];
+        $sdata['tradeNo'] = $data['tradeNo'];
+
+        $sdata = json_encode($sdata);
+        
+        $payment_type = ($request->payment_type==1) ? 'transferQuery' : 'orderQuery';
+        // dd($payment_type);
+        $url = 'https://phpay.ipayment.vip/dgateway/ws/trans/nocard/'.$payment_type;
+        
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Content-Type: application/json"
+        ]);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $sdata);
+        curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_DEFAULT);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 120);
+
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            return curl_error($ch);
+        } 
+
+        curl_close($ch);
+        
+        $response = json_decode($response);
+
+        if(isset($response->code) && $response->code == 0){
+            $mchNo = $response->mchNo;
+            $payload = $response->payload;
+            $sign = $payload.$apiData['signatureKey']; // concatinating the payload and signature key
+            $sign = strtoupper(md5($sign));
+            // dd($response->sign,'-----',$sign);
+            Log::info('gateway payload--');
+            Log::info($response->payload);
+            if($response->sign == $sign){
+                // dd('if');
+                $payload = (new AuthController)->aes128cbcDycrypt($apiData['encryptionKey'],$payload);
+                Log::info('decrypted payload');
+                Log::info($payload);
+                // dd('payload--',$payload);
+                return $payload;
+                $payloadData = json_decode($payload);
+
+                if($payloadData->status =='00'){
+                    // $user->wallet_amount = floatval($user->wallet_amount) - floatval($transaction->transfer_amount);
+                    return True;
+                    return response()->json([
+                        'message'=> 'Transaction Successfull',
+                        'response_code'=> '200'
+                    ]);
+                } else{
+                    return False;
+                }
+
+                // return response()->json([
+                //     'data'=> $payload,
+                //     'message'=>$payloadData->statusDesc,
+                //     'response_code'=> '200'
+                // ]);
+                // dd($payload);
+            } else{
+                // dd('else');
+                return False;
+                return response()->json([
+                    'message'=> 'Unable to verify Sign',
+                    'response_code'=> '105'
+                ]);
+            }
+        } else{
+            return False;
+            return response()->json([
+                'message'=> 'Something Went Wrong',
+                'response_code'=> '105'
+            ]);
+        }
+        // dd($response);
+        return response()->json([
+            'message'=> 'Transaction Succesfull',
+            'response_code'=> '200',
+            'response'=>$response
+        ]);
+
+    }
+
 }
