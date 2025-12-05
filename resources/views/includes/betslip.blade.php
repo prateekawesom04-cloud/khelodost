@@ -518,7 +518,7 @@
          localStorage.setItem('user_bets', JSON.stringify(user_bets));
          loadBets();
 
-         callApi('get','{{route('user.openbets')}}',null,openBetsBottom);
+         callApi('get','{{route('user.eventBets')}}',betslipData,openBetsBottom);
       }
    }
    
