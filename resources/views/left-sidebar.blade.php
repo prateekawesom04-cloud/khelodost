@@ -66,9 +66,9 @@
       <!-- Sports Section -->
       <div class="sidebar-section">
         <div class="sidebar-title">Sports</div>
-        <a href="{{ route('cricket') }}" class="sidebar-link">🏏 Cricket</a>
-        <a href="{{ route('football') }}" class="sidebar-link">⚽ Football</a>
-        <a href="{{ route('tennis') }}" class="sidebar-link">🎾 Tennis</a>
+        <a href="{{ route('user.sport','cricket') }}" class="sidebar-link">🏏 Cricket</a>
+        <a href="{{ route('user.sport','soccer') }}" class="sidebar-link">⚽ Football</a>
+        <a href="{{ route('user.sport','tennis') }}" class="sidebar-link">🎾 Tennis</a>
         <div class="sidebar-divider"></div>
       </div>
 

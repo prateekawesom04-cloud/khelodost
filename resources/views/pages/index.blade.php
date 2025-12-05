@@ -58,31 +58,31 @@
                 </div>
                 <div class="all_games d-flex overflow-auto p-2 gap-3">
                     <div id="originals" class="tab-content d-flex gap-2">
-                        <img src="{{ asset('images/MINES.avif') }}" class="rounded tab-img" alt="Original 1">
-                        <img src="{{ asset('images/T20-1739615944873.jpeg') }}" class="rounded tab-img" alt="Original 2">
-                        <img src="{{ asset('images/aviatorspribe.avif') }}" class="rounded tab-img" alt="Original 3">
-                        <img src="{{ asset('images/7UPDOWN-1739615820768.jpeg') }}" class="rounded tab-img"
+                        <img src="{{ asset('images/MINES.avif') }}" class="rounded tab-img contact_admin" alt="Original 1">
+                        <img src="{{ asset('images/T20-1739615944873.jpeg') }}" class="rounded tab-img contact_admin" alt="Original 2">
+                        <img src="{{ asset('images/aviatorspribe.avif') }}" class="rounded tab-img contact_admin" alt="Original 3">
+                        <img src="{{ asset('images/7UPDOWN-1739615820768.jpeg') }}" class="rounded tab-img contact_admin"
                             alt="Original 4">
-                        <img src="{{ asset('images/color_game.avif') }}" class="rounded tab-img" alt="Original 5">
-                        <img src="{{ asset('images/balloon.webp') }}" class="rounded tab-img" alt="Original 6">
+                        <img src="{{ asset('images/color_game.avif') }}" class="rounded tab-img contact_admin" alt="Original 5">
+                        <img src="{{ asset('images/balloon.webp') }}" class="rounded tab-img contact_admin" alt="Original 6">
                     </div>
                     <div id="crash" class="tab-content flex d-none gap-2">
-                        <img src="{{ asset('images/crash_games1.webp') }}" class="rounded tab-img" alt="Original 6">
-                        <img src="{{ asset('images/crash_games2.webp') }}" class="rounded tab-img" alt="Original 6">
-                        <img src="{{ asset('images/crash_games3.webp') }}" class="rounded tab-img" alt="Original 6">
-                        <img src="{{ asset('images/crash_games4.webp') }}" class="rounded tab-img" alt="Original 6">
-                        <img src="{{ asset('images/crash_games5.webp') }}" class="rounded tab-img" alt="Original 6">
-                        <img src="{{ asset('images/crash_games6.webp') }}" class="rounded tab-img" alt="Original 6">
-                        <img src="{{ asset('images/crash_games7.webp') }}" class="rounded tab-img" alt="Original 6">
+                        <img src="{{ asset('images/crash_games1.webp') }}" class="rounded tab-img contact_admin" alt="Original 6">
+                        <img src="{{ asset('images/crash_games2.webp') }}" class="rounded tab-img contact_admin" alt="Original 6">
+                        <img src="{{ asset('images/crash_games3.webp') }}" class="rounded tab-img contact_admin" alt="Original 6">
+                        <img src="{{ asset('images/crash_games4.webp') }}" class="rounded tab-img contact_admin" alt="Original 6">
+                        <img src="{{ asset('images/crash_games5.webp') }}" class="rounded tab-img contact_admin" alt="Original 6">
+                        <img src="{{ asset('images/crash_games6.webp') }}" class="rounded tab-img contact_admin" alt="Original 6">
+                        <img src="{{ asset('images/crash_games7.webp') }}" class="rounded tab-img contact_admin" alt="Original 6">
                     </div>
                     <div id="live" class="tab-content flex d-none gap-2">
-                            <img src="{{ asset('images/live_roulette1.webp') }}" class="rounded tab-img" alt="Original 6">
-                            <img src="{{ asset('images/live_roulette2.webp') }}" class="rounded tab-img" alt="Original 6">
-                            <img src="{{ asset('images/live_roulette3.webp') }}" class="rounded tab-img" alt="Original 6">
-                            <img src="{{ asset('images/live_roulette4.webp') }}" class="rounded tab-img" alt="Original 6">
-                            <img src="{{ asset('images/live_roulette5.webp') }}" class="rounded tab-img" alt="Original 6">
-                            <img src="{{ asset('images/live_roulette6.webp') }}" class="rounded tab-img" alt="Original 6">
-                            <img src="{{ asset('images/live_roulette7.webp') }}" class="rounded tab-img" alt="Original 6">
+                            <img src="{{ asset('images/live_roulette1.webp') }}" class="rounded tab-img contact_admin" alt="Original 6">
+                            <img src="{{ asset('images/live_roulette2.webp') }}" class="rounded tab-img contact_admin" alt="Original 6">
+                            <img src="{{ asset('images/live_roulette3.webp') }}" class="rounded tab-img contact_admin" alt="Original 6">
+                            <img src="{{ asset('images/live_roulette4.webp') }}" class="rounded tab-img contact_admin" alt="Original 6">
+                            <img src="{{ asset('images/live_roulette5.webp') }}" class="rounded tab-img contact_admin" alt="Original 6">
+                            <img src="{{ asset('images/live_roulette6.webp') }}" class="rounded tab-img contact_admin" alt="Original 6">
+                            <img src="{{ asset('images/live_roulette7.webp') }}" class="rounded tab-img contact_admin" alt="Original 6">
                     </div>
                 </div>
             </div>
@@ -173,27 +173,27 @@
                         <div class="row flex-shrink-0" style="min-width:100%;">
                             <div class="col-4 d-flex flex-column gap-1">
                                 <div class="card-slide"><img src="{{ asset('images/indian games posters-02.avif') }}"
-                                        class="card-game-img" alt="Card Game 1"></div>
+                                        class="card-game-img contact_admin" alt="Card Game 1"></div>
                                 <div class="card-slide"><img src="{{ asset('images/indian games posters-22.avif') }}"
-                                        class="card-game-img" alt="Card Game 2"></div>
+                                        class="card-game-img contact_admin" alt="Card Game 2"></div>
                                 <div class="card-slide"><img src="{{ asset('images/indian games posters-26.avif') }}"
-                                        class="card-game-img" alt="Card Game 3"></div>
+                                        class="card-game-img contact_admin" alt="Card Game 3"></div>
                             </div>
                             <div class="col-4 d-flex flex-column gap-1">
                                 <div class="card-slide"><img src="{{ asset('images/indian games posters-02.avif') }}"
-                                        class="card-game-img" alt="Card Game 4"></div>
+                                        class="card-game-img contact_admin contact_admin" alt="Card Game 4"></div>
                                 <div class="card-slide"><img src="{{ asset('images/indian games posters-22.avif') }}"
-                                        class="card-game-img" alt="Card Game 5"></div>
+                                        class="card-game-img contact_admin contact_admin" alt="Card Game 5"></div>
                                 <div class="card-slide"><img src="{{ asset('images/indian games posters-26.avif') }}"
-                                        class="card-game-img" alt="Card Game 6"></div>
+                                        class="card-game-img contact_admin contact_admin" alt="Card Game 6"></div>
                             </div>
                             <div class="col-4 d-flex flex-column gap-1">
                                 <div class="card-slide"><img src="{{ asset('images/indian games posters-02.avif') }}"
-                                        class="card-game-img" alt="Card Game 7"></div>
+                                        class="card-game-img contact_admin contact_admin" alt="Card Game 7"></div>
                                 <div class="card-slide"><img src="{{ asset('images/indian games posters-22.avif') }}"
-                                        class="card-game-img" alt="Card Game 8"></div>
+                                        class="card-game-img contact_admin contact_admin" alt="Card Game 8"></div>
                                 <div class="card-slide"><img src="{{ asset('images/indian games posters-26.avif') }}"
-                                        class="card-game-img" alt="Card Game 9"></div>
+                                        class="card-game-img contact_admin contact_admin" alt="Card Game 9"></div>
                             </div>
                         </div>
 
@@ -201,27 +201,27 @@
                         <div class="row flex-shrink-0" style="min-width:100%;">
                             <div class="col-4 d-flex flex-column gap-1">
                                 <div class="card-slide"><img src="{{ asset('images/indian games posters-02.avif') }}"
-                                        class="card-game-img" alt="Card Game 10"></div>
+                                        class="card-game-img contact_admin" alt="Card Game 10"></div>
                                 <div class="card-slide"><img src="{{ asset('images/indian games posters-22.avif') }}"
-                                        class="card-game-img" alt="Card Game 11"></div>
+                                        class="card-game-img contact_admin" alt="Card Game 11"></div>
                                 <div class="card-slide"><img src="{{ asset('images/indian games posters-26.avif') }}"
                                         class="card-game-img" alt="Card Game 12"></div>
                             </div>
                             <div class="col-4 d-flex flex-column gap-1">
                                 <div class="card-slide"><img src="{{ asset('images/indian games posters-02.avif') }}"
-                                        class="card-game-img" alt="Card Game 13"></div>
+                                        class="card-game-img contact_admin" alt="Card Game 13"></div>
                                 <div class="card-slide"><img src="{{ asset('images/indian games posters-22.avif') }}"
-                                        class="card-game-img" alt="Card Game 14"></div>
+                                        class="card-game-img contact_admin" alt="Card Game 14"></div>
                                 <div class="card-slide"><img src="{{ asset('images/indian games posters-26.avif') }}"
-                                        class="card-game-img" alt="Card Game 15"></div>
+                                        class="card-game-img contact_admin" alt="Card Game 15"></div>
                             </div>
                             <div class="col-4 d-flex flex-column gap-1">
                                 <div class="card-slide"><img src="{{ asset('images/indian games posters-02.avif') }}"
-                                        class="card-game-img" alt="Card Game 16"></div>
+                                        class="card-game-img contact_admin" alt="Card Game 16"></div>
                                 <div class="card-slide"><img src="{{ asset('images/indian games posters-22.avif') }}"
-                                        class="card-game-img" alt="Card Game 17"></div>
+                                        class="card-game-img contact_admin" alt="Card Game 17"></div>
                                 <div class="card-slide"><img src="{{ asset('images/indian games posters-26.avif') }}"
-                                        class="card-game-img" alt="Card Game 18"></div>
+                                        class="card-game-img contact_admin" alt="Card Game 18"></div>
                             </div>
                         </div>
                     </div>
