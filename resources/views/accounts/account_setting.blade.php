@@ -42,7 +42,7 @@
     </div> --}}
 
     <!-- Spacer / Divider -->
-    <hr class="my-5">
+    {{-- <hr class="my-5"> --}}
 
     <!-- Add/Edit Payment Card -->
     <form class="card deposit-card border-0 rounded-3 p-4 shadow-sm">
@@ -54,14 +54,14 @@
 
         <!-- Account No. -->
         <div class="mb-3">
-            <label for="account_id" class="form-label fw-semibold">Account ID</label>
-            <input type="text" id="account_id" name="account_id" class="form-control" placeholder="Account No./Card No./Upi ID" value="{{isset($userBank->account_id)?$userBank->account_id:''}}">
+            <label for="account_id" class="form-label fw-semibold">Account Number</label>
+            <input type="text" id="account_id" name="account_id" class="form-control" placeholder="Account Number" value="{{isset($userBank->account_id)?$userBank->account_id:''}}">
         </div>
         
         <!-- Confirm Account No. -->
         <div class="mb-3">
-            <label for="confirm_account_id" class="form-label fw-semibold">Confirm Account ID</label>
-            <input type="text" id="confirm_account_id" name="confirm_account_id" class="form-control" placeholder="Account No./Card No./Upi ID" value="">
+            <label for="confirm_account_id" class="form-label fw-semibold">Confirm Account Number</label>
+            <input type="text" id="confirm_account_id" name="confirm_account_id" class="form-control" placeholder="Account Number" value="">
         </div>
 
         <!-- Account Holder Name -->

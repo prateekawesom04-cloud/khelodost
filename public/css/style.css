@@ -124,7 +124,7 @@ body {
 .layout-container {
     display: flex;
     flex-direction: row;
-    min-height: 100vh;
+    /* min-height: 100vh; */
 }
 
 /* Common Layout Section */
@@ -149,7 +149,7 @@ body {
     background-color: #fff;
     padding-left: 5px;
     padding-right: 5px;
-    padding-bottom: 20px;
+    /* padding-bottom: 20px; */
 }
 
 /* Right Sidebar */

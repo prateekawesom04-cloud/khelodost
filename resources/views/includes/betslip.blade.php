@@ -643,7 +643,7 @@
                      <td class="flexTableItem t_data">${this.mname}/${this.nat}</td>
                      <td class="flexTableItem t_data">${this.oddVal}</td>
                      <td class="flexTableItem t_data">${this.bet_amount}</td>
-                     <td class="flexTableItem t_data">${this.betOn?'Lay':'Back'}</td>
+                     <td class="flexTableItem t_data ${this.betOn?'text-danger':'text-success'}">${this.betOn?'Lay':'Back'}</td>
                      <td class="flexTableItem t_data">${formatData(this.created_at)}</td>
                      <td class="flexTableItem t_data">${this.ip}</td>
                   </tr>
