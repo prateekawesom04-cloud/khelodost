@@ -131,4 +131,13 @@ class SportbookController extends Controller
         ]);
     }
 
+    public function getEventDataAdmin(Request $request){
+        $body = Storage::get('sattleEvent/'.$request->eventId.'.json');
+
+        // dd($body);
+        return response()->json([
+            'response'=>$body,
+            'response_code'=>'200'
+        ]);
+    }
 }

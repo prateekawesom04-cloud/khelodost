@@ -247,3 +247,5 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
 Route::get('getSportFixture/{sportname}',[SportbookController::class,'getSportFixture'])->name('getSportFixture');
 Route::get('getCricketEventData/{eventId}',[SportbookController::class,'getCricketEventData'])->name('getCricketEventData');
 Route::post('updateSportResult/{eventId}',[SportbookController::class,'updateSportResult'])->name('updateSportResult');
+
+Route::get('getEventDataAdmin', [SportbookController::class,'getEventDataAdmin'])->name('admin.getEventDataAdmin');

@@ -69,6 +69,10 @@ class getEventData extends Command
             $body = $response->getBody()->getContents(); 
             
             Storage::put('event/'.$eventId.'.json', $body);
+
+            if(file_exists(storage_path('app/private/sattleEvent/'.$eventId.'.json'))){
+                Storage::put('sattleEvent/'.$eventId.'.json', $body);
+            }
             
             usleep(500000);
         }

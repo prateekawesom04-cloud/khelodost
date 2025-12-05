@@ -356,7 +356,7 @@
         sportname = $(this).attr('data-sportname');
         $('.sattleEvent').removeClass('disabled');
         $(this).addClass('disabled');
-        callApi('get',`{{route('user.getEventData')}}`,{eventId:$(this).attr('data-eventId')},getEventData);
+        callApi('get',`{{route('admin.getEventDataAdmin')}}`,{eventId:$(this).attr('data-eventId')},getEventData);
         $('#sattleEventForm').find('.eventIdVal').val($(this).attr('data-eventId'));
         // $('#sattleEventForm').find('.teamA').text($(this).attr('data-teama'));
         // $('#sattleEventForm').find('.teamB').text($(this).attr('data-teamb'));
