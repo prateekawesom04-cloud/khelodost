@@ -59,7 +59,7 @@
 
       <!-- Aviator -->
       <div class="sidebar-section">
-        <a href="#" class="aviator-link">🚀 Aviator</a>
+        <a href="#" class="aviator-link contact_admin">🚀 Aviator</a>
         <div class="sidebar-divider"></div>
       </div>
 
@@ -75,14 +75,14 @@
       <!-- Casino Section -->
       <div class="sidebar-section">
         <div class="sidebar-title">Casino</div>
-        <a href="{{ route('indian_card_games') }}" class="sidebar-link">♠️ Indian Card Games</a>
-        <a href="{{ route('casino') }}" class="sidebar-link">🎰 Casino</a>
-        <a href="{{ route('1X2_gaming') }}" class="sidebar-link">🕹️ 1X2 Gaming</a>
-        <a href="{{ route('ezugi') }}" class="sidebar-link">🎲 Ezugi</a>
-        <a href="{{ route('supernova') }}" class="sidebar-link">✨ Supernova</a>
-        <a href="{{ route('slot_casino') }}" class="sidebar-link">🎰 Slot Casino</a>
+        <a href="{{ route('indian_card_games') }}" class="sidebar-link contact_admin">♠️ Indian Card Games</a>
+        <a href="{{ route('casino') }}" class="sidebar-link contact_admin">🎰 Casino</a>
+        <a href="{{ route('1X2_gaming') }}" class="sidebar-link contact_admin">🕹️ 1X2 Gaming</a>
+        <a href="{{ route('ezugi') }}" class="sidebar-link contact_admin">🎲 Ezugi</a>
+        <a href="{{ route('supernova') }}" class="sidebar-link contact_admin">✨ Supernova</a>
+        <a href="{{ route('slot_casino') }}" class="sidebar-link contact_admin">🎰 Slot Casino</a>
         <div class="sidebar-divider"></div>
-        <a href="#" class="sidebar-link">🏆 Sportsbook (80+)</a>
+        <a href="#" class="sidebar-link contact_admin">🏆 Sportsbook (80+)</a>
       </div>
 
     </div>

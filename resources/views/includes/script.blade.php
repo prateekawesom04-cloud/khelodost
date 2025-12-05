@@ -212,4 +212,8 @@
       });
   });
   
+  $('.contact_admin').on('click',function(e){
+    e.preventDefault();
+      responseToast('Please contact to admin.','bg-warning');
+  });
 </script>

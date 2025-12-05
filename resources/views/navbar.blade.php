@@ -8,9 +8,9 @@
             <span class="me-1">🏠</span>Home
         </a>
 
-        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill" href="javascript:void(0)">
+        {{-- <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill" href="javascript:void(0)">
             <span class="me-1">🏆</span>Sports
-        </a>
+        </a> --}}
 
         <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('cricket') ? 'active' : '' }}"
             href="{{ route('user.sport','cricket') }}">
@@ -27,28 +27,28 @@
             <span class="me-1">🎾</span>Tennis
         </a>
 
-        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill" href="javascript:void(0)">
+        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill contact_admin" href="javascript:void(0)">
             <span class="me-1">✈️</span>Spribe
         </a>
 
-        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('1X2_gaming') ? 'active' : '' }}"
+        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill contact_admin {{ request()->routeIs('1X2_gaming') ? 'active' : '' }}"
             href="{{ route('1X2_gaming') }}">
             <span class="me-1">🎲</span>1x2 Gaming
         </a>
 
-        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill" href="javascript:void(0)">
+        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill contact_admin" href="javascript:void(0)">
             <span class="me-1">♟️</span>Live Casino
         </a>
 
-        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('ezugi') ? 'active' : '' }}"
+        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill contact_admin {{ request()->routeIs('ezugi') ? 'active' : '' }}"
             href="{{ route('ezugi') }}">
             <span class="me-1">🎲</span>Ezugi
         </a>
 
-        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill" href="javascript:void(0)">
+        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill contact_admin" href="javascript:void(0)">
             <span class="me-1">🎮</span>Slots
         </a>
-        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('supernova') ? 'active' : '' }}"
+        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill contact_admin {{ request()->routeIs('supernova') ? 'active' : '' }}"
             href="{{ route('supernova') }}">
             <span class="me-1">🌟</span>Supernova
         </a>
@@ -57,10 +57,10 @@
             <span class="me-1">⏱️</span>Beter live
         </a> --}}
 
-        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill" href="javascript:void(0)">
+        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill contact_admin" href="javascript:void(0)">
             <span class="me-1">🚀</span>Crash Games
         </a>
-        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill" href="javascript:void(0)">
+        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill contact_admin" href="javascript:void(0)">
             <span class="me-1">🐟</span>Fishing Games
         </a>
 

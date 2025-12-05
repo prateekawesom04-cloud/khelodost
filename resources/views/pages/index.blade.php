@@ -66,11 +66,23 @@
                         <img src="{{ asset('images/color_game.avif') }}" class="rounded tab-img" alt="Original 5">
                         <img src="{{ asset('images/balloon.webp') }}" class="rounded tab-img" alt="Original 6">
                     </div>
-                    <div id="crash" class="tab-content d-none gap-2">
-                        <img src="{{ asset('images/MINES.avif') }}" class="rounded tab-img" alt="Crash 1">
+                    <div id="crash" class="tab-content flex d-none gap-2">
+                        <img src="{{ asset('images/crash_games1.webp') }}" class="rounded tab-img" alt="Original 6">
+                        <img src="{{ asset('images/crash_games2.webp') }}" class="rounded tab-img" alt="Original 6">
+                        <img src="{{ asset('images/crash_games3.webp') }}" class="rounded tab-img" alt="Original 6">
+                        <img src="{{ asset('images/crash_games4.webp') }}" class="rounded tab-img" alt="Original 6">
+                        <img src="{{ asset('images/crash_games5.webp') }}" class="rounded tab-img" alt="Original 6">
+                        <img src="{{ asset('images/crash_games6.webp') }}" class="rounded tab-img" alt="Original 6">
+                        <img src="{{ asset('images/crash_games7.webp') }}" class="rounded tab-img" alt="Original 6">
                     </div>
-                    <div id="live" class="tab-content d-none gap-2">
-                        <img src="{{ asset('images/balloon.webp') }}" class="rounded tab-img" alt="Live 1">
+                    <div id="live" class="tab-content flex d-none gap-2">
+                            <img src="{{ asset('images/live_roulette1.webp') }}" class="rounded tab-img" alt="Original 6">
+                            <img src="{{ asset('images/live_roulette2.webp') }}" class="rounded tab-img" alt="Original 6">
+                            <img src="{{ asset('images/live_roulette3.webp') }}" class="rounded tab-img" alt="Original 6">
+                            <img src="{{ asset('images/live_roulette4.webp') }}" class="rounded tab-img" alt="Original 6">
+                            <img src="{{ asset('images/live_roulette5.webp') }}" class="rounded tab-img" alt="Original 6">
+                            <img src="{{ asset('images/live_roulette6.webp') }}" class="rounded tab-img" alt="Original 6">
+                            <img src="{{ asset('images/live_roulette7.webp') }}" class="rounded tab-img" alt="Original 6">
                     </div>
                 </div>
             </div>

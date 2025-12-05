@@ -219,7 +219,11 @@ table tbody tr:hover {
     /* left: 0 !important; */
     top: 0 !important;
 }
-
+.dropdown-menu.show {
+    inset: auto !important;
+    transform: none !important;
+    top: 57px !important;
+}
 .dropdown-menu li:not(:last-child) {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     margin-bottom: 3px;
