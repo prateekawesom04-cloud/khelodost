@@ -506,6 +506,13 @@ class AdminDataController extends Controller
             }
             $events = $events->orderBy('id','desc')->get();
         }
+
+        $events = $events->filter(function($event){
+            if(file_exists(storage_path('app/private/sattleEvent/'.$event->eventId.'.json'))){
+                return true;
+            }
+        });
+        // dd($events);
         // $events = Event::all();
         $sport = $request->sport;
         return view('pages.sattlement',compact('events','sport'));

@@ -116,7 +116,7 @@
     </div>
 
     <!-- Compact Reusable Modal with Form -->
-<div class="modal fade" id="sattleEvent" tabindex="-1" aria-labelledby="sattleEventLabel" aria-hidden="true">
+<div class="modal fade text-[#000] bg-[#fff] font-bold" id="sattleEvent" tabindex="-1" aria-labelledby="sattleEventLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- Modal Header -->
