@@ -84,7 +84,7 @@
                     <table class="table table-bordered text-center align-middle table-sm">
                         <thead class="table-light">
                             <tr>
-                                <th>Nat</th>
+                                <th>Selection</th>
                                 <th>Exposure</th>
                                 <th>Total Bets</th>
                             </tr>

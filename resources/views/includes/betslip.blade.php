@@ -629,7 +629,6 @@
                      <th class="flexTableItem t_data">Amount</th>
                      <th class="flexTableItem t_data">BetType</th>
                      <th class="flexTableItem t_data">Time</th>
-                     <th class="flexTableItem t_data">ip</th>
                   </tr>
                </thead>
          `;
@@ -638,14 +637,13 @@
 
             bets +=`
                <tbody>
-                  <tr class="flex fex-row gap-2 flex-1">
-                     <td class="flexTableItem t_data">${i+1}</td>
-                     <td class="flexTableItem t_data">${this.mname}/${this.nat}</td>
-                     <td class="flexTableItem t_data">${this.oddVal}</td>
-                     <td class="flexTableItem t_data">${this.bet_amount}</td>
-                     <td class="flexTableItem t_data ${this.betOn?'text-danger':'text-success'}">${this.betOn?'Lay':'Back'}</td>
-                     <td class="flexTableItem t_data">${formatData(this.created_at)}</td>
-                     <td class="flexTableItem t_data">${this.ip}</td>
+                  <tr class="flex fex-row gap-2 flex-1 ${this.betOn?'!bg-[#e9a9dc]':'!bg-[#91c9f5]'}">
+                     <td class="flexTableItem t_data ${this.betOn?'!bg-[#e9a9dc]':'!bg-[#91c9f5]'}">${i+1}</td>
+                     <td class="flexTableItem t_data ${this.betOn?'!bg-[#e9a9dc]':'!bg-[#91c9f5]'}">${this.mname}/${this.nat}</td>
+                     <td class="flexTableItem t_data ${this.betOn?'!bg-[#e9a9dc]':'!bg-[#91c9f5]'}">${this.oddVal}</td>
+                     <td class="flexTableItem t_data ${this.betOn?'!bg-[#e9a9dc]':'!bg-[#91c9f5]'}">${this.bet_amount}</td>
+                     <td class="flexTableItem t_data ${this.betOn?'!bg-[#e9a9dc]':'!bg-[#91c9f5]'}">${this.betOn?'Lay':'Back'}</td>
+                     <td class="flexTableItem t_data ${this.betOn?'!bg-[#e9a9dc]':'!bg-[#91c9f5]'}">${formatData(this.created_at)}</td>
                   </tr>
                </tbody>
                        

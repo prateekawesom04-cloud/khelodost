@@ -47,7 +47,7 @@
 
   .table-card {
     background: white;
-    border-radius: 12px;
+    /* border-radius: 12px; */
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     overflow: hidden;
   }
@@ -74,17 +74,19 @@
   }
 
   .table-header {
-    background-color: #0c9971;
-    color: white;
+    background-color: #0c0339 !important;
+    color: white !important;
     font-weight: 600;
     font-size: 14px;
   }
 
   .table-header th {
-    padding: 15px;
+    padding: 5px;
     text-align: center;
+    color: white !important;
     border: 1px solid rgba(255,255,255,0.2);
     min-width: max-content;
+    background: #0c0339 !important;
   }
 
   .no-records {
@@ -203,18 +205,18 @@
                             </thead>
                             <tbody class="table-body">
                                 @foreach ($bets as $transaction)
-                                <tr>
+                                <tr class="{{$transaction->betOn?'!bg-[#e9a9dc]':'!bg-[#91c9f5]'}}">
                                     {{-- <td>{{$a+=1}}</td> --}}
-                                    <td>{{$transaction->created_at}}</td>
-                                    <td>{{$transaction->sportname}}</td>
-                                    <td>{{$transaction->eventId}}</td>
-                                    <td>{{$transaction->eventName}}/{{$transaction->mname}}/{{$transaction->nat}}</td>
-                                    <td>{{$transaction->nat}}</td>
-                                    <td>{{$transaction->betOn?'Lay':'Back'}}</td>
-                                    <td>{{$transaction->gtype}}</td>
-                                    <td>{{$transaction->oddVal}}</td>
-                                    <td>{{$transaction->bet_amount}}</td>
-                                    <td>
+                                    <td class="{{$transaction->betOn?'!bg-[#e9a9dc]':'!bg-[#91c9f5]'}}">{{$transaction->created_at}}</td>
+                                    <td class="{{$transaction->betOn?'!bg-[#e9a9dc]':'!bg-[#91c9f5]'}}">{{$transaction->sportname}}</td>
+                                    <td class="{{$transaction->betOn?'!bg-[#e9a9dc]':'!bg-[#91c9f5]'}}">{{$transaction->eventId}}</td>
+                                    <td class="{{$transaction->betOn?'!bg-[#e9a9dc]':'!bg-[#91c9f5]'}}">{{$transaction->eventName}}/{{$transaction->mname}}/{{$transaction->nat}}</td>
+                                    <td class="{{$transaction->betOn?'!bg-[#e9a9dc]':'!bg-[#91c9f5]'}}">{{$transaction->nat}}</td>
+                                    <td class="{{$transaction->betOn?'!bg-[#e9a9dc]':'!bg-[#91c9f5]'}}">{{$transaction->betOn?'Lay':'Back'}}</td>
+                                    <td class="{{$transaction->betOn?'!bg-[#e9a9dc]':'!bg-[#91c9f5]'}}">{{$transaction->gtype}}</td>
+                                    <td class="{{$transaction->betOn?'!bg-[#e9a9dc]':'!bg-[#91c9f5]'}}">{{$transaction->oddVal}}</td>
+                                    <td class="{{$transaction->betOn?'!bg-[#e9a9dc]':'!bg-[#91c9f5]'}}">{{$transaction->bet_amount}}</td>
+                                    <td class="{{$transaction->betOn?'!bg-[#e9a9dc]':'!bg-[#91c9f5]'}}">
                                         <span class="text-success">{{$transaction->profit}}</span>/<span class="text-danger">{{$transaction->bet_amount}}</span>
                                     </td>
                                     {{-- <td>{{($transaction->status==0)?'--':(($transaction->status==1)?'0':$transaction->bet_amount)}}</td> --}}

@@ -56,7 +56,7 @@
                                     <tr>
                                         <td>{{$row->bonus_uid}}</td>
                                         <td>{{$row->amount}}</td>
-                                        <td>{{$row->wager_amount}}</td>
+                                        <td class="text-danger">{{$row->wager_amount}}</td>
                                         <td>{{$row->description}}</td>
                                         <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td>
                                         <td>
