@@ -576,7 +576,7 @@ td {
     }
 
     .btn {
-        width: 100%;
+        /* width: 100%; */
         margin-bottom: 5px;
     }
 }
@@ -669,8 +669,8 @@ td {
 }
 
 .modal-body.modal-header-dark {
-    background-color: #0d6efd;
-    color: white;
+    background-color: #fff;
+    color: #0c0339;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
 }

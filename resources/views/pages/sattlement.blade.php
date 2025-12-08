@@ -68,7 +68,7 @@
                                             $teamA = explode(' v ',$row->eventName)[0] ?? 'Series';
                                             $teamB = explode(' v ',$row->eventName)[1] ?? 'Series';
                                         @endphp
-                                        <td>{{(!$row->status)?'upcoming':(($row->status==1)?'Going In-play':'Finished')}}</td>
+                                        <td>{{(!$row->status)?'upcoming':(($row->status==1)?'Going In-play':'Under Sattlement')}}</td>
                                         {{-- <td class="{{($row->status)?'text-success':'text-danger'}}">{{($row->status)?'Active':'Inactive'}}</td> --}}
                                         <td>
                                             <div class="flex flex-row items-center justify-between">
@@ -116,7 +116,7 @@
     </div>
 
     <!-- Compact Reusable Modal with Form -->
-<div class="modal fade text-[#000] bg-[#fff] font-bold" id="sattleEvent" tabindex="-1" aria-labelledby="sattleEventLabel" aria-hidden="true">
+<div class="modal fade" id="sattleEvent" tabindex="-1" aria-labelledby="sattleEventLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- Modal Header -->
@@ -129,7 +129,7 @@
                 </div>
                 <a type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></a>
             </div>
-            <div class="modal-body modal-header-dark">
+            <div class="modal-body modal-header-dark !text-[#000] !bg-[#fff] !font-bold p-0">
                 <div id="sattleEventForm">
                     <input type="hidden" name="eventId" class="eventIdVal">
                     {{-- <div class="mb-3">
@@ -212,20 +212,20 @@
                 if(j.mname != 'Normal'){
                     
                     html += `
-                        <form class="my-2 ${j.mname}">
+                        <form class="mb-2 ${j.mname}">
                         <input type="hidden" name="eventId" class="eventId" value="${j.gmid}">
                         <input type="hidden" name="marketId" class="marketId" value="${j.mid}">
                         <input type="hidden" name="mname" class="mname" value="${j.mname}">
-                        <div class="market" data-marketId="${j.mid}" data-mname="${j.mname}">
-                            <h3 class="!text-[14px] p-2 bg-[#0c0339] mt-4 mb-2 text-center">${j.mname}</h3>
+                        <div class="market mb-2" data-marketId="${j.mid}" data-mname="${j.mname}">
+                            <h3 class="!text-[14px] p-2 !bg-[#0d6efd] mb-2 text-center !text-white font-bold">${j.mname}</h3>
                             <div class="flex flex-row items-center justify-between gap-3 divide-xed divide-gray-300 mb-1">
-                                <div class="w-[60%] px-2">Result</div>
+                                <div class="w-[60%] px-2 font-bold">Result</div>
                     
-                                <div class="px-2">Action</div>
+                                <div class="px-2 font-bold">Action</div>
                             </div>
                             <div class="flex flex-row items-center justify-between gap-3 mb-1">
-                                <div class="w-[60%] px-2">
-                                    <select id="nat" name="result" class="form-select marketResult">
+                                <div class="w-[60%] px-2 font-bold">
+                                    <select id="nat" name="result" class="form-select marketResult font-bold">
                         `;
                         
                         $(j.section).each(function(i,j){
@@ -238,20 +238,20 @@
                     html +=`
                                     </select>
                                 </div>
-                                <a href="javascript:void(0)" class="px-2 sattleEvent btn btn-secondary">Save</a>
+                                <a href="javascript:void(0)" class="px-2 sattleEvent btn btn-secondary !font-bold">Save</a>
                             </div>
                         </div>
                         </form>
                     `;
                 } else{
                     html +=`
-                        <div class="market" data-marketId="${j.mid}" data-mname="${j.mname}">
-                            <h3 class="!text-[14px] p-2 bg-[#0c0339] mt-4 mb-2 text-center">${j.mname}</h3>
+                        <div class="market mb-4" data-marketId="${j.mid}" data-mname="${j.mname}">
+                            <h3 class="!text-[14px] p-2 !bg-[#0d6efd] mb-2 text-center !text-white font-bold">${j.mname}</h3>
                             <div class="flex flex-row items-center justify-between gap-3 divide-xed divide-gray-300 mb-1">
-                                <div class="w-[60%] px-2">Runner</div>
+                                <div class="w-[60%] px-2 font-bold">Runner</div>
                     
-                                <div class="px-2">Result</div>
-                                <div class="px-2">Action</div>
+                                <div class="px-2 font-bold">Result</div>
+                                <div class="px-2 font-bold">Action</div>
                             </div>
                     `;
                         $(j.section).each(function(i2,j2){
@@ -262,11 +262,11 @@
                                 <input type="hidden" name="marketId" class="marketId" value="${j.mid}">
                                 <input type="hidden" name="mname" class="mname" value="${j.mname}">
                                 <input type="hidden" name="result" class="result" value="${this.sid}">
-                                <div class="w-[60%] px-2">${this.nat}</div>
+                                <div class="w-[60%] px-2 font-bold">${this.nat}</div>
                                 <div class="px-2">
                                     <input type="text" name="size" class="form-control" placeholder="Enter Value">
                                 </div>
-                                <a href="javascript:void(0)" class="px-2 sattleEvent btn btn-secondary">Save</a>
+                                <a href="javascript:void(0)" class="px-2 sattleEvent btn btn-secondary !font-bold">Save</a>
                             </form>
                         `;
                         });

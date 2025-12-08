@@ -75,7 +75,8 @@ a {
 }
 
 .odd_change {
-    background: #91c9f5 !important;
+    background: #0c0339 !important;
+    color: #fff !important;
 }
 
 .activeTab.active {

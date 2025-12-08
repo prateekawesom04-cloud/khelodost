@@ -14,15 +14,15 @@ class EventNotification
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $sportData;
+    public $eventData;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($sportData)
+    public function __construct($eventData)
     {
         //
-        $this->sportData = $sportData;
+        $this->eventData = $eventData;
     }
 
     /**
@@ -32,20 +32,22 @@ class EventNotification
      */
     public function broadcastOn(): array
     {
-        return [
-            new Channel('getSportFixture'),
-        ];
+        // return [
+        //     new Channel('eventData'),
+        // ];
+
+        return new Channel('eventData');
     }
 
     public function broadcastAs()
     {
-        return 'getSportFixture';
+        return 'eventDataListener';
     }
     
     public function broadcastWith(): array
     {
         return [
-            'sportData' => $this->sportData
+            'eventData' => $this->eventData
         ];
     }
 }

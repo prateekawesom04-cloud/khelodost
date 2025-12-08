@@ -38,7 +38,7 @@ class SportbookController extends Controller
 
     public function getCricketEventData(Request $request){
         $sportname = $request->sportname;
-        $sportData = Cache::remember($sportname, 60, function () use ($sportname) {
+        // $sportData = Cache::remember($sportname, 60, function () use ($sportname) {
             $client = new Client(); 
             $response = $client->get("http://170.187.250.13/getbm?eventId=".$request->eventId); 
             $body = $response->getBody(); 
@@ -47,7 +47,7 @@ class SportbookController extends Controller
             return json_decode($response->getBody(), true);
             
             // return User::where('active', 1)->get();
-        });
+        // });
 
         return $sportData;
     }

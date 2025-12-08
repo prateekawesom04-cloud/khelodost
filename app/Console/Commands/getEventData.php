@@ -70,8 +70,19 @@ class getEventData extends Command
             
             Storage::put('event/'.$eventId.'.json', $body);
 
+            event(new EventNotification($body));
+
             if(!file_exists(storage_path('app/private/sattleEvent/'.$eventId.'.json'))){
                 Storage::put('sattleEvent/'.$eventId.'.json', $body);
+            } else{
+                $sattleEventData = Storage::get('sattleEvent/'.$eventId.'.json');
+                $sattleEventData = json_decode($sattleEventData,true);
+                $newEventData = json_decode($body,true);
+                // dump(json_encode($sattleEventData));
+                $sattleEventData = $this->my_merge($sattleEventData,$newEventData);
+                // dd('json_encode($sattleEventData)',json_encode($sattleEventData));
+                
+                Storage::put('sattleEvent/'.$eventId.'.json', json_encode($sattleEventData));
             }
             
             usleep(500000);
@@ -94,5 +105,37 @@ class getEventData extends Command
 
         // $response = $pusher->trigger('inplayUpdate', 'inplayUpdate-event', ['data' => $body,'sport'=>$sportname]);
           
+    }
+        
+    public function my_merge( $arr1, $arr2 )
+    {
+        $keys = array_keys( $arr2 );
+        foreach( $keys as $key ) { 
+
+            if(!isset( $arr1[$key])) {
+                $arr1[$key] = $arr2[$key];
+            } else{
+                if(is_array( $arr1[$key] ) 
+                    && is_array( $arr2[$key] ) 
+                ) {
+                    if($key != 'section' ) {
+                        $arr1[$key] = $this->my_merge( $arr1[$key], $arr2[$key] );
+                    } else{
+                        foreach( $arr2[$key] as $k=>$item ) {
+                            // if( $k == 'sid' ) {
+                            // dd($arr1[$key][$k]['sid']);
+                                if(!isset( $arr1[$key][$k]) || ($arr1[$key][$k]['sid'] != $item['sid'])){
+                                    $arr1[$key][] = $item;
+                                }
+            
+                            // }
+                        }
+                    }
+    
+                }
+
+            }
+        }
+        return $arr1;
     }
 }
