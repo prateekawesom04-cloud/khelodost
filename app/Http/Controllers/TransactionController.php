@@ -780,6 +780,7 @@ class TransactionController extends Controller
         $data['money'] = $request->transfer_amount*100;
         $data['notify_url'] = env('APP_URL').'/lgPaymentCallback';
 
+        // dd($data);
 
     
             // if(session('user_uid')){}
@@ -872,13 +873,25 @@ class TransactionController extends Controller
     }  
     
     public function lgpayUpdateTransaction(Request $request){
-
-        $response = $this->lgPaymentGatewayMethod($request);
+        // dd($request->all());
+        if($request->status == 2){
+            $response = $this->lgPaymentGatewayMethod($request);
+            dd($response);
+        } else{
+            $transaction = Transaction::where('order_sn',$request->order_sn)->first();
+            $transaction->status = $request->status;
+            $transaction->save();
+    
+            return response()->json([
+                'message'=> 'Transaction Updated Successfully',
+                'response_code'=> '200'
+            ]);
+        }
     }
     
     public function lgPaymentCallback(Request $request){
-        Log::info('lpayment callack----');
-        Log::info($request->all());
+        Log::channel('custom_log')->info('lpayment callack----');
+        Log::channel('custom_log')->info($request->all());
 
         $data =[];
 

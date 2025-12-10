@@ -127,6 +127,12 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        'custom_log' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/custom.log'), // Specify your desired log file name
+            'level' => 'debug', // Or any other desired log level (info, warning, error, etc.)
+        ]
+
     ],
 
 ];

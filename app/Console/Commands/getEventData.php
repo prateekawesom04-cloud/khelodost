@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use Pusher\Pusher;
 use GuzzleHttp\Client;
 use App\Events\EventNotification;
@@ -59,7 +60,7 @@ class getEventData extends Command
 
         $client = new Client(); 
         foreach ($inplaySports as $eventId) {
-            
+            Log::info('Fetching data for event ID: '.$eventId);
             if($sportname=='cricket'){
                 $response = $client->get("http://170.187.250.13/getbm?eventId=".$eventId); 
             } else{
@@ -109,36 +110,43 @@ class getEventData extends Command
         
     public function my_merge( $arr1, $arr2 )
     {
-        $keys = array_keys( $arr2 );
-        $arr2Normal = array_filter($arr2['data'], function($item){
-            return $item['mname'] == 'Normal';
-        });
-        foreach($arr2Normal as $key=>$val ) { 
-            $arr2Normal = $val; 
-        }
-        // dd($arr2Normal);
-        $arr1Normal = array_filter($arr1['data'], function($item){
-            return $item['mname'] == 'Normal';
-        });
-        foreach($arr1Normal as $key=>$val ) { 
-            $arr1Normal = $val; 
-        }
 
-        // dd($arr1Normal);
-        if(!count($arr1Normal)){
-            $arr1['data'][] = $arr2Normal;
+        if(!array_key_exists('data',$arr1)){
+            // dd('$arr2[data]',$arr2['data']);
+            $arr1 = $arr2;
         } else{
-            foreach( $arr2Normal['section'] as $key=>$val ) { 
-        // dd('$arr2Normal',$arr2Normal,'$val',$val,'$arr1Normal',$arr1Normal);
-                $arr1Sid = array_filter($arr1Normal['section'], function($item) use($val){
-                    return $item['sid'] == $val['sid'];
-                });
-                // dd( $arr1Sid);
-                if(!count($arr1Sid)){
-                    $arr1Normal['section'][] = $val;
-                }
-        }
 
+            $keys = array_keys( $arr2 );
+            $arr2Normal = array_filter($arr2['data'], function($item){
+                return $item['mname'] == 'Normal';
+            });
+            foreach($arr2Normal as $key=>$val ) { 
+                $arr2Normal = $val; 
+            }
+            // dd($arr2Normal);
+            $arr1Normal = array_filter($arr1['data'], function($item){
+                return $item['mname'] == 'Normal';
+            });
+            foreach($arr1Normal as $key=>$val ) { 
+                $arr1Normal = $val; 
+            }
+    
+            // dd($arr1Normal);
+            if(!count($arr1Normal)){
+                $arr1['data'][] = $arr2Normal;
+            } else{
+                foreach( $arr2Normal['section'] as $key=>$val ) { 
+            // dd('$arr2Normal',$arr2Normal,'$val',$val,'$arr1Normal',$arr1Normal);
+                    $arr1Sid = array_filter($arr1Normal['section'], function($item) use($val){
+                        return $item['sid'] == $val['sid'];
+                    });
+                    // dd( $arr1Sid);
+                    if(!count($arr1Sid)){
+                        $arr1Normal['section'][] = $val;
+                    }
+                }
+    
+            }
         }
         return $arr1;
     }
