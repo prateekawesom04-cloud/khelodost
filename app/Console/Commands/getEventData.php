@@ -110,31 +110,35 @@ class getEventData extends Command
     public function my_merge( $arr1, $arr2 )
     {
         $keys = array_keys( $arr2 );
-        foreach( $keys as $key ) { 
+        $arr2Normal = array_filter($arr2['data'], function($item){
+            return $item['mname'] == 'Normal';
+        });
+        foreach($arr2Normal as $key=>$val ) { 
+            $arr2Normal = $val; 
+        }
+        // dd($arr2Normal);
+        $arr1Normal = array_filter($arr1['data'], function($item){
+            return $item['mname'] == 'Normal';
+        });
+        foreach($arr1Normal as $key=>$val ) { 
+            $arr1Normal = $val; 
+        }
 
-            if(!isset( $arr1[$key])) {
-                $arr1[$key] = $arr2[$key];
-            } else{
-                if(is_array( $arr1[$key] ) 
-                    && is_array( $arr2[$key] ) 
-                ) {
-                    if($key != 'section' ) {
-                        $arr1[$key] = $this->my_merge( $arr1[$key], $arr2[$key] );
-                    } else{
-                        foreach( $arr2[$key] as $k=>$item ) {
-                            // if( $k == 'sid' ) {
-                            // dd($arr1[$key][$k]['sid']);
-                                if(!isset( $arr1[$key][$k]) || ($arr1[$key][$k]['sid'] != $item['sid'])){
-                                    $arr1[$key][] = $item;
-                                }
-            
-                            // }
-                        }
-                    }
-    
+        // dd($arr1Normal);
+        if(!count($arr1Normal)){
+            $arr1['data'][] = $arr2Normal;
+        } else{
+            foreach( $arr2Normal['section'] as $key=>$val ) { 
+        // dd('$arr2Normal',$arr2Normal,'$val',$val,'$arr1Normal',$arr1Normal);
+                $arr1Sid = array_filter($arr1Normal['section'], function($item) use($val){
+                    return $item['sid'] == $val['sid'];
+                });
+                // dd( $arr1Sid);
+                if(!count($arr1Sid)){
+                    $arr1Normal['section'][] = $val;
                 }
+        }
 
-            }
         }
         return $arr1;
     }

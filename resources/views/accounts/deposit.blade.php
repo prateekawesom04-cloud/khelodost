@@ -120,23 +120,34 @@
     });
 
     function paymentGatewayMethod(response) {
-        // response = JSON.parse(response.response);
-        data = JSON.parse(response.data);
-        console.log('res msg',response.message,'data--',data);
-        
-        if (response.response_code == 200) {
-            // $('#paymentModel').modal('show');
-            if(data['payUrl']){
-                window.location.href = data['payUrl'];
-            } else{
-                responseToast(response.message);
-            }
-            // $('.paymentModel').html(response.response);
-
-        } else {
-            responseToast('Deposit Request failed');
-            // window.location.reload();
+        response = JSON.parse(response.response);
+        if(response.status == 0){
+            responseToast(response.msg);
+            return false;
         }
+        data = response.data;
+        window.location.href = data['pay_url'];
+        console.log('respoonse',response);
+        
+        // data = JSON.parse(response.data);
+        // console.log('res msg',response.message,'data--',data);
+        
+        // if (response.response_code == 200) {
+        //     // $('#paymentModel').modal('show');
+        //     if(data['payUrl']){
+        //         window.location.href = data['payUrl'];
+        //     } else if(data['pay_url']){
+        //         window.location.href = data['pay_url'];
+                
+        //     } else {
+        //         responseToast('Deposit Request successful');
+        //     // $('.paymentModel').html(response.response);
+        //     }
+
+        // } else {
+        //     responseToast('Deposit Request failed');
+        //     // window.location.reload();
+        // }
         
     }
 

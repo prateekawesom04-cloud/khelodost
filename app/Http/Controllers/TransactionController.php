@@ -555,6 +555,8 @@ class TransactionController extends Controller
     public function updateTransaction(Request $request){
         $transaction = Transaction::where('order_sn',$request->order_sn)->first();
 
+        // return $this->lgPaymentGatewayMethod($request);
+
         if($request->status == 2){
             
             $user = User::where('username',$transaction->username)->first();
@@ -769,18 +771,31 @@ class TransactionController extends Controller
 
     }
 
+    // LG Payment Gateway
     public function lgPaymentGatewayMethod(Request $request){
         
         $data = [];
         $data['app_id'] = env('LG_PAY_APP_ID');
         $data['order_sn'] = "PRQ_".time().rand(0000,9999);
-        $data['money'] = $request->money*100;
+        $data['money'] = $request->transfer_amount*100;
         $data['notify_url'] = env('APP_URL').'/lgPaymentCallback';
 
-        $user = User::getCurrentUser();
-        
-        if($user){
 
+    
+            // if(session('user_uid')){}
+            
+        if($request->payment_type == 0){
+            $user = User::getCurrentUser();
+
+            if(!$user){
+
+                return response()->json([
+                    'message'=> 'login required',
+                    'response_code'=> '105'
+                ]);
+            }
+            
+            // if($user){
             $transaction = new Transaction();
             $transaction->username = $user->username;
             // $transaction->user_uid = '121';
@@ -792,69 +807,74 @@ class TransactionController extends Controller
             $transaction->payment_type = $request->payment_type;
             $transaction->manual = 1;
             $transaction->currency = "INR";
-            $transaction->remark = "remark001";
+            $transaction->remark = "Deposit of ".$request->transfer_amount;
             $transaction->save();
-    
-            // if(session('user_uid')){}
-            
-            if($request->payment_type == 0){
-    
-                $data['trade_type'] = 'INRUPI';
-                $data['ip'] = $request->ip();
-                $data['remark'] = "remark001";
-            
-            } elseif ($request->payment_type == 1) {
-    
-                // $data['currency'] = $request->currency;
-                $data['currency'] = "INR";
-                
-            } else{
-                return False;
-            }
-    
-            $data['sign'] = (new AuthController)->md5_sign($data, env('LG_PAY_SECRET_KEY'));
-            
-            $payment_type = ($request->payment_type==1) ? 'deposit' : 'order';
-            
-            $url = "https://www.lg-pay.com/api/".$payment_type."/create";
-            
-            $ch = curl_init();
-    
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                "Content-Type: application/x-www-form-urlencoded"
-            ]);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-            curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_DEFAULT);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 120);
-    
-            $response = curl_exec($ch);
-    
-            if (curl_errno($ch)) {
-                return curl_error($ch);
-            } 
-    
-            curl_close($ch);
-            
-            return response()->json([
-                'message'=> 'Deposit Request Created Succesfully',
-                'response_code'=> '200',
-                'response'=>$response
-            ]);
-        } else{
-            
-            return response()->json([
-                'message'=> 'login required',
-                'response_code'=> '105'
-            ]);
 
+            $data['trade_type'] = 'INRUPI';
+            $data['ip'] = $request->ip();
+            $data['remark'] = "Deposit of ".$request->transfer_amount;
+        
+        } elseif ($request->payment_type == 1) {
+            $data['order_sn'] = $request->order_sn;
+            $transaction = Transaction::where('order_sn',$request->order_sn)->first();
+            $user = User::where('username',$transaction->username)->first();
+            $userBank = UserBank::where('username',$user->username)->first();
+            // $data['currency'] = $request->currency;
+            $data['currency'] = "INR";
+            
+            $bdata = [
+                'name'=>$userBank->account_holder,
+                'bank_name'=>$userBank->ifsc_code,
+                'card_number'=>$userBank->account_id,
+                'addon1'=>$userBank->ifsc_code,
+            ];
+            $data = array_merge($data,$bdata);
+            
+        } else{
+            return False;
         }
+    
+        $data['sign'] = (new AuthController)->md5_sign($data, env('LG_PAY_SECRET_KEY'));
+        
+        $payment_type = ($request->payment_type==1) ? 'deposit' : 'order';
+        
+        $url = "https://www.lg-pay.com/api/".$payment_type."/create";
+        
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Content-Type: application/x-www-form-urlencoded"
+        ]);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_DEFAULT);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 120);
+
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            return curl_error($ch);
+        } 
+
+        curl_close($ch);
+        // dd(json_decode($response));
+        return response()->json([
+            'message'=> 'Transaction Request Created Succesfully',
+            'response_code'=> '200',
+            'response'=>$response
+        ]);
+
 
     }  
+    
+    public function lgpayUpdateTransaction(Request $request){
+
+        $response = $this->lgPaymentGatewayMethod($request);
+    }
     
     public function lgPaymentCallback(Request $request){
         Log::info('lpayment callack----');
@@ -874,12 +894,32 @@ class TransactionController extends Controller
         // $model->save();
 
         $sign = md5_sign($data,env('LG_PAY_SECRET_KEY'));
-        if($sign == $request->sign){
-            $transaction = Transaction::where('order_sn',$request->order_sn);
+        if($request->status == 1 && $sign == $request->sign){
+            $transaction = Transaction::where('order_sn',$request->order_sn)->where('status',1)->first();
 
-            $transaction->transfer_amount = $request->money;
-            $transaction->status = $request->status;
-            $transaction->manual = 0;
+            $user = User::where('username',$transaction->username)->first();
+            // $userBank = UserBank::where('username',$user->username)->first();
+
+            if($transaction->payment_type != 1){
+                $user->wallet_amount = floatval($user->wallet_amount) + floatval($transaction->transfer_amount);
+            } else{
+                
+                $request->merge(['username'=>$user->username]);
+                $request->merge([
+                    'card_number'=>$userBank->account_id,
+                    'bank_name'=>$userBank->ifsc_code,
+                    'addon1'=>$userBank->ifsc_code,
+                    'name'=>$userBank->account_holder
+                ]);
+
+                // Api statements
+
+                $user->wallet_amount = floatval($user->wallet_amount) - floatval($transaction->transfer_amount);
+                $response = '3456';
+            }
+            $transaction->transfer_amount = $request->transfer_amount;
+            $transaction->status = 2;
+            // $transaction->manual = 0;
             $transaction->save();
 
             return 'ok';
