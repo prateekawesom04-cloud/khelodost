@@ -863,6 +863,13 @@ class TransactionController extends Controller
 
         curl_close($ch);
         // dd(json_decode($response));
+        if(json_decode($response)->status == 0){
+            return response()->json([
+                'message'=> 'Transaction Request Unsuccesfully',
+                'response_code'=> '101',
+                'response'=>$response
+            ]);
+        }
         return response()->json([
             'message'=> 'Transaction Request Created Succesfully',
             'response_code'=> '200',
@@ -874,11 +881,25 @@ class TransactionController extends Controller
     
     public function lgpayUpdateTransaction(Request $request){
         // dd($request->all());
+        $transaction = Transaction::where('order_sn',$request->order_sn)->where('status',1)->first();
+
         if($request->status == 2){
-            $response = $this->lgPaymentGatewayMethod($request);
-            dd($response);
+            if($request->payment_type == 1){
+                return $this->lgPaymentGatewayMethod($request);
+
+            } else{
+                $user = User::where('username',$transaction->username)->first();
+                $user->wallet_amount = floatval($user->wallet_amount) + floatval($transaction->transfer_amount);
+                $user->save();
+                $transaction->status = $request->status;
+                $transaction->save();
+                return response()->json([
+                    'message'=> 'Transaction Updated Successfully',
+                    'response_code'=> '200'
+                ]);
+            }
+            // dd($response);
         } else{
-            $transaction = Transaction::where('order_sn',$request->order_sn)->first();
             $transaction->status = $request->status;
             $transaction->save();
     
@@ -910,6 +931,8 @@ class TransactionController extends Controller
         if($request->status == 1 && $sign == $request->sign){
             $transaction = Transaction::where('order_sn',$request->order_sn)->where('status',1)->first();
 
+        Log::channel('custom_log')->info('$transaction callack----'.$transaction->payment_type);
+
             $user = User::where('username',$transaction->username)->first();
             // $userBank = UserBank::where('username',$user->username)->first();
 
@@ -934,6 +957,7 @@ class TransactionController extends Controller
             $transaction->status = 2;
             // $transaction->manual = 0;
             $transaction->save();
+            $user->save();
 
             return 'ok';
         } else{
