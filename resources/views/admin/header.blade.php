@@ -56,6 +56,7 @@
                 <li><a class="dropdown-item" href="{{ route('admin.admin_fund') }}">💰Admin Fund</a></li>
                 @endif
                 <li><a class="dropdown-item" href="{{ route('admin.news_view') }}">📰News</a></li>
+                <li><a class="dropdown-item" href="{{ route('admin.gateways') }}">📰Gateways</a></li>
                 <li>
                     <a class="dropdown-item" href="{{ route('admin.user_general_setting') }}">👥User General
                         Setting</a>
