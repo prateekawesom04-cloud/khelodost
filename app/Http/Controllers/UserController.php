@@ -526,7 +526,8 @@ class UserController extends Controller
         // $user = User::where('username',$request->username)->get();
         return response()->json([
             'response_code'=>'200',
-            'wallet_amount'=> $userData->wallet_amount
+            'wallet_amount'=> $userData->wallet_amount,
+            'unsattled_amount'=> $userData->unsattled_amount
         ]);
     }
 }

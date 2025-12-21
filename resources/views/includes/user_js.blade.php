@@ -246,7 +246,7 @@
             } else {
                 // updateMarket(this);
                 if(eventPageLoading==1){
-                    console.log('chal rha hai ki nhi');
+                    // console.log('chal rha hai ki nhi');
                     
                     loadBets();
                     eventPageLoading +=1;
@@ -388,7 +388,7 @@
                 // console.log(parseFloat($(odd).attr('data-oddVal')),'------', parseFloat(k.odds));
                 
 
-                if(parseFloat($(odd).attr('data-oddVal')) != parseFloat(k.odds)){
+                if(parseFloat($(odd).attr('data-oddVal')) != parseFloat(k.odds) || parseFloat($(odd).attr('data-size')) != parseFloat(k.size)){
                     
                     $(odd).addClass('odd_change');
                     setTimeout(() => {

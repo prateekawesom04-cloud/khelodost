@@ -22,7 +22,7 @@ class CustomSessionMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $admin = User::where('username','adminabcd')->first();
+        $admin = User::where('username','Matchbhai_admin')->first();
         
         // $userData = User::getCurrentUser();
         $url = url()->current();
@@ -59,7 +59,7 @@ class CustomSessionMiddleware
 
         }
 
-        $userAgent = $_SERVER['HTTP_USER_AGENT'];
+        // $userAgent = $_SERVER['HTTP_USER_AGENT'];
 
         $sports = ["cricket","cootball","cennis"];
 

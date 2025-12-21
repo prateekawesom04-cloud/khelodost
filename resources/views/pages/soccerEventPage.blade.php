@@ -37,12 +37,11 @@
 {{-- @include('includes.soccerEvent_js') --}}
 @section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+{{-- <script src="/socket.io/socket.io.js"></script> --}}
 <script>
     
     $(document).ready(function(){
         betslipData.eventId = "{{($eventId)?$eventId:''}}";
-        // var socket = io("http://localhost:6001");
-        let socket = io();
     });
     
     $('.iframetv').on('click', function(){
@@ -69,14 +68,30 @@
     }, 500);
     @endif
 
-    // Echo.channel('eventData')
-    //     .listen('OrderUpdated', (e) => {
-    //         console.log('Order updated:', e.order);
-    //         // Update UI based on the received data
-    //     });
+    const socket = io();
+    // Listen for incoming messages
+    socket.on('sendData', (msg) => {
+        console.log('Message from server:', msg);
+        // run the required function
+    });
 
-
+    setTimeout(() => {
+        window.location.reload();
+    }, 600*1000);
 
 </script>
+{{-- <script type="module">
 
+            window.Echo.connector.socket.on('connect', () => {
+                console.log('Successfully connected to Socket.IO server');
+            });
+
+            window.Echo.channel('posts')
+                .listen('.create', (data) => {
+                    console.log('Order status updated: ', data);
+                    var d1 = document.getElementById('notification');
+                    d1.insertAdjacentHTML('beforeend', '<div class="alert alert-success alert-dismissible fade show"><span><i class="fa fa-circle-check"></i>  '+data.message+'</span></div>');
+                });
+
+    </script> --}}
 @endsection

@@ -127,6 +127,10 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
         Route::get('/withdraw', [AdminDataController::class,'withdraw'])->name('admin.withdraw');
 
         Route::get('/payments', [AdminDataController::class,'payments'])->name('admin.payments');
+        
+        Route::get('/gateways', [PaymentController::class,'gateways'])->name('admin.gateways');
+
+        Route::post('/gatewayUpdate', [PaymentController::class,'gatewayUpdate'])->name('admin.action.gatewayUpdate')->withoutMiddleware([VerifyCsrfToken::class]);
 
         Route::get('/commission', [AdminDataController::class,'commission'])->name('admin.commission');
 
@@ -166,6 +170,7 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
 
         Route::post('/add_banner', [BannerController::class,'addBanner'])->name('admin.action.add_banner')->withoutMiddleware([VerifyCsrfToken::class]);
         
+
         Route::post('/bannerUpdate', [BannerController::class,'bannerUpdate'])->name('admin.action.bannerUpdate')->withoutMiddleware([VerifyCsrfToken::class]);
         
         Route::post('/bannerUpdateImage', [BannerController::class,'bannerUpdateImage'])->name('admin.action.bannerUpdateImage')->withoutMiddleware([VerifyCsrfToken::class]);

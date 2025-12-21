@@ -114,11 +114,11 @@
 </head>
 
 <body class="d-flex align-items-center justify-content-center bg-light">
-  <div class="bg-custom-green rounded-3 text-center text-white shadow my-" style="width: 380px;">
+  <div class="bg-custom-green rounded-3 text-center text-white shadow h-[100vh]" style="width: 380px;">
     <!-- Logo -->
     {{-- <img src="{{ asset('banners/auth.png') }}" alt="Logo" class="mb-4 w-full" /> --}}
     <div alt="Logo" class="mb- w-full" style="height: 284px;background: url('banners/auth.png');background-position: center center;background-size: cover;background-repeat: no-repeat;border-radius: 8px 8px 0 0;background-position-y: 30%;"></div>
-    <div class="p-4 py-2">
+    <div class="p-4 py-4">
       {{-- <a>
         <div style="display: block;height: 77px;position: relative;">
           <img alt="Logo" style="/*! max-width:180px; *//*! position: absolute; */top: 0%;left: 0%;height: 90px;/*! width: 100%; */" src="logo/logo.png" class="mb-2">

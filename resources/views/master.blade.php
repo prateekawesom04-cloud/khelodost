@@ -34,6 +34,12 @@
         <div class="footer_part w-full">
             @include('footer')
         </div>
+
+        <div class="fixed right-5 z-[9999999] bottom-[15%] w-[50px] h-[50px]">
+            <a class="w-full h-full" href="https://t.me/matchbhaii">
+                <img src="https://img.icons8.com/?size=48&id=63306&format=png" alt="" class="w-full h-full">
+            </a>
+        </div>
     </div>
     @include('includes.app_toast')
     @if($claim_bonus)

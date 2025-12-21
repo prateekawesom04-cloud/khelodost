@@ -1,22 +1,42 @@
-// server.js
-const server = require('http').createServer();
-const io = require('socket.io')(server);
-const port = 3000; // Choose a suitable port
+const express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');
+const path = require('path');
 
-io.on('connection', (socket) => {
-    console.log('Client connected:', socket.id);
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+const fs = require('fs');
+const path = require('path');
 
-    socket.on('eventData', (data) => {
-        console.log('Received data from PHP:', data);
-        // Broadcast the data to all connected clients
-        io.emit('eventDataListener', data.eventData); 
-    });
+// Serve static files
+app.use(express.static(path.join(__dirname, 'storage/app/private')));
 
-    socket.on('disconnect', () => {
-        console.log('Client disconnected:', socket.id);
+fs.readFile('./example.txt', 'utf8', (err, data) => {
+    if (err) {
+        console.error('Error reading file:', err);
+        return;
+    }
+    // Socket.IO connection handler
+    io.on('connection', (socket) => {
+    console.log('A user connected');
+
+        // Handle new messages
+        socket.on('sendData', (msg) => {
+            console.log('Message received:', msg);
+            // Broadcast the message to all connected clients
+            io.emit('sendData', msg);
+            });
+
+        // Handle disconnection
+        socket.on('disconnect', () => {
+            console.log('A user disconnected');
+        });
     });
 });
 
-server.listen(port, () => {
-    console.log(`Socket.IO server listening on port ${port}`);
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

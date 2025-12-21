@@ -212,9 +212,10 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
     Route::post('paymentCallback', [TransactionController::class,'paymentCallback'])->name('paymentCallback')->withoutMiddleware([VerifyCsrfToken::class]);
     Route::post('paymentCallbackInd', [TransactionController::class,'paymentCallbackInd'])->name('paymentCallbackInd')->withoutMiddleware([VerifyCsrfToken::class]);
     Route::post('paymentCallbackBan', [TransactionController::class,'paymentCallbackBan'])->name('paymentCallbackBan')->withoutMiddleware([VerifyCsrfToken::class]);
-    
-    Route::post('lgPaymentCallback', [TransactionController::class,'lgPaymentCallback'])->name('lgPaymentCallback')->withoutMiddleware([VerifyCsrfToken::class]);
+    Route::post('lgPaymentQueryMethod', [TransactionController::class,'lgPaymentQueryMethod'])->name('lgPaymentQueryMethod')->withoutMiddleware([VerifyCsrfToken::class]);
     
     Route::post('apiCall', [TransactionController::class,'apiCall'])->name('apiCall')->withoutMiddleware([VerifyCsrfToken::class]);
        
 });
+    Route::post('lgPaymentCallback', [TransactionController::class,'lgPaymentCallback'])->name('lgPaymentCallback')->withoutMiddleware([VerifyCsrfToken::class]);
+    

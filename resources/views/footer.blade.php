@@ -27,7 +27,32 @@
 
             <div class="game_center border-b-2 border-t-2 !border-[#0552cc] p-2 mb-3">
                 <h3 class="!text-[#0c0339] !text-[16px] !font-bold">Game Center</h3>
-                <div class="flex flex-row py-1 gap-1 overflow-x-auto">
+                <div class="bg-white py-1 shadow-sm">
+                    <nav class="nav nav-pills flex-nowrap overflow-auto px-0 small custom-scrollbar"
+                        style="white-space: nowrap; -webkit-overflow-scrolling: touch; overflow-x: auto;">
+
+                        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('cricket') ? 'active' : '' }}"
+                            href="{{ route('user.sport','cricket') }}">
+                            <span class="me-1">🏏</span>Cricket
+                        </a>
+
+                        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('football') ? 'active' : '' }}"
+                            href="{{ route('user.sport','soccer') }}">
+                            <span class="me-1">⚽</span>Football
+                        </a>
+
+                        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill {{ request()->routeIs('tennis') ? 'active' : '' }}"
+                            href="{{ route('user.sport','tennis') }}">
+                            <span class="me-1">🎾</span>Tennis
+                        </a>
+
+                        <a class="nav-link d-inline-flex align-items-center mx-1 px-2 py-1 rounded-pill contact_admin" href="javascript:void(0)">
+                            <span class="me-1">🏆</span>Complete Matches
+                        </a>
+
+                    </nav>
+                </div>
+                {{-- <div class="flex flex-row py-1 gap-1 overflow-x-auto">
                     <div class="bg-[#0c0339] !text-[16px] !text-[#fff] border-1 !border-[#0552cc] p-2 !font-bold rounded-md">
                         Cricket
                     </div>
@@ -40,7 +65,7 @@
                     <div class="bg-[#0c0339] !text-[16px] !text-[#fff] border-1 !border-[#0552cc] p-2 !font-bold rounded-md">
                         Complete Matches
                     </div>
-                </div>
+                </div> --}}
             </div>
     
     <div class="flex flex-row flex-wrap items-center justify-center">
@@ -66,7 +91,7 @@
 
     <!-- Copyright -->
     <div class="copyright">
-      © 2025 playcrick99. All rights reserved.
+      © 2025 Matchbhai. All rights reserved.
     </div>
   </div>
 </footer>

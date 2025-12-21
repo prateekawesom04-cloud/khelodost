@@ -145,7 +145,7 @@
 </div>
 <div class="flex items-center justify-between mt-2 p-2 !bg-[#0552cc]">
   <h4 class="page-title !text-white m-0">Referral Link</h4>
-  <div class=" !text-white">{{route('user.referral_code',$userData->referral_code)}}</div>
+  <div class="clipboard !text-white">{{route('user.referral_code',$userData->referral_code)}}</div>
 </div>
 <main class="layout-content-center !p-0">
     <div class="main-container">
@@ -277,4 +277,10 @@
     </div>
 
 </main>
+<script>
+  $('.clipboard').on('click',function(){
+     navigator.clipboard.writeText($(this).text());
+     responseToast('Referral link copied to clipboard','bg-success');
+  });
+</script>
 @endsection

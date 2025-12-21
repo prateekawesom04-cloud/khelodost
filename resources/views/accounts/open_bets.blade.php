@@ -204,11 +204,11 @@
         </div>
       </div>
 
-      <div class="flex items-center justify-center gap-2">
+      {{-- <div class="flex items-center justify-center gap-2">
         <a href="{{ route('user.betlist','cricket') }}" class="px-3 py-1 !bg-[#0c0339] text-white">Cricket</a>
         <a href="{{ route('user.betlist','soccer') }}" class="px-3 py-1 !bg-[#0c0339] text-white">Soccer</a>
         <a href="{{ route('user.betlist','tennis') }}" class="px-3 py-1 !bg-[#0c0339] text-white">Tennis</a>
-      </div>
+      </div> --}}
 
 @php
 $a = 0;

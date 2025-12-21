@@ -133,7 +133,7 @@
                 </div>
                 <div>
                     <div class="text-muted small fw-semibold text-uppercase">Net Exposure</div>
-                    <div class="fs-6 fw-bold">₹ {{$userData->unsattled_amount}}</div>
+                    <div class="fs-6 fw-bold">₹ <span class="userExposure fs-6">{{isset($userData->unsattled_amount)?$userData->unsattled_amount:'00'}}</span></div>
                 </div>
             </div>
 

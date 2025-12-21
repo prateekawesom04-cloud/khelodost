@@ -373,6 +373,7 @@ class AdminDataController extends Controller
         $payments = Payment::all();
         return view('admin.pages.payments',compact('payments'));
     }
+    
 
     public function commission(){
         

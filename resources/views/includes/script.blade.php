@@ -77,8 +77,10 @@
     }
 
     function userBalance(res){
+      
         if(res.response_code == 200){
-            $('.userBalance').html(res.wallet_amount);
+          $('.userBalance').html(res.wallet_amount);
+          $('.userExposure').html(res.unsattled_amount);
         }
     }
 

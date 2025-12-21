@@ -71,7 +71,7 @@ class getEventData extends Command
             
             Storage::put('event/'.$eventId.'.json', $body);
 
-            event(new EventNotification($body));
+            // event(new EventNotification($body));
 
             if(!file_exists(storage_path('app/private/sattleEvent/'.$eventId.'.json'))){
                 Storage::put('sattleEvent/'.$eventId.'.json', $body);
@@ -118,22 +118,38 @@ class getEventData extends Command
 
             $keys = array_keys( $arr2 );
             $arr2Normal = array_filter($arr2['data'], function($item){
-                return $item['mname'] == 'Normal';
+                // Log::info('Merging market:');
+                // Log::info($item);
+                if( isset($item['mname']) ){
+                    return $item['mname'] == 'Normal';
+                } else {
+                    return false;
+                }
             });
             foreach($arr2Normal as $key=>$val ) { 
                 $arr2Normal = $val; 
             }
             // dd($arr2Normal);
             $arr1Normal = array_filter($arr1['data'], function($item){
-                return $item['mname'] == 'Normal';
+                if( isset($item['mname']) ){
+                    return $item['mname'] == 'Normal';
+                } else {
+                    return false;
+                }
             });
+            $arr1Normalkey = '';
             foreach($arr1Normal as $key=>$val ) { 
+                $arr1Normalkey = $key;
+                // dd($arr1Normal,'$arr1Normal',$arr1['data'][$key]);
+                // unset($arr1['data'][$key]);
                 $arr1Normal = $val; 
             }
     
             // dd($arr1Normal);
             if(!count($arr1Normal)){
+                // dump($arr1['data']);
                 $arr1['data'][] = $arr2Normal;
+                // dd('newdata--',$arr1['data']);
             } else{
                 foreach( $arr2Normal['section'] as $key=>$val ) { 
             // dd('$arr2Normal',$arr2Normal,'$val',$val,'$arr1Normal',$arr1Normal);
@@ -143,6 +159,7 @@ class getEventData extends Command
                     // dd( $arr1Sid);
                     if(!count($arr1Sid)){
                         $arr1Normal['section'][] = $val;
+                        $arr1['data'][$arr1Normalkey] = $arr1Normal;
                     }
                 }
     

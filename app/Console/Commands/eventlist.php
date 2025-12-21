@@ -35,9 +35,10 @@ class eventlist extends Command
         $sportData = json_decode($sportData,true);
 
         // event status
-        // 0 - upcoming
+        // 0 - inactive
         // 1 - inplay
-        // 2 - under settlement
+        // 2 - upcoming
+        // 3 - under settlement
         foreach($sportData as $event){
             
             if($sportname != 'cricket'){
@@ -47,9 +48,9 @@ class eventlist extends Command
                 $beventId = $event['beventId'];
 
                 if($event['iplay']=="True") {
-                    $status = (strtotime(now()) > strtotime($date)) ? 1 : 0;
+                    $status = (strtotime(now()) > strtotime($date)) ? 1 : 2;
                 } else {
-                    $status = 0;
+                    $status = 2;
                 }
 
             } else {
@@ -60,9 +61,9 @@ class eventlist extends Command
                 $beventId = $event['beventId'];
 
                 if($event['inPlay']=="True") {
-                    $status = (strtotime(now()) > strtotime($date)) ? 1 : 0;
+                    $status = (strtotime(now()) > strtotime($date)) ? 1 : 2;
                 } else {
-                    $status = 0;
+                    $status = 2;
                 }
             }
 

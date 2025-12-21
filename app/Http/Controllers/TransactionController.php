@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use App\Models\UserBank;
 use App\Models\Transaction;
+use App\Models\Payment;
 
 class TransactionController extends Controller
 {
@@ -837,6 +838,7 @@ class TransactionController extends Controller
     
         $data['sign'] = (new AuthController)->md5_sign($data, env('LG_PAY_SECRET_KEY'));
         
+        // dd($data);
         $payment_type = ($request->payment_type==1) ? 'deposit' : 'order';
         
         $url = "https://www.lg-pay.com/api/".$payment_type."/create";
@@ -882,21 +884,32 @@ class TransactionController extends Controller
     public function lgpayUpdateTransaction(Request $request){
         // dd($request->all());
         $transaction = Transaction::where('order_sn',$request->order_sn)->where('status',1)->first();
-
+        
+        $request->merge(['transfer_amount'=>$transaction->transfer_amount]);
         if($request->status == 2){
             if($request->payment_type == 1){
                 return $this->lgPaymentGatewayMethod($request);
 
             } else{
-                $user = User::where('username',$transaction->username)->first();
-                $user->wallet_amount = floatval($user->wallet_amount) + floatval($transaction->transfer_amount);
-                $user->save();
-                $transaction->status = $request->status;
-                $transaction->save();
-                return response()->json([
-                    'message'=> 'Transaction Updated Successfully',
-                    'response_code'=> '200'
-                ]);
+                $query = $this->lgPaymentQueryMethod($request);
+                // dd($query->status);
+                if($query->status == 1){
+                    $user = User::where('username',$transaction->username)->first();
+                    $user->wallet_amount = floatval($user->wallet_amount) + floatval($transaction->transfer_amount);
+                    $user->save();
+                    $transaction->status = $request->status;
+                    $transaction->save();
+                    return response()->json([
+                        'message'=> 'Transaction Updated Successfully',
+                        'response_code'=> '200'
+                    ]);
+
+                } else{
+                    return response()->json([
+                        'message'=> 'Transaction Not Updated',
+                        'response_code'=> '200'
+                    ]);
+                }
             }
             // dd($response);
         } else{
@@ -912,6 +925,7 @@ class TransactionController extends Controller
     
     public function lgPaymentCallback(Request $request){
         Log::channel('custom_log')->info('lpayment callack----');
+        // Log::info('lgpayment callack----');
         Log::channel('custom_log')->info($request->all());
 
         $data =[];
@@ -927,17 +941,17 @@ class TransactionController extends Controller
         // $model->fill(request()->all());
         // $model->save();
 
-        $sign = md5_sign($data,env('LG_PAY_SECRET_KEY'));
+        $sign = (new AuthController)->md5_sign($data,env('LG_PAY_SECRET_KEY'));
         if($request->status == 1 && $sign == $request->sign){
             $transaction = Transaction::where('order_sn',$request->order_sn)->where('status',1)->first();
 
         Log::channel('custom_log')->info('$transaction callack----'.$transaction->payment_type);
 
             $user = User::where('username',$transaction->username)->first();
-            // $userBank = UserBank::where('username',$user->username)->first();
+            $userBank = UserBank::where('username',$user->username)->first();
 
             if($transaction->payment_type != 1){
-                $user->wallet_amount = floatval($user->wallet_amount) + floatval($transaction->transfer_amount);
+                $user->wallet_amount = floatval($user->wallet_amount) + floatval($transaction->money);
             } else{
                 
                 $request->merge(['username'=>$user->username]);
@@ -950,10 +964,10 @@ class TransactionController extends Controller
 
                 // Api statements
 
-                $user->wallet_amount = floatval($user->wallet_amount) - floatval($transaction->transfer_amount);
+                $user->wallet_amount = floatval($user->wallet_amount) - floatval($transaction->money);
                 $response = '3456';
             }
-            $transaction->transfer_amount = $request->transfer_amount;
+            $transaction->transfer_amount = $request->money;
             $transaction->status = 2;
             // $transaction->manual = 0;
             $transaction->save();
@@ -963,5 +977,169 @@ class TransactionController extends Controller
         } else{
             return 'no';
         }
+    }
+    
+    // public function lgPaymentCallback(Request $request)
+    // {
+    //     Log::channel('custom_log')->info('LG PAY CALLBACK RECEIVED', $request->all());
+    
+    //     // 1. Validate required fields
+    //     $requiredFields = ['order_sn','money','status','pay_time','msg','remark','sign'];
+    //     foreach ($requiredFields as $field) {
+    //         if (!$request->has($field)) {
+    //             Log::channel('custom_log')->error("Missing field: {$field}");
+    //             return response('ok', 200); // fail-safe
+    //         }
+    //     }
+    
+    //     // 2. Prepare data for signature verification
+    //     $dataToVerify = [
+    //         'order_sn' => $request->order_sn,
+    //         'money'    => $request->money,
+    //         'status'   => $request->status,
+    //         'pay_time' => $request->pay_time,
+    //         'msg'      => $request->msg,
+    //         'remark'   => $request->remark,
+    //     ];
+    
+    //     $generatedSign = md5_sign($dataToVerify, env('LG_PAY_SECRET_KEY'));
+    
+    //     // 3. Verify status + signature
+    //     if ((int)$request->status !== 1 || $generatedSign !== $request->sign) {
+    //         Log::channel('custom_log')->warning('Invalid LG Pay signature or status', [
+    //             'generated' => $generatedSign,
+    //             'received'  => $request->sign,
+    //         ]);
+    //         return response('ok', 200);
+    //     }
+    
+    //     // 4. Fetch transaction (NO status filter)
+    //     $transaction = Transaction::where('order_sn', $request->order_sn)->first();
+    
+    //     if (!$transaction) {
+    //         Log::channel('custom_log')->warning("Order not found: {$request->order_sn}");
+    //         return response('ok', 200);
+    //     }
+    
+    //     // 5. Idempotency check (already processed)
+    //     if ($transaction->status == 2) {
+    //         Log::channel('custom_log')->info("Order already processed: {$request->order_sn}");
+    //         return response('ok', 200);
+    //     }
+    
+    //     // 6. Fetch user
+    //     $user = User::where('username', $transaction->username)->first();
+    //     if (!$user) {
+    //         Log::channel('custom_log')->error("User not found for order: {$request->order_sn}");
+    //         return response('ok', 200);
+    //     }
+    
+    //     // 7. Process payment
+    //     DB::beginTransaction();
+    //     try {
+    //         if ($transaction->payment_type != 1) {
+    //             // Deposit
+    //             $user->wallet_amount += (float)$transaction->transfer_amount;
+    //         } else {
+    //             // Withdrawal (if applicable)
+    //             $user->wallet_amount -= (float)$transaction->transfer_amount;
+    //         }
+    
+    //         $transaction->status = 2; // paid
+    //         $transaction->save();
+    //         $user->save();
+    
+    //         DB::commit();
+    
+    //         Log::channel('custom_log')->info("LG Pay processed successfully: {$request->order_sn}");
+    //         return response('ok', 200);
+    
+    //     } catch (\Throwable $e) {
+    //         DB::rollBack();
+    //         Log::channel('custom_log')->error('LG Pay processing failed', [
+    //             'order_sn' => $request->order_sn,
+    //             'error' => $e->getMessage(),
+    //         ]);
+    //         return response('ok', 200);
+    //     }
+    // }
+    
+    public function lgPaymentQueryMethod(Request $request){
+        
+        $data = [];
+        $data['app_id'] = env('LG_PAY_APP_ID');
+        $data['order_sn'] = $request->order_sn;
+
+        // dd($data);
+
+    
+            // if(session('user_uid')){}
+            
+    
+        $data['sign'] = (new AuthController)->md5_sign($data, env('LG_PAY_SECRET_KEY'));
+        
+        $payment_type = ($request->payment_type==1) ? 'deposit' : 'order';
+        
+        $url = "https://www.lg-pay.com/api/".$payment_type."/query";
+        
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Content-Type: application/x-www-form-urlencoded"
+        ]);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_DEFAULT);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 120);
+
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            return curl_error($ch);
+        } 
+
+        curl_close($ch);
+        return json_decode($response);
+        // dd(json_decode($response));
+        if(json_decode($response)->status == 0){
+            return response()->json([
+                'message'=> 'Transaction Request Unsuccesfully',
+                'response_code'=> '101',
+                'response'=>$response
+            ]);
+        }
+        return response()->json([
+            'message'=> 'Transaction Request Created Succesfully',
+            'response_code'=> '200',
+            'response'=>$response
+        ]);
+
+
+    }  
+
+    function paymentGatewayOptionalMethod(Request $request){
+        $gateway = Payment::where('status', 1)->first();
+        if ($gateway) {
+            if ($gateway->gateway_name == 'LG Pay') {
+                return $this->lgPaymentGatewayMethod($request);
+            } elseif ($gateway->gateway_name == 'India Payment Gateway') {
+                return $this->paymentGatewayIndMethod($request);
+            } elseif ($gateway->gateway_name == 'Bangladesh Payment Gateway') {
+                return $this->paymentGatewayBanMethod($request);
+            } else {
+                return response()->json([
+                    'message' => 'No valid payment gateway found',
+                    'response_code' => '105'
+                ]);
+            }
+        } else {
+            return response()->json([
+                'message' => 'No active payment gateway available',
+                'response_code' => '105'
+            ]);
     }
 }

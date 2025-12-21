@@ -61,7 +61,7 @@
                                 <td>{{ $value->payment_type ? 'Withdraw' : ($value->payment_type==0?'Deposit':'Bonus') }}</td>
                                 <td>{{ $value->transfer_amount }}</td>
                                 <td>{{ $value->status == 2 ? 'Success' : 'Processing' }}</td>
-                                <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d M Y') }}</td>
+                                <td>{{$value->created_at }}</td>
                                 <td style="word-break: break-word;">{{ $value->order_sn }}</td>
                                 <td>{{ $value->remark }}</td>
                             </tr>
@@ -92,6 +92,22 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="paymentGateway" tabindex="-1" aria-hidden="true">
+  <div class="flex items-center justify-center modal-dialog w-full h-full">
+    <div class="modal-content !h-[400px] mx-auto text-center">
+      <div class="modal-header border-0">
+        {{-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> --}}
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+            <iframe src="" frameborder="0" class="w-full h-full absolute top-0 left-0"></iframe>
+
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @section('js')
@@ -105,6 +121,7 @@
     
     // On submit button click
     $('a.btn-submit').click(function() {
+        $(this).addClass('disabled');
         let transfer_amount = parseInt($('#depositAmount').val());
         let data = {};
         data.payment_type = '0';
@@ -126,7 +143,9 @@
             return false;
         }
         data = response.data;
-        window.location.href = data['pay_url'];
+        // $('#paymentGateway iframe').attr('src', data['pay_url']);
+        // $('#paymentGateway').modal('show');
+        // window.location.href = data['pay_url'];
         console.log('respoonse',response);
         
         // data = JSON.parse(response.data);
@@ -137,7 +156,7 @@
         //     if(data['payUrl']){
         //         window.location.href = data['payUrl'];
         //     } else if(data['pay_url']){
-        //         window.location.href = data['pay_url'];
+                window.location.href = data['pay_url'];
                 
         //     } else {
         //         responseToast('Deposit Request successful');
