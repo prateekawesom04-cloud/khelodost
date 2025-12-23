@@ -143,14 +143,14 @@
         $(document).on('click','.updateTransaction',function(){
             $('.btn-close').trigger('click');
             formData = {};
-            $(this).addClass('disabled');
+            // $(this).addClass('disabled');
             callApi('post', `{{route('admin.action.updateTransaction')}}`, gatewayData, ajaxResponseModal);
         });
         
          $(document).on('click','#lgPayUpdateTransaction',function(){
             $('.btn-close').trigger('click');
             
-            $(this).addClass('disabled');
+            // $(this).addClass('disabled');
             formData = {};
             callApi('post', `{{route('admin.action.lgpayUpdateTransaction')}}`, gatewayData, ajaxResponseModal);
         });
