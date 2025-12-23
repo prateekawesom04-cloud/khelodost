@@ -906,8 +906,9 @@ class TransactionController extends Controller
 
                 } else{
                     return response()->json([
-                        'message'=> 'Transaction Not Updated',
-                        'response_code'=> '200'
+                        'message'=> $query->msg,
+                        'redirect'=> request()->headers->get('referer'),
+                        'response_code'=> '101'
                     ]);
                 }
             }

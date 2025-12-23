@@ -22,6 +22,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if(isset($gateways) && count($gateways) > 0)
                             @foreach($gateways as $key => $payment)
                             <tr>
                                 <td>{{$key+1}}</td>
@@ -37,7 +38,7 @@
                                 </td>
                             </tr>
                             @endforeach
-
+                            @endif
                         </tbody>
                     </table>
                 </div>

@@ -472,7 +472,7 @@
             return false;
          }
          if($('#oddVal').val() > max_odds){
-            if(betslipData.mname != "Normal"  && betslipData.mname != "Bookmaker"){
+            if(betslipData.mname == "MATCH_ODDS"){
                responseToast('Maximum odd value is '+max_odds);
                return false;
             }
