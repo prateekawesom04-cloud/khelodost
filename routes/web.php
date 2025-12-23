@@ -63,7 +63,7 @@ Route::middleware(['custom_session_middleware','bonus_middleware'])->group(funct
     Route::middleware(['auth_check_middleware'])->group(function () {
         
         // Route::post('paymentGatewayMethod', [TransactionController::class,'paymentGatewayMethod'])->name('paymentGatewayMethod')->withoutMiddleware([VerifyCsrfToken::class]);
-        Route::post('paymentGatewayMethod', [TransactionController::class,'lgPaymentGatewayMethod'])->name('paymentGatewayMethod')->withoutMiddleware([VerifyCsrfToken::class]);
+        Route::post('paymentGatewayMethod', [TransactionController::class,'paymentGatewayOptionalMethod'])->name('paymentGatewayMethod')->withoutMiddleware([VerifyCsrfToken::class]);
         
         Route::post('withdrawalRequest', [TransactionController::class,'withdrawalRequest'])->name('user.withdrawalRequest')->withoutMiddleware([VerifyCsrfToken::class]);
  

@@ -60,7 +60,7 @@ class getEventData extends Command
 
         $client = new Client(); 
         foreach ($inplaySports as $eventId) {
-            Log::info('Fetching data for event ID: '.$eventId);
+            // Log::info('Fetching data for event ID: '.$eventId);
             if($sportname=='cricket'){
                 $response = $client->get("http://170.187.250.13/getbm?eventId=".$eventId); 
             } else{
@@ -111,11 +111,20 @@ class getEventData extends Command
     public function my_merge( $arr1, $arr2 )
     {
 
-        if(!array_key_exists('data',$arr1)){
-            // dd('$arr2[data]',$arr2['data']);
+        // if(!array_key_exists('data',$arr1)){
+        if(!isset($arr1) || !$arr1 ){
             $arr1 = $arr2;
+        } elseif(!array_key_exists('data',$arr1) ){
+            $arr1 = $arr2;
+            
+            // dd('$arr2[data]',$arr2['data']);
         } else{
-
+            if(!isset($arr2) || !$arr2 ){
+                return $arr1;
+            } elseif(!array_key_exists('data',$arr2) ){
+                return $arr1;
+            
+            }
             $keys = array_keys( $arr2 );
             $arr2Normal = array_filter($arr2['data'], function($item){
                 // Log::info('Merging market:');
@@ -151,6 +160,13 @@ class getEventData extends Command
                 $arr1['data'][] = $arr2Normal;
                 // dd('newdata--',$arr1['data']);
             } else{
+                if(!isset($arr2Normal) || !$arr2Normal ){
+                    return $arr1;
+                } else{
+                    if(!array_key_exists('section',$arr2Normal) ){
+                        return $arr1;
+                    }
+                }
                 foreach( $arr2Normal['section'] as $key=>$val ) { 
             // dd('$arr2Normal',$arr2Normal,'$val',$val,'$arr1Normal',$arr1Normal);
                     $arr1Sid = array_filter($arr1Normal['section'], function($item) use($val){

@@ -875,7 +875,7 @@ class TransactionController extends Controller
         return response()->json([
             'message'=> 'Transaction Request Created Succesfully',
             'response_code'=> '200',
-            'response'=>$response
+            'data'=>$response
         ]);
 
 
@@ -967,7 +967,7 @@ class TransactionController extends Controller
                 $user->wallet_amount = floatval($user->wallet_amount) - floatval($transaction->money);
                 $response = '3456';
             }
-            $transaction->transfer_amount = $request->money;
+            // $transaction->transfer_amount = $request->money;
             $transaction->status = 2;
             // $transaction->manual = 0;
             $transaction->save();
@@ -1122,14 +1122,21 @@ class TransactionController extends Controller
     }  
 
     function paymentGatewayOptionalMethod(Request $request){
+        // dd($request->all());
         $gateway = Payment::where('status', 1)->first();
         if ($gateway) {
-            if ($gateway->gateway_name == 'LG Pay') {
-                return $this->lgPaymentGatewayMethod($request);
-            } elseif ($gateway->gateway_name == 'India Payment Gateway') {
-                return $this->paymentGatewayIndMethod($request);
-            } elseif ($gateway->gateway_name == 'Bangladesh Payment Gateway') {
-                return $this->paymentGatewayBanMethod($request);
+            if ($gateway->name == 'LG Pay') {
+                if($request->payment_type == 0) {
+                    return $this->lgPaymentGatewayMethod($request);
+                } else {
+                    return $this->lgpayUpdateTransaction($request);
+                }
+            } elseif ($gateway->name == 'dgateway') {
+                if($request->payment_type == 0) {
+                    return $this->paymentGatewayMethod($request);
+                } else {
+                    return $this->updateTransaction($request);
+                }
             } else {
                 return response()->json([
                     'message' => 'No valid payment gateway found',
@@ -1141,5 +1148,6 @@ class TransactionController extends Controller
                 'message' => 'No active payment gateway available',
                 'response_code' => '105'
             ]);
+        }
     }
 }

@@ -22,11 +22,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($payments as $key => $payment)
+                            @foreach($gateways as $key => $payment)
                             <tr>
                                 <td>{{$key+1}}</td>
                                 <td>{{$payment->name}}</td>
-                                <td>{{$payment->ifsc_code}}</td>
                                 <td>{{($payment->status)?'active':'inactive'}}</td>
                                 <td>
                                     <div class="flex items-center justify-center gap-2">

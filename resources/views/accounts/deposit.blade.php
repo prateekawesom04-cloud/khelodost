@@ -137,16 +137,25 @@
     });
 
     function paymentGatewayMethod(response) {
-        response = JSON.parse(response.response);
-        if(response.status == 0){
-            responseToast(response.msg);
+        
+        response = JSON.parse(response.data);
+        @if ($gateway->name == 'LG Pay') 
+        data = response.data;
+        console.log('data data.status--',response.status);
+        if(data.pay_url == 'undefined'){
+            responseToast(data.msg);
+        @else
+        data = response;
+        console.log('data data.status--',response.status);
+        if(data.payUrl == 'undefined'){
+            responseToast(data.message);
+        @endif
             return false;
         }
-        data = response.data;
         // $('#paymentGateway iframe').attr('src', data['pay_url']);
         // $('#paymentGateway').modal('show');
         // window.location.href = data['pay_url'];
-        console.log('respoonse',response);
+        console.log('respoonse',data);
         
         // data = JSON.parse(response.data);
         // console.log('res msg',response.message,'data--',data);
@@ -156,8 +165,11 @@
         //     if(data['payUrl']){
         //         window.location.href = data['payUrl'];
         //     } else if(data['pay_url']){
+            @if ($gateway->name == 'LG Pay') 
                 window.location.href = data['pay_url'];
-                
+            @else
+                window.location.href = data['payUrl'];
+            @endif
         //     } else {
         //         responseToast('Deposit Request successful');
         //     // $('.paymentModel').html(response.response);

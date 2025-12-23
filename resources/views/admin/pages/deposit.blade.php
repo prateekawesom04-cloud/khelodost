@@ -116,21 +116,49 @@
                 </div>
             </div>
         </div>
-    @endsection
-
+         
+@include('admin.model.paymentGatewayModal')
+@endsection
 
     @section('js')
     <script>
-        $('.transaction_status').on('change',function(){
-            let formData = {};
-            
-            formData['previous_url'] = '{{url()->previous()}}';
-            formData['search_data_key'] = 'order_sn';
-            formData['search_data_value'] = $(this).attr('data-order_sn');
-            formData['update_data_key'] = $(this).attr('name');
-            formData['update_data_value'] = $(this).val();
-            formData['m_key'] = 'transactions';
-            callAjaxFormData('post', `{{url('/admin')}}/updateModelData`, formData, ajaxResponseModal);
+
+        function openWithDrawModal(response){
+            let userBankData = `
+                <p class="mb-1 text-start"><strong>Transaction Id:</strong> ${response.transaction.order_sn}</p>
+                <p class="mb-1 text-start"><strong>Transaction Id:</strong> ${response.transaction.username}</p>
+                <p class="mb-1 text-start"><strong>Amount:</strong> ${response.transaction.transfer_amount}</p>
+            `;
+            $('.userBankData').html(userBankData);
+            $('#approve_transaction').modal('show');
+        }
+
+        let gatewayData = {};
+
+        $('.approve_deposit').on('click',function(){
+            $('#approve_transaction').modal('show');
+            gatewayData['order_sn'] = $(this).attr('data-order_sn');
+            gatewayData['payment_type'] = 0;
+            gatewayData['status'] = 2;
+
+            callApi('post', `{{route('admin.userBankData')}}`, gatewayData, openWithDrawModal);
+
         });
+
+        $(document).on('click','.updateTransaction',function(){
+            $('.btn-close').trigger('click');
+            formData = {};
+            $(this).addClass('disabled');
+            callApi('post', `{{route('admin.action.updateTransaction')}}`, gatewayData, ajaxResponseModal);
+        });
+        
+         $(document).on('click','#lgPayUpdateTransaction',function(){
+            
+            $('.btn-close').trigger('click');
+            $(this).addClass('disabled');
+            formData = {};
+            callApi('post', `{{route('admin.action.lgpayUpdateTransaction')}}`, gatewayData, ajaxResponseModal);
+        });
+
     </script>
     @endsection

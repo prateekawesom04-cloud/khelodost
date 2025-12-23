@@ -106,13 +106,15 @@ class UserController extends Controller
     public function deposit(Request $request){
         
         $user = $this->currentUser;
+        
+        $gateway = Payment::where('status',1)->first();
         if($user){
             $agent = User::where('username',$user->username)->where('status','>',0)->first();
             $data = Transaction::where([
                 'username'=>$user->username,
                 'payment_type'=>'0'
             ])->orderBy('id','desc')->get();
-            return view('accounts.deposit',compact('data','agent'));
+            return view('accounts.deposit',compact('data','agent','gateway'));
         }
         return view('accounts.deposit');
         // $payments = Payment::where('admin_username',$user->admin_username)->get();
