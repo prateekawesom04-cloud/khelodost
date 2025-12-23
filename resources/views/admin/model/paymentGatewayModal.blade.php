@@ -12,8 +12,8 @@
 
                     </div>
                     <div class="flex flex-row gap-2">
-                        <a id="lgPayCheckBalance" href="javascript:void(0)" class="btn btn-primary bg-[#0552cc] lgPayUpdateTransaction">LgPay Balance</a>
-                        <a id="checkBalance" href="javascript:void(0)" class="btn btn-primary bg-[#0552cc] updateTransaction">UnitedPay Balance</a>
+                        <a id="lgPayCheckBalance" href="javascript:void(0)" class="btn btn-primary bg-[#0552cc] lgPayCheckBalance">LgPay Balance</a>
+                        <a id="checkBalance" href="javascript:void(0)" class="btn btn-primary bg-[#0552cc] checkBalance">UnitedPay Balance</a>
                     </div>
                     <div class="flex flex-row gap-2">
                         <a id="lgPayUpdateTransaction" href="javascript:void(0)" class="btn btn-primary bg-[#0552cc] lgPayUpdateTransaction">LgPay</a>
