@@ -68,9 +68,9 @@
     }, 500);
     @endif
 
-    const socket = io();
+    const socket = io(`{https://72.60.97.123:3001`);
     // Listen for incoming messages
-    socket.on('sendData', (msg) => {
+    socket.on('message', (msg) => {
         console.log('Message from server:', msg);
         // run the required function
     });

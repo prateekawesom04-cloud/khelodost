@@ -1,42 +1,48 @@
-const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
-const path = require('path');
+// const express = require("express");
+// const fs = require("fs");
+// const cors = require("cors");
+import express from 'express';
+import http from 'http';
+import fs from 'fs';
+import cors from 'cors';
+import {Server} from 'socket.io';
+
 
 const app = express();
+app.use(cors());
+
 const server = http.createServer(app);
-const io = new Server(server);
-const fs = require('fs');
-const path = require('path');
 
-// Serve static files
-app.use(express.static(path.join(__dirname, 'storage/app/private')));
-
-fs.readFile('./example.txt', 'utf8', (err, data) => {
-    if (err) {
-        console.error('Error reading file:', err);
-        return;
+const io = new Server(server, {
+    cors: {
+        origin: "https://matchbhai.com",
+        methods: ["GET", "POST"]
     }
-    // Socket.IO connection handler
-    io.on('connection', (socket) => {
-    console.log('A user connected');
+});
 
-        // Handle new messages
-        socket.on('sendData', (msg) => {
-            console.log('Message received:', msg);
-            // Broadcast the message to all connected clients
-            io.emit('sendData', msg);
-            });
+io.on("connection", (socket) => {
+    console.log("Client connected");
 
-        // Handle disconnection
-        socket.on('disconnect', () => {
-            console.log('A user disconnected');
-        });
+    socket.emit('message', 'Welcome! This data is from the server.');
+
+    
+    // socket.on("get-file-data", () => {
+    //     const filePath = "/var/www/laravel/storage/app/private/data.txt";
+
+    //     fs.readFile(filePath, "utf8", (err, data) => {
+    //         if (err) {
+    //             socket.emit("file-error", err.message);
+    //         } else {
+    //             socket.emit("file-data", data);
+    //         }
+    //     });
+    });
+
+    socket.on("disconnect", () => {
+        console.log("Client disconnected");
     });
 });
 
-
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+server.listen(3001, "127.0.0.1", () => {
+    console.log("Node Socket Server running on port 3001");
 });
