@@ -34,6 +34,23 @@
     });
 
     function lgPayCheckBalance(response){
+        let userBankData = `
+            <p class="mb-1 text-start"><strong>Balance: Rs.</strong> ${response.balance}</p>
+        `;
         $('.userBankData').html(response.balance);
+    }
+    
+    $(document).on('click','#checkBalance',function(){
+        
+        callApi('post', `{{route('admin.action.checkBalance')}}`, {}, checkBalance);
+    });
+
+    function checkBalance(response){
+        console.log('response-',response);
+        
+        // let userBankData = `
+        //     <p class="mb-1 text-start"><strong>Balance: Rs.</strong> ${response.balance}</p>
+        // `;
+        // $('.userBankData').html(response.balance);
     }
 </script>

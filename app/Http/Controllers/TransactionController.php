@@ -1182,7 +1182,64 @@ class TransactionController extends Controller
         curl_close($ch);
         
         $response = json_decode($response);
-        $balance = $response->data['balance'];
+        $balance = $response->data->balance;
+        // dd($balance);
+        if($response->status == 1){
+            return response()->json([
+                'response_code'=> '200',
+                'balance'=>$balance
+            ]);
+        }
+    }
+    
+    public function checkBalance(){
+
+        $apiData = [];
+        $apiData['mchNo'] = 'M0396';
+        $apiData['encryptionKey'] = '72012C03A0F21CC3';
+        $apiData['signatureKey'] = '613BA28576F3CDF8';
+        
+        $data = [];
+
+        $data['versionNo'] = 1;
+        $data['mchNo'] = 'M0396';
+        
+        $sdata = [];
+
+        $sdata['mchNo'] = $data['mchNo'];
+        $sdata['payload'] = json_encode($data);
+        
+        $sdata['payload'] = (new AuthController)->aes128cbc($apiData['encryptionKey'],$sdata['payload']);
+
+        $sdata['sign'] = $sdata['payload'].$apiData['signatureKey'];
+        $sdata['sign'] = strtoupper(md5($sdata['sign']));
+
+        $url = 'https://phpay.ipayment.vip/dgateway/ws/trans/nocard/accBalQuery';
+        
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Content-Type: application/x-www-form-urlencoded"
+        ]);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $sdata);
+        curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_DEFAULT);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 120);
+
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            return curl_error($ch);
+        } 
+
+        curl_close($ch);
+        
+        $response = json_decode($response);
+        $balance = $response;
         dd($balance);
         if($response->status == 1){
             return response()->json([

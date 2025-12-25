@@ -126,7 +126,7 @@
         function openWithDrawModal(response){
             let userBankData = `
                 <p class="mb-1 text-start"><strong>Transaction Id:</strong> ${response.transaction.order_sn}</p>
-                <p class="mb-1 text-start"><strong>Transaction Id:</strong> ${response.transaction.username}</p>
+                <p class="mb-1 text-start"><strong>Username:</strong> ${response.transaction.username}</p>
                 <p class="mb-1 text-start"><strong>Amount:</strong> ${response.transaction.transfer_amount}</p>
             `;
             $('.userBankData').html(userBankData);
