@@ -25,3 +25,15 @@
         </div>
     </div>
 </div>
+
+<script>
+    
+    $(document).on('click','#lgPayCheckBalance',function(){
+        
+        callApi('post', `{{route('admin.action.lgPayCheckBalance')}}`, {}, lgPayCheckBalance);
+    });
+
+    function lgPayCheckBalance(response){
+        $('.userBankData').html(response.balance);
+    }
+</script>

@@ -353,7 +353,7 @@ class TransactionController extends Controller
         
         } elseif ($request->payment_type == 1) {
 
-            $data['mode'] = S1;
+            $data['mode'] = 'S1';
             $data['accBankCode'] = $request->accBankCode;
             $data['accName'] = $request->accName;
             $data['accCardNo'] = $request->accCardNo;
@@ -1148,6 +1148,46 @@ class TransactionController extends Controller
             return response()->json([
                 'message' => 'No active payment gateway available',
                 'response_code' => '105'
+            ]);
+        }
+    }
+
+    public function lgPayCheckBalance(){
+        $data = [];
+        $data['app_id'] = env('LG_PAY_APP_ID');
+        $data['time'] = time();
+        $data['sign'] = (new AuthController)->md5_sign($data, env('LG_PAY_SECRET_KEY'));
+        $url = 'https://www.lg-pay.com/api/deposit/balance';
+        
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Content-Type: application/x-www-form-urlencoded"
+        ]);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_DEFAULT);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 120);
+
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            return curl_error($ch);
+        } 
+
+        curl_close($ch);
+        
+        $response = json_decode($response);
+        $balance = $response->data['balance'];
+        dd($balance);
+        if($response->status == 1){
+            return response()->json([
+                'response_code'=> '200',
+                'balance'=>$balance
             ]);
         }
     }

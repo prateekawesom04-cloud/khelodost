@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Pusher\Pusher;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 use App\Events\EventNotification;
 
 class getEventData extends Command

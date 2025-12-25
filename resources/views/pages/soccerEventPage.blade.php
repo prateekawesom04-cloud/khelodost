@@ -68,8 +68,21 @@
     }, 500);
     @endif
 
-    const socket = io(`{https://72.60.97.123:3001`);
+    // const socket = io(`https://matchbhai.com`,{
+    //     transports: ["websocket"]
+    // });
+    
+    // const socket = io('https://72.60.97.123:3001');
+    const socket = io("https://matchbhai.com", {
+        path: "/socket.io",
+        transports: ["websocket", "polling"],
+        withCredentials: true
+    });
     // Listen for incoming messages
+    socket.on('connection', ()=>{
+        console.log('soccket connected..');
+        
+    });
     socket.on('message', (msg) => {
         console.log('Message from server:', msg);
         // run the required function
