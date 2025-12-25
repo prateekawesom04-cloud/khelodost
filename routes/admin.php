@@ -79,6 +79,8 @@ Route::middleware(['admin_auth_check_middleware','custom_admin_session_middlewar
         Route::post('/lgpayUpdateTransaction', [TransactionController::class,'lgpayUpdateTransaction'])->name('admin.action.lgpayUpdateTransaction')->withoutMiddleware([VerifyCsrfToken::class]);
         
         Route::post('/lgPayCheckBalance', [TransactionController::class,'lgPayCheckBalance'])->name('admin.action.lgPayCheckBalance')->withoutMiddleware([VerifyCsrfToken::class]);
+        
+        Route::post('/checkBalance', [TransactionController::class,'checkBalance'])->name('admin.action.checkBalance')->withoutMiddleware([VerifyCsrfToken::class]);
 
         Route::get('/inactive_user_downline_list', [AdminDataController::class,'inactive_user_downline_list'])->name('admin.inactive_user_downline_list');
 
