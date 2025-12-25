@@ -145,7 +145,8 @@ class AuthController extends Controller
                 $this->setUserSession($user->username);
                 $activity = new Activity();
                 $activity->username = $user->username;
-                $activity->ip = $request->ip();
+                // $activity->ip = $request->ip();
+                $activity->ip = null;
                 $activity->save();
             } else{
                 return response()->json([
