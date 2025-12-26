@@ -1202,20 +1202,26 @@ class TransactionController extends Controller
         $data = [];
 
         $data['versionNo'] = 1;
-        $data['mchNo'] = 'M0396';
+        $data['mchNo'] = $apiData['mchNo'];
         
         $sdata = [];
 
-        $sdata['mchNo'] = $data['mchNo'];
+        // $sdata['versionNo'] = $data['versionNo'];
+        
         $sdata['payload'] = json_encode($data);
         
         $sdata['payload'] = (new AuthController)->aes128cbc($apiData['encryptionKey'],$sdata['payload']);
-
+        // dd($sdata['payload']);
         $sdata['sign'] = $sdata['payload'].$apiData['signatureKey'];
         $sdata['sign'] = strtoupper(md5($sdata['sign']));
+        
+        $sdata['mchNo'] = $apiData['mchNo'];
 
+        $sdata = json_encode($sdata);
+        // dd($sdata);
         $url = 'https://phpay.ipayment.vip/dgateway/ws/trans/nocard/accBalQuery';
         
+        // dd($sdata);
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -1237,7 +1243,7 @@ class TransactionController extends Controller
         } 
 
         curl_close($ch);
-        
+        dd($response);
         $response = json_decode($response);
         $balance = $response;
         dd($balance);

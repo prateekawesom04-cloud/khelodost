@@ -37,7 +37,7 @@
         let userBankData = `
             <p class="mb-1 text-start"><strong>Balance: Rs.</strong> ${response.balance}</p>
         `;
-        $('.userBankData').html(response.balance);
+        $('.userBankData').append(userBankData);
     }
     
     $(document).on('click','#checkBalance',function(){
@@ -51,6 +51,6 @@
         // let userBankData = `
         //     <p class="mb-1 text-start"><strong>Balance: Rs.</strong> ${response.balance}</p>
         // `;
-        // $('.userBankData').html(response.balance);
+        $('.userBankData').append(userBankData);
     }
 </script>

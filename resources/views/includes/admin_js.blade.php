@@ -80,6 +80,28 @@
         }
     });
     
+    $('.deleteUser').on('click',function(){
+        $('#deleteConfirmationModal input[name=username]').val($(this).attr('data-username'));
+    });
+
+    $('.confirmDelete').on('click',function(){
+        let exitLoop = true;
+        let formData = new FormData($('#deleteForm')[0]);
+        let formInputs = $('#deleteForm input');
+        
+        $(formInputs).each(function(){
+            if($(this).val() == ''){
+                ajaxResponseModal(`Please Enter ${$(this).attr('name')}`);
+                exitLoop = false;
+                scrollToElement($(this));
+                return false;
+            }
+            
+        });
+        if(exitLoop){
+            callAjaxFormData('post', `{{url('/admin')}}/deleteUser`, formData, ajaxResponseModal);
+        }
+    });
     $('.depositWallet').on('click',function(){
         $('.balance_form input[name=username]').val($(this).attr('data-username'));
         $('.userBalance').text($(this).attr('data-user_wallet'))
